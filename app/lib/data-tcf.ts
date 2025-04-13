@@ -1,6 +1,6 @@
 import {Category, Products, SubCategory} from "@/app/lib/schemas-tcf";
 
-const BASE_URL = "http://127.0.0.1:8080";
+const BASE_URL = process.env.API_URL!;
 
 export async function fetchCategories(): Promise<Category[]> {
     try {
