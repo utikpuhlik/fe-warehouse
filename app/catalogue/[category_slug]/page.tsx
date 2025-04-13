@@ -2,12 +2,14 @@ import { fetchSubCategories } from "@/app/lib/data-tcf";
 import { SubCategoryCard } from "@/app/ui/catalogue/cards";
 import { lusitana } from "@/app/ui/fonts";
 
-type Props = {
-    params: { category_slug: string };
-};
+type Params = Promise<{
+    category_slug: string;
+}>
 
-export default async function SubCategoriesPage({ params }: Props) {
-    const { category_slug } = await params;
+
+export default async function SubCategoriesPage(props: {params: Params}) {
+    const params = await props.params;
+    const category_slug = params.category_slug;
     const subcategories = await fetchSubCategories(category_slug);
 
     return (

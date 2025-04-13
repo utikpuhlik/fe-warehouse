@@ -2,16 +2,16 @@ import { fetchProducts } from "@/app/lib/data-tcf";
 import { lusitana } from "@/app/ui/fonts";
 import {ProductCard} from "@/app/ui/catalogue/cards";
 
-type Props = {
-    params: {
-        category_slug: string;
-        subcategory_slug: string;
-    };
-};
+
+type Params = Promise<{
+    category_slug: string;
+    subcategory_slug: string;
+}>
 
 
-export default async function Page({ params }: Props) {
-    const { category_slug, subcategory_slug } = await params;
+export default async function Page(props: {params: Params}) {
+    const params = await props.params;
+    const subcategory_slug = params.subcategory_slug;
     const productsData = await fetchProducts(subcategory_slug);
     const products = productsData.items ?? [];
 
