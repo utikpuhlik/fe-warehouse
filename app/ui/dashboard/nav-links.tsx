@@ -5,7 +5,8 @@ import {
   HomeIcon,
   DocumentDuplicateIcon,
   ClipboardDocumentListIcon,
-  CurrencyDollarIcon
+  CurrencyDollarIcon,
+  ShoppingCartIcon,
 
 } from '@heroicons/react/24/outline';
 import Link from "next/link";
@@ -23,6 +24,7 @@ const links = [
   },
   { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
   { name: 'Catalogue', href: '/catalogue', icon: ClipboardDocumentListIcon },
+  { name: 'Orders', href: '/orders', icon: ShoppingCartIcon },
   { name: 'Price', href: '/price', icon: CurrencyDollarIcon },
 ];
 
