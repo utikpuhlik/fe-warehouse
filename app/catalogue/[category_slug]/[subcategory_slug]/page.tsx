@@ -2,7 +2,7 @@ import { fetchProducts } from "@/app/lib/data-tcf";
 import { lusitana } from "@/app/ui/fonts";
 import {ProductCard} from "@/app/ui/catalogue/cards";
 
-
+// https://stackoverflow.com/questions/79113322/nextjs-react-type-does-not-satisfy-constraint
 type Params = Promise<{
     category_slug: string;
     subcategory_slug: string;
