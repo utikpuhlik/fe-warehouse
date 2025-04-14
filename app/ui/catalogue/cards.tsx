@@ -13,7 +13,7 @@ export function CategoryCard({title, image_url, slug}: {
     return (
         <div className="rounded-xl bg-gray-50 shadow-sm overflow-hidden">
             <Link href={`/catalogue/${slug}`}>
-            <div className="flex flex-col">
+            <div className="flex flex-col items-center p-4">
                 <Image
                     src={image_url}
                     width={64}
@@ -40,7 +40,7 @@ export function SubCategoryCard({title, image_url, parentSlug, slug}: {
     return (
         <div className="rounded-xl bg-gray-50 shadow-sm overflow-hidden">
             <Link href={`/catalogue/${parentSlug}/${slug}`}>
-            <div className="flex flex-col">
+            <div className="flex flex-col items-center p-4">
                     <Image
                         src={image_url}
                         width={64}
