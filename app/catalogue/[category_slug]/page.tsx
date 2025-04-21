@@ -23,8 +23,8 @@ export default async function SubCategoriesPage(props: {params: Params}) {
                         key={sub.id}
                         title={sub.name}
                         image_url={sub.image_url}
-                        slug={sub.slug}
-                        parentSlug={category_slug}
+                        sub_category_slug={sub.slug}
+                        category_slug={category_slug}
                     />
                 ))}
             </div>

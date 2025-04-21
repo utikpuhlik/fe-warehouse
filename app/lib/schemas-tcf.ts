@@ -1,3 +1,6 @@
+export const imageUrlPlaceholder: string = 'https://chibisafe.eucalytics.uk//REXA2bZVWeZT.webp';
+
+
 export type Category = {
     id: string;
     name: string;
@@ -24,7 +27,7 @@ export type Product = {
     cross_number: string;
     description: string | null;
     image_url: string | null;
-    price_rub: string;
+    price_rub: number;
     super_wholesale_price_rub: string;
     quantity: number;
     sub_category_id: string;

@@ -18,7 +18,7 @@ export default async function Catalogue() {
                         key={category.id}
                         title={category.name}
                         image_url={category.image_url}
-                        slug={category.slug}
+                        category_slug={category.slug}
                     />
                     )
                 )}

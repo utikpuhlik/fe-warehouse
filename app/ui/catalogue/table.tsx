@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { UpdateInvoice, DeleteInvoice } from '@/app/ui/invoices/buttons';
-import { fetchFilteredInvoices } from '@/app/lib/data';
 import {fetchFilteredProductsVS, fetchFilteredProductsWS} from "@/app/lib/data-tcf";
 import {Product, Products} from "@/app/lib/schemas-tcf";
+import { imageUrlPlaceholder } from "@/app/lib/schemas-tcf"
 
 export default async function ProductsTable({
   query,
@@ -21,14 +21,6 @@ export default async function ProductsTable({
   const page: number = data.page;
   const products: Product[] = data.items
 
-  console.log(products)
-
-  products.forEach(p => {
-    if (!p.image_url) {
-      p.image_url = 'https://chibisafe.eucalytics.uk//REXA2bZVWeZT.webp';
-    }
-  });
-
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
@@ -43,7 +35,7 @@ export default async function ProductsTable({
                   <div>
                     <div className="mb-2 flex items-center">
                       <Image
-                        src={product.image_url}
+                        src={product.image_url ?? imageUrlPlaceholder}
                         className="mr-2 rounded-full"
                         width={28}
                         height={28}
@@ -98,7 +90,7 @@ export default async function ProductsTable({
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex items-center gap-3">
                       <Image
-                        src={product.image_url}
+                        src={product.image_url ?? imageUrlPlaceholder}
                         className="rounded-full"
                         width={28}
                         height={28}

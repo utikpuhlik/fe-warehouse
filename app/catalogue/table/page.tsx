@@ -1,6 +1,6 @@
 import { CreateInvoice } from '@/app/ui/catalogue/buttons';
 import { lusitana } from '@/app/ui/fonts';
-import {InvoicesTableSkeleton, ProductsTableSkeleton} from '@/app/ui/skeletons';
+import {ProductsTableSkeleton} from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import Search from "@/app/ui/catalogue/search";
 import Pagination from "@/app/ui/catalogue/pagination";
