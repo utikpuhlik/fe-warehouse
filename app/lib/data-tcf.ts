@@ -1,6 +1,7 @@
 import {Category, Product, Products, SubCategory} from "@/app/lib/schemas-tcf";
 
 const BASE_URL = process.env.API_URL!;
+const ITEMS_PER_PAGE: number = 6
 
 export async function fetchCategories(): Promise<Category[]> {
     try {
@@ -57,9 +58,11 @@ export async function fetchProductById(id: string): Promise<Product> {
     }
 }
 // Wildcard Search
-export async function fetchFilteredProductsWS(search_term: string): Promise<Products> {
+export async function fetchFilteredProductsWS(search_term: string, page: number, size: number = 10): Promise<Products> {
     try {
-        const data = await fetch(`${BASE_URL}/products/search?search_term=${search_term}`);
+        const data = await fetch(
+            `${BASE_URL}/products/search?search_term=${search_term}&size=${size}&page=${page}`
+        );
         return data.json();
 
     } catch (error) {
@@ -68,7 +71,7 @@ export async function fetchFilteredProductsWS(search_term: string): Promise<Prod
     }
 }
 // Text Search
-export async function fetchFilteredProductsTS(search_term: string): Promise<Products> {
+export async function fetchFilteredProductsTS(search_term: string, page: number, size: number = 10): Promise<Products> {
     try {
         const data = await fetch(`${BASE_URL}/products/test_search?search_term=${search_term}`);
         return data.json();
@@ -79,9 +82,11 @@ export async function fetchFilteredProductsTS(search_term: string): Promise<Prod
     }
 }
 // Vector Search
-export async function fetchFilteredProductsVS(search_term: string): Promise<Products> {
+export async function fetchFilteredProductsVS(search_term: string, page: number, size: number = 10): Promise<Products> {
     try {
-        const data = await fetch(`${BASE_URL}/products/vector_search?search_term=${search_term}`);
+        const data = await fetch(
+            `${BASE_URL}/products/vector_search?search_term=${search_term}&size=${size}&page=${page}`
+        );
         return data.json();
 
     } catch (error) {
