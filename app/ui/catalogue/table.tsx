@@ -1,25 +1,13 @@
 import Image from 'next/image';
 import { UpdateInvoice, DeleteInvoice } from '@/app/ui/invoices/buttons';
-import {fetchFilteredProductsVS, fetchFilteredProductsWS} from "@/app/lib/data-tcf";
-import {Product, Products} from "@/app/lib/schemas-tcf";
+import {Product} from "@/app/lib/schemas-tcf";
 import { imageUrlPlaceholder } from "@/app/lib/schemas-tcf"
 
 export default async function ProductsTable({
-  query,
-  currentPage,
+  products
 }: {
-  query: string;
-  currentPage: number;
+  products: Product[]
 }) {
-  // const invoices = await fetchFilteredInvoices(query, currentPage);
-
-  // const data: Products = await fetchFilteredProductsWS(query, currentPage);
-  const data: Products = await fetchFilteredProductsVS(query, currentPage);
-
-  const total: number = data.total;
-  const pages: number = data.pages;
-  const page: number = data.page;
-  const products: Product[] = data.items
 
   return (
     <div className="mt-6 flow-root">

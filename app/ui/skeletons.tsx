@@ -258,6 +258,10 @@ export function ProductsTableSkeleton() {
                         <TableRowSkeleton />
                         <TableRowSkeleton />
                         <TableRowSkeleton />
+                        <TableRowSkeleton />
+                        <TableRowSkeleton />
+                        <TableRowSkeleton />
+                        <TableRowSkeleton />
                         </tbody>
                     </table>
                 </div>

@@ -1,4 +1,4 @@
-import { CreateInvoice } from '@/app/ui/catalogue/buttons';
+import { CreateProduct, DeleteProduct, UpdateProduct } from '@/app/ui/catalogue/buttons';
 import { lusitana } from '@/app/ui/fonts';
 import {ProductsTableSkeleton} from '@/app/ui/skeletons';
 import { Suspense } from 'react';
@@ -6,6 +6,7 @@ import Search from "@/app/ui/catalogue/search";
 import Pagination from "@/app/ui/catalogue/pagination";
 import Table from "@/app/ui/catalogue/table";
 import {fetchFilteredProductsWS, fetchFilteredProductsVS} from "@/app/lib/data-tcf";
+import {Products, zProducts} from "@/app/lib/schemas-tcf";
 
 export default async function Page(props: {
     searchParams?: Promise<{
@@ -16,8 +17,14 @@ export default async function Page(props: {
     const searchParams = await props.searchParams;
     const query = searchParams?.query || '';
     const currentPage = Number(searchParams?.page) || 1;
-    const data = await fetchFilteredProductsWS(query, currentPage);
-    const totalPages = data.pages; {
+
+    const data: Products = zProducts.parse(
+        query
+            ? await fetchFilteredProductsVS(query, currentPage)
+            : await fetchFilteredProductsWS(query, currentPage)
+    );
+
+    const { pages: totalPages, items } = data; {
     return (
         <div className="w-full">
             <div className="flex w-full items-center justify-between">
@@ -25,10 +32,10 @@ export default async function Page(props: {
             </div>
             <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
                 <Search placeholder="Search products..." />
-                <CreateInvoice />
+                <CreateProduct />
             </div>
             <Suspense key={query + currentPage} fallback={<ProductsTableSkeleton />}>
-                <Table query={query} currentPage={currentPage} />
+                <Table products={items} />
             </Suspense>
             <div className="mt-5 flex w-full justify-center">
                  <Pagination totalPages={totalPages} />

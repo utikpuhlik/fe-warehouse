@@ -1,19 +1,23 @@
-import {Category, Product, Products, SubCategory} from "@/app/lib/schemas-tcf";
+import {Category, Product, Products, SubCategory, UserSchema, zUsers} from "@/app/lib/schemas-tcf";
 
 const BASE_URL = process.env.API_URL!;
 const ITEMS_PER_PAGE: number = 6
 
 export async function fetchCategories(): Promise<Category[]> {
     try {
+        const res = await fetch(`${BASE_URL}/categories`, {next: {revalidate: 60}});
+        return res.json();
 
-        console.log('Fetching categories data...');
-        // await new Promise((resolve) => setTimeout(resolve, 3000));
+    } catch (error) {
+        console.error('API Error:', error);
+        throw new Error('Failed to category data.');
+    }
+}
 
-        const data = await fetch(`${BASE_URL}/categories`);
-
-        // console.log('Data fetch completed after 3 seconds.');
-
-        return data.json();
+export async function fetchCategoryBySlug(slug: string): Promise<Category> {
+    try {
+        const res = await fetch(`${BASE_URL}/categories/${slug}`, {next: {revalidate: 60}});
+        return res.json();
 
     } catch (error) {
         console.error('API Error:', error);
@@ -34,12 +38,24 @@ export async function fetchSubCategories(categorySlug: string): Promise<SubCateg
     }
 }
 
+export async function fetchSubCategoryBySlug(slug: string): Promise<Category> {
+    try {
+        const res = await fetch(`${BASE_URL}/sub-categories/${slug}`, {next: {revalidate: 60}});
+        return res.json();
+
+    } catch (error) {
+        console.error('API Error:', error);
+        throw new Error('Failed to sub-category data.');
+    }
+}
+
 export async function fetchProducts(subCategorySlug: string): Promise<Products> {
     try {
 
-        const data = await fetch(`${BASE_URL}/products?sub_category_slug=${subCategorySlug}`);
+        const res = await fetch(`${BASE_URL}/products?sub_category_slug=${subCategorySlug}`,
+            {next: {revalidate: 60}});
 
-        return data.json();
+        return res.json();
 
     } catch (error) {
         console.error('API Error:', error);
@@ -49,8 +65,9 @@ export async function fetchProducts(subCategorySlug: string): Promise<Products> 
 
 export async function fetchProductById(id: string): Promise<Product> {
     try {
-        const data = await fetch(`${BASE_URL}/products/${id}`);
-        return data.json();
+        const res = await fetch(`${BASE_URL}/products/${id}`,
+            {next: {revalidate: 60}});
+        return res.json();
 
     } catch (error) {
         console.error('API Error:', error);
@@ -60,10 +77,11 @@ export async function fetchProductById(id: string): Promise<Product> {
 // Wildcard Search
 export async function fetchFilteredProductsWS(search_term: string, page: number, size: number = 10): Promise<Products> {
     try {
-        const data = await fetch(
-            `${BASE_URL}/products/search?search_term=${search_term}&size=${size}&page=${page}`
+        const res = await fetch(
+            `${BASE_URL}/products/search?search_term=${search_term}&size=${size}&page=${page}`,
+            {next: {revalidate: 60}}
         );
-        return data.json();
+        return res.json();
 
     } catch (error) {
         console.error('API Error:', error);
@@ -73,8 +91,8 @@ export async function fetchFilteredProductsWS(search_term: string, page: number,
 // Text Search
 export async function fetchFilteredProductsTS(search_term: string, page: number, size: number = 10): Promise<Products> {
     try {
-        const data = await fetch(`${BASE_URL}/products/test_search?search_term=${search_term}`);
-        return data.json();
+        const res = await fetch(`${BASE_URL}/products/test_search?search_term=${search_term}`);
+        return res.json();
 
     } catch (error) {
         console.error('API Error:', error);
@@ -84,13 +102,30 @@ export async function fetchFilteredProductsTS(search_term: string, page: number,
 // Vector Search
 export async function fetchFilteredProductsVS(search_term: string, page: number, size: number = 10): Promise<Products> {
     try {
-        const data = await fetch(
-            `${BASE_URL}/products/vector_search?search_term=${search_term}&size=${size}&page=${page}`
+        const res = await fetch(
+            `${BASE_URL}/products/vector_search?search_term=${search_term}&size=${size}&page=${page}`,
+            {next: {revalidate: 60}}
         );
-        return data.json();
+        return res.json();
 
     } catch (error) {
         console.error('API Error:', error);
         throw new Error('Failed to products data.');
     }
 }
+
+
+export async function fetchUsers(role: string | null = null): Promise<UserSchema[]> {
+    const url = role ? `${BASE_URL}/users?role=${role}` : `${BASE_URL}/users`;
+
+    // ? Fetch Caching in NextJS for 60 sec:
+    const res = await fetch(url, {next: {revalidate: 60}});
+    if (!res.ok) throw new Error(`Network error ${res.status}`);
+
+    const json = await res.json();
+
+    // 🔒 Runtime validation
+    return zUsers.parse(json);
+}
+
+// export async function createProduct()
