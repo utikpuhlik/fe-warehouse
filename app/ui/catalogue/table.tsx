@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import { UpdateInvoice, DeleteInvoice } from '@/app/ui/invoices/buttons';
 import {Product} from "@/app/lib/schemas-tcf";
 import { imageUrlPlaceholder } from "@/app/lib/schemas-tcf"
+import {DeleteProduct, UpdateProduct} from "@/app/ui/catalogue/buttons";
 
 export default async function ProductsTable({
   products
@@ -42,8 +42,8 @@ export default async function ProductsTable({
                     <p>{product.id}</p>
                   </div>
                   <div className="flex justify-end gap-2">
-                    <UpdateInvoice id={product.id} />
-                    <DeleteInvoice id={product.id} />
+                    <UpdateProduct id={product.id} />
+                    <DeleteProduct id={product.id} />
                   </div>
                 </div>
               </div>
@@ -98,8 +98,8 @@ export default async function ProductsTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      <UpdateInvoice id={product.id} />
-                      <DeleteInvoice id={product.id} />
+                      <UpdateProduct id={product.id} />
+                      <DeleteProduct id={product.id} />
                     </div>
                   </td>
                 </tr>

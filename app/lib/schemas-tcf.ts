@@ -3,6 +3,43 @@ import { z } from 'zod';
 
 export const imageUrlPlaceholder: string = 'https://chibisafe.eucalytics.uk//REXA2bZVWeZT.webp';
 
+export const zProductPostSchema = z.object({
+    address_id: z.string().nullable(),
+    name: z.string(),
+    brand: z.string(),
+    manufacturer_number: z.string(),
+    cross_number: z.string().nullable(),
+    description: z.string().nullable(),
+    image_url: z.string().url().nullable(),
+    price_rub: z.number().nonnegative(),
+    super_wholesale_price_rub: z.number().nonnegative(),
+    quantity: z.number().int(),
+    sub_category_id: z.string(),
+    sub_category_slug: z.string(),
+})
+
+export const zProductPutSchema = z.object({
+    address_id: z.string().nullable(),
+    name: z.string({
+        invalid_type_error: 'Название не может быть пустым',
+    }),
+    brand: z.string({
+        invalid_type_error: 'Бренд не может быть пустым',
+    }),
+    manufacturer_number: z.string({
+        invalid_type_error: 'Номер производителя не может быть пустым',
+    }),
+    cross_number: z.string().nullable(),
+    description: z.string().nullable(),
+    image_url: z.string().url().nullable(),
+    price_rub: z.number().nonnegative({
+        message: 'Цена не может быть меньше нуля',
+    }),
+    super_wholesale_price_rub: z.number().nonnegative({
+        message: 'Цена не может быть меньше нуля',
+    }),
+    quantity: z.number().int(),
+})
 
 export const zProduct = z.object({
     id: z.string().uuid(),
@@ -15,10 +52,8 @@ export const zProduct = z.object({
     description: z.string().nullable(),
     image_url: z.string().url().nullable(),
     price_rub: z.number().nonnegative(),
-    super_wholesale_price_rub: z.coerce.string(),
+    super_wholesale_price_rub: z.number().nonnegative(),
     quantity: z.number().int(),
-    sub_category_id: z.string(),
-    sub_category_slug: z.string(),
 });
 
 export const zProducts = z.object({
@@ -26,7 +61,7 @@ export const zProducts = z.object({
     total: z.number().int().nonnegative(),
     page: z.number().int().positive(),
     size: z.number().int().positive(),
-    pages: z.number().int().positive(),
+    pages: z.number().int().nonnegative(),
 });
 
 export const zCategory = z.object({
@@ -64,6 +99,8 @@ export const zUser = z.object({
 export const zUsers = z.array(zUser);
 
 /** TypeScript helper */
+export type ProductPutSchema = z.infer<typeof zProductPutSchema>
+export type ProductPostSchema = z.infer<typeof zProductPostSchema>
 export type Product = z.infer<typeof zProduct>;
 export type Products = z.infer<typeof zProducts>;
 

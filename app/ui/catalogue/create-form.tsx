@@ -1,8 +1,9 @@
-import { UserCircleIcon, ListBulletIcon, CurrencyDollarIcon } from '@heroicons/react/24/outline';
+'use client';
+
 
 import IconInput from "@/app/components/form/IconInput";
 import IconSelect from "@/app/components/form/IconSelect";
-import {createProduct} from "@/app/lib/actions-tcf";
+import {createProductAction} from "@/app/lib/actions-tcf";
 import Link from "next/link";
 import {Button} from "@/app/ui/button";
 import {productFields} from "@/app/lib/form/productFields";
@@ -10,7 +11,7 @@ import { UserSchema, Category } from "@/app/lib/schemas-tcf";
 
 export default function Form({ employees, categories }: { employees: UserSchema[], categories: Category[]}) {
   return (
-      <form action={createProduct}>
+      <form action={createProductAction}>
         <div className="rounded-md bg-gray-50 p-4 md:p-6">
           {/* Selects */}
           <IconSelect

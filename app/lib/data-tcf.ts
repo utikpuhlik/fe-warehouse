@@ -1,4 +1,13 @@
-import {Category, Product, Products, SubCategory, UserSchema, zUsers} from "@/app/lib/schemas-tcf";
+import {
+    Category,
+    Product,
+    ProductPostSchema,
+    ProductPutSchema,
+    Products,
+    SubCategory,
+    UserSchema, zProduct,
+    zUsers
+} from "@/app/lib/schemas-tcf";
 
 const BASE_URL = process.env.API_URL!;
 const ITEMS_PER_PAGE: number = 6
@@ -16,7 +25,7 @@ export async function fetchCategories(): Promise<Category[]> {
 
 export async function fetchCategoryBySlug(slug: string): Promise<Category> {
     try {
-        const res = await fetch(`${BASE_URL}/categories/${slug}`, {next: {revalidate: 60}});
+        const res = await fetch(`${BASE_URL}/category/${slug}`, {next: {revalidate: 60}});
         return res.json();
 
     } catch (error) {
@@ -28,7 +37,8 @@ export async function fetchCategoryBySlug(slug: string): Promise<Category> {
 export async function fetchSubCategories(categorySlug: string): Promise<SubCategory[]> {
     try {
 
-        const data = await fetch(`${BASE_URL}/sub-categories?category_slug=${categorySlug}`);
+        const data = await fetch(`${BASE_URL}/sub-categories?category_slug=${categorySlug}`,
+            {next: {revalidate: 60}});
 
         return data.json();
 
@@ -40,7 +50,7 @@ export async function fetchSubCategories(categorySlug: string): Promise<SubCateg
 
 export async function fetchSubCategoryBySlug(slug: string): Promise<Category> {
     try {
-        const res = await fetch(`${BASE_URL}/sub-categories/${slug}`, {next: {revalidate: 60}});
+        const res = await fetch(`${BASE_URL}/sub-category/${slug}`, {next: {revalidate: 60}});
         return res.json();
 
     } catch (error) {
@@ -65,8 +75,7 @@ export async function fetchProducts(subCategorySlug: string): Promise<Products> 
 
 export async function fetchProductById(id: string): Promise<Product> {
     try {
-        const res = await fetch(`${BASE_URL}/products/${id}`,
-            {next: {revalidate: 60}});
+        const res = await fetch(`${BASE_URL}/product/${id}`);
         return res.json();
 
     } catch (error) {
@@ -128,4 +137,51 @@ export async function fetchUsers(role: string | null = null): Promise<UserSchema
     return zUsers.parse(json);
 }
 
-// export async function createProduct()
+export async function createProduct(product: ProductPostSchema): Promise<Product> {
+    const res = await fetch(`${BASE_URL}/product`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(product)
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to create product: ${res.status}`);
+    }
+
+    const json = await res.json();
+
+    return zProduct.parse(json);
+}
+
+export async function putProduct(id: string, product: ProductPutSchema): Promise<number> {
+    const res = await fetch(`${BASE_URL}/product/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(product)
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to update product: ${res.status}`);
+    }
+
+    return res.status;
+}
+
+export async function delProduct(id: string): Promise<number> {
+    const res = await fetch(`${BASE_URL}/product/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to delete product: ${res.status}`);
+    }
+
+    return res.status;
+}

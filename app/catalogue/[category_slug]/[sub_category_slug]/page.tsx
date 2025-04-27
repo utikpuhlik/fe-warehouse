@@ -15,8 +15,10 @@ export default async function Page(props: {params: Params}) {
     const category_slug = params.category_slug;
     const sub_category_slug = params.sub_category_slug;
 
-    const category = await fetchCategoryBySlug(category_slug);
-    const sub_category = await fetchSubCategoryBySlug(sub_category_slug);
+    const [category, sub_category] = await Promise.all([
+        fetchCategoryBySlug(category_slug),
+        fetchSubCategoryBySlug(sub_category_slug)
+    ])
 
     const productsData = await fetchProducts(sub_category_slug);
     const products = productsData.items ?? [];
