@@ -72,6 +72,16 @@ export const zCategory = z.object({
 	image_url: z.string(),
 });
 
+export const zCategoryPostSchema = z.object({
+	name: z.string(),
+	image_url: z.string().url()
+})
+
+export const zCategoryPutSchema = z.object({
+	name: z.string(),
+	image_url: z.string().url()
+})
+
 export const zSubCategory = z.object({
 	id: z.string(),
 	name: z.string(),
@@ -105,6 +115,8 @@ export type ProductPostSchema = z.infer<typeof zProductPostSchema>;
 export type Product = z.infer<typeof zProduct>;
 export type Products = z.infer<typeof zProducts>;
 
+export type CategoryPostSchema = z.infer<typeof zCategoryPostSchema>;
+export type CategoryPutSchema = z.infer<typeof zCategoryPutSchema>;
 export type Category = z.infer<typeof zCategory>;
 export type SubCategory = z.infer<typeof zSubCategory>;
 

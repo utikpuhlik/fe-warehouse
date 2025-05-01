@@ -1,3 +1,5 @@
+import { Skeleton } from "@/components/ui/skeleton";
+
 // Loading animation
 const shimmer =
 	"before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent";
@@ -13,6 +15,23 @@ export function CardSkeleton() {
 			</div>
 			<div className="flex items-center justify-center truncate rounded-xl bg-white px-4 py-8">
 				<div className="h-7 w-20 rounded-md bg-gray-200" />
+			</div>
+		</div>
+	);
+}
+
+export function CardSkeletonV2() {
+	return (
+		<div className="relative overflow-hidden rounded-xl border bg-background p-4 shadow-sm">
+			{/* Header */}
+			<div className="flex items-center space-x-2 mb-4">
+				<Skeleton className="h-6 w-6 rounded-md" />
+				<Skeleton className="h-6 w-20 rounded-md" />
+			</div>
+
+			{/* Content block */}
+			<div className="flex items-center justify-center rounded-xl bg-muted px-4 py-10">
+				<Skeleton className="h-6 w-24 rounded-md" />
 			</div>
 		</div>
 	);

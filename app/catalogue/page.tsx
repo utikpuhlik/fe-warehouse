@@ -14,9 +14,10 @@ export default async function Catalogue() {
 				{categories.map((category) => (
 					<CategoryCard
 						key={category.id}
-						title={category.name}
+						name={category.name}
 						image_url={category.image_url}
 						category_slug={category.slug}
+						category_id={category.id}
 					/>
 				))}
 			</div>
