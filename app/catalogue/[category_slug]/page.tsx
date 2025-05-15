@@ -1,6 +1,8 @@
-import { fetchCategoryBySlug, fetchSubCategories } from "@/app/lib/data-tcf";
+
 import { SubCategoryCard } from "@/app/ui/catalogue/cards";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
+import {fetchCategoryBySlug} from "@/app/lib/apis/categoryApi";
+import {fetchSubCategories} from "@/app/lib/apis/subCategoryApi";
 
 type Params = Promise<{
 	category_slug: string;

@@ -1,5 +1,5 @@
-import type { Product } from "@/app/lib/schemas-tcf";
-import { imageUrlPlaceholder } from "@/app/lib/schemas-tcf";
+import type { Product } from "@/app/lib/schemas/categorySchema";
+import { imageUrlPlaceholder } from "@/app/lib/schemas/categorySchema";
 import { DeleteProduct, UpdateProduct } from "@/app/ui/catalogue/buttons";
 import Image from "next/image";
 

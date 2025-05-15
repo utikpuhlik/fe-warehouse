@@ -1,7 +1,7 @@
 "use server";
 
-import {createCategory, createProduct, delProduct, putCategory, putProduct} from "@/app/lib/data-tcf";
-import {type CategoryPostSchema, CategoryPutSchema, zProductPostSchema, zProductPutSchema} from "@/app/lib/schemas-tcf";
+import {createCategory, createProduct, delProduct, putCategory, putProduct} from "@/app/lib/apis/userApi";
+import {type CategoryPostSchema, CategoryPutSchema, zProductPostSchema, zProductPutSchema} from "@/app/lib/schemas/categorySchema";
 import {revalidatePath} from "next/cache";
 import {redirect} from "next/navigation";
 

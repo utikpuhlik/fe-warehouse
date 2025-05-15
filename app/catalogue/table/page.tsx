@@ -1,8 +1,8 @@
 import {
 	fetchFilteredProductsVS,
 	fetchFilteredProductsWS,
-} from "@/app/lib/data-tcf";
-import { type Products, zProducts } from "@/app/lib/schemas-tcf";
+} from "@/app/lib/apis/userApi";
+import { type Products, zProducts } from "@/app/lib/schemas/categorySchema";
 import { CreateProduct } from "@/app/ui/catalogue/buttons";
 import Pagination from "@/app/ui/catalogue/pagination";
 import Search from "@/app/ui/catalogue/search";

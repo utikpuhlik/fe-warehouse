@@ -1,5 +1,5 @@
-import { fetchCategories } from "@/app/lib/data-tcf";
-import type { Category } from "@/app/lib/schemas-tcf";
+import { fetchCategories } from "@/app/lib/apis/userApi";
+import type { Category } from "@/app/lib/schemas/categorySchema";
 import { CategoryCard } from "@/app/ui/catalogue/cards";
 import { lusitana } from "@/app/ui/fonts";
 

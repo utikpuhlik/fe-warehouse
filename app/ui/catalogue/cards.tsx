@@ -1,6 +1,7 @@
 "use client"
 
-import {type CategoryPutSchema, imageUrlPlaceholder} from "@/app/lib/schemas-tcf";
+
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,8 +10,9 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Pencil } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {EditCategoryDialog} from "@/app/ui/catalogue/category/edit-category-dialog";
-import {putCategory} from "@/app/lib/data-tcf";
 import {updateCategoryAction} from "@/app/lib/actions-tcf";
+import {imageUrlPlaceholder} from "@/app/lib/config/config";
+import {type CategoryPutSchema} from "@/app/lib/schemas/categorySchema";
 
 type CategoryCardProps = {
 	name: string
@@ -87,18 +89,12 @@ export function ProductCard({
 	id,
 	name,
 	image_url,
-	price_rub,
-	brand,
-	manufacturer_number,
 	category_slug,
 	sub_category_slug,
 }: {
 	id: string;
 	name: string;
 	image_url: string | null;
-	price_rub: number;
-	brand: string;
-	manufacturer_number: string;
 	category_slug: string;
 	sub_category_slug: string;
 }) {
@@ -114,18 +110,13 @@ export function ProductCard({
 						className="object-contain mb-2"
 					/>
 					<h3 className="text-center text-sm font-medium mb-1">{name}</h3>
-					<p className="text-xs text-gray-500">{brand}</p>
-					<p className="text-xs text-gray-400 mb-2">{manufacturer_number}</p>
-					<span className="text-sm font-semibold text-green-700">
-						{Number(price_rub).toFixed(0)} ₽
-					</span>
 				</div>
 			</Link>
 		</div>
 	);
 }
 
-export function ProductDetailCard({
+export function OfferCard({
 	name,
 	image_url,
 	price_rub,

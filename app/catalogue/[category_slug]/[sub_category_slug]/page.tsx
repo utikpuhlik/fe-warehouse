@@ -2,7 +2,7 @@ import {
 	fetchCategoryBySlug,
 	fetchProducts,
 	fetchSubCategoryBySlug,
-} from "@/app/lib/data-tcf";
+} from "@/app/lib/apis/userApi";
 import { ProductCard } from "@/app/ui/catalogue/cards";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
 

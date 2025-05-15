@@ -1,6 +1,6 @@
 "use client";
 import { updateProductAction } from "@/app/lib/actions-tcf";
-import type { ProductPutSchema, UserSchema } from "@/app/lib/schemas-tcf";
+import type { ProductPutSchema, UserSchema } from "@/app/lib/schemas/categorySchema";
 import { Button } from "@/app/ui/button";
 import {
 	CurrencyDollarIcon,

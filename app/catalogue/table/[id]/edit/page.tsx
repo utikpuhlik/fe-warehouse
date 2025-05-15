@@ -1,4 +1,4 @@
-import { fetchProductById, fetchUsers } from "@/app/lib/data-tcf";
+import { fetchProductById, fetchUsers } from "@/app/lib/apis/userApi";
 import Form from "@/app/ui/catalogue/edit-form";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
 import { notFound } from "next/navigation";

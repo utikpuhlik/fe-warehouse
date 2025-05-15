@@ -4,7 +4,7 @@ import IconInput from "@/app/components/form/IconInput";
 import IconSelect from "@/app/components/form/IconSelect";
 import { createProductAction } from "@/app/lib/actions-tcf";
 import { productFields } from "@/app/lib/form/productFields";
-import type { Category, UserSchema } from "@/app/lib/schemas-tcf";
+import type { Category, UserSchema } from "@/app/lib/schemas/categorySchema";
 import { Button } from "@/app/ui/button";
 import Link from "next/link";
 
