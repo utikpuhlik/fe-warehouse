@@ -1,6 +1,5 @@
-import {
-    type SubCategory,
-    zSubCategory
+import type {
+    SubCategory
 } from "@/app/lib/schemas/subCategorySchema";
 import {BASE_URL} from "@/app/lib/config/config";
 

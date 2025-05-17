@@ -4,7 +4,6 @@ import type { ProductPutSchema } from "@/app/lib/schemas/productSchema";
 import type { UserSchema } from "@/app/lib/schemas/userSchema";
 import { Button } from "@/app/ui/button";
 import {
-	CurrencyDollarIcon,
 	UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import { Icon } from "@radix-ui/react-select";

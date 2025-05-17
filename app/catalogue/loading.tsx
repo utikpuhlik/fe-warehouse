@@ -1,5 +1,5 @@
 import { lusitana } from "@/app/ui/fonts";
-import {CardSkeleton, CardSkeletonV2} from "@/app/ui/skeletons";
+import {CardSkeletonV2} from "@/app/ui/skeletons";
 
 export default function Loading() {
 	return (
