@@ -1,10 +1,9 @@
-import {
-	fetchCategoryBySlug,
-	fetchProducts,
-	fetchSubCategoryBySlug,
-} from "@/app/lib/apis/userApi";
-import { ProductCard } from "@/app/ui/catalogue/cards";
+import { ProductCard } from "@/app/ui/catalogue/cards/product-card";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
+import {fetchCategoryBySlug} from "@/app/lib/apis/categoryApi";
+import {fetchSubCategoryBySlug} from "@/app/lib/apis/subCategoryApi";
+import { fetchProducts } from "@/app/lib/apis/productApi";
+import type {Product, Products} from "@/app/lib/schemas/productSchema";
 
 // https://stackoverflow.com/questions/79113322/nextjs-react-type-does-not-satisfy-constraint
 type Params = Promise<{
@@ -22,8 +21,8 @@ export default async function Page(props: { params: Params }) {
 		fetchSubCategoryBySlug(sub_category_slug),
 	]);
 
-	const productsData = await fetchProducts(sub_category_slug);
-	const products = productsData.items ?? [];
+	const productsData: Products = await fetchProducts(sub_category_slug);
+	const products: Product[] = productsData.items ?? [];
 
 	return (
 		<main>

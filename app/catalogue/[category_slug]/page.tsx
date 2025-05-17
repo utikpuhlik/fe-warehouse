@@ -1,5 +1,5 @@
 
-import { SubCategoryCard } from "@/app/ui/catalogue/cards";
+import { SubCategoryCard } from "@/app/ui/catalogue/cards/sub-category-card";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
 import {fetchCategoryBySlug} from "@/app/lib/apis/categoryApi";
 import {fetchSubCategories} from "@/app/lib/apis/subCategoryApi";

@@ -1,7 +1,7 @@
-"use server";
+"use server"
 
-import {createCategory, createProduct, delProduct, putCategory, putProduct} from "@/app/lib/apis/userApi";
-import {type CategoryPostSchema, CategoryPutSchema, zProductPostSchema, zProductPutSchema} from "@/app/lib/schemas/categorySchema";
+import {zProductPostSchema, zProductPutSchema} from "@/app/lib/schemas/productSchema";
+import {createProduct, delProduct, putProduct} from "@/app/lib/apis/productApi";
 import {revalidatePath} from "next/cache";
 import {redirect} from "next/navigation";
 
@@ -73,18 +73,4 @@ export async function deleteProductAction(id: string): Promise<void> {
     await delProduct(id);
 
     revalidatePath("/catalogue/table");
-}
-
-
-export async function createCategoryAction(category: CategoryPostSchema): Promise<void> {
-    await createCategory(category)
-
-    revalidatePath("/catalogue");
-    redirect("/catalogue");
-}
-
-export async function updateCategoryAction(category_id: string, category: CategoryPutSchema): Promise<void> {
-    await putCategory(category_id, category)
-    revalidatePath("/catalogue");
-
 }

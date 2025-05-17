@@ -1,5 +1,4 @@
 import {z} from "zod";
-import {zProduct} from "@/app/lib/schemas/productSchema";
 
 export const zOfferBaseSchema = z.object({
     brand: z.string({
@@ -16,6 +15,7 @@ export const zOfferBaseSchema = z.object({
         message: "Цена не может быть меньше нуля",
     }),
     quantity: z.number().int(),
+    image_url: z.string().url().nullable(),
 })
 
 export const zOfferSchema = zOfferBaseSchema.extend({

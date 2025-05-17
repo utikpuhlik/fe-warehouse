@@ -1,6 +1,7 @@
 "use client";
-import { updateProductAction } from "@/app/lib/actions-tcf";
-import type { ProductPutSchema, UserSchema } from "@/app/lib/schemas/categorySchema";
+import { updateProductAction } from "@/app/lib/actions/productAction";
+import type { ProductPutSchema } from "@/app/lib/schemas/productSchema";
+import type { UserSchema } from "@/app/lib/schemas/userSchema";
 import { Button } from "@/app/ui/button";
 import {
 	CurrencyDollarIcon,
@@ -95,47 +96,47 @@ export default function EditProductForm({
 				</div>
 
 				{/* Product Brand */}
-				<div className="mb-4">
-					<label htmlFor="brand" className="mb-2 block text-sm font-medium">
-						Enter a Brand
-					</label>
-					<div className="relative mt-2 rounded-md">
-						<div className="relative">
-							<input
-								id="brand"
-								name="brand"
-								type="text"
-								defaultValue={product.brand}
-								placeholder="Enter the brand"
-								className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-							/>
-							<Icon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-						</div>
-					</div>
-				</div>
+				{/*<div className="mb-4">*/}
+				{/*	<label htmlFor="brand" className="mb-2 block text-sm font-medium">*/}
+				{/*		Enter a Brand*/}
+				{/*	</label>*/}
+				{/*	<div className="relative mt-2 rounded-md">*/}
+				{/*		<div className="relative">*/}
+				{/*			<input*/}
+				{/*				id="brand"*/}
+				{/*				name="brand"*/}
+				{/*				type="text"*/}
+				{/*				defaultValue={product.brand}*/}
+				{/*				placeholder="Enter the brand"*/}
+				{/*				className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"*/}
+				{/*			/>*/}
+				{/*			<Icon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />*/}
+				{/*		</div>*/}
+				{/*	</div>*/}
+				{/*</div>*/}
 
 				{/* Product manufacturer_numbe */}
-				<div className="mb-4">
-					<label
-						htmlFor="manufacturer_number"
-						className="mb-2 block text-sm font-medium"
-					>
-						Enter a manufacturer_number
-					</label>
-					<div className="relative mt-2 rounded-md">
-						<div className="relative">
-							<input
-								id="manufacturer_number"
-								name="manufacturer_number"
-								type="text"
-								defaultValue={product.manufacturer_number}
-								placeholder="Enter the manufacturer_number"
-								className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-							/>
-							<Icon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-						</div>
-					</div>
-				</div>
+				{/*<div className="mb-4">*/}
+				{/*	<label*/}
+				{/*		htmlFor="manufacturer_number"*/}
+				{/*		className="mb-2 block text-sm font-medium"*/}
+				{/*	>*/}
+				{/*		Enter a manufacturer_number*/}
+				{/*	</label>*/}
+				{/*	<div className="relative mt-2 rounded-md">*/}
+				{/*		<div className="relative">*/}
+				{/*			<input*/}
+				{/*				id="manufacturer_number"*/}
+				{/*				name="manufacturer_number"*/}
+				{/*				type="text"*/}
+				{/*				defaultValue={product.manufacturer_number}*/}
+				{/*				placeholder="Enter the manufacturer_number"*/}
+				{/*				className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"*/}
+				{/*			/>*/}
+				{/*			<Icon className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />*/}
+				{/*		</div>*/}
+				{/*	</div>*/}
+				{/*</div>*/}
 
 				{/* Product cross_number */}
 				<div className="mb-4">
@@ -204,70 +205,70 @@ export default function EditProductForm({
 				</div>
 
 				{/* Invoice price_rub */}
-				<div className="mb-4">
-					<label htmlFor="price_rub" className="mb-2 block text-sm font-medium">
-						Choose an price_rub
-					</label>
-					<div className="relative mt-2 rounded-md">
-						<div className="relative">
-							<input
-								id="price_rub"
-								name="price_rub"
-								type="number"
-								step="1"
-								defaultValue={product.price_rub}
-								placeholder="Enter RUB amount"
-								className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-							/>
-							<CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-						</div>
-					</div>
-				</div>
+				{/*<div className="mb-4">*/}
+				{/*	<label htmlFor="price_rub" className="mb-2 block text-sm font-medium">*/}
+				{/*		Choose an price_rub*/}
+				{/*	</label>*/}
+				{/*	<div className="relative mt-2 rounded-md">*/}
+				{/*		<div className="relative">*/}
+				{/*			<input*/}
+				{/*				id="price_rub"*/}
+				{/*				name="price_rub"*/}
+				{/*				type="number"*/}
+				{/*				step="1"*/}
+				{/*				defaultValue={product.price_rub}*/}
+				{/*				placeholder="Enter RUB amount"*/}
+				{/*				className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"*/}
+				{/*			/>*/}
+				{/*			<CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />*/}
+				{/*		</div>*/}
+				{/*	</div>*/}
+				{/*</div>*/}
 
 				{/* Invoice super_wholesale_price_rub */}
-				<div className="mb-4">
-					<label
-						htmlFor="super_wholesale_price_rub"
-						className="mb-2 block text-sm font-medium"
-					>
-						Choose an super_wholesale_price_rub
-					</label>
-					<div className="relative mt-2 rounded-md">
-						<div className="relative">
-							<input
-								id="super_wholesale_price_rub"
-								name="super_wholesale_price_rub"
-								type="number"
-								step="1"
-								defaultValue={product.super_wholesale_price_rub}
-								placeholder="Enter RUB amount"
-								className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-							/>
-							<CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-						</div>
-					</div>
-				</div>
+				{/*<div className="mb-4">*/}
+				{/*	<label*/}
+				{/*		htmlFor="super_wholesale_price_rub"*/}
+				{/*		className="mb-2 block text-sm font-medium"*/}
+				{/*	>*/}
+				{/*		Choose an super_wholesale_price_rub*/}
+				{/*	</label>*/}
+				{/*	<div className="relative mt-2 rounded-md">*/}
+				{/*		<div className="relative">*/}
+				{/*			<input*/}
+				{/*				id="super_wholesale_price_rub"*/}
+				{/*				name="super_wholesale_price_rub"*/}
+				{/*				type="number"*/}
+				{/*				step="1"*/}
+				{/*				defaultValue={product.super_wholesale_price_rub}*/}
+				{/*				placeholder="Enter RUB amount"*/}
+				{/*				className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"*/}
+				{/*			/>*/}
+				{/*			<CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />*/}
+				{/*		</div>*/}
+				{/*	</div>*/}
+				{/*</div>*/}
 
 				{/* Invoice quantity */}
-				<div className="mb-4">
-					<label htmlFor="quantity" className="mb-2 block text-sm font-medium">
-						Choose an quantity
-					</label>
-					<div className="relative mt-2 rounded-md">
-						<div className="relative">
-							<input
-								id="quantity"
-								name="quantity"
-								type="number"
-								step="1"
-								defaultValue={product.quantity}
-								placeholder="Enter quantity"
-								className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-							/>
-							<CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-						</div>
-					</div>
-				</div>
+				{/*<div className="mb-4">*/}
+				{/*	<label htmlFor="quantity" className="mb-2 block text-sm font-medium">*/}
+				{/*		Choose an quantity*/}
+				{/*	</label>*/}
+				{/*	<div className="relative mt-2 rounded-md">*/}
+				{/*		<div className="relative">*/}
+				{/*			<input*/}
+				{/*				id="quantity"*/}
+				{/*				name="quantity"*/}
+				{/*				type="number"*/}
+				{/*				step="1"*/}
+				{/*				defaultValue={product.quantity}*/}
+				{/*				placeholder="Enter quantity"*/}
+				{/*				className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"*/}
+				{/*			/>*/}
+				{/*			<CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />*/}
+				{/*		</div>*/}
+				{/*	</div>*/}
+				{/*</div>*/}
 			</div>
 			<div className="mt-6 flex justify-end gap-4">
 				<Link

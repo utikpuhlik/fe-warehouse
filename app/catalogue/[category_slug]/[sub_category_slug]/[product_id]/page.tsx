@@ -1,7 +1,12 @@
 
-import {OfferCard} from "@/app/ui/catalogue/cards";
+import {OfferCard} from "@/app/ui/catalogue/cards/offer-card";
 import { lusitana } from "@/app/ui/fonts";
 import {fetchProductById} from "@/app/lib/apis/productApi";
+import {fetchCategoryBySlug} from "@/app/lib/apis/categoryApi";
+import {fetchSubCategoryBySlug} from "@/app/lib/apis/subCategoryApi";
+import {fetchOffersByProductId} from "@/app/lib/apis/offerApi";
+import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
+import type {OfferSchema, OffersSchema} from "@/app/lib/schemas/offerSchema";
 
 // https://stackoverflow.com/questions/79113322/nextjs-react-type-does-not-satisfy-constraint
 type Params = Promise<{
@@ -13,16 +18,47 @@ type Params = Promise<{
 export default async function Page(props: { params: Params }) {
 	const params = await props.params;
 	const product_id = params.product_id;
+	const category_slug = params.category_slug;
+	const sub_category_slug = params.sub_category_slug;
 
-	const productData = await fetchProductById(product_id);
+	const [category, sub_category, product] = await Promise.all([
+		fetchCategoryBySlug(category_slug),
+		fetchSubCategoryBySlug(sub_category_slug),
+		fetchProductById(product_id)
+	]);
+
+	const offersData: OffersSchema = await fetchOffersByProductId(product_id);
+	const offers: OfferSchema[] = offersData.items ?? [];
 
 	return (
 		<main>
-			<h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-				Product: {productData.name}
-			</h1>
-			<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
-				<OfferCard key={product_id} {...productData} />
+			<Breadcrumbs
+				breadcrumbs={[
+					{ label: "Каталог", href: "/catalogue" },
+					{
+						label: category.name,
+						href: `/catalogue/${category_slug}`,
+						active: true,
+					},
+					{
+						label: sub_category.name,
+						href: `/catalogue/${category_slug}/${sub_category_slug}`,
+						active: true,
+					},
+					{
+						label: product.name,
+						href: `/catalogue/${category_slug}/${sub_category_slug}/${product_id}`,
+						active: true,
+					},
+				]}
+			/>
+			<div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-1">
+				{offers.map((offer) => (
+					<OfferCard
+						key={offer.id}
+						{...offer}
+					/>
+				))}
 			</div>
 		</main>
 	);

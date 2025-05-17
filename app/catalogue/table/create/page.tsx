@@ -1,6 +1,7 @@
-import { fetchCategories, fetchUsers } from "@/app/lib/apis/userApi";
 import Form from "@/app/ui/catalogue/create-form";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
+import {fetchUsers} from "@/app/lib/apis/userApi";
+import {fetchCategories} from "@/app/lib/apis/categoryApi";
 
 export default async function Page() {
 	const employees = await fetchUsers("employee");
