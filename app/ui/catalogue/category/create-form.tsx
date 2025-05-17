@@ -16,6 +16,7 @@ import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 
 import {createCategoryAction} from "@/app/lib/actions/categoryAction";
+import {Label} from "@/components/ui/label";
 
 const formSchema = z.object({
     name: z.string().min(2, {
@@ -23,7 +24,7 @@ const formSchema = z.object({
     }),
     image_url: z.string().url({
         message: "Not valid URL format"
-    })
+    }),
 })
 
 
@@ -75,6 +76,10 @@ export function CategoryForm() {
 
                     )}
                 />
+                <div className="grid w-full max-w-sm items-center gap-1.5">
+                    <Label htmlFor="picture">Picture</Label>
+                    <Input id="picture" type="file" />
+                </div>
                 <Button type="submit">Submit</Button>
             </form>
         </Form>

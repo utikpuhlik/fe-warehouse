@@ -1,7 +1,7 @@
-import type { Product } from "@/app/lib/schemas/categorySchema";
-import { imageUrlPlaceholder } from "@/app/lib/schemas/categorySchema";
+import type { Product } from "@/app/lib/schemas/productSchema";
 import { DeleteProduct, UpdateProduct } from "@/app/ui/catalogue/buttons";
 import Image from "next/image";
+import {imageUrlPlaceholder} from "@/app/lib/config/config";
 
 export default async function ProductsTable({
 	products,
@@ -35,7 +35,7 @@ export default async function ProductsTable({
 								</div>
 								<div className="flex w-full items-center justify-between pt-4">
 									<div>
-										<p className="text-xl font-medium">{product.quantity}</p>
+										{/*<p className="text-xl font-medium">{product.quantity}</p>*/}
 										<p>{product.id}</p>
 									</div>
 									<div className="flex justify-end gap-2">
@@ -52,15 +52,15 @@ export default async function ProductsTable({
 								<th scope="col" className="px-4 py-5 font-medium sm:pl-6">
 									Name
 								</th>
-								<th scope="col" className="px-3 py-5 font-medium">
-									Brand
-								</th>
-								<th scope="col" className="px-3 py-5 font-medium">
-									Quantity
-								</th>
-								<th scope="col" className="px-3 py-5 font-medium">
-									Price
-								</th>
+								{/*<th scope="col" className="px-3 py-5 font-medium">*/}
+								{/*	Brand*/}
+								{/*</th>*/}
+								{/*<th scope="col" className="px-3 py-5 font-medium">*/}
+								{/*	Quantity*/}
+								{/*</th>*/}
+								{/*<th scope="col" className="px-3 py-5 font-medium">*/}
+								{/*	Price*/}
+								{/*</th>*/}
 								<th scope="col" className="relative py-3 pl-6 pr-3">
 									<span className="sr-only">Edit</span>
 								</th>
@@ -84,15 +84,15 @@ export default async function ProductsTable({
 											<p>{product.name}</p>
 										</div>
 									</td>
-									<td className="whitespace-nowrap px-3 py-3">
-										{product.brand}
-									</td>
-									<td className="whitespace-nowrap px-3 py-3">
-										{product.quantity}
-									</td>
-									<td className="whitespace-nowrap px-3 py-3">
-										{product.price_rub}
-									</td>
+									{/*<td className="whitespace-nowrap px-3 py-3">*/}
+									{/*	{product.brand}*/}
+									{/*</td>*/}
+									{/*<td className="whitespace-nowrap px-3 py-3">*/}
+									{/*	{product.quantity}*/}
+									{/*</td>*/}
+									{/*<td className="whitespace-nowrap px-3 py-3">*/}
+									{/*	{product.price_rub}*/}
+									{/*</td>*/}
 									<td className="whitespace-nowrap py-3 pl-6 pr-3">
 										<div className="flex justify-end gap-3">
 											<UpdateProduct id={product.id} />

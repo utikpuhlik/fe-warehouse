@@ -1,6 +1,5 @@
 
 import {OfferCard} from "@/app/ui/catalogue/cards/offer-card";
-import { lusitana } from "@/app/ui/fonts";
 import {fetchProductById} from "@/app/lib/apis/productApi";
 import {fetchCategoryBySlug} from "@/app/lib/apis/categoryApi";
 import {fetchSubCategoryBySlug} from "@/app/lib/apis/subCategoryApi";
