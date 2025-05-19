@@ -10,14 +10,14 @@ import {EditCategoryDialog} from "@/app/ui/catalogue/category/edit-category-dial
 type CategoryCardProps = {
     name: string
     image_url: string
-    category_slug: string
-    category_id: string
+    slug: string
+    id: string
 }
 
-export function CategoryCard({ name, image_url, category_slug, category_id }: CategoryCardProps) {
+export function CategoryCard({ name, image_url, slug, id }: CategoryCardProps) {
     const handleSubmit = async (data: CategoryPutSchema) => {
         try {
-            await updateCategoryAction(category_id, data)
+            await updateCategoryAction(id, data)
             console.log("Category updated successfully")
         } catch (error) {
             console.error("Update failed", error)
@@ -26,7 +26,7 @@ export function CategoryCard({ name, image_url, category_slug, category_id }: Ca
 
     return (
         <Card className="relative group">
-            <Link href={`/catalogue/${category_slug}`}>
+            <Link href={`/catalogue/${slug}`}>
                 <CardContent className="flex flex-col items-center p-4">
                     <Image
                         src={image_url}

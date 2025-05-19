@@ -1,6 +1,7 @@
 import type {
-    SubCategory
+    SubCategory, SubCategoryPutSchema
 } from "@/app/lib/schemas/subCategorySchema";
+import {zSubCategorySchema} from "@/app/lib/schemas/subCategorySchema";
 import {BASE_URL} from "@/app/lib/config/config";
 
 export async function fetchSubCategories(
@@ -29,4 +30,43 @@ export async function fetchSubCategoryBySlug(slug: string): Promise<SubCategory>
         console.error("API Error:", error);
         throw new Error("Failed to sub-category data.");
     }
+}
+
+export async function postSubCategory(
+    category: FormData,
+): Promise<SubCategory> {
+    const res = await fetch(`${BASE_URL}/category`, {
+        method: "POST",
+        headers: {
+            Accept: "application/json"
+        },
+        body: category,
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to create category: ${res.status}`);
+    }
+
+    const json = await res.json();
+
+    return zSubCategorySchema.parse(json);
+}
+
+export async function putSubCategory(
+    category_id: string,
+    category: SubCategoryPutSchema,
+): Promise<number> {
+    const res = await fetch(`${BASE_URL}/sub-category/${category_id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(category),
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to update sub-category: ${res.status}`);
+    }
+
+    return res.status;
 }

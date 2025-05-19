@@ -1,12 +1,12 @@
 "use server"
 
-import type {CategoryPostSchema, CategoryPutSchema} from "@/app/lib/schemas/categorySchema";
-import {createCategory, putCategory} from "@/app/lib/apis/categoryApi";
+import type {CategoryPutSchema} from "@/app/lib/schemas/categorySchema";
+import {postCategory, putCategory} from "@/app/lib/apis/categoryApi";
 import {revalidatePath} from "next/cache";
 import {redirect} from "next/navigation";
 
-export async function createCategoryAction(category: CategoryPostSchema): Promise<void> {
-    await createCategory(category)
+export async function createCategoryAction(category: FormData): Promise<void> {
+    await postCategory(category)
 
     revalidatePath("/catalogue");
     redirect("/catalogue");

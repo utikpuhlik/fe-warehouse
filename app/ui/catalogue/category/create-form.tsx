@@ -1,87 +1,78 @@
-"use client"
+"use client";
 
-import {Button} from "@/components/ui/button"
+import { useState } from "react";
 import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form"
-import {Input} from "@/components/ui/input"
-import {useForm} from "react-hook-form";
-import {z} from "zod";
-import {zodResolver} from "@hookform/resolvers/zod";
+    Dialog,
+    DialogTrigger,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { createCategoryAction } from "@/app/lib/actions/categoryAction";
 
-import {createCategoryAction} from "@/app/lib/actions/categoryAction";
-import {Label} from "@/components/ui/label";
+export function CreateCategoryModal() {
+    const [open, setOpen] = useState(false);
+    const [file, setFile] = useState<File | null>(null);
+    const [name, setName] = useState("");
 
-const formSchema = z.object({
-    name: z.string().min(2, {
-        message: "Название категории должно быть длиннее 2 символов",
-    }),
-    image_url: z.string().url({
-        message: "Not valid URL format"
-    }),
-})
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!file || !name) {
+            alert("Please provide both name and image");
+            return;
+        }
 
+        const formData = new FormData();
+        formData.append("category", JSON.stringify({ name }));
+        formData.append("image", file);
 
-export function CategoryForm() {
-    // 1. Define your form.
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            name: "",
-            image_url: ""
-        },
-    })
+        await createCategoryAction(formData);
+        setOpen(false); // Закрыть модалку после успешной отправки
+        setName("");
+        setFile(null);
+    };
 
     return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(createCategoryAction)} className="space-y-8">
-                <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Название</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Название категории" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                This is your public display name.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+                <Button>Добавить категорию</Button>
+            </DialogTrigger>
 
-                    )}
-                />
+            <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                    <DialogTitle>Новая категория</DialogTitle>
+                </DialogHeader>
 
-                <FormField
-                    control={form.control}
-                    name="image_url"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Ссылка</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Изображение" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                This is your public display URL.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-
-                    )}
-                />
-                <div className="grid w-full max-w-sm items-center gap-1.5">
-                    <Label htmlFor="picture">Picture</Label>
-                    <Input id="picture" type="file" />
-                </div>
-                <Button type="submit">Submit</Button>
-            </form>
-        </Form>
-    )
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                        <Label htmlFor="name">Название</Label>
+                        <Input
+                            id="name"
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <Label htmlFor="picture">Картинка</Label>
+                        <Input
+                            id="picture"
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => setFile(e.target.files?.[0] || null)}
+                            required
+                        />
+                    </div>
+                    <DialogFooter>
+                        <Button type="submit">Создать</Button>
+                    </DialogFooter>
+                </form>
+            </DialogContent>
+        </Dialog>
+    );
 }

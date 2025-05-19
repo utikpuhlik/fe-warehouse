@@ -30,15 +30,15 @@ export async function fetchCategoryBySlug(slug: string): Promise<Category> {
     }
 }
 
-export async function createCategory(
-    category: CategoryPostSchema,
+export async function postCategory(
+    category: FormData,
 ): Promise<Category> {
     const res = await fetch(`${BASE_URL}/category`, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+            Accept: "application/json"
         },
-        body: JSON.stringify(category),
+        body: category,
     });
 
     if (!res.ok) {
@@ -64,6 +64,21 @@ export async function putCategory(
 
     if (!res.ok) {
         throw new Error(`Failed to update category: ${res.status}`);
+    }
+
+    return res.status;
+}
+
+export async function delCategory(id: string): Promise<number> {
+    const res = await fetch(`${BASE_URL}/product/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to delete category: ${res.status}`);
     }
 
     return res.status;

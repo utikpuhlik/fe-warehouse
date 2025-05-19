@@ -1,4 +1,3 @@
-// components/edit-category-dialog.tsx
 "use client"
 
 import {
@@ -8,36 +7,39 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Pencil } from "lucide-react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {type CategoryPutSchema, zCategoryPutSchema} from "@/app/lib/schemas/categorySchema";
-import {useState} from "react";
+import {Button} from "@/components/ui/button"
+import {Pencil} from "lucide-react"
+import {useForm} from "react-hook-form"
+import {zodResolver} from "@hookform/resolvers/zod"
+import {Input} from "@/components/ui/input"
+import {useState, useTransition} from "react"
+import {
+    type CategoryPutSchema,
+    zCategoryPutSchema,
+} from "@/app/lib/schemas/categorySchema"
+import {Label} from "@/components/ui/label";
 
-type EditCategoryDialogProps = {
+type Props = {
     initialData: CategoryPutSchema
-    action: (data: CategoryPutSchema) => void
+    action: (data: CategoryPutSchema) => Promise<void>
 }
 
-export function EditCategoryDialog({ initialData, action }: EditCategoryDialogProps) {
+export function EditCategoryDialog({initialData, action}: Props) {
     const form = useForm<CategoryPutSchema>({
         resolver: zodResolver(zCategoryPutSchema),
         defaultValues: initialData,
     })
-    const [open, setOpen] = useState(false);
-    const handleSubmit = async (data: CategoryPutSchema) => {
-        try {
-            action(data)
-            setOpen(false) // ✅ закрытие модалки после успешного сохранения
-        } catch (error) {
-            console.error("Ошибка при обновлении категории:", error)
-            // Можно добавить toast с ошибкой
-        }
-    }
 
+    const [open, setOpen] = useState(false)
+    const [isPending, startTransition] = useTransition()
+
+    function onSubmit(values: CategoryPutSchema) {
+        startTransition(async () => {
+            await action(values)
+            form.reset(values)
+            setOpen(false)
+        })
+    }
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -51,21 +53,16 @@ export function EditCategoryDialog({ initialData, action }: EditCategoryDialogPr
                     <DialogTitle>Редактировать категорию</DialogTitle>
                 </DialogHeader>
 
-                <form
-                    onSubmit={form.handleSubmit(handleSubmit)}
-                    className="space-y-4"
-                >
-                    <div className="space-y-2">
-                        <Label htmlFor="name">Название</Label>
-                        <Input id="name" {...form.register("name")} />
-                    </div>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                    <Label htmlFor="name">Название</Label>
+                    <Input id="name" {...form.register("name")} />
 
-                    <div className="space-y-2">
-                        <Label htmlFor="image_url">URL изображения</Label>
-                        <Input id="image_url" {...form.register("image_url")} />
-                    </div>
+                    <Label htmlFor="image_url">URL изображения</Label>
+                    <Input id="image_url" {...form.register("image_url")} />
 
-                    <Button type="submit">Сохранить</Button>
+                    <Button type="submit" disabled={isPending}>
+                        {isPending ? "Saving.." : "Сохранить"}
+                    </Button>
                 </form>
             </DialogContent>
         </Dialog>
