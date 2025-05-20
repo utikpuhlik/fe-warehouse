@@ -1,6 +1,5 @@
 import {
     type Category,
-    type CategoryPostSchema,
     type CategoryPutSchema,
     zCategory,
 } from "@/app/lib/schemas/categorySchema";
