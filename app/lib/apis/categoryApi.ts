@@ -69,7 +69,7 @@ export async function putCategory(
 }
 
 export async function delCategory(id: string): Promise<number> {
-    const res = await fetch(`${BASE_URL}/product/${id}`, {
+    const res = await fetch(`${BASE_URL}/category/${id}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",

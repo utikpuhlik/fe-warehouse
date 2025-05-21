@@ -15,8 +15,7 @@ export async function fetchSubCategories(
 
         return data.json();
     } catch (error) {
-        console.error("API Error:", error);
-        throw new Error("Failed to sub-category data.");
+        throw new Error(`Failed to fetch sub-category data. Detail: ${error}`);
     }
 }
 
@@ -27,8 +26,7 @@ export async function fetchSubCategoryBySlug(slug: string): Promise<SubCategory>
         });
         return res.json();
     } catch (error) {
-        console.error("API Error:", error);
-        throw new Error("Failed to sub-category data.");
+        throw new Error(`Failed to sub-category data. Detail: ${error}`);
     }
 }
 
@@ -44,7 +42,7 @@ export async function postSubCategory(
     });
 
     if (!res.ok) {
-        throw new Error(`Failed to create category: ${res.status}`);
+        throw new Error(`Failed to create sub-category: ${res.status}`);
     }
 
     const json = await res.json();
@@ -66,6 +64,21 @@ export async function putSubCategory(
 
     if (!res.ok) {
         throw new Error(`Failed to update sub-category: ${res.status}`);
+    }
+
+    return res.status;
+}
+
+export async function delSubCategory(id: string): Promise<number> {
+    const res = await fetch(`${BASE_URL}/sub-category/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to delete category: ${res.status}`);
     }
 
     return res.status;

@@ -1,5 +1,5 @@
 import {
-	fetchFilteredProductsVS,
+	fetchFilteredProductsTS,
 	fetchFilteredProductsWS,
 } from "@/app/lib/apis/productApi";
 import { type Products, zProducts } from "@/app/lib/schemas/productSchema";
@@ -23,7 +23,7 @@ export default async function Page(props: {
 
 	const data: Products = zProducts.parse(
 		query
-			? await fetchFilteredProductsVS(query, currentPage)
+			? await fetchFilteredProductsTS(query, currentPage)
 			: await fetchFilteredProductsWS(query, currentPage),
 	);
 

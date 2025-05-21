@@ -60,7 +60,7 @@ export async function fetchFilteredProductsTS(
 ): Promise<Products> {
     try {
         const res = await fetch(
-            `${BASE_URL}/products/test_search?search_term=${search_term}&size=${size}&page=${page}`,
+            `${BASE_URL}/products/text_search?search_term=${search_term}&size=${size}&page=${page}`,
         );
         return res.json();
     } catch (error) {

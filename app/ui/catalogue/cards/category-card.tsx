@@ -5,7 +5,7 @@ import {updateCategoryAction} from "@/app/lib/actions/categoryAction";
 import {Card, CardContent} from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
-import {EditCategoryDialog} from "@/app/ui/catalogue/category/edit-category-dialog";
+import {EditDialog} from "@/app/ui/catalogue/category/edit-dialog";
 
 type CategoryCardProps = {
     name: string
@@ -40,7 +40,7 @@ export function CategoryCard({ name, image_url, slug, id }: CategoryCardProps) {
             </Link>
 
             {/* Модалка с редактированием */}
-            <EditCategoryDialog
+            <EditDialog
                 initialData={{ name, image_url }}
                 action={handleSubmit}
             />

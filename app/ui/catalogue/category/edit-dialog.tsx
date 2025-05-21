@@ -24,7 +24,7 @@ type Props = {
     action: (data: CategoryPutSchema) => Promise<void>
 }
 
-export function EditCategoryDialog({initialData, action}: Props) {
+export function EditDialog({initialData, action}: Props) {
     const form = useForm<CategoryPutSchema>({
         resolver: zodResolver(zCategoryPutSchema),
         defaultValues: initialData,

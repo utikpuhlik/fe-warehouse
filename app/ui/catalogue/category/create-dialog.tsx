@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import {useState} from "react";
 import {
     Dialog,
     DialogTrigger,
@@ -9,31 +9,52 @@ import {
     DialogTitle,
     DialogFooter,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { createCategoryAction } from "@/app/lib/actions/categoryAction";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+import {Button} from "@/components/ui/button";
+import {createCategoryAction} from "@/app/lib/actions/categoryAction";
+import {useToast} from "@/hooks/use-toast";
 
 export function CreateCategoryModal() {
     const [open, setOpen] = useState(false);
     const [file, setFile] = useState<File | null>(null);
     const [name, setName] = useState("");
+    const {toast} = useToast()
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!file || !name) {
-            alert("Please provide both name and image");
+            toast({
+                title: "Ошибка",
+                description: "Пожалуйста, заполните все поля",
+                variant: "destructive",
+            });
             return;
         }
 
         const formData = new FormData();
-        formData.append("category", JSON.stringify({ name }));
-        formData.append("image", file);
+        formData.append("category", JSON.stringify({name}));
+        formData.append("image_blob", file);
 
-        await createCategoryAction(formData);
-        setOpen(false); // Закрыть модалку после успешной отправки
-        setName("");
-        setFile(null);
+        try {
+            await createCategoryAction(formData);
+
+            toast({
+                title: "Категория создана",
+                description: `Категория "${name}" добавлена`,
+            });
+
+            // Очистка полей и закрытие модалки
+            setOpen(false);
+            setName("");
+            setFile(null);
+        } catch (error) {
+            toast({
+                title: "Ошибка",
+                description: (error as Error).message,
+                variant: "destructive",
+            });
+        }
     };
 
     return (
@@ -69,7 +90,9 @@ export function CreateCategoryModal() {
                         />
                     </div>
                     <DialogFooter>
-                        <Button type="submit">Создать</Button>
+                        <Button type="submit">
+                            Создать
+                        </Button>
                     </DialogFooter>
                 </form>
             </DialogContent>
