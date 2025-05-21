@@ -33,7 +33,7 @@ export async function fetchSubCategoryBySlug(slug: string): Promise<SubCategory>
 export async function postSubCategory(
     category: FormData,
 ): Promise<SubCategory> {
-    const res = await fetch(`${BASE_URL}/category`, {
+    const res = await fetch(`${BASE_URL}/sub-category`, {
         method: "POST",
         headers: {
             Accept: "application/json"
