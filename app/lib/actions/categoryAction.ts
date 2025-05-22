@@ -9,7 +9,7 @@ export async function createCategoryAction(category: FormData): Promise<void> {
     revalidatePath("/catalogue");
 }
 
-export async function updateCategoryAction(category_id: string, category: CategoryPutSchema): Promise<void> {
+export async function updateCategoryAction(category_id: string, category: FormData): Promise<void> {
     await putCategory(category_id, category)
     revalidatePath("/catalogue");
 }

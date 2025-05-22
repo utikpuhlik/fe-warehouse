@@ -1,11 +1,9 @@
 "use client"
 
-import type {CategoryPutSchema} from "@/app/lib/schemas/categorySchema";
-import {updateCategoryAction} from "@/app/lib/actions/categoryAction";
 import {Card, CardContent} from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
-import {EditDialog} from "@/app/ui/catalogue/category/edit-dialog";
+import {EditCategoryModal} from "@/app/ui/catalogue/category/edit-dialog";
 
 type CategoryCardProps = {
     name: string
@@ -15,15 +13,6 @@ type CategoryCardProps = {
 }
 
 export function CategoryCard({ name, image_url, slug, id }: CategoryCardProps) {
-    const handleSubmit = async (data: CategoryPutSchema) => {
-        try {
-            await updateCategoryAction(id, data)
-            console.log("Category updated successfully")
-        } catch (error) {
-            console.error("Update failed", error)
-        }
-    }
-
     return (
         <Card className="relative group">
             <Link href={`/catalogue/${slug}`}>
@@ -39,10 +28,9 @@ export function CategoryCard({ name, image_url, slug, id }: CategoryCardProps) {
                 </CardContent>
             </Link>
 
-            {/* Модалка с редактированием */}
-            <EditDialog
-                initialData={{ name, image_url }}
-                action={handleSubmit}
+            <EditCategoryModal
+                category_id={id}
+                category={{ name }}
             />
         </Card>
     )

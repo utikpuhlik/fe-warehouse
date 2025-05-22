@@ -3,12 +3,12 @@ import {z} from "zod";
 
 export const zCategoryBaseSchema = z.object({
     name: z.string(),
-    image_url: z.string().url()
 })
 
 export const zCategory = zCategoryBaseSchema.extend({
     id: z.string(),
     slug: z.string(),
+    image_url: z.string().url()
 });
 
 export const zCategoryPostSchema = zCategoryBaseSchema.extend({})

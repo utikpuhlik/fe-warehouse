@@ -4,6 +4,7 @@ import {
     zCategory,
 } from "@/app/lib/schemas/categorySchema";
 import {BASE_URL} from "@/app/lib/config/config";
+import {ConflictError, UnknownApiError, UnsupportedMediaTypeError } from "../errors/apiErrors";
 
 export async function fetchCategories(): Promise<Category[]> {
     try {
@@ -41,24 +42,33 @@ export async function postCategory(
     });
 
     if (!res.ok) {
-        throw new Error(`Failed to create category: ${res.status}`);
+        const errorText = await res.text().catch(() => "");
+
+        if (res.status === 409) {
+            throw new ConflictError("Категория с таким именем уже существует.");
+        }
+
+        if (res.status === 415) {
+            throw new UnsupportedMediaTypeError("Недопустимый формат файла.");
+        }
+
+        throw new UnknownApiError(res.status, errorText);
     }
 
     const json = await res.json();
-
     return zCategory.parse(json);
 }
 
 export async function putCategory(
     category_id: string,
-    category: CategoryPutSchema,
+    category: FormData,
 ): Promise<number> {
     const res = await fetch(`${BASE_URL}/category/${category_id}`, {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json",
+            Accept: "application/json"
         },
-        body: JSON.stringify(category),
+        body: category,
     });
 
     if (!res.ok) {

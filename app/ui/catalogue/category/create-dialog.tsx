@@ -14,15 +14,22 @@ import {Label} from "@/components/ui/label";
 import {Button} from "@/components/ui/button";
 import {createCategoryAction} from "@/app/lib/actions/categoryAction";
 import {useToast} from "@/hooks/use-toast";
+import {showToastError} from "@/app/lib/utils/toastError";
 
 export function CreateCategoryModal() {
     const [open, setOpen] = useState(false);
     const [file, setFile] = useState<File | null>(null);
     const [name, setName] = useState("");
-    const {toast} = useToast()
+    const { toast } = useToast();
 
+    const resetForm = () => {
+        setOpen(false);
+        setName("");
+        setFile(null);
+    };
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
         if (!file || !name) {
             toast({
                 title: "Ошибка",
@@ -33,7 +40,7 @@ export function CreateCategoryModal() {
         }
 
         const formData = new FormData();
-        formData.append("category", JSON.stringify({name}));
+        formData.append("category", JSON.stringify({ name }));
         formData.append("image_blob", file);
 
         try {
@@ -41,19 +48,12 @@ export function CreateCategoryModal() {
 
             toast({
                 title: "Категория создана",
-                description: `Категория "${name}" добавлена`,
+                description: `Категория "${name}" добавлена.`,
             });
 
-            // Очистка полей и закрытие модалки
-            setOpen(false);
-            setName("");
-            setFile(null);
+            resetForm();
         } catch (error) {
-            toast({
-                title: "Ошибка",
-                description: (error as Error).message,
-                variant: "destructive",
-            });
+            showToastError(error);
         }
     };
 
@@ -90,9 +90,7 @@ export function CreateCategoryModal() {
                         />
                     </div>
                     <DialogFooter>
-                        <Button type="submit">
-                            Создать
-                        </Button>
+                        <Button type="submit">Создать</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>

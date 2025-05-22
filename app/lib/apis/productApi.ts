@@ -6,6 +6,7 @@ import {
     zProduct,
 } from "@/app/lib/schemas/productSchema";
 import {BASE_URL} from "@/app/lib/config/config"
+import {ConflictError, UnknownApiError, UnsupportedMediaTypeError} from "@/app/lib/errors/apiErrors";
 
 
 export async function fetchProducts(
@@ -99,11 +100,20 @@ export async function createProduct(
     });
 
     if (!res.ok) {
-        throw new Error(`Failed to create product: ${res.status}`);
+        const errorText = await res.text().catch(() => "");
+
+        if (res.status === 409) {
+            throw new ConflictError("Продукт с таким именем уже существует.");
+        }
+
+        if (res.status === 415) {
+            throw new UnsupportedMediaTypeError("Недопустимый формат файла.");
+        }
+
+        throw new UnknownApiError(res.status, errorText);
     }
 
     const json = await res.json();
-
     return zProduct.parse(json);
 }
 

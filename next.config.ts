@@ -4,14 +4,16 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
     experimental: {
         ppr: 'incremental',
-        serverActions: {
-            bodySizeLimit: '2mb',
-        },
     }
 };
 
 
 module.exports = {
+    experimental: {
+        serverActions: {
+            bodySizeLimit: '3mb',
+        },
+    },
     images: {
         remotePatterns: [
             {
