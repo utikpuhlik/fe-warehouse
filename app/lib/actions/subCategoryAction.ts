@@ -1,6 +1,5 @@
 "use server"
 
-import type {SubCategoryPutSchema} from "@/app/lib/schemas/subCategorySchema";
 import {delSubCategory, postSubCategory, putSubCategory} from "@/app/lib/apis/subCategoryApi";
 import {revalidatePath} from "next/cache";
 
@@ -10,9 +9,9 @@ export async function createSubCategoryAction(sub_category: FormData, category_s
 }
 
 export async function updateSubCategoryAction(sub_category_id: string,
-                                              category: SubCategoryPutSchema,
+                                              sub_category: FormData,
                                               category_slug: string): Promise<void> {
-    await putSubCategory(sub_category_id, category)
+    await putSubCategory(sub_category_id, sub_category)
     revalidatePath(`/catalogue/${category_slug}`);
 }
 

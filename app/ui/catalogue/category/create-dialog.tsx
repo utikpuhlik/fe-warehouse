@@ -40,7 +40,7 @@ export function CreateCategoryModal() {
         }
 
         const formData = new FormData();
-        formData.append("category", JSON.stringify({ name }));
+        formData.append("category_payload", JSON.stringify({ name }));
         formData.append("image_blob", file);
 
         try {

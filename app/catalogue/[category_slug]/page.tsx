@@ -4,6 +4,8 @@ import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
 import {fetchCategoryBySlug} from "@/app/lib/apis/categoryApi";
 import {fetchSubCategories} from "@/app/lib/apis/subCategoryApi";
 import {CreateSubCategoryModal} from "@/app/ui/catalogue/sub-category/create-dialog";
+import type {SubCategory} from "@/app/lib/schemas/subCategorySchema";
+import type {Category} from "@/app/lib/schemas/categorySchema";
 
 type Params = Promise<{
 	category_slug: string;
@@ -12,9 +14,8 @@ type Params = Promise<{
 export default async function SubCategoriesPage(props: { params: Params }) {
 	const params = await props.params;
 	const category_slug = params.category_slug;
-	const category = await fetchCategoryBySlug(category_slug);
-	const subcategories = await fetchSubCategories(category_slug);
-	console.log(subcategories)
+	const category: Category = await fetchCategoryBySlug(category_slug);
+	const subcategories: SubCategory[] = await fetchSubCategories(category.id);
 	return (
 		<main>
 			<div className="mb-4 flex items-center justify-between">
@@ -34,10 +35,7 @@ export default async function SubCategoriesPage(props: { params: Params }) {
 				{subcategories.map((sub) => (
 					<SubCategoryCard
 						key={sub.id}
-						title={sub.name}
-						image_url={sub.image_url}
-						sub_category_slug={sub.slug}
-						category_slug={category_slug}
+						sub_category={sub}
 					/>
 				))}
 			</div>

@@ -47,7 +47,7 @@ export function CreateSubCategoryModal({ category_id, category_slug }: Props) {
         const formData = new FormData();
         formData.append(
             "sub_category",
-            JSON.stringify({ name, category_id, category_slug })
+            JSON.stringify({ name, category_id })
         );
         formData.append("image_blob", file);
 

@@ -24,7 +24,7 @@ import { updateCategoryAction } from "@/app/lib/actions/categoryAction";
 
 type Props = {
     category_id: string;
-    category: { name: string };
+    category: CategoryPutSchema;
 };
 
 export function EditCategoryModal({ category_id, category }: Props) {
@@ -45,7 +45,7 @@ export function EditCategoryModal({ category_id, category }: Props) {
 
     const onSubmit = (category: CategoryPutSchema) => {
         const formData = new FormData();
-        formData.append("category", JSON.stringify(category));
+        formData.append("category_payload", JSON.stringify(category));
 
         if (file) {
             formData.append("image_blob", file);

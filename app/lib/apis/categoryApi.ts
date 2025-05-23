@@ -20,7 +20,19 @@ export async function fetchCategories(): Promise<Category[]> {
 
 export async function fetchCategoryBySlug(slug: string): Promise<Category> {
     try {
-        const res = await fetch(`${BASE_URL}/category/${slug}`, {
+        const res = await fetch(`${BASE_URL}/category/slug/${slug}`, {
+            next: {revalidate: 60},
+        });
+        return res.json();
+    } catch (error) {
+        console.error("API Error:", error);
+        throw new Error("Failed to category data.");
+    }
+}
+
+export async function fetchCategoryById(id: string): Promise<Category> {
+    try {
+        const res = await fetch(`${BASE_URL}/category/${id}`, {
             next: {revalidate: 60},
         });
         return res.json();
@@ -59,23 +71,34 @@ export async function postCategory(
     return zCategory.parse(json);
 }
 
-export async function putCategory(
+export async function patchCategory(
     category_id: string,
     category: FormData,
-): Promise<number> {
+): Promise<Category> {
     const res = await fetch(`${BASE_URL}/category/${category_id}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
-            Accept: "application/json"
+            Accept: "application/json",
         },
         body: category,
     });
 
     if (!res.ok) {
-        throw new Error(`Failed to update category: ${res.status}`);
+        const errorText = await res.text().catch(() => "");
+
+        if (res.status === 409) {
+            throw new ConflictError("Категория с таким именем уже существует.");
+        }
+
+        if (res.status === 415) {
+            throw new UnsupportedMediaTypeError("Недопустимый формат файла.");
+        }
+
+        throw new UnknownApiError(res.status, errorText);
     }
 
-    return res.status;
+    const json = await res.json();
+    return zCategory.parse(json);
 }
 
 export async function delCategory(id: string): Promise<number> {

@@ -6,11 +6,11 @@ import {BASE_URL} from "@/app/lib/config/config";
 import {ConflictError, UnknownApiError, UnsupportedMediaTypeError} from "@/app/lib/errors/apiErrors";
 
 export async function fetchSubCategories(
-    categorySlug: string,
+    category_id: string,
 ): Promise<SubCategory[]> {
     try {
         const data = await fetch(
-            `${BASE_URL}/sub-categories?category_slug=${categorySlug}&order_by=name`,
+            `${BASE_URL}/sub-categories?category_id=${category_id}&order_by=name`,
             {next: {revalidate: 60}},
         );
 
@@ -32,14 +32,14 @@ export async function fetchSubCategoryBySlug(slug: string): Promise<SubCategory>
 }
 
 export async function postSubCategory(
-    category: FormData,
+    sub_category: FormData,
 ): Promise<SubCategory> {
     const res = await fetch(`${BASE_URL}/sub-category`, {
         method: "POST",
         headers: {
             Accept: "application/json"
         },
-        body: category,
+        body: sub_category,
     });
 
     if (!res.ok) {
@@ -61,19 +61,29 @@ export async function postSubCategory(
 }
 
 export async function putSubCategory(
-    category_id: string,
-    category: SubCategoryPutSchema,
+    sub_category_id: string,
+    sub_category: FormData,
 ): Promise<number> {
-    const res = await fetch(`${BASE_URL}/sub-category/${category_id}`, {
+    const res = await fetch(`${BASE_URL}/sub-category/${sub_category_id}`, {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json",
+            Accept: "application/json"
         },
-        body: JSON.stringify(category),
+        body: sub_category,
     });
 
     if (!res.ok) {
-        throw new Error(`Failed to update sub-category: ${res.status}`);
+        const errorText = await res.text().catch(() => "");
+
+        if (res.status === 409) {
+            throw new ConflictError("Подкатегория с таким именем уже существует.");
+        }
+
+        if (res.status === 415) {
+            throw new UnsupportedMediaTypeError("Недопустимый формат файла.");
+        }
+
+        throw new UnknownApiError(res.status, errorText);
     }
 
     return res.status;

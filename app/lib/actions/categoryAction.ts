@@ -1,7 +1,6 @@
 "use server"
 
-import type {CategoryPutSchema} from "@/app/lib/schemas/categorySchema";
-import {delCategory, postCategory, putCategory} from "@/app/lib/apis/categoryApi";
+import {delCategory, postCategory, patchCategory} from "@/app/lib/apis/categoryApi";
 import {revalidatePath} from "next/cache";
 
 export async function createCategoryAction(category: FormData): Promise<void> {
@@ -10,7 +9,7 @@ export async function createCategoryAction(category: FormData): Promise<void> {
 }
 
 export async function updateCategoryAction(category_id: string, category: FormData): Promise<void> {
-    await putCategory(category_id, category)
+    await patchCategory(category_id, category)
     revalidatePath("/catalogue");
 }
 

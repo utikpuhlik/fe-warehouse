@@ -1,5 +1,12 @@
-## Next.js App Router Course - Starter
+# TCF Warehouse FrontEnd
+## Coding Conventions
+### 1. Styling
+1. JSX - `kebab-case`
+2. TS - `camelCase`
+3. classes, functions - `PascalCase`
 
-This is the starter template for the Next.js App Router Course. It contains the starting code for the dashboard application.
+### 2. Schema First
+1. Props should always inherit or reuse Zod BasicObjectSchema
 
-For more information, see the [course curriculum](https://nextjs.org/learn) on the Next.js Website.
+### 3. Architecture
+Flow: Component (CS) -> Action (SS) -> External API call (SS)

@@ -4,15 +4,11 @@ import {Card, CardContent} from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
 import {EditCategoryModal} from "@/app/ui/catalogue/category/edit-dialog";
+import type {Category} from "@/app/lib/schemas/categorySchema";
 
-type CategoryCardProps = {
-    name: string
-    image_url: string
-    slug: string
-    id: string
-}
+export function CategoryCard(category: Category) {
+    const { name, image_url, slug, id } = category;
 
-export function CategoryCard({ name, image_url, slug, id }: CategoryCardProps) {
     return (
         <Card className="relative group">
             <Link href={`/catalogue/${slug}`}>
@@ -28,10 +24,7 @@ export function CategoryCard({ name, image_url, slug, id }: CategoryCardProps) {
                 </CardContent>
             </Link>
 
-            <EditCategoryModal
-                category_id={id}
-                category={{ name }}
-            />
+            <EditCategoryModal category_id={id} category={category} />
         </Card>
-    )
+    );
 }

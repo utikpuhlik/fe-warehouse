@@ -3,32 +3,30 @@
 import Link from "next/link";
 import Image from "next/image";
 import {imageUrlPlaceholder} from "@/app/lib/config/config";
+import {EditSubCategoryModal} from "@/app/ui/catalogue/sub-category/edit-dialog";
+import type {SubCategory} from "@/app/lib/schemas/subCategorySchema";
+import {Card, CardContent} from "@/components/ui/card";
 
-export function SubCategoryCard({
-                                    title,
-                                    image_url,
-                                    category_slug,
-                                    sub_category_slug,
-                                }: {
-    title: string;
-    image_url: string;
-    category_slug: string;
-    sub_category_slug: string;
-}) {
+type SubCategoryCardProps = {
+    sub_category: SubCategory;
+};
+
+export function SubCategoryCard({ sub_category }: SubCategoryCardProps) {
     return (
-        <div className="rounded-xl bg-gray-50 shadow-sm overflow-hidden">
-            <Link href={`/catalogue/${category_slug}/${sub_category_slug}`}>
-                <div className="flex flex-col items-center p-7">
+        <Card className="relative group">
+            <Link href={`/catalogue/${sub_category.category_slug}/${sub_category.slug}`}>
+                <CardContent className="flex flex-col items-center p-4">
                     <Image
-                        src={image_url ?? imageUrlPlaceholder}
-                        alt={sub_category_slug}
+                        src={sub_category.image_url ?? imageUrlPlaceholder}
+                        alt={sub_category.slug}
                         width={100}
                         height={100}
                         className="block"
                     />
-                    <h3 className="p-4 text-center text-sm font-medium">{title}</h3>
-                </div>
+                    <h3 className="p-4 text-center text-sm font-medium">{sub_category.name}</h3>
+                </CardContent>
             </Link>
-        </div>
+            <EditSubCategoryModal sub_category={sub_category}/>
+        </Card>
     );
 }
