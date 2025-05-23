@@ -73,7 +73,7 @@ export function CreateSubCategoryModal({ category_id, category_slug }: Props) {
 
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                    <DialogTitle>Новая подкатегория в "{category_slug}"</DialogTitle>
+                    <DialogTitle>Новая подкатегория в {category_slug}</DialogTitle>
                 </DialogHeader>
 
                 <form onSubmit={handleSubmit} className="space-y-4">

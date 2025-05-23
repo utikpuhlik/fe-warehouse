@@ -1,6 +1,5 @@
 import {
     type Category,
-    type CategoryPutSchema,
     zCategory,
 } from "@/app/lib/schemas/categorySchema";
 import {BASE_URL} from "@/app/lib/config/config";

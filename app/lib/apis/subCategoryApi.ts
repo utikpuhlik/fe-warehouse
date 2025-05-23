@@ -1,5 +1,5 @@
 import type {
-    SubCategory, SubCategoryPutSchema
+    SubCategory
 } from "@/app/lib/schemas/subCategorySchema";
 import {zSubCategorySchema} from "@/app/lib/schemas/subCategorySchema";
 import {BASE_URL} from "@/app/lib/config/config";
