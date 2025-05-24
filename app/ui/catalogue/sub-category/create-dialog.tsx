@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import {useState, useTransition} from "react";
 import {
     Dialog,
     DialogTrigger,
@@ -9,60 +9,60 @@ import {
     DialogTitle,
     DialogFooter,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
-import { createSubCategoryAction } from "@/app/lib/actions/subCategoryAction";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+import {Button} from "@/components/ui/button";
+import {useToast} from "@/hooks/use-toast";
+import {createSubCategoryAction} from "@/app/lib/actions/subCategoryAction";
 import {showToastError} from "@/app/lib/utils/toastError";
+import type {Category} from "@/app/lib/schemas/categorySchema";
+import {
+    type SubCategoryPostSchema, zSubCategoryPostSchema,
+} from "@/app/lib/schemas/subCategorySchema";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
 
-type Props = {
-    category_id: string;
-    category_slug: string;
-};
-
-export function CreateSubCategoryModal({ category_id, category_slug }: Props) {
+export function CreateSubCategoryModal(category: Category) {
     const [open, setOpen] = useState(false);
     const [file, setFile] = useState<File | null>(null);
-    const [name, setName] = useState("");
-    const { toast } = useToast();
+    const [isPending, startTransition] = useTransition();
+    const {toast} = useToast();
+
+    const form = useForm<SubCategoryPostSchema>({
+        resolver: zodResolver(zSubCategoryPostSchema),
+        defaultValues: {
+            name: "",
+            category_id: category.id,
+        },
+    });
 
     const resetForm = () => {
-        setOpen(false);
-        setName("");
+        form.reset();
         setFile(null);
+        setOpen(false);
     };
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
 
-        if (!file || !name) {
-            toast({
-                title: "Ошибка",
-                description: "Пожалуйста, заполните все поля",
-                variant: "destructive",
-            });
-            return;
-        }
-
+    const onSubmit = (data: SubCategoryPostSchema) => {
         const formData = new FormData();
-        formData.append(
-            "sub_category",
-            JSON.stringify({ name, category_id })
-        );
-        formData.append("image_blob", file);
-
-        try {
-            await createSubCategoryAction(formData, category_slug);
-
-            toast({
-                title: "Успешно",
-                description: `Подкатегория "${name}" добавлена.`,
-            });
-
-            resetForm();
-        } catch (error) {
-            showToastError(error);
+        formData.append("sub_category", JSON.stringify({
+            name: data.name,
+            category_id: data.category_id
+        }));
+        if (file) {
+            formData.append("image_blob", file);
         }
+        startTransition(async () => {
+            try {
+                await createSubCategoryAction(formData, category.slug);
+                toast({
+                    title: "Успешно",
+                    description: `Подкатегория "${data.name}" добавлена.`,
+                });
+                resetForm();
+            } catch (error) {
+                showToastError(error);
+            }
+        });
     };
 
     return (
@@ -73,34 +73,35 @@ export function CreateSubCategoryModal({ category_id, category_slug }: Props) {
 
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                    <DialogTitle>Новая подкатегория в {category_slug}</DialogTitle>
+                    <DialogTitle>Новая подкатегория в {category.name}</DialogTitle>
                 </DialogHeader>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     <div>
                         <Label htmlFor="name">Название</Label>
-                        <Input
-                            id="name"
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                        />
+                        <Input id="name" {...form.register("name")} />
+                        {form.formState.errors.name && (
+                            <p className="text-sm text-red-500">{form.formState.errors.name.message}</p>
+                        )}
                     </div>
+
                     <div>
                         <Label htmlFor="picture">Картинка</Label>
                         <Input
                             id="picture"
                             type="file"
                             accept="image/*"
-                            onChange={(e) =>
-                                setFile(e.target.files?.[0] || null)
-                            }
                             required
+                            onChange={(e) => {
+                                setFile(e.target.files?.[0] || null);
+                            }}
                         />
                     </div>
+
                     <DialogFooter>
-                        <Button type="submit">Создать</Button>
+                        <Button type="submit" disabled={isPending}>
+                            {isPending ? "Создаем.." : "Создать"}
+                        </Button>
                     </DialogFooter>
                 </form>
             </DialogContent>

@@ -7,11 +7,8 @@ import {EditSubCategoryModal} from "@/app/ui/catalogue/sub-category/edit-dialog"
 import type {SubCategory} from "@/app/lib/schemas/subCategorySchema";
 import {Card, CardContent} from "@/components/ui/card";
 
-type SubCategoryCardProps = {
-    sub_category: SubCategory;
-};
 
-export function SubCategoryCard({ sub_category }: SubCategoryCardProps) {
+export function SubCategoryCard(sub_category: SubCategory) {
     return (
         <Card className="relative group">
             <Link href={`/catalogue/${sub_category.category_slug}/${sub_category.slug}`}>
@@ -26,7 +23,9 @@ export function SubCategoryCard({ sub_category }: SubCategoryCardProps) {
                     <h3 className="p-4 text-center text-sm font-medium">{sub_category.name}</h3>
                 </CardContent>
             </Link>
-            <EditSubCategoryModal sub_category={sub_category}/>
+            <EditSubCategoryModal
+                {...sub_category}
+                />
         </Card>
     );
 }

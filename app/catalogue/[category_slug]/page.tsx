@@ -29,13 +29,13 @@ export default async function SubCategoriesPage(props: { params: Params }) {
 					},
 				]}
 			/>
-			<CreateSubCategoryModal category_id={category.id} category_slug={category.slug}/>
+			<CreateSubCategoryModal {...category}/>
 			</div>
 			<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
-				{subcategories.map((sub) => (
+				{subcategories.map((sub: SubCategory) => (
 					<SubCategoryCard
 						key={sub.id}
-						sub_category={sub}
+						{...sub}
 					/>
 				))}
 			</div>

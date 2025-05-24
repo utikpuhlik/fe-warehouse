@@ -11,8 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-    zSubCategoryPutSchema, type SubCategory, type SubCategoryPutSchema
+import {type SubCategory, zSubCategorySchema
 } from "@/app/lib/schemas/subCategorySchema";
 import { useState, useTransition } from "react";
 import { Label } from "@/components/ui/label";
@@ -21,16 +20,14 @@ import { toast } from "@/hooks/use-toast";
 import { showToastError } from "@/app/lib/utils/toastError";
 import { updateSubCategoryAction } from "@/app/lib/actions/subCategoryAction";
 
-type EditSubCategoryModalProps = {
-    sub_category: SubCategory
-};
-export function EditSubCategoryModal({ sub_category }: EditSubCategoryModalProps) {
+
+export function EditSubCategoryModal(sub_category: SubCategory) {
     const [open, setOpen] = useState(false);
     const [file, setFile] = useState<File | null>(null);
     const [isPending, startTransition] = useTransition();
 
-    const form = useForm<SubCategoryPutSchema>({
-        resolver: zodResolver(zSubCategoryPutSchema),
+    const form = useForm<SubCategory>({
+        resolver: zodResolver(zSubCategorySchema),
         defaultValues: sub_category,
     });
 
@@ -40,7 +37,7 @@ export function EditSubCategoryModal({ sub_category }: EditSubCategoryModalProps
         setOpen(false);
     };
 
-    const onSubmit = (sub_category: SubCategoryPutSchema) => {
+    const onSubmit = (sub_category: SubCategory) => {
         const formData = new FormData();
         formData.append("sub_category", JSON.stringify(
             {name: sub_category.name, category_id: sub_category.category_id}
@@ -94,7 +91,7 @@ export function EditSubCategoryModal({ sub_category }: EditSubCategoryModalProps
                     </div>
 
                     <Button type="submit" disabled={isPending}>
-                        {isPending ? "Сохраняем..." : "Сохранить"}
+                        {isPending ? "Сохраняем.." : "Сохранить"}
                     </Button>
                 </form>
             </DialogContent>
