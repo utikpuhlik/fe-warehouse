@@ -12,8 +12,8 @@ import { Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-    zCategoryPutSchema,
-    type CategoryPutSchema,
+    type Category,
+    zCategory,
 } from "@/app/lib/schemas/categorySchema";
 import { useState, useTransition } from "react";
 import { Label } from "@/components/ui/label";
@@ -22,18 +22,14 @@ import { toast } from "@/hooks/use-toast";
 import { showToastError } from "@/app/lib/utils/toastError";
 import { updateCategoryAction } from "@/app/lib/actions/categoryAction";
 
-type Props = {
-    category_id: string;
-    category: CategoryPutSchema;
-};
 
-export function EditCategoryModal({ category_id, category }: Props) {
+export function EditCategoryModal(category: Category) {
     const [open, setOpen] = useState(false);
     const [file, setFile] = useState<File | null>(null);
     const [isPending, startTransition] = useTransition();
 
-    const form = useForm<CategoryPutSchema>({
-        resolver: zodResolver(zCategoryPutSchema),
+    const form = useForm<Category>({
+        resolver: zodResolver(zCategory),
         defaultValues: category,
     });
 
@@ -43,7 +39,7 @@ export function EditCategoryModal({ category_id, category }: Props) {
         setOpen(false);
     };
 
-    const onSubmit = (category: CategoryPutSchema) => {
+    const onSubmit = (category: Category) => {
         const formData = new FormData();
         formData.append("category_payload", JSON.stringify(category));
 
@@ -52,7 +48,7 @@ export function EditCategoryModal({ category_id, category }: Props) {
         }
         startTransition(async () => {
             try {
-                await updateCategoryAction(category_id, formData);
+                await updateCategoryAction(category.id, formData);
                 toast({
                     title: "Успешно",
                     description: `Категория "${category.name}" обновлена.`,
