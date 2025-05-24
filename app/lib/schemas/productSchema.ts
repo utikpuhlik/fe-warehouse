@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const zProductBaseSchema = z.object({
     address_id: z.string().nullable(),
-    name: z.string(),
+    name: z.string().min(1, "Название не может быть пустым"),
     cross_number: z.string().nullable(),
     description: z.string().nullable(),
     image_url: z.string().url().nullable(),
@@ -10,7 +10,6 @@ export const zProductBaseSchema = z.object({
 
 export const zProductPostSchema = zProductBaseSchema.extend({
     sub_category_id: z.string(),
-    sub_category_slug: z.string(),
 });
 
 export const zProductPutSchema = zProductBaseSchema.extend({
@@ -23,6 +22,9 @@ export const zProductPutSchema = zProductBaseSchema.extend({
 export const zProduct = zProductBaseSchema.extend({
     id: z.string().uuid(),
     bitrix_id: z.string(),
+    slug: z.string(),
+    category_slug: z.string(),
+    sub_category_slug: z.string()
 });
 
 export const zProducts = z.object({

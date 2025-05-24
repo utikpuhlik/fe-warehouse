@@ -1,6 +1,5 @@
 import {
     type Product,
-    type ProductPostSchema,
     type ProductPutSchema,
     type Products,
     zProduct,
@@ -10,11 +9,11 @@ import {ConflictError, UnknownApiError, UnsupportedMediaTypeError} from "@/app/l
 
 
 export async function fetchProducts(
-    subCategorySlug: string,
+    sub_category_id: string,
 ): Promise<Products> {
     try {
         const res = await fetch(
-            `${BASE_URL}/products?sub_category_slug=${subCategorySlug}`,
+            `${BASE_URL}/products?sub_category_id=${sub_category_id}`,
             {next: {revalidate: 60}},
         );
 
@@ -88,8 +87,8 @@ export async function fetchFilteredProductsVS(
     }
 }
 
-export async function createProduct(
-    product: ProductPostSchema,
+export async function postProduct(
+    product: FormData,
 ): Promise<Product> {
     const res = await fetch(`${BASE_URL}/product`, {
         method: "POST",

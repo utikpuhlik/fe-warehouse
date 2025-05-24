@@ -4,6 +4,7 @@ import {fetchCategoryBySlug} from "@/app/lib/apis/categoryApi";
 import {fetchSubCategoryBySlug} from "@/app/lib/apis/subCategoryApi";
 import { fetchProducts } from "@/app/lib/apis/productApi";
 import type {Product, Products} from "@/app/lib/schemas/productSchema";
+import { CreateProductModal } from "@/app/ui/catalogue/product/create-dialog";
 
 // https://stackoverflow.com/questions/79113322/nextjs-react-type-does-not-satisfy-constraint
 type Params = Promise<{
@@ -21,11 +22,12 @@ export default async function Page(props: { params: Params }) {
 		fetchSubCategoryBySlug(sub_category_slug),
 	]);
 
-	const productsData: Products = await fetchProducts(sub_category_slug);
+	const productsData: Products = await fetchProducts(sub_category.id);
 	const products: Product[] = productsData.items ?? [];
 
 	return (
 		<main>
+			<div className="mb-4 flex items-center justify-between">
 			<Breadcrumbs
 				breadcrumbs={[
 					{ label: "Каталог", href: "/catalogue" },
@@ -41,13 +43,13 @@ export default async function Page(props: { params: Params }) {
 					},
 				]}
 			/>
+			<CreateProductModal {...sub_category}/>
+			</div>
 			<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
 				{products.map((product) => (
 					<ProductCard
 						key={product.id}
 						{...product}
-						category_slug={category_slug}
-						sub_category_slug={sub_category_slug}
 					/>
 				))}
 			</div>
