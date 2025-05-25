@@ -1,6 +1,5 @@
 import {
     type Product,
-    type ProductPutSchema,
     type Products,
     zProduct,
 } from "@/app/lib/schemas/productSchema";
@@ -93,9 +92,9 @@ export async function postProduct(
     const res = await fetch(`${BASE_URL}/product`, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+            Accept: "application/json"
         },
-        body: JSON.stringify(product),
+        body: product,
     });
 
     if (!res.ok) {
@@ -118,14 +117,14 @@ export async function postProduct(
 
 export async function putProduct(
     id: string,
-    product: ProductPutSchema,
+    product: FormData,
 ): Promise<number> {
     const res = await fetch(`${BASE_URL}/product/${id}`, {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json",
+            Accept: "application/json"
         },
-        body: JSON.stringify(product),
+        body: product,
     });
 
     if (!res.ok) {

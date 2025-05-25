@@ -6,6 +6,7 @@ import {fetchSubCategories} from "@/app/lib/apis/subCategoryApi";
 import {CreateSubCategoryModal} from "@/app/ui/catalogue/sub-category/create-dialog";
 import type {SubCategory} from "@/app/lib/schemas/subCategorySchema";
 import type {Category} from "@/app/lib/schemas/categorySchema";
+import { notFound } from "next/navigation";
 
 type Params = Promise<{
 	category_slug: string;
@@ -14,8 +15,14 @@ type Params = Promise<{
 export default async function SubCategoriesPage(props: { params: Params }) {
 	const params = await props.params;
 	const category_slug = params.category_slug;
+
 	const category: Category = await fetchCategoryBySlug(category_slug);
+	if (!category) {
+		notFound();
+	}
+
 	const subcategories: SubCategory[] = await fetchSubCategories(category.id);
+
 	return (
 		<main>
 			<div className="mb-4 flex items-center justify-between">

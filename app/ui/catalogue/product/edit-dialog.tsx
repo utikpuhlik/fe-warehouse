@@ -12,25 +12,24 @@ import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {type SubCategory, zSubCategorySchema
-} from "@/app/lib/schemas/subCategorySchema";
 import { useState, useTransition } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { showToastError } from "@/app/lib/utils/toastError";
-import {deleteSubCategoryAction, updateSubCategoryAction} from "@/app/lib/actions/subCategoryAction";
 import { DeleteEntityButton } from "@/app/ui/catalogue/buttons/delete-entity-button";
+import {type Product, zProduct} from "@/app/lib/schemas/productSchema";
+import {deleteProductAction, updateProductAction} from "@/app/lib/actions/productAction";
 
 
-export function EditSubCategoryModal(sub_category: SubCategory) {
+export function EditProductModal(product: Product) {
     const [open, setOpen] = useState(false);
     const [file, setFile] = useState<File | null>(null);
     const [isPending, startTransition] = useTransition();
 
-    const form = useForm<SubCategory>({
-        resolver: zodResolver(zSubCategorySchema),
-        defaultValues: sub_category,
+    const form = useForm<Product>({
+        resolver: zodResolver(zProduct),
+        defaultValues: product,
     });
 
     const resetForm = () => {
@@ -39,19 +38,19 @@ export function EditSubCategoryModal(sub_category: SubCategory) {
         setOpen(false);
     };
 
-    const onSubmit = (sub_category: SubCategory) => {
+    const onSubmit = (product: Product) => {
         const formData = new FormData();
-        formData.append("sub_category", JSON.stringify(sub_category));
+        formData.append("product", JSON.stringify(product));
 
         if (file) {
             formData.append("image_blob", file);
         }
         startTransition(async () => {
             try {
-                await updateSubCategoryAction(sub_category.id, formData, sub_category.category_slug);
+                await updateProductAction(product.id, formData, product.category_slug, product.sub_category_slug);
                 toast({
                     title: "Успешно",
-                    description: `Категория "${sub_category.name}" обновлена.`,
+                    description: `Товар "${product.name}" обновлен.`,
                 });
                 resetForm();
             } catch (error) {
@@ -70,7 +69,7 @@ export function EditSubCategoryModal(sub_category: SubCategory) {
 
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Редактировать подкатегорию</DialogTitle>
+                    <DialogTitle>Редактировать товар</DialogTitle>
                 </DialogHeader>
 
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -78,7 +77,18 @@ export function EditSubCategoryModal(sub_category: SubCategory) {
                         <Label htmlFor="name">Название</Label>
                         <Input id="name" {...form.register("name")} />
                     </div>
-
+                    <div>
+                        <Label htmlFor="address_id">Адресный номер</Label>
+                        <Input id="address_id" {...form.register("address_id")} />
+                    </div>
+                    <div>
+                        <Label htmlFor="cross_number">Кросс-номер</Label>
+                        <Input id="cross_number" {...form.register("cross_number")} />
+                    </div>
+                    <div>
+                        <Label htmlFor="description">Описание</Label>
+                        <Input id="description" {...form.register("description")} />
+                    </div>
                     <div>
                         <Label htmlFor="picture">Картинка</Label>
                         <Input
@@ -91,9 +101,9 @@ export function EditSubCategoryModal(sub_category: SubCategory) {
                     </div>
                 <DialogFooter className="flex items-center justify-between">
                     <DeleteEntityButton
-                        entityName={sub_category.name}
-                        entityId={sub_category.id}
-                        deleteAction={(id) => deleteSubCategoryAction(id, sub_category.category_slug)}
+                        entityName={product.name}
+                        entityId={product.id}
+                        deleteAction={(id) => deleteProductAction(id, product.category_slug, product.sub_category_slug)}
                         onDeleted={resetForm}
                     />
                     <Button type="submit" disabled={isPending}>

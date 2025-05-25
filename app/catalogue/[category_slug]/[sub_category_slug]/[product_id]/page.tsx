@@ -6,6 +6,7 @@ import {fetchSubCategoryBySlug} from "@/app/lib/apis/subCategoryApi";
 import {fetchOffersByProductId} from "@/app/lib/apis/offerApi";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
 import type {OfferSchema, OffersSchema} from "@/app/lib/schemas/offerSchema";
+import {notFound} from "next/navigation";
 
 // https://stackoverflow.com/questions/79113322/nextjs-react-type-does-not-satisfy-constraint
 type Params = Promise<{
@@ -25,6 +26,10 @@ export default async function Page(props: { params: Params }) {
 		fetchSubCategoryBySlug(sub_category_slug),
 		fetchProductById(product_id)
 	]);
+
+	if (!product) {
+		notFound();
+	}
 
 	const offersData: OffersSchema = await fetchOffersByProductId(product_id);
 	const offers: OfferSchema[] = offersData.items ?? [];

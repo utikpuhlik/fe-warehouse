@@ -1,15 +1,15 @@
 import { z } from "zod";
 
 export const zProductBaseSchema = z.object({
-    address_id: z.string().nullable(),
+    address_id: z.string().optional().nullable(),
     name: z.string().min(1, "Название не может быть пустым"),
-    cross_number: z.string().nullable(),
-    description: z.string().nullable(),
-    image_url: z.string().url().nullable(),
+    cross_number: z.string().min(1, "Кросс номер не может быть пустым"),
+    description: z.string().optional().nullable(),
+    image_url: z.string().url().optional().nullable(),
+    sub_category_id: z.string(),
 });
 
 export const zProductPostSchema = zProductBaseSchema.extend({
-    sub_category_id: z.string(),
 });
 
 export const zProductPutSchema = zProductBaseSchema.extend({
@@ -21,8 +21,8 @@ export const zProductPutSchema = zProductBaseSchema.extend({
 
 export const zProduct = zProductBaseSchema.extend({
     id: z.string().uuid(),
-    bitrix_id: z.string(),
-    slug: z.string(),
+    bitrix_id: z.string().optional().nullable(),
+    slug: z.string().nullable(),
     category_slug: z.string(),
     sub_category_slug: z.string()
 });

@@ -32,6 +32,9 @@ export function CreateProductModal(sub_category: SubCategory) {
         resolver: zodResolver(zProductPostSchema),
         defaultValues: {
             name: "",
+            address_id: "",
+            cross_number: "",
+            description: "",
             sub_category_id: sub_category.id,
         },
     });
@@ -44,10 +47,7 @@ export function CreateProductModal(sub_category: SubCategory) {
 
     const onSubmit = (data: ProductPostSchema) => {
         const formData = new FormData();
-        formData.append("sub_category", JSON.stringify({
-            name: data.name,
-            sub_category_id: data.sub_category_id
-        }));
+        formData.append("product", JSON.stringify({...data}));
         if (file) {
             formData.append("image_blob", file);
         }
@@ -86,12 +86,14 @@ export function CreateProductModal(sub_category: SubCategory) {
                             </p>
                         )}
                     </div>
-
+                    <div>
+                        <Label htmlFor="address_id">Адресный номер</Label>
+                        <Input id="address_id" {...form.register("address_id")} />
+                    </div>
                     <div>
                         <Label htmlFor="cross_number">Кросс-номер</Label>
                         <Input id="cross_number" {...form.register("cross_number")} />
                     </div>
-
                     <div>
                         <Label htmlFor="description">Описание</Label>
                         <Input id="description" {...form.register("description")} />
