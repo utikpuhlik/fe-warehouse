@@ -1,5 +1,4 @@
 import { fetchUsers } from "@/app/lib/apis/userApi";
-import Form from "@/app/ui/catalogue/edit-form";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
 import { notFound } from "next/navigation";
 import {fetchProductById} from "@/app/lib/apis/productApi";
@@ -18,6 +17,7 @@ export default async function Page(props: { params: Params }) {
 	if (!product) {
 		notFound();
 	}
+	console.log(users)
 	return (
 		<main>
 			<Breadcrumbs
@@ -30,7 +30,7 @@ export default async function Page(props: { params: Params }) {
 					},
 				]}
 			/>
-			<Form id={id} product={product} users={users} />
+			{/*<Form id={id} product={product} users={users} />*/}
 		</main>
 	);
 }
