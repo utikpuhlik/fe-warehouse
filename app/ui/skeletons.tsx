@@ -37,6 +37,16 @@ export function CardSkeletonV2() {
 	);
 }
 
+export function BreadcrumbsSkeleton() {
+	return (
+		<div className="flex items-center gap-2 mb-4">
+			<Skeleton className="h-4 w-16" />
+			<span className="text-muted-foreground">/</span>
+			<Skeleton className="h-4 w-24" />
+		</div>
+	);
+}
+
 export function CardsSkeleton() {
 	return (
 		<>
