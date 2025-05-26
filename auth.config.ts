@@ -7,16 +7,24 @@ export const authConfig = {
     callbacks: {
         authorized({ auth, request: { nextUrl } }) {
             const isLoggedIn = !!auth?.user;
-            const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
-            const isOnCatalogue = nextUrl.pathname.startsWith('/catalogue');
-            if (isOnDashboard || isOnCatalogue) {
-                if (isLoggedIn) return true;
-                return false; // Redirect unauthenticated users to login page
-            } else if (isLoggedIn) {
-                return Response.redirect(new URL('/catalogue', nextUrl));
+            const path = nextUrl.pathname
+
+            const isOnDashboard = path.startsWith('/dashboard')
+            const isOnCatalogue = path.startsWith('/catalogue')
+            const isOnMailing = path.startsWith('/mailing')
+            const isRoot = path === '/'
+
+            if (isOnDashboard || isOnCatalogue || isOnMailing) {
+                return isLoggedIn // Only allow if logged in
             }
-            return true;
+
+            if (isRoot && isLoggedIn) {
+                // Only redirect from root
+                return Response.redirect(new URL('/catalogue', nextUrl))
+            }
+
+            return true // Allow access to mailing, etc.
         },
     },
-    providers: [], // Add providers with an empty array for now
-} satisfies NextAuthConfig;
+    providers: [], // You can configure this later
+} satisfies NextAuthConfig

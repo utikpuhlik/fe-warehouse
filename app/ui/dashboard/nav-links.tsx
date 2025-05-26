@@ -3,11 +3,13 @@
 import {
 	ClipboardDocumentListIcon,
 	CurrencyDollarIcon,
-	DocumentDuplicateIcon,
-	HomeIcon,
 	ShoppingCartIcon,
 	TableCellsIcon,
 	UserGroupIcon,
+	InboxIcon,
+	DocumentArrowDownIcon,
+	DocumentArrowUpIcon,
+
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import Link from "next/link";
@@ -16,17 +18,21 @@ import { usePathname } from "next/navigation";
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
 const links = [
-	{ name: "Home", href: "/dashboard", icon: HomeIcon },
-	{
-		name: "Invoices",
-		href: "/dashboard/invoices",
-		icon: DocumentDuplicateIcon,
-	},
+	// { name: "Home", href: "/dashboard", icon: HomeIcon },
+	// {
+	// 	name: "Invoices",
+	// 	href: "/dashboard/invoices",
+	// 	icon: DocumentDuplicateIcon,
+	// },
+	{ name: "Mailing", href: "/mailing", icon: InboxIcon },
+
 	{ name: "Customers", href: "/dashboard/customers", icon: UserGroupIcon },
 	{ name: "Catalogue", href: "/catalogue", icon: ClipboardDocumentListIcon },
 	{ name: "Catalogue Table", href: "/catalogue/table", icon: TableCellsIcon },
 	{ name: "Orders", href: "/orders", icon: ShoppingCartIcon },
 	{ name: "Price", href: "/price", icon: CurrencyDollarIcon },
+	{ name: "Waybill In", href: "/waybill/in", icon: DocumentArrowDownIcon},
+	{ name: "Waybill Out", href: "/waybill/out", icon: DocumentArrowUpIcon}
 ];
 
 export default function NavLinks() {
