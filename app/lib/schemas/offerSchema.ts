@@ -15,16 +15,19 @@ export const zOfferBaseSchema = z.object({
         message: "Цена не может быть меньше нуля",
     }),
     quantity: z.number().int(),
-    image_url: z.string().url().nullable(),
+    product_id: z.string().uuid(),
 })
 
 export const zOfferSchema = zOfferBaseSchema.extend({
     id: z.string().uuid(),
-    product_id: z.string().uuid()
+    offer_bitrix_id: z.string().nullable().optional(),
+    category_slug: z.string(),
+    sub_category_slug: z.string(),
+    image_url: z.string().url().nullable(),
+    wholesale_price_rub: z.number().nonnegative()
 })
 
 export const zOfferPostSchema = zOfferBaseSchema.extend({
-    product_id: z.string().uuid()
 })
 
 export const zOfferPutSchema = zOfferBaseSchema.extend({

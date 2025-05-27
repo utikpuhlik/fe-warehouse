@@ -7,6 +7,7 @@ import {fetchOffersByProductId} from "@/app/lib/apis/offerApi";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
 import type {OfferSchema, OffersSchema} from "@/app/lib/schemas/offerSchema";
 import {notFound} from "next/navigation";
+import { CreateOfferModal } from "@/app/ui/catalogue/offer/create-dialog";
 
 // https://stackoverflow.com/questions/79113322/nextjs-react-type-does-not-satisfy-constraint
 type Params = Promise<{
@@ -56,6 +57,7 @@ export default async function Page(props: { params: Params }) {
 					},
 				]}
 			/>
+      <CreateOfferModal {...product}/>
 			<div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-1">
 				{offers.map((offer) => (
 					<OfferCard
