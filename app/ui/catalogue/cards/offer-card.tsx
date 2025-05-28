@@ -7,7 +7,7 @@ import { EditOfferModal } from "@/app/ui/catalogue/offer/edit-dialog";
 
 export function OfferCard(offer: OfferSchema) {
     return (
-        <Card className="flex h-[150px] w-[700px] overflow-hidden rounded-xl border">
+      <Card className="group relative flex h-[150px] w-[700px] overflow-hidden rounded-xl border">
             <div className="relative w-[150px] h-full flex-shrink-0">
                 <Image
                     src={offer.image_url ?? "https://storage.yandexcloud.net/tcf-images/default.svg"}

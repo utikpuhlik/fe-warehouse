@@ -37,6 +37,7 @@ export default async function Page(props: { params: Params }) {
 
 	return (
 		<main>
+		<div className="mb-4 flex items-center justify-between">
 			<Breadcrumbs
 				breadcrumbs={[
 					{ label: "Каталог", href: "/catalogue" },
@@ -58,6 +59,7 @@ export default async function Page(props: { params: Params }) {
 				]}
 			/>
       <CreateOfferModal {...product}/>
+		</div>
 			<div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-1">
 				{offers.map((offer) => (
 					<OfferCard

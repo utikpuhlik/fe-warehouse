@@ -49,7 +49,6 @@ export function CreateOfferModal(product: Product) {
     const onSubmit = (data: OfferPostSchema) => {
         startTransition(async () => {
             try {
-                console.log(data)
                 await createOfferAction(data, product.category_slug, product.sub_category_slug, product.id);
                 toast({
                     title: "Успешно",
@@ -72,10 +71,7 @@ export function CreateOfferModal(product: Product) {
                     <DialogTitle>Новое предложение для {product.name}</DialogTitle>
                 </DialogHeader>
 
-                <form onSubmit={form.handleSubmit(onSubmit,(errors) => {
-                      console.log("Validation failed:", errors);
-                    }
-                  )} className="space-y-4">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     <div>
                         <Label htmlFor="brand">Бренд</Label>
                         <Input id="brand" {...form.register("brand")} />
@@ -95,7 +91,7 @@ export function CreateOfferModal(product: Product) {
                     </div>
                     <div>
                         <Label htmlFor="price_rub">Цена розница</Label>
-                        <Input id="price_rub" {...form.register("price_rub")} />
+                        <Input id="price_rub" type="number" step="1" {...form.register("price_rub", { valueAsNumber: true })} />
                         {form.formState.errors.price_rub && (
                             <p className="text-sm text-red-500">
                                 {form.formState.errors.price_rub.message}
@@ -104,11 +100,21 @@ export function CreateOfferModal(product: Product) {
                     </div>
                     <div>
                         <Label htmlFor="super_wholesale_price_rub">Супер-опт</Label>
-                        <Input id="super_wholesale_price_rub" type="number" step="1" {...form.register("super_wholesale_price_rub")} />
+                        <Input id="super_wholesale_price_rub" type="number" step="1" {...form.register("super_wholesale_price_rub", { valueAsNumber: true })} />
+                        {form.formState.errors.super_wholesale_price_rub && (
+                            <p className="text-sm text-red-500">
+                                {form.formState.errors.super_wholesale_price_rub.message}
+                            </p>
+                        )}
                     </div>
                     <div>
                         <Label htmlFor="quantity">Остаток</Label>
-                        <Input id="quantity" {...form.register("quantity")} />
+                        <Input id="quantity" type="number" step="1" {...form.register("quantity", { valueAsNumber: true })} />
+                        {form.formState.errors.quantity && (
+                            <p className="text-sm text-red-500">
+                                {form.formState.errors.quantity.message}
+                            </p>
+                        )}
                     </div>
                     <DialogFooter>
                         <Button type="submit" disabled={isPending}>
