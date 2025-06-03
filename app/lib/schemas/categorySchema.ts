@@ -2,11 +2,11 @@
 import {z} from "zod";
 
 export const zCategoryBaseSchema = z.object({
-    name: z.string(),
+    name: z.string().min(1, "Название не может быть пустым"),
 })
 
 export const zCategory = zCategoryBaseSchema.extend({
-    id: z.string(),
+    id: z.string().uuid(),
     slug: z.string(),
     image_url: z.string().url()
 });

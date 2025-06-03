@@ -1,6 +1,6 @@
 "use client";
 
-import {useState} from "react";
+import {useState, useTransition} from "react";
 import {
     Dialog,
     DialogTrigger,
@@ -15,46 +15,47 @@ import {Button} from "@/components/ui/button";
 import {createCategoryAction} from "@/app/lib/actions/categoryAction";
 import {useToast} from "@/hooks/use-toast";
 import {showToastError} from "@/app/lib/utils/toastError";
+import {useForm} from "react-hook-form";
+import {type CategoryPostSchema, zCategoryPostSchema} from "@/app/lib/schemas/categorySchema";
+import {zodResolver} from "@hookform/resolvers/zod";
 
 export function CreateCategoryModal() {
     const [open, setOpen] = useState(false);
     const [file, setFile] = useState<File | null>(null);
-    const [name, setName] = useState("");
-    const { toast } = useToast();
+    const [isPending, startTransition] = useTransition();
+    const {toast} = useToast();
+
+    const form = useForm<CategoryPostSchema>({
+        resolver: zodResolver(zCategoryPostSchema),
+        defaultValues: {
+            name: ""
+        }
+    })
 
     const resetForm = () => {
+        form.reset();
         setOpen(false);
-        setName("");
         setFile(null);
     };
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (!file || !name) {
-            toast({
-                title: "Ошибка",
-                description: "Пожалуйста, заполните все поля",
-                variant: "destructive",
-            });
-            return;
-        }
-
+    const onSubmit = (data: CategoryPostSchema) => {
         const formData = new FormData();
-        formData.append("category_payload", JSON.stringify({ name }));
-        formData.append("image_blob", file);
-
-        try {
-            await createCategoryAction(formData);
-
-            toast({
-                title: "Категория создана",
-                description: `Категория "${name}" добавлена.`,
-            });
-
-            resetForm();
-        } catch (error) {
-            showToastError(error);
+        formData.append("category_payload", JSON.stringify({...data}));
+        if (file) {
+            formData.append("image_blob", file);
         }
+        startTransition(async () => {
+                try {
+                    await createCategoryAction(formData);
+                    toast({
+                        title: "Категория создана",
+                        description: `Категория "${data.name}" добавлена.`,
+                    });
+                    resetForm();
+                } catch (error) {
+                    showToastError(error);
+                }
+            }
+        )
     };
 
     return (
@@ -68,16 +69,15 @@ export function CreateCategoryModal() {
                     <DialogTitle>Новая категория</DialogTitle>
                 </DialogHeader>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     <div>
                         <Label htmlFor="name">Название</Label>
-                        <Input
-                            id="name"
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                        />
+                        <Input id="name" {...form.register("name")} />
+                        {form.formState.errors.name && (
+                            <p className="text-sm text-red-500">
+                                {form.formState.errors.name.message}
+                            </p>
+                        )}
                     </div>
                     <div>
                         <Label htmlFor="picture">Картинка</Label>
@@ -90,7 +90,9 @@ export function CreateCategoryModal() {
                         />
                     </div>
                     <DialogFooter>
-                        <Button type="submit">Создать</Button>
+                        <Button type="submit" disabled={isPending}>
+                            {isPending ? "Создаем.." : "Создать"}
+                        </Button>
                     </DialogFooter>
                 </form>
             </DialogContent>
