@@ -1,8 +1,8 @@
 "use server";
 
 import {
-  OfferPostSchema,
-  OfferPutSchema,
+  type OfferPostSchema,
+  type OfferPutSchema,
   zOfferPostSchema,
   zOfferPutSchema,
 } from "@/app/lib/schemas/offerSchema";

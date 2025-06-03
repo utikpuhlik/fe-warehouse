@@ -40,7 +40,7 @@ export async function postOffer(
         const errorText = await res.text().catch(() => "");
 
         if (res.status === 409) {
-            throw new ConflictError("Продукт с таким именем уже существует.");
+            throw new ConflictError("Предложение с таким именем уже существует.");
         }
 
         if (res.status === 415) {

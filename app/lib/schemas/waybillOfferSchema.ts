@@ -1,0 +1,33 @@
+import {z} from "zod";
+
+export const zWaybillOfferBaseSchema = z.object({
+    offer_id: z.string().uuid(),
+    brand: z.string().min(1, "Бренд не может быть пустым"),
+    manufacturer_number: z.string({
+        invalid_type_error: "Номер производителя не может быть пустым",
+    }),
+    quantity: z
+        .number({ invalid_type_error: "Поле должно быть целым числом" })
+        .int(),
+    price_rub: z
+        .number({invalid_type_error: "Поле должно быть числом"})
+        .nonnegative({
+            message: "Цена не может быть меньше нуля",
+        })
+})
+
+export const zWaybillOfferSchema = zWaybillOfferBaseSchema.extend({
+    id: z.string().uuid(),
+    waybill_id: z.string().uuid(),
+    product_name: z.string(),
+    image_url: z.string().url(),
+    category_slug: z.string(),
+    sub_category_slug: z.string()
+})
+
+export const zWaybillOfferPostSchema = zWaybillOfferBaseSchema.extend({
+})
+
+/** TypeScript helper */
+export type WaybillOfferSchema = z.infer<typeof zWaybillOfferSchema>;
+export type WaybillOfferPostSchema = z.infer<typeof zWaybillOfferPostSchema>;

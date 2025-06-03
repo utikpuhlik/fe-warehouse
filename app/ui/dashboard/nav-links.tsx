@@ -8,7 +8,6 @@ import {
 	UserGroupIcon,
 	InboxIcon,
 	DocumentArrowDownIcon,
-	DocumentArrowUpIcon,
 
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
@@ -31,8 +30,7 @@ const links = [
 	{ name: "Catalogue Table", href: "/catalogue/table", icon: TableCellsIcon },
 	{ name: "Orders", href: "/orders", icon: ShoppingCartIcon },
 	{ name: "Price", href: "/price", icon: CurrencyDollarIcon },
-	{ name: "Waybill In", href: "/waybill/in", icon: DocumentArrowDownIcon},
-	{ name: "Waybill Out", href: "/waybill/out", icon: DocumentArrowUpIcon}
+	{ name: "Накладные", href: "/waybills", icon: DocumentArrowDownIcon}
 ];
 
 export default function NavLinks() {
