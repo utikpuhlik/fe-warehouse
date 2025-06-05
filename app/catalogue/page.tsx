@@ -4,6 +4,8 @@ import {lusitana} from "@/app/ui/fonts";
 import {fetchCategories} from "@/app/lib/apis/categoryApi";
 import {CreateCategoryModal} from "@/app/ui/catalogue/category/create-dialog";
 
+export const dynamic = 'force-dynamic'
+
 export default async function CategoriesPage() {
 	const categories: Category[] = await fetchCategories();
 	return (
