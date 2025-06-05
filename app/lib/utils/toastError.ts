@@ -15,7 +15,7 @@ export function showToastError(error: unknown) {
         });
     } else {
         toast({
-            title: "Unexpected Error",
+            title: "Ошибка сервера",
             description: error instanceof Error ? error.message : "An unknown error occurred.",
             variant: "destructive",
         });

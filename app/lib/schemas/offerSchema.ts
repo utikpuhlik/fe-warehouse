@@ -27,6 +27,8 @@ export const zOfferSchema = zOfferBaseSchema.extend({
   offer_bitrix_id: z.string().nullable().optional(),
   category_slug: z.string(),
   sub_category_slug: z.string(),
+  product_name: z.string(),
+  cross_number: z.string().nullable().optional(),
   image_url: z.string().url().nullable(),
   wholesale_price_rub: z.number().nonnegative(),
 });

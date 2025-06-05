@@ -1,7 +1,6 @@
-
-import type { Category } from "@/app/lib/schemas/categorySchema";
-import { CategoryCard } from "@/app/ui/catalogue/cards/category-card";
-import { lusitana } from "@/app/ui/fonts";
+import type {Category} from "@/app/lib/schemas/categorySchema";
+import {CategoryCard} from "@/app/ui/catalogue/cards/category-card";
+import {lusitana} from "@/app/ui/fonts";
 import {fetchCategories} from "@/app/lib/apis/categoryApi";
 import {CreateCategoryModal} from "@/app/ui/catalogue/category/create-dialog";
 

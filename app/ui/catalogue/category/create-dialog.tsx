@@ -18,6 +18,7 @@ import {showToastError} from "@/app/lib/utils/toastError";
 import {useForm} from "react-hook-form";
 import {type CategoryPostSchema, zCategoryPostSchema} from "@/app/lib/schemas/categorySchema";
 import {zodResolver} from "@hookform/resolvers/zod";
+import {ConflictError} from "@/app/lib/errors/apiErrors";
 
 export function CreateCategoryModal() {
     const [open, setOpen] = useState(false);
@@ -52,6 +53,7 @@ export function CreateCategoryModal() {
                     });
                     resetForm();
                 } catch (error) {
+                    console.log(error instanceof ConflictError);
                     showToastError(error);
                 }
             }

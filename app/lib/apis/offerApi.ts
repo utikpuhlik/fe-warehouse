@@ -24,6 +24,33 @@ export async function fetchOffersByProductId(product_id: string): Promise<Offers
     }
 }
 
+export async function fetchFilteredOffersWS(search_term: string): Promise<OffersSchema> {
+    try {
+        const res = await fetch(`${BASE_URL}/offers/search?search_term=${search_term}`);
+        return res.json();
+    } catch (error) {
+        console.error("API Error:", error);
+        throw new Error("Failed to fetch offers.");
+    }
+}
+
+export async function fetchFilteredOffersTS(
+    search_term: string,
+    size = 10,
+    page = 1
+): Promise<OffersSchema> {
+    try {
+        const res = await fetch(`${BASE_URL}/offers/text_search?search_term=${search_term}&size=${size}&page=${page}`);
+        // Add Zod check
+        return res.json();
+    } catch (error) {
+        console.error("API Error:", error);
+        throw new Error("Failed to fetch offers.");
+    }
+}
+
+
+
 export async function postOffer(
     offer: OfferPostSchema,
 ): Promise<OfferSchema> {

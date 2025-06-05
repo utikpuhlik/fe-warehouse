@@ -1,8 +1,3 @@
-import {
-	fetchFilteredProductsTS,
-	fetchFilteredProductsWS,
-} from "@/app/lib/apis/productApi";
-import { type Products, zProducts } from "@/app/lib/schemas/productSchema";
 import { CreateProduct } from "@/app/ui/catalogue/buttons";
 import Pagination from "@/app/ui/catalogue/pagination";
 import Search from "@/app/ui/catalogue/search";
@@ -10,6 +5,8 @@ import Table from "@/app/ui/catalogue/table";
 import { lusitana } from "@/app/ui/fonts";
 import { ProductsTableSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
+import type {OffersSchema} from "@/app/lib/schemas/offerSchema";
+import {fetchFilteredOffersTS} from "@/app/lib/apis/offerApi";
 
 export default async function Page(props: {
 	searchParams?: Promise<{
@@ -18,27 +15,23 @@ export default async function Page(props: {
 	}>;
 }) {
 	const searchParams = await props.searchParams;
-	const query = searchParams?.query || "";
+	const query = searchParams?.query || "6000180";
 	const currentPage = Number(searchParams?.page) || 1;
 
-	const data: Products = zProducts.parse(
-		query
-			? await fetchFilteredProductsTS(query, currentPage)
-			: await fetchFilteredProductsWS(query, currentPage),
-	);
+	const data: OffersSchema = await fetchFilteredOffersTS(query, 10, currentPage);
 
 	const { pages: totalPages, items } = data;
 	return (
 		<div className="w-full">
 			<div className="flex w-full items-center justify-between">
-				<h1 className={`${lusitana.className} text-2xl`}>Products</h1>
+				<h1 className={`${lusitana.className} text-2xl`}>Таблица предложений</h1>
 			</div>
 			<div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-				<Search placeholder="Search products..." />
+				<Search placeholder="Поиск.." />
 				<CreateProduct />
 			</div>
 			<Suspense key={query + currentPage} fallback={<ProductsTableSkeleton />}>
-				<Table products={items} />
+				<Table offers={items}/>
 			</Suspense>
 			<div className="mt-5 flex w-full justify-center">
 				<Pagination totalPages={totalPages} />

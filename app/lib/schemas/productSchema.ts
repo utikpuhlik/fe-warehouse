@@ -3,19 +3,21 @@ import { z } from "zod";
 export const zProductBaseSchema = z.object({
     address_id: z.string().optional().nullable(),
     name: z.string().min(1, "Название не может быть пустым"),
-    cross_number: z.string().min(1, "Кросс номер не может быть пустым"),
+    cross_number: z.string().optional().nullable(),
     description: z.string().optional().nullable(),
     image_url: z.string().url().optional().nullable(),
     sub_category_id: z.string(),
 });
 
 export const zProductPostSchema = zProductBaseSchema.extend({
+    cross_number: z.string().min(1, "Кросс номер не может быть пустым"),
 });
 
 export const zProductPutSchema = zProductBaseSchema.extend({
     name: z.string({
         invalid_type_error: "Название не может быть пустым",
     }),
+    cross_number: z.string().min(1, "Кросс номер не может быть пустым"),
 });
 
 

@@ -9,13 +9,10 @@ export default function Search({ placeholder }: { placeholder: string }) {
 	const { replace } = useRouter();
 
 	const handleSearch = useDebouncedCallback((term: string) => {
-		console.log(`Searching... ${term}`);
-		term = term.trim();
-
 		const params = new URLSearchParams(searchParams);
 		params.set("page", "1");
 		if (term) {
-			params.set("query", term);
+			params.set("query", term.trim());
 		} else {
 			params.delete("query");
 		}

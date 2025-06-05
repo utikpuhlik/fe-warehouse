@@ -7,9 +7,7 @@ import {ConflictError, UnknownApiError, UnsupportedMediaTypeError } from "../err
 
 export async function fetchCategories(): Promise<Category[]> {
     try {
-        const res = await fetch(`${BASE_URL}/categories?order_by=name`, {
-            next: {revalidate: 60},
-        });
+        const res = await fetch(`${BASE_URL}/categories?order_by=name`);
         return res.json();
     } catch (error) {
         console.error("API Error:", error);
@@ -19,9 +17,7 @@ export async function fetchCategories(): Promise<Category[]> {
 
 export async function fetchCategoryBySlug(slug: string): Promise<Category> {
     try {
-        const res = await fetch(`${BASE_URL}/category/slug/${slug}`, {
-            next: {revalidate: 60},
-        });
+        const res = await fetch(`${BASE_URL}/category/slug/${slug}`);
         return res.json();
     } catch (error) {
         console.error("API Error:", error);
@@ -56,13 +52,13 @@ export async function postCategory(
         const errorText = await res.text().catch(() => "");
 
         if (res.status === 409) {
-            throw new ConflictError("Категория с таким именем уже существует.");
+            throw new ConflictError("Категория с таким именем уже существует.", res.status);
         }
 
         if (res.status === 415) {
-            throw new UnsupportedMediaTypeError("Недопустимый формат файла.");
+            throw new UnsupportedMediaTypeError("Недопустимый формат файла.", res.status);
         }
-
+        console.error(`API error: ${res.status} ${errorText}`);
         throw new UnknownApiError(res.status, errorText);
     }
 
