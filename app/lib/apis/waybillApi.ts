@@ -6,7 +6,7 @@ import {
 } from "@/app/lib/schemas/waybillSchema";
 import {BASE_URL} from "@/app/lib/config/config";
 import { UnknownApiError,} from "@/app/lib/errors/apiErrors";
-import type {WaybillOfferSchema} from "@/app/lib/schemas/waybillOfferSchema";
+import {type WaybillOfferPostSchema, type WaybillOfferSchema, zWaybillOfferSchema} from "@/app/lib/schemas/waybillOfferSchema";
 export async function fetchWaybills(
     waybill_type: string | undefined,
     is_pending: string | undefined,
@@ -81,6 +81,49 @@ export async function postWaybill(
 
     const json = await res.json();
     return zWaybillSchema.parse(json);
+}
+
+export async function commitWaybill(
+    waybill_id: string
+): Promise<WaybillSchema> {
+    const res = await fetch(`${BASE_URL}/waybill/${waybill_id}/commit`, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!res.ok) {
+        const errorText = await res.text().catch(() => "");
+        throw new UnknownApiError(res.status, errorText);
+    }
+
+    const json = await res.json();
+    return zWaybillSchema.parse(json);
+}
+
+
+export async function postWaybillOffer(
+    waybill: WaybillOfferPostSchema,
+    waybill_id: string
+): Promise<WaybillOfferSchema> {
+    const res = await fetch(`${BASE_URL}/waybill/${waybill_id}/offers`, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(waybill),
+    });
+
+    if (!res.ok) {
+        const errorText = await res.text().catch(() => "");
+        throw new UnknownApiError(res.status, errorText);
+    }
+
+    const json = await res.json();
+    return zWaybillOfferSchema.parse(json);
 }
 
 export async function delWaybill(id: string): Promise<number> {

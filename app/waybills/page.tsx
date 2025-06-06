@@ -7,7 +7,7 @@ import Pagination from "@/app/ui/catalogue/pagination";
 import {CreateWaybillModal} from "@/app/ui/catalogue/waybill/create-dialog";
 import {WaybillFilters} from "@/app/ui/catalogue/waybill/filters";
 
-export default async function WaybillInPage({searchParams}: {
+export default async function WaybillsPage({searchParams}: {
 	searchParams?: Promise<{ query?: string; page?: string; waybill_type: string; is_pending?: string }>;
 }) {
 	const params = await searchParams
@@ -28,7 +28,7 @@ export default async function WaybillInPage({searchParams}: {
 	return (
 		<div className="p-4 space-y-4">
 			<div className="flex justify-between items-center flex-wrap gap-2">
-				<h1 className="text-2xl font-semibold">Приходные накладные</h1>
+				<h1 className="text-2xl font-semibold">Накладные</h1>
 				<WaybillFilters />
 				<Search placeholder="Поиск..." />
 				<CreateWaybillModal user_id={"b5fe5a3b-dfa2-43d3-a81e-34404d8f75d4"}/>

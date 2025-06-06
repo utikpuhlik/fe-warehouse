@@ -67,7 +67,7 @@ export function CreateWaybillModal({ user_id }: { user_id: string }) {
                     <div>
                         <Label>Тип</Label>
                         <Select
-                            onValueChange={(value: "WAYBILL_IN" | "WAYBILL_OUT") =>
+                            onValueChange={(value: "WAYBILL_IN" | "WAYBILL_OUT" | "WAYBILL_RETURN") =>
                                 form.setValue("waybill_type", value)
                             }
                             defaultValue={form.getValues("waybill_type")}
@@ -78,6 +78,7 @@ export function CreateWaybillModal({ user_id }: { user_id: string }) {
                             <SelectContent>
                                 <SelectItem value="WAYBILL_IN">Приход</SelectItem>
                                 <SelectItem value="WAYBILL_OUT">Расход</SelectItem>
+                                <SelectItem value="WAYBILL_RETURN">Возврат</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>

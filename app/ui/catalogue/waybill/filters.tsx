@@ -31,6 +31,7 @@ export function WaybillFilters() {
                     <SelectItem value="all">Все</SelectItem>
                     <SelectItem value="WAYBILL_IN">Приход</SelectItem>
                     <SelectItem value="WAYBILL_OUT">Расход</SelectItem>
+                    <SelectItem value="WAYBILL_RETURN">Возврат</SelectItem>
                 </SelectContent>
             </Select>
 
