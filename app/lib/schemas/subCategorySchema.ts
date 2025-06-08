@@ -12,6 +12,7 @@ export const zSubCategorySchema = zSubCategoryBaseSchema.extend({
     category_slug: z.string()
 
 });
+export const zSubCategoryArraySchema = z.array(zSubCategorySchema);
 export const zSubCategoryPostSchema = zSubCategoryBaseSchema.extend({
 })
 

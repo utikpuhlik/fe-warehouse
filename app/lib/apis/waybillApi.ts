@@ -10,14 +10,12 @@ import {type WaybillOfferPostSchema, type WaybillOfferSchema, zWaybillOfferSchem
 export async function fetchWaybills(
     waybill_type: string | undefined,
     is_pending: string | undefined,
-    user_id: string,
     search_term: string,
     page: number,
     size = 10
 ): Promise<WaybillPaginatedSchema> {
     try {
         const params = new URLSearchParams({
-            user_id,
             search_term,
             size: size.toString(),
             page: page.toString(),
@@ -65,7 +63,7 @@ export async function fetchWaybillOffers(waybill_id: string): Promise<WaybillOff
 export async function postWaybill(
     waybill: WaybillPostSchema,
 ): Promise<WaybillSchema> {
-    const res = await fetch(`${BASE_URL}/waybill`, {
+    const res = await fetch(`${BASE_URL}/waybills`, {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -86,7 +84,7 @@ export async function postWaybill(
 export async function commitWaybill(
     waybill_id: string
 ): Promise<WaybillSchema> {
-    const res = await fetch(`${BASE_URL}/waybill/${waybill_id}/commit`, {
+    const res = await fetch(`${BASE_URL}/waybills/${waybill_id}/commit`, {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -108,7 +106,7 @@ export async function postWaybillOffer(
     waybill: WaybillOfferPostSchema,
     waybill_id: string
 ): Promise<WaybillOfferSchema> {
-    const res = await fetch(`${BASE_URL}/waybill/${waybill_id}/offers`, {
+    const res = await fetch(`${BASE_URL}/waybills/${waybill_id}/offers`, {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -127,7 +125,7 @@ export async function postWaybillOffer(
 }
 
 export async function delWaybill(id: string): Promise<number> {
-    const res = await fetch(`${BASE_URL}/waybill/${id}`, {
+    const res = await fetch(`${BASE_URL}/waybills/${id}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",

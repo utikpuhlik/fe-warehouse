@@ -2,148 +2,63 @@ import {
     type Product,
     type Products,
     zProduct,
+    zProducts,
 } from "@/app/lib/schemas/productSchema";
-import {BASE_URL} from "@/app/lib/config/config"
-import {ConflictError, UnknownApiError, UnsupportedMediaTypeError} from "@/app/lib/errors/apiErrors";
+import { BASE_URL } from "@/app/lib/config/config";
+import { handleApiError } from "@/app/lib/apis/utils/handleApiError";
+import {fetchAndParse} from "@/app/lib/apis/utils/fetchJson";
 
+const ENTITY = "products";
 
-export async function fetchProducts(
-    sub_category_id: string,
-): Promise<Products> {
-    try {
-        const res = await fetch(
-            `${BASE_URL}/products?sub_category_id=${sub_category_id}`,
-            {next: {revalidate: 60}},
-        );
-
-        return res.json();
-    } catch (error) {
-        console.error("API Error:", error);
-        throw new Error("Failed to products data.");
-    }
+export async function fetchProducts(sub_category_id: string): Promise<Products> {
+    const url = `${BASE_URL}/${ENTITY}?sub_category_id=${sub_category_id}`;
+    return fetchAndParse(url, zProducts, { next: { revalidate: 60 } }, "product");
 }
 
 export async function fetchProductById(id: string): Promise<Product> {
-    try {
-        const res = await fetch(`${BASE_URL}/product/${id}`);
-        return res.json();
-    } catch (error) {
-        console.error("API Error:", error);
-        throw new Error("Failed to products data.");
-    }
+    const url = `${BASE_URL}/${ENTITY}/${id}`;
+    return fetchAndParse(url, zProduct, undefined, "product");
 }
 
-// Wildcard Search
-export async function fetchFilteredProductsWS(
-    search_term: string,
-    page: number,
-    size = 10,
-): Promise<Products> {
-    try {
-        const res = await fetch(
-            `${BASE_URL}/products/search?search_term=${search_term}&size=${size}&page=${page}`,
-            {next: {revalidate: 60}},
-        );
-        return res.json();
-    } catch (error) {
-        console.error("API Error:", error);
-        throw new Error("Failed to products data.");
-    }
-}
-
-// Text Search
-export async function fetchFilteredProductsTS(
-    search_term: string,
-    page: number,
-    size = 10,
-): Promise<Products> {
-    try {
-        const res = await fetch(
-            `${BASE_URL}/products/text_search?search_term=${search_term}&size=${size}&page=${page}`,
-        );
-        return res.json();
-    } catch (error) {
-        console.error("API Error:", error);
-        throw new Error("Failed to products data.");
-    }
-}
-
-// Vector Search
-export async function fetchFilteredProductsVS(
-    search_term: string,
-    page: number,
-    size = 10,
-): Promise<Products> {
-    try {
-        const res = await fetch(
-            `${BASE_URL}/products/vector_search?search_term=${search_term}&size=${size}&page=${page}`,
-            {next: {revalidate: 60}},
-        );
-        return res.json();
-    } catch (error) {
-        console.error("API Error:", error);
-        throw new Error("Failed to products data.");
-    }
-}
-
-export async function postProduct(
-    product: FormData,
-): Promise<Product> {
-    const res = await fetch(`${BASE_URL}/product`, {
+export async function postProduct(product: FormData): Promise<Product> {
+    const res = await fetch(`${BASE_URL}/${ENTITY}`, {
         method: "POST",
-        headers: {
-            Accept: "application/json"
-        },
+        headers: { Accept: "application/json" },
         body: product,
     });
 
+    const text = await res.text().catch(() => "");
     if (!res.ok) {
-        const errorText = await res.text().catch(() => "");
-
-        if (res.status === 409) {
-            throw new ConflictError("Продукт с таким именем уже существует.");
-        }
-
-        if (res.status === 415) {
-            throw new UnsupportedMediaTypeError("Недопустимый формат файла.");
-        }
-
-        throw new UnknownApiError(res.status, errorText);
+        handleApiError(res, text, { entity: "product" });
     }
 
-    const json = await res.json();
-    return zProduct.parse(json);
+    return zProduct.parse(JSON.parse(text));
 }
 
-export async function putProduct(
-    id: string,
-    product: FormData,
-): Promise<number> {
-    const res = await fetch(`${BASE_URL}/product/${id}`, {
+export async function putProduct(id: string, product: FormData): Promise<number> {
+    const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
         method: "PUT",
-        headers: {
-            Accept: "application/json"
-        },
+        headers: { Accept: "application/json" },
         body: product,
     });
 
+    const text = await res.text().catch(() => "");
     if (!res.ok) {
-        throw new Error(`Failed to update product: ${res.status}`);
+        handleApiError(res, text, { entity: "product" });
     }
 
     return res.status;
 }
 
 export async function delProduct(id: string): Promise<number> {
-    const res = await fetch(`${BASE_URL}/product/${id}`, {
+    const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
         method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
     });
 
+    const text = await res.text().catch(() => "");
     if (!res.ok) {
-        throw new Error(`Failed to delete product: ${res.status}`);
+        handleApiError(res, text, { entity: "product" });
     }
 
     return res.status;

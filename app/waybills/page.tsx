@@ -20,7 +20,6 @@ export default async function WaybillsPage({searchParams}: {
 	const data: WaybillPaginatedSchema = await fetchWaybills(
 		waybillType,
 		is_pending,
-		"b5fe5a3b-dfa2-43d3-a81e-34404d8f75d4",
 		query,
 		currentPage,
 		4);
@@ -31,7 +30,7 @@ export default async function WaybillsPage({searchParams}: {
 				<h1 className="text-2xl font-semibold">Накладные</h1>
 				<WaybillFilters />
 				<Search placeholder="Поиск..." />
-				<CreateWaybillModal user_id={"b5fe5a3b-dfa2-43d3-a81e-34404d8f75d4"}/>
+				<CreateWaybillModal user_id={"a3392f44-44e5-4910-b1be-e5f51e4002fe"}/>
 			</div>
 
 			<div className="grid gap-4">

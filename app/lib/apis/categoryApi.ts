@@ -1,76 +1,47 @@
-import {
-    type Category,
-    zCategory,
-} from "@/app/lib/schemas/categorySchema";
-import {BASE_URL} from "@/app/lib/config/config";
-import {ConflictError, UnknownApiError, UnsupportedMediaTypeError } from "../errors/apiErrors";
+import { type Category, zCategory, zCategories } from "@/app/lib/schemas/categorySchema";
+import { BASE_URL } from "@/app/lib/config/config";
+import { handleApiError } from "@/app/lib/apis/utils/handleApiError";
+import {fetchAndParse} from "@/app/lib/apis/utils/fetchJson";
+
+const ENTITY = "categories";
 
 export async function fetchCategories(): Promise<Category[]> {
-    try {
-        const res = await fetch(`${BASE_URL}/categories?order_by=name`);
-        return res.json();
-    } catch (error) {
-        console.error("API Error:", error);
-        throw new Error("Failed to category data.");
-    }
+    return fetchAndParse(`${BASE_URL}/${ENTITY}?order_by=name`, zCategories, {
+        next: { revalidate: 60 },
+    });
 }
 
 export async function fetchCategoryBySlug(slug: string): Promise<Category> {
-    try {
-        const res = await fetch(`${BASE_URL}/category/slug/${slug}`);
-        return res.json();
-    } catch (error) {
-        console.error("API Error:", error);
-        throw new Error("Failed to category data.");
-    }
+    return fetchAndParse(`${BASE_URL}/${ENTITY}/slug/${slug}`, zCategory, {
+        next: { revalidate: 60 },
+    });
 }
 
 export async function fetchCategoryById(id: string): Promise<Category> {
-    try {
-        const res = await fetch(`${BASE_URL}/category/${id}`, {
-            next: {revalidate: 60},
-        });
-        return res.json();
-    } catch (error) {
-        console.error("API Error:", error);
-        throw new Error("Failed to category data.");
-    }
+    return fetchAndParse(`${BASE_URL}/${ENTITY}/${id}`, zCategory, {
+        next: { revalidate: 60 },
+    });
 }
 
-export async function postCategory(
-    category: FormData,
-): Promise<Category> {
-    const res = await fetch(`${BASE_URL}/category`, {
+export async function postCategory(category: FormData): Promise<Category> {
+    const res = await fetch(`${BASE_URL}/${ENTITY}`, {
         method: "POST",
         headers: {
-            Accept: "application/json"
+            Accept: "application/json",
         },
         body: category,
     });
 
+    const text = await res.text().catch(() => "");
     if (!res.ok) {
-        const errorText = await res.text().catch(() => "");
-
-        if (res.status === 409) {
-            throw new ConflictError("Категория с таким именем уже существует.", res.status);
-        }
-
-        if (res.status === 415) {
-            throw new UnsupportedMediaTypeError("Недопустимый формат файла.", res.status);
-        }
-        console.error(`API error: ${res.status} ${errorText}`);
-        throw new UnknownApiError(res.status, errorText);
+        handleApiError(res, text, { entity: "category" });
     }
 
-    const json = await res.json();
-    return zCategory.parse(json);
+    return zCategory.parse(JSON.parse(text));
 }
 
-export async function patchCategory(
-    category_id: string,
-    category: FormData,
-): Promise<Category> {
-    const res = await fetch(`${BASE_URL}/category/${category_id}`, {
+export async function patchCategory(id: string, category: FormData): Promise<Category> {
+    const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
         method: "PATCH",
         headers: {
             Accept: "application/json",
@@ -78,26 +49,16 @@ export async function patchCategory(
         body: category,
     });
 
+    const text = await res.text().catch(() => "");
     if (!res.ok) {
-        const errorText = await res.text().catch(() => "");
-
-        if (res.status === 409) {
-            throw new ConflictError("Категория с таким именем уже существует.");
-        }
-
-        if (res.status === 415) {
-            throw new UnsupportedMediaTypeError("Недопустимый формат файла.");
-        }
-
-        throw new UnknownApiError(res.status, errorText);
+        handleApiError(res, text, { entity: "category" });
     }
 
-    const json = await res.json();
-    return zCategory.parse(json);
+    return zCategory.parse(JSON.parse(text));
 }
 
 export async function delCategory(id: string): Promise<number> {
-    const res = await fetch(`${BASE_URL}/category/${id}`, {
+    const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -105,7 +66,7 @@ export async function delCategory(id: string): Promise<number> {
     });
 
     if (!res.ok) {
-        throw new Error(`Failed to delete category: ${res.status}`);
+        handleApiError(res, await res.text().catch(() => ""), { entity: "category" });
     }
 
     return res.status;

@@ -1,37 +1,30 @@
-import {BASE_URL} from "@/app/lib/config/config";
-import type {OfferPostSchema, OfferPutSchema, OfferSchema, OffersSchema} from "@/app/lib/schemas/offerSchema";
-import { zOfferSchema } from "@/app/lib/schemas/offerSchema";
-import { ConflictError, UnknownApiError, UnsupportedMediaTypeError } from "@/app/lib/errors/apiErrors";
+import {
+    type OfferPostSchema,
+    type OfferPutSchema,
+    type OfferSchema,
+    type OffersSchema,
+    zOfferSchema,
+    zOffersSchema,
+} from "@/app/lib/schemas/offerSchema";
+import { BASE_URL } from "@/app/lib/config/config";
+import { handleApiError } from "@/app/lib/apis/utils/handleApiError";
+import {fetchAndParse} from "@/app/lib/apis/utils/fetchJson";
 
+const ENTITY = "offers";
 
 export async function fetchOfferById(id: string): Promise<OfferSchema> {
-    try {
-        const res = await fetch(`${BASE_URL}/offer/${id}`);
-        return res.json();
-    } catch (error) {
-        console.error("API Error:", error);
-        throw new Error("Failed to offer data.");
-    }
+    const url = `${BASE_URL}/${ENTITY}/${id}`;
+    return fetchAndParse(url, zOfferSchema, undefined, "offer");
 }
 
 export async function fetchOffersByProductId(product_id: string): Promise<OffersSchema> {
-    try {
-        const res = await fetch(`${BASE_URL}/offers?product_id=${product_id}`);
-        return res.json();
-    } catch (error) {
-        console.error("API Error:", error);
-        throw new Error("Failed to offer data.");
-    }
+    const url = `${BASE_URL}/${ENTITY}?product_id=${product_id}`;
+    return fetchAndParse(url, zOffersSchema, undefined, "offer");
 }
 
 export async function fetchFilteredOffersWS(search_term: string): Promise<OffersSchema> {
-    try {
-        const res = await fetch(`${BASE_URL}/offers/search?search_term=${search_term}`);
-        return res.json();
-    } catch (error) {
-        console.error("API Error:", error);
-        throw new Error("Failed to fetch offers.");
-    }
+    const url = `${BASE_URL}/${ENTITY}/search?search_term=${search_term}`;
+    return fetchAndParse(url, zOffersSchema, undefined, "offer");
 }
 
 export async function fetchFilteredOffersTS(
@@ -39,78 +32,55 @@ export async function fetchFilteredOffersTS(
     size = 10,
     page = 1
 ): Promise<OffersSchema> {
-    try {
-        const res = await fetch(`${BASE_URL}/offers/text_search?search_term=${search_term}&size=${size}&page=${page}`);
-        // Add Zod check
-        return res.json();
-    } catch (error) {
-        console.error("API Error:", error);
-        throw new Error("Failed to fetch offers.");
-    }
+    const url = `${BASE_URL}/${ENTITY}/text_search?search_term=${search_term}&size=${size}&page=${page}`;
+    return fetchAndParse(url, zOffersSchema, undefined, "offer");
 }
 
-
-
-export async function postOffer(
-    offer: OfferPostSchema,
-): Promise<OfferSchema> {
-    const res = await fetch(`${BASE_URL}/offer`, {
+export async function postOffer(offer: OfferPostSchema): Promise<OfferSchema> {
+    const res = await fetch(`${BASE_URL}/${ENTITY}`, {
         method: "POST",
         headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
         body: JSON.stringify(offer),
     });
 
+    const text = await res.text().catch(() => "");
     if (!res.ok) {
-        const errorText = await res.text().catch(() => "");
-
-        if (res.status === 409) {
-            throw new ConflictError("Предложение с таким именем уже существует.");
-        }
-
-        if (res.status === 415) {
-            throw new UnsupportedMediaTypeError("Недопустимый формат файла.");
-        }
-
-        throw new UnknownApiError(res.status, errorText);
+        handleApiError(res, text, { entity: "offer" });
     }
 
-    const json = await res.json();
-    return zOfferSchema.parse(json);
+    return zOfferSchema.parse(JSON.parse(text));
 }
 
-export async function putOffer(
-    id: string,
-    offer: OfferPutSchema,
-): Promise<number> {
-    const res = await fetch(`${BASE_URL}/offer/${id}`, {
+export async function putOffer(id: string, offer: OfferPutSchema): Promise<number> {
+    const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
         method: "PUT",
         headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
         body: JSON.stringify(offer),
     });
 
+    const text = await res.text().catch(() => "");
     if (!res.ok) {
-        throw new Error(`Failed to update offer: ${res.status}`);
+        handleApiError(res, text, { entity: "offer" });
     }
 
     return res.status;
 }
 
 export async function delOffer(id: string): Promise<number> {
-    const res = await fetch(`${BASE_URL}/offer/${id}`, {
+    const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
         method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
     });
 
+    const text = await res.text().catch(() => "");
     if (!res.ok) {
-        throw new Error(`Failed to delete offer: ${res.status}`);
+        handleApiError(res, text, { entity: "offer" });
     }
 
     return res.status;
