@@ -3,7 +3,6 @@ import {z} from "zod";
 /** Single user */
 export const zUser = z.object({
     id: z.string().uuid(),
-    hashed_password: z.string(), // TODO: you won’t expose this in UI but it exists
     first_name: z.string(),
     last_name: z.string().nullable(),
     avatar_url: z.string().url().nullable(),

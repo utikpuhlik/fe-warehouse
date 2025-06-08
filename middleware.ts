@@ -1,9 +1,30 @@
-import NextAuth from 'next-auth';
-import { authConfig } from './auth.config';
+import { type NextRequest, NextResponse } from "next/server";
 
-export default NextAuth(authConfig).auth;
+export function middleware(request: NextRequest) {
+    const token = request.cookies.get("access_token")?.value;
+    const url = request.nextUrl;
+
+    const isLoggedIn = !!token;
+    const path = url.pathname;
+
+    const isAdminRoute = path.startsWith("/dashboard") || path.startsWith("/catalogue");
+
+    if (isAdminRoute && !isLoggedIn) {
+        return NextResponse.redirect(new URL("/login", request.url));
+    }
+
+    if (path === "/" && isLoggedIn) {
+        return NextResponse.redirect(new URL("/catalogue", request.url));
+    }
+
+    return NextResponse.next();
+}
 
 export const config = {
-    // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
-    matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+    matcher: [
+        "/",
+        "/dashboard/:path*",
+        "/catalogue/:path*",
+        "/mailing/:path*"
+    ],
 };

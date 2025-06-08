@@ -7,6 +7,7 @@ import {
 import {BASE_URL} from "@/app/lib/config/config";
 import { UnknownApiError,} from "@/app/lib/errors/apiErrors";
 import {type WaybillOfferPostSchema, type WaybillOfferSchema, zWaybillOfferSchema} from "@/app/lib/schemas/waybillOfferSchema";
+import { getAuthHeader } from "@/app/lib/apis/utils/getAuthHeader"
 export async function fetchWaybills(
     waybill_type: string | undefined,
     is_pending: string | undefined,
@@ -14,36 +15,35 @@ export async function fetchWaybills(
     page: number,
     size = 10
 ): Promise<WaybillPaginatedSchema> {
-    try {
-        const params = new URLSearchParams({
-            search_term,
-            size: size.toString(),
-            page: page.toString(),
-        });
+    const params = new URLSearchParams({
+        search_term,
+        size: size.toString(),
+        page: page.toString(),
+    });
 
-        if (waybill_type) {
-            params.set("waybill_type", waybill_type);
-        }
+    if (waybill_type) params.set("waybill_type", waybill_type);
+    if (is_pending) params.set("is_pending", is_pending);
 
-        if (is_pending) {
-            params.set("is_pending", is_pending);
-        }
+    const res = await fetch(`${BASE_URL}/waybills?${params.toString()}`, {
+        headers: await getAuthHeader(),
+        cache: "no-store"
+    });
 
-        const res = await fetch(`${BASE_URL}/waybills?${params.toString()}`);
-        return res.json();
-    }
-    catch (error) {
-        console.error("API Error:", error);
+    if (!res.ok) {
+        console.error("Waybill fetch failed", await res.text());
         throw new Error("Failed to fetch waybill data.");
     }
+
+    return res.json();
 }
 
 export async function fetchWaybillById(waybill_id: string): Promise<WaybillSchema> {
     try {
-        const res = await fetch(`${BASE_URL}/waybills/${waybill_id}`)
-        return res.json()
-    }
-    catch (error) {
+        const res = await fetch(`${BASE_URL}/waybills/${waybill_id}`, {
+            headers: await getAuthHeader(),
+        });
+        return res.json();
+    } catch (error) {
         console.error("API Error:", error);
         throw new Error("Failed to fetch waybill data.");
     }
@@ -51,23 +51,23 @@ export async function fetchWaybillById(waybill_id: string): Promise<WaybillSchem
 
 export async function fetchWaybillOffers(waybill_id: string): Promise<WaybillOfferSchema[]> {
     try {
-        const res = await fetch(`${BASE_URL}/waybills/${waybill_id}/offers`)
-        return res.json()
-    }
-    catch (error) {
+        const res = await fetch(`${BASE_URL}/waybills/${waybill_id}/offers`, {
+            headers: await getAuthHeader(),
+        });
+        return res.json();
+    } catch (error) {
         console.error("API Error:", error);
         throw new Error("Failed to fetch waybill-offers data.");
     }
 }
 
-export async function postWaybill(
-    waybill: WaybillPostSchema,
-): Promise<WaybillSchema> {
+export async function postWaybill(waybill: WaybillPostSchema): Promise<WaybillSchema> {
     const res = await fetch(`${BASE_URL}/waybills`, {
         method: "POST",
         headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            ...(await getAuthHeader()),
         },
         body: JSON.stringify(waybill),
     });
@@ -81,15 +81,14 @@ export async function postWaybill(
     return zWaybillSchema.parse(json);
 }
 
-export async function commitWaybill(
-    waybill_id: string
-): Promise<WaybillSchema> {
+export async function commitWaybill(waybill_id: string): Promise<WaybillSchema> {
     const res = await fetch(`${BASE_URL}/waybills/${waybill_id}/commit`, {
         method: "POST",
         headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            ...(await getAuthHeader()),
+        },
     });
 
     if (!res.ok) {
@@ -109,8 +108,9 @@ export async function postWaybillOffer(
     const res = await fetch(`${BASE_URL}/waybills/${waybill_id}/offers`, {
         method: "POST",
         headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            ...(await getAuthHeader()),
         },
         body: JSON.stringify(waybill),
     });
@@ -129,6 +129,7 @@ export async function delWaybill(id: string): Promise<number> {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
+            ...(await getAuthHeader()),
         },
     });
 
@@ -144,6 +145,7 @@ export async function delWaybillOffer(waybill_offer_id: string): Promise<number>
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
+            ...(await getAuthHeader()),
         },
     });
 

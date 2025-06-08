@@ -6,6 +6,9 @@ import Search from "@/app/ui/catalogue/search";
 import Pagination from "@/app/ui/catalogue/pagination";
 import {CreateWaybillModal} from "@/app/ui/catalogue/waybill/create-dialog";
 import {WaybillFilters} from "@/app/ui/catalogue/waybill/filters";
+import {getCurrentUserAction} from "@/app/lib/actions/authAction";
+import {UserSchema} from "@/app/lib/schemas/userSchema";
+import {notFound} from "next/navigation";
 
 export default async function WaybillsPage({searchParams}: {
 	searchParams?: Promise<{ query?: string; page?: string; waybill_type: string; is_pending?: string }>;
@@ -24,13 +27,19 @@ export default async function WaybillsPage({searchParams}: {
 		currentPage,
 		4);
 	const waybills: WaybillSchema[] = data.items;
+	const user: UserSchema | null = await getCurrentUserAction();
+
+	if (!user) {
+		notFound()
+	}
+
 	return (
 		<div className="p-4 space-y-4">
 			<div className="flex justify-between items-center flex-wrap gap-2">
 				<h1 className="text-2xl font-semibold">Накладные</h1>
 				<WaybillFilters />
 				<Search placeholder="Поиск..." />
-				<CreateWaybillModal user_id={"a3392f44-44e5-4910-b1be-e5f51e4002fe"}/>
+				<CreateWaybillModal user_id={user.id}/>
 			</div>
 
 			<div className="grid gap-4">
