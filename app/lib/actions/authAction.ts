@@ -4,7 +4,7 @@ import {cookies} from "next/headers";
 import {loginApi} from "@/app/lib/apis/authApi";
 import {redirect} from "next/navigation";
 import {fetchCurrentUser} from "@/app/lib/apis/userApi";
-import {UserSchema} from "@/app/lib/schemas/userSchema";
+import type {UserSchema} from "@/app/lib/schemas/userSchema";
 
 
 export async function loginAction(_: unknown, formData: FormData): Promise<string> {

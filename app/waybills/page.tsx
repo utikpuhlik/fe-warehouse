@@ -7,7 +7,7 @@ import Pagination from "@/app/ui/catalogue/pagination";
 import {CreateWaybillModal} from "@/app/ui/catalogue/waybill/create-dialog";
 import {WaybillFilters} from "@/app/ui/catalogue/waybill/filters";
 import {getCurrentUserAction} from "@/app/lib/actions/authAction";
-import {UserSchema} from "@/app/lib/schemas/userSchema";
+import type {UserSchema} from "@/app/lib/schemas/userSchema";
 import {notFound} from "next/navigation";
 
 export default async function WaybillsPage({searchParams}: {
