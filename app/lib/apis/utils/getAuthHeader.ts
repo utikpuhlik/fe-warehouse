@@ -3,7 +3,6 @@ import {cookies} from "next/headers";
 
 export async function getAuthHeader(): Promise<HeadersInit> {
     const token = (await cookies()).get("access_token")?.value;
-    return token
-        ? {Authorization: `Bearer ${token}`}
-        : {};
+    if (!token) throw new Error("No access token");
+    return { Authorization: `Bearer ${token}` };
 }
