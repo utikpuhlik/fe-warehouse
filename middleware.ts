@@ -3,14 +3,27 @@ import { type NextRequest, NextResponse } from "next/server";
 export function middleware(request: NextRequest) {
     const token = request.cookies.get("access_token")?.value;
     const url = request.nextUrl;
-
-    const isLoggedIn = !!token;
     const path = url.pathname;
 
-    const isAdminRoute = path.startsWith("/dashboard") || path.startsWith("/catalogue");
+    const isLoggedIn = !!token;
+
+    const isAdminRoute = [
+        "/dashboard",
+        "/catalogue",
+        "/profile",
+        "/orders",
+        "/mailing",
+        "/waybills",
+        "/price",
+    ].some((prefix) =>
+        path.startsWith(prefix)
+    );
+
 
     if (isAdminRoute && !isLoggedIn) {
-        return NextResponse.redirect(new URL("/login", request.url));
+        const loginUrl = new URL("/login", request.url);
+        loginUrl.searchParams.set("callbackUrl", request.nextUrl.pathname);
+        return NextResponse.redirect(loginUrl);
     }
 
     if (path === "/" && isLoggedIn) {
@@ -22,9 +35,12 @@ export function middleware(request: NextRequest) {
 
 export const config = {
     matcher: [
-        "/",
         "/dashboard/:path*",
         "/catalogue/:path*",
-        "/mailing/:path*"
+        "/mailing/:path*",
+        "/price/:path*",
+        "/waybills/:path*",
+        "/profile/:path*",
+        "/orders/:path*"
     ],
 };

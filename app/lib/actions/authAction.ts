@@ -12,24 +12,28 @@ export async function loginAction(_: unknown, formData: FormData): Promise<strin
     const password = formData.get("password") as string;
     const redirectTo = (formData.get("redirectTo") as string) || "/catalogue";
 
-    const data = await loginApi(email, password);
+    try {
+        const data = await loginApi(email, password);
 
-    const cookieStore = await cookies();
-    cookieStore.set("access_token", data.access_token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "lax",
-        path: "/",
-        maxAge: 60 * 60,
-    });
+        const cookieStore = await cookies();
+        cookieStore.set("access_token", data.access_token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "lax",
+            path: "/",
+            maxAge: 60 * 60,
+        });
 
-    return redirectTo;
+        return redirectTo;
+    } catch {
+        return "Неверный email или пароль.";
+    }
 }
 
 export async function logoutAction(): Promise<void> {
     const cookieStore = await cookies();
     cookieStore.delete("access_token");
-    redirect("/")
+    redirect("/login")
 }
 
 
