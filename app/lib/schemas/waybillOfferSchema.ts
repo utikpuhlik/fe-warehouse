@@ -20,9 +20,12 @@ export const zWaybillOfferSchema = zWaybillOfferBaseSchema.extend({
     id: z.string().uuid(),
     waybill_id: z.string().uuid(),
     product_name: z.string(),
+    address_id: z.string().optional().nullable(),
     image_url: z.string().url(),
     category_slug: z.string(),
-    sub_category_slug: z.string()
+    category_name: z.string(),
+    sub_category_slug: z.string(),
+    sub_category_name: z.string()
 })
 
 export const zWaybillOfferPostSchema = zWaybillOfferBaseSchema.extend({

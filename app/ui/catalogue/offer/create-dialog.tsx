@@ -30,6 +30,7 @@ export function CreateOfferModal(product: Product) {
     const form = useForm<OfferPostSchema>({
         resolver: zodResolver(zOfferPostSchema),
         defaultValues: {
+            address_id: "",
             brand: "",
             manufacturer_number: "",
             internal_description: "",
@@ -72,6 +73,10 @@ export function CreateOfferModal(product: Product) {
                 </DialogHeader>
 
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                    <div>
+                        <Label htmlFor="address_id">Адресный номер</Label>
+                        <Input id="address_id" {...form.register("address_id")} />
+                    </div>
                     <div>
                         <Label htmlFor="brand">Бренд</Label>
                         <Input id="brand" {...form.register("brand")} />

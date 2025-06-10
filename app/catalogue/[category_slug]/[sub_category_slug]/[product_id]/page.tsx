@@ -1,36 +1,29 @@
 
 import {OfferCard} from "@/app/ui/catalogue/cards/offer-card";
 import {fetchProductById} from "@/app/lib/apis/productApi";
-import {fetchCategoryBySlug} from "@/app/lib/apis/categoryApi";
-import {fetchSubCategoryBySlug} from "@/app/lib/apis/subCategoryApi";
 import {fetchOffersByProductId} from "@/app/lib/apis/offerApi";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
 import type {OfferSchema, OffersSchema} from "@/app/lib/schemas/offerSchema";
 import {notFound} from "next/navigation";
 import { CreateOfferModal } from "@/app/ui/catalogue/offer/create-dialog";
+import type {Product} from "@/app/lib/schemas/productSchema";
 
 // https://stackoverflow.com/questions/79113322/nextjs-react-type-does-not-satisfy-constraint
 type Params = Promise<{
-	category_slug: string;
-	sub_category_slug: string;
 	product_id: string;
 }>;
 
-export default async function Page(props: { params: Params }) {
+export default async function OffersPage(props: { params: Params }) {
 	const params = await props.params;
 	const product_id = params.product_id;
-	const category_slug = params.category_slug;
-	const sub_category_slug = params.sub_category_slug;
 
-	const [category, sub_category, product] = await Promise.all([
-		fetchCategoryBySlug(category_slug),
-		fetchSubCategoryBySlug(sub_category_slug),
-		fetchProductById(product_id)
-	]);
+	const product: Product = await fetchProductById(product_id);
 
 	if (!product) {
 		notFound();
 	}
+	const category_slug = product.category_slug;
+	const sub_category_slug = product.sub_category_slug;
 
 	const offersData: OffersSchema = await fetchOffersByProductId(product_id);
 	const offers: OfferSchema[] = offersData.items ?? [];
@@ -42,12 +35,12 @@ export default async function Page(props: { params: Params }) {
 				breadcrumbs={[
 					{ label: "Каталог", href: "/catalogue" },
 					{
-						label: category.name,
+						label: product.category_name,
 						href: `/catalogue/${category_slug}`,
 						active: true,
 					},
 					{
-						label: sub_category.name,
+						label: product.sub_category_name,
 						href: `/catalogue/${category_slug}/${sub_category_slug}`,
 						active: true,
 					},

@@ -8,6 +8,8 @@ import { CreateWaybillOfferModal } from "@/app/ui/catalogue/waybill/create-waybi
 import { DownloadButton } from "@/app/ui/catalogue/buttons/download-button";
 import { CommitWaybillButton } from "@/app/ui/catalogue/waybill/commit-waybill-button";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
+import {DeleteEntityButton} from "@/app/ui/catalogue/buttons/delete-entity-button";
+import {deleteWaybillAction} from "@/app/lib/actions/waybillAction";
 
 type Params = Promise<{
     id: string;
@@ -27,7 +29,7 @@ export default async function WaybillPage(props: { params: Params }) {
                 : "Возврат";
 
     return (
-        <div className="max-w-5xl mx-auto py-10 space-y-6">
+        <div className="max-w-[100rem] mx-auto py-10 space-y-6 px-4">
             <div className="mb-4 flex items-center justify-between">
                 <Breadcrumbs
                     breadcrumbs={[
@@ -76,6 +78,13 @@ export default async function WaybillPage(props: { params: Params }) {
                     )}
                 </Tooltip>
             </TooltipProvider>
+            <DeleteEntityButton
+                entityName="накладную"
+                entityId={waybill_id}
+                deleteAction={deleteWaybillAction}
+                disabled={!waybill.is_pending}
+                className="ml-2"
+            />
         </div>
     );
 }

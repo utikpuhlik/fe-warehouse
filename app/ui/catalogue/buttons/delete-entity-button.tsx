@@ -11,6 +11,8 @@ type Props = {
     entityId: string;
     deleteAction: (id: string) => Promise<void>;
     onDeleted?: () => void;
+    className?: string;
+    disabled?: boolean;
 };
 
 export function DeleteEntityButton({
@@ -18,6 +20,8 @@ export function DeleteEntityButton({
                                        entityId,
                                        deleteAction,
                                        onDeleted,
+                                       className,
+                                       disabled,
                                    }: Props) {
     const [isPending, startTransition] = useTransition();
 
@@ -43,8 +47,9 @@ export function DeleteEntityButton({
         <Button
             type="button"
             variant="destructive"
-            disabled={isPending}
+            disabled={isPending || disabled}
             onClick={handleDelete}
+            className={className}
         >
             <TrashIcon/>
         </Button>

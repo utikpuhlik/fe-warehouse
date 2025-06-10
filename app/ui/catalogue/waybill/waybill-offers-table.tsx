@@ -2,6 +2,7 @@ import {
     Table,
     TableBody,
     TableCell,
+    TableFooter,
     TableHead,
     TableHeader,
     TableRow,
@@ -15,6 +16,12 @@ import {DeleteWaybillOfferProxy} from "@/app/ui/catalogue/waybill/delete-waybill
 
 export default async function WaybillOffersTable(waybill: WaybillSchema) {
     const offers: WaybillOfferSchema[] = await fetchWaybillOffers(waybill.id);
+
+    const totalSumRub = offers.reduce(
+        (acc: number, o: WaybillOfferSchema) => acc + o.price_rub * o.quantity,
+        0,
+    );
+
     if (!offers.length) {
         return (
             <Card>
@@ -34,19 +41,25 @@ export default async function WaybillOffersTable(waybill: WaybillSchema) {
             <Table>
                 <TableHeader>
                     <TableRow>
+                        <TableHead>№</TableHead>
+                        <TableHead>Адресный код</TableHead>
                         <TableHead>Фото</TableHead>
-                        <TableHead>Название</TableHead>
+                        <TableHead>Система</TableHead>
+                        <TableHead>Подсистема</TableHead>
+                        <TableHead>Наименование</TableHead>
                         <TableHead>Бренд</TableHead>
                         <TableHead>Артикул</TableHead>
-                        <TableHead>Цена</TableHead>
                         <TableHead>Кол-во</TableHead>
+                        <TableHead>Цена</TableHead>
                         <TableHead>Сумма</TableHead>
                         {waybill.is_pending && <TableHead />}
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {offers.map((o) => (
+                    {offers.map((o: WaybillOfferSchema, index) => (
                         <TableRow key={o.id}>
+                            <TableCell>{index + 1}</TableCell>
+                            <TableCell>{o.address_id}</TableCell>
                             <TableCell>
                                 <Image
                                     src={o.image_url}
@@ -56,11 +69,13 @@ export default async function WaybillOffersTable(waybill: WaybillSchema) {
                                     className="rounded"
                                 />
                             </TableCell>
+                            <TableCell>{o.category_name}</TableCell>
+                            <TableCell>{o.sub_category_name}</TableCell>
                             <TableCell>{o.product_name}</TableCell>
                             <TableCell>{o.brand}</TableCell>
                             <TableCell>{o.manufacturer_number}</TableCell>
-                            <TableCell>{o.price_rub.toFixed(2)} ₽</TableCell>
                             <TableCell>{o.quantity}</TableCell>
+                            <TableCell>{o.price_rub.toFixed(2)} ₽</TableCell>
                             <TableCell>{(o.price_rub * o.quantity).toFixed(2)} ₽</TableCell>
                             {waybill.is_pending && (
                                 <TableCell>
@@ -70,6 +85,14 @@ export default async function WaybillOffersTable(waybill: WaybillSchema) {
                         </TableRow>
                     ))}
                 </TableBody>
+                <TableFooter>
+                    <TableRow className="font-semibold bg-muted/40">
+                        <TableCell colSpan={9} />
+                        <TableCell className="text-right">Σ</TableCell>
+                        <TableCell>{totalSumRub.toFixed(2)} ₽</TableCell>
+                        {waybill.is_pending && <TableCell />}
+                    </TableRow>
+                </TableFooter>
             </Table>
         </Card>
     );

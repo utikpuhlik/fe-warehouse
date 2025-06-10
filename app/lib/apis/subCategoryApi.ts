@@ -7,12 +7,12 @@ const ENTITY = "sub-categories";
 
 export async function fetchSubCategories(category_id: string): Promise<SubCategory[]> {
     const url = `${BASE_URL}/${ENTITY}?category_id=${category_id}&order_by=name`;
-    return fetchAndParse(url, zSubCategoryArraySchema, {next: {revalidate: 60}}, "sub-category");
+    return fetchAndParse(url, zSubCategoryArraySchema, undefined, "sub-category");
 }
 
 export async function fetchSubCategoryBySlug(slug: string): Promise<SubCategory> {
     const url = `${BASE_URL}/${ENTITY}/${slug}`;
-    return fetchAndParse(url, zSubCategorySchema, {next: {revalidate: 60}}, "sub-category");
+    return fetchAndParse(url, zSubCategorySchema,  undefined, "sub-category");
 }
 
 export async function postSubCategory(subCategory: FormData): Promise<SubCategory> {

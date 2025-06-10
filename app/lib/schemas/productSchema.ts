@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 export const zProductBaseSchema = z.object({
-    address_id: z.string().optional().nullable(),
     name: z.string().min(1, "Название не может быть пустым"),
     cross_number: z.string().optional().nullable(),
     description: z.string().optional().nullable(),
@@ -26,7 +25,9 @@ export const zProduct = zProductBaseSchema.extend({
     bitrix_id: z.string().optional().nullable(),
     slug: z.string().nullable(),
     category_slug: z.string(),
-    sub_category_slug: z.string()
+    category_name: z.string(),
+    sub_category_slug: z.string(),
+    sub_category_name: z.string()
 });
 
 export const zProducts = z.object({
