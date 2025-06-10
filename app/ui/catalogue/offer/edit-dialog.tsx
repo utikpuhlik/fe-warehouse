@@ -23,6 +23,7 @@ import {
   deleteOfferAction,
   updateOfferAction,
 } from "@/app/lib/actions/offerAction";
+import { useEffect } from "react";
 
 export function EditOfferModal(offer: OfferSchema) {
   const [open, setOpen] = useState(false);
@@ -32,6 +33,11 @@ export function EditOfferModal(offer: OfferSchema) {
     resolver: zodResolver(zOfferSchema),
     defaultValues: offer,
   });
+  useEffect(() => {
+    if (open) {
+      form.reset(offer);
+    }
+  }, [open, offer, form]);
 
   const resetForm = () => {
     form.reset();

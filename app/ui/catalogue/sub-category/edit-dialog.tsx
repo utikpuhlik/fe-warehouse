@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {type SubCategory, zSubCategorySchema
 } from "@/app/lib/schemas/subCategorySchema";
-import { useState, useTransition } from "react";
+import {useEffect, useState, useTransition} from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
@@ -32,6 +32,11 @@ export function EditSubCategoryModal(sub_category: SubCategory) {
         resolver: zodResolver(zSubCategorySchema),
         defaultValues: sub_category,
     });
+    useEffect(() => {
+        if (open) {
+            form.reset(sub_category);
+        }
+    }, [open, sub_category, form]);
 
     const resetForm = () => {
         form.reset();

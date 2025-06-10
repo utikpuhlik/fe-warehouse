@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useTransition } from "react";
+import {useEffect, useState, useTransition} from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
@@ -31,6 +31,11 @@ export function EditProductModal(product: Product) {
         resolver: zodResolver(zProduct),
         defaultValues: product,
     });
+    useEffect(() => {
+        if (open) {
+            form.reset(product);
+        }
+    }, [open, product, form]);
 
     const resetForm = () => {
         form.reset();
@@ -76,10 +81,6 @@ export function EditProductModal(product: Product) {
                     <div>
                         <Label htmlFor="name">Название</Label>
                         <Input id="name" {...form.register("name")} />
-                    </div>
-                    <div>
-                        <Label htmlFor="address_id">Адресный номер</Label>
-                        <Input id="address_id" {...form.register("address_id")} />
                     </div>
                     <div>
                         <Label htmlFor="cross_number">Кросс-номер</Label>
