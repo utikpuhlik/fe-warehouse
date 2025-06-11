@@ -1,4 +1,3 @@
-import { CreateProduct } from "@/app/ui/catalogue/buttons";
 import Pagination from "@/app/ui/catalogue/pagination";
 import Search from "@/app/ui/catalogue/search";
 import Table from "@/app/ui/catalogue/table";
@@ -28,7 +27,7 @@ export default async function Page(props: {
 			</div>
 			<div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
 				<Search placeholder="Поиск.." />
-				<CreateProduct />
+				{/*<CreateProduct />*/}
 			</div>
 			<Suspense key={query + currentPage} fallback={<ProductsTableSkeleton />}>
 				<Table offers={items}/>

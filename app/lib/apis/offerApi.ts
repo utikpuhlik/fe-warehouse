@@ -23,7 +23,7 @@ export async function fetchOffersByProductId(product_id: string): Promise<Offers
 }
 
 export async function fetchFilteredOffersWS(search_term: string): Promise<OffersSchema> {
-    const url = `${BASE_URL}/${ENTITY}/search?search_term=${search_term}`;
+    const url = `${BASE_URL}/${ENTITY}/search/wildcard?search_term=${search_term}`;
     return fetchAndParse(url, zOffersSchema, undefined, "offer");
 }
 
@@ -32,7 +32,7 @@ export async function fetchFilteredOffersTS(
     size = 10,
     page = 1
 ): Promise<OffersSchema> {
-    const url = `${BASE_URL}/${ENTITY}/text_search?search_term=${search_term}&size=${size}&page=${page}`;
+    const url = `${BASE_URL}/${ENTITY}/search/text_search?search_term=${search_term}&size=${size}&page=${page}`;
     return fetchAndParse(url, zOffersSchema, undefined, "offer");
 }
 

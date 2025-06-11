@@ -32,7 +32,6 @@ export function CreateProductModal(sub_category: SubCategory) {
         resolver: zodResolver(zProductPostSchema),
         defaultValues: {
             name: "",
-            address_id: "",
             cross_number: "",
             description: "",
             sub_category_id: sub_category.id,
@@ -85,10 +84,6 @@ export function CreateProductModal(sub_category: SubCategory) {
                                 {form.formState.errors.name.message}
                             </p>
                         )}
-                    </div>
-                    <div>
-                        <Label htmlFor="address_id">Адресный номер</Label>
-                        <Input id="address_id" {...form.register("address_id")} />
                     </div>
                     <div>
                         <Label htmlFor="cross_number">Кросс-номер</Label>
