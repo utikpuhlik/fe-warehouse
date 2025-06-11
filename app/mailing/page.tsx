@@ -9,6 +9,8 @@ import {
 	TableRow,
 } from "@/components/ui/table"
 import {fetchUsers} from "@/app/lib/apis/userApi";
+import {CustomerTypeSelect} from "@/app/ui/catalogue/mailing/customer-type-select";
+import {MailingToggle} from "@/app/ui/catalogue/mailing/customer-mailing-toggle";
 
 export const dynamic = 'force-dynamic'
 
@@ -22,6 +24,8 @@ export default async function MailingPage() {
 					<TableHead className="w-[100px]">Имя</TableHead>
 					<TableHead>Фамилия</TableHead>
 					<TableHead>Позиция</TableHead>
+					<TableHead>Тип клиента</TableHead>
+					<TableHead>Рассылка</TableHead>
 					<TableHead className="text-right">Email</TableHead>
 				</TableRow>
 			</TableHeader>
@@ -31,13 +35,19 @@ export default async function MailingPage() {
 						<TableCell className="font-medium">{user.first_name}</TableCell>
 						<TableCell>{user.last_name ?? 'TCF'}</TableCell>
 						<TableCell>{user.position}</TableCell>
+						<TableCell>
+							<CustomerTypeSelect {...user} />
+						</TableCell>
+						<TableCell>
+							<MailingToggle {...user} />
+						</TableCell>
 						<TableCell className="text-right">{user.email}</TableCell>
 					</TableRow>
 				))}
 			</TableBody>
 			<TableFooter>
 				<TableRow>
-					<TableCell colSpan={3}>Total</TableCell>
+					<TableCell colSpan={5}>Total</TableCell>
 					<TableCell className="text-right">{users.length}</TableCell>
 				</TableRow>
 			</TableFooter>

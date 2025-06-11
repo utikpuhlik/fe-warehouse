@@ -12,6 +12,8 @@ export const zUser = z.object({
     is_verified: z.boolean(),
     role: z.string(),
     position: z.string().nullable(),
+    customer_type: z.enum(["USER_RETAIL", "USER_WHOLESALE", "USER_SUPER_WHOLESALE"]),
+    mailing: z.boolean(),
 });
 
 /** Array wrapper for list endpoints */
