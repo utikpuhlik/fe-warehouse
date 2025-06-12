@@ -2,7 +2,6 @@ import { type Category, zCategory, zCategories } from "@/app/lib/schemas/categor
 import { BASE_URL } from "@/app/lib/config/config";
 import { handleApiError } from "@/app/lib/apis/utils/handleApiError";
 import {fetchAndParse} from "@/app/lib/apis/utils/fetchJson";
-import {getAuthHeader} from "@/app/lib/apis/utils/getAuthHeader";
 
 const ENTITY = "categories";
 
@@ -29,7 +28,6 @@ export async function postCategory(category: FormData): Promise<Category> {
         method: "POST",
         headers: {
             Accept: "application/json",
-            ...(await getAuthHeader()),
         },
         body: category,
     });
@@ -47,7 +45,6 @@ export async function patchCategory(id: string, category: FormData): Promise<Cat
         method: "PATCH",
         headers: {
             Accept: "application/json",
-            ...(await getAuthHeader()),
         },
         body: category,
     });
@@ -64,8 +61,7 @@ export async function delCategory(id: string): Promise<number> {
     const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
         method: "DELETE",
         headers: {
-            Accept: "application/json",
-            ...(await getAuthHeader()),
+            "Content-Type": "application/json",
         },
     });
 

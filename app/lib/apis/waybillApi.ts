@@ -66,6 +66,7 @@ export async function postWaybill(waybill: WaybillPostSchema): Promise<WaybillSc
         method: "POST",
         headers: {
             Accept: "application/json",
+            "Content-Type": "application/json",
             ...(await getAuthHeader()),
         },
         body: JSON.stringify(waybill),
@@ -85,6 +86,7 @@ export async function commitWaybill(waybill_id: string): Promise<WaybillSchema> 
         method: "POST",
         headers: {
             Accept: "application/json",
+            "Content-Type": "application/json",
             ...(await getAuthHeader()),
         },
     });
@@ -107,6 +109,7 @@ export async function postWaybillOffer(
         method: "POST",
         headers: {
             Accept: "application/json",
+            "Content-Type": "application/json",
             ...(await getAuthHeader()),
         },
         body: JSON.stringify(waybill),
@@ -125,7 +128,7 @@ export async function delWaybill(id: string): Promise<number> {
     const res = await fetch(`${BASE_URL}/waybills/${id}`, {
         method: "DELETE",
         headers: {
-            
+            "Content-Type": "application/json",
             ...(await getAuthHeader()),
         },
     });
@@ -141,7 +144,7 @@ export async function delWaybillOffer(waybill_offer_id: string): Promise<number>
     const res = await fetch(`${BASE_URL}/waybill-offers/${waybill_offer_id}`, {
         method: "DELETE",
         headers: {
-            
+            "Content-Type": "application/json",
             ...(await getAuthHeader()),
         },
     });

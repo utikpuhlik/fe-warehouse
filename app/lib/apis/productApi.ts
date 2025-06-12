@@ -7,7 +7,6 @@ import {
 import { BASE_URL } from "@/app/lib/config/config";
 import { handleApiError } from "@/app/lib/apis/utils/handleApiError";
 import {fetchAndParse} from "@/app/lib/apis/utils/fetchJson";
-import {getAuthHeader} from "@/app/lib/apis/utils/getAuthHeader";
 
 const ENTITY = "products";
 
@@ -24,10 +23,7 @@ export async function fetchProductById(id: string): Promise<Product> {
 export async function postProduct(product: FormData): Promise<Product> {
     const res = await fetch(`${BASE_URL}/${ENTITY}`, {
         method: "POST",
-        headers: {
-            Accept: "application/json",
-            ...(await getAuthHeader()),
-        },
+        headers: { Accept: "application/json" },
         body: product,
     });
 
@@ -42,10 +38,7 @@ export async function postProduct(product: FormData): Promise<Product> {
 export async function putProduct(id: string, product: FormData): Promise<number> {
     const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
         method: "PUT",
-        headers: {
-            Accept: "application/json",
-            ...(await getAuthHeader()),
-        },
+        headers: { Accept: "application/json" },
         body: product,
     });
 
@@ -60,10 +53,7 @@ export async function putProduct(id: string, product: FormData): Promise<number>
 export async function delProduct(id: string): Promise<number> {
     const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
         method: "DELETE",
-        headers: {
-            Accept: "application/json",
-            ...(await getAuthHeader()),
-        },
+        headers: { "Content-Type": "application/json" },
     });
 
     const text = await res.text().catch(() => "");
