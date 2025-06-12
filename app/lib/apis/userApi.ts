@@ -47,7 +47,6 @@ export async function patchUser(id: string, user: UserSchema): Promise<UserSchem
         method: "PATCH",
         headers: {
             Accept: "application/json",
-            "Content-Type": "application/json",
             ...(await getAuthHeader()),
         },
         body: JSON.stringify(user),
