@@ -15,7 +15,7 @@ import {
     type Category,
     zCategory,
 } from "@/app/lib/schemas/categorySchema";
-import {useEffect, useState, useTransition} from "react";
+import {useState, useTransition} from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
@@ -32,11 +32,6 @@ export function EditCategoryModal(category: Category) {
         resolver: zodResolver(zCategory),
         defaultValues: category,
     });
-    useEffect(() => {
-        if (open) {
-            form.reset(category);
-        }
-    }, [open, category, form]);
 
     const resetForm = () => {
         form.reset();

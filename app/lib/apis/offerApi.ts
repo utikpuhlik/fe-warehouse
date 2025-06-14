@@ -9,6 +9,7 @@ import {
 import { BASE_URL } from "@/app/lib/config/config";
 import { handleApiError } from "@/app/lib/apis/utils/handleApiError";
 import {fetchAndParse} from "@/app/lib/apis/utils/fetchJson";
+import {getAuthHeader} from "@/app/lib/apis/utils/getAuthHeader";
 
 const ENTITY = "offers";
 
@@ -42,6 +43,7 @@ export async function postOffer(offer: OfferPostSchema): Promise<OfferSchema> {
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            ...(await getAuthHeader()),
         },
         body: JSON.stringify(offer),
     });
@@ -54,12 +56,13 @@ export async function postOffer(offer: OfferPostSchema): Promise<OfferSchema> {
     return zOfferSchema.parse(JSON.parse(text));
 }
 
-export async function putOffer(id: string, offer: OfferPutSchema): Promise<number> {
+export async function putOffer(id: string, offer: OfferPutSchema): Promise<OfferSchema> {
     const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
         method: "PUT",
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            ...(await getAuthHeader()),
         },
         body: JSON.stringify(offer),
     });
@@ -69,13 +72,17 @@ export async function putOffer(id: string, offer: OfferPutSchema): Promise<numbe
         handleApiError(res, text, { entity: "offer" });
     }
 
-    return res.status;
+    return zOfferSchema.parse(JSON.parse(text));
 }
 
 export async function delOffer(id: string): Promise<number> {
     const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            ...(await getAuthHeader()),
+        },
     });
 
     const text = await res.text().catch(() => "");

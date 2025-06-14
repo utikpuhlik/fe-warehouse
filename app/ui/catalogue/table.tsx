@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import {imageUrlPlaceholder} from "@/app/lib/config/config";
 import type {OfferSchema} from "@/app/lib/schemas/offerSchema";
@@ -11,7 +9,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import {EditOfferModal} from "@/app/ui/catalogue/offer/edit-dialog";
 import Link from "next/link";
 
 export default function OffersTable({offers}: { offers: OfferSchema[] }) {
@@ -26,7 +23,6 @@ export default function OffersTable({offers}: { offers: OfferSchema[] }) {
                         <TableHead>Номер производителя</TableHead>
                         <TableHead>Остаток</TableHead>
                         <TableHead>Цена</TableHead>
-                        <TableHead className="text-right">Действия</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -52,9 +48,6 @@ export default function OffersTable({offers}: { offers: OfferSchema[] }) {
                             <TableCell>{offer.manufacturer_number}</TableCell>
                             <TableCell>{offer.quantity}</TableCell>
                             <TableCell>{`${offer.price_rub} ₽`}</TableCell>
-                            <TableCell className="text-right">
-                                <EditOfferModal {...offer} />
-                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

@@ -4,6 +4,7 @@ import type {OfferSchema} from "@/app/lib/schemas/offerSchema";
 import {Card} from "@/components/ui/card";
 import Image from "next/image";
 import { EditOfferModal } from "@/app/ui/catalogue/offer/edit-dialog";
+import { v4 as uuidv4 } from 'uuid';
 
 export function OfferCard(offer: OfferSchema) {
     return (
@@ -32,7 +33,7 @@ export function OfferCard(offer: OfferSchema) {
                 </div>
                 <div className="text-xs text-muted-foreground mt-1">ID: {offer.id}</div>
             </div>
-            <EditOfferModal {...offer}/>
+            <EditOfferModal key={uuidv4()} {...offer}/>
         </Card>
     )
 }

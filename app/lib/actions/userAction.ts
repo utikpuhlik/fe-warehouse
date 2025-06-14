@@ -7,6 +7,7 @@ import type {UserSchema} from "@/app/lib/schemas/userSchema";
 export async function updateUserAction(
     user: UserSchema
 ) {
+    console.log(user)
     await patchUser(user.id, user);
     revalidatePath("/mailing");
 }

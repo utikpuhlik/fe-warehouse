@@ -28,7 +28,7 @@ const links = [
 
 	{ name: "Customers", href: "/dashboard/customers", icon: UserGroupIcon },
 	{ name: "Catalogue", href: "/catalogue", icon: ClipboardDocumentListIcon },
-	{ name: "Catalogue Table", href: "/catalogue/table", icon: TableCellsIcon },
+	{ name: "Catalogue Table", href: "/table", icon: TableCellsIcon },
 	{ name: "Orders", href: "/orders", icon: ShoppingCartIcon },
 	{ name: "Price", href: "/price", icon: CurrencyDollarIcon },
 	{ name: "Накладные", href: "/waybills", icon: DocumentArrowDownIcon},

@@ -6,6 +6,7 @@ import Image from "next/image";
 import {imageUrlPlaceholder} from "@/app/lib/config/config";
 import {Card, CardContent} from "@/components/ui/card";
 import {EditProductModal} from "@/app/ui/catalogue/product/edit-dialog";
+import {v4 as uuidv4} from "uuid";
 
 export function ProductCard(product: Product) {
     return (
@@ -22,7 +23,7 @@ export function ProductCard(product: Product) {
                     <h3 className="text-center text-sm font-medium mb-1">{product.name}</h3>
                 </CardContent>
             </Link>
-            <EditProductModal {...product} />
+            <EditProductModal key={uuidv4()} {...product} />
         </Card>
     );
 }

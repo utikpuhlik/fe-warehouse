@@ -13,7 +13,7 @@ export function MailingToggle(user: UserSchema) {
     const handleChange = (checked: boolean) => {
         setValue(checked);
         startTransition(() => {
-            updateUserAction(user)
+            updateUserAction({...user, mailing: checked})
                 .then(() =>
                     toast({
                         title: "Рассылка обновлена",

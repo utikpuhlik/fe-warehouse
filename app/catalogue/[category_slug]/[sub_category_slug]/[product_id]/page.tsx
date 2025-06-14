@@ -37,12 +37,12 @@ export default async function OffersPage(props: { params: Params }) {
 					{
 						label: product.category_name,
 						href: `/catalogue/${category_slug}`,
-						active: true,
+						active: false,
 					},
 					{
 						label: product.sub_category_name,
 						href: `/catalogue/${category_slug}/${sub_category_slug}`,
-						active: true,
+						active: false,
 					},
 					{
 						label: product.name,

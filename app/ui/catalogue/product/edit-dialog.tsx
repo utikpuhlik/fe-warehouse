@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {useEffect, useState, useTransition} from "react";
+import {useState, useTransition} from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
@@ -31,11 +31,6 @@ export function EditProductModal(product: Product) {
         resolver: zodResolver(zProduct),
         defaultValues: product,
     });
-    useEffect(() => {
-        if (open) {
-            form.reset(product);
-        }
-    }, [open, product, form]);
 
     const resetForm = () => {
         form.reset();

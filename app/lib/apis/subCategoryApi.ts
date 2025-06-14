@@ -2,6 +2,7 @@ import {type SubCategory, zSubCategorySchema, zSubCategoryArraySchema} from "@/a
 import {BASE_URL} from "@/app/lib/config/config";
 import {handleApiError} from "@/app/lib/apis/utils/handleApiError";
 import {fetchAndParse} from "@/app/lib/apis/utils/fetchJson";
+import {getAuthHeader} from "@/app/lib/apis/utils/getAuthHeader";
 
 const ENTITY = "sub-categories";
 
@@ -18,7 +19,10 @@ export async function fetchSubCategoryBySlug(slug: string): Promise<SubCategory>
 export async function postSubCategory(subCategory: FormData): Promise<SubCategory> {
     const res = await fetch(`${BASE_URL}/${ENTITY}`, {
         method: "POST",
-        headers: {Accept: "application/json"},
+        headers: {
+            Accept: "application/json",
+            ...(await getAuthHeader()),
+        },
         body: subCategory,
     });
 
@@ -33,7 +37,10 @@ export async function postSubCategory(subCategory: FormData): Promise<SubCategor
 export async function putSubCategory(id: string, subCategory: FormData): Promise<number> {
     const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
         method: "PUT",
-        headers: {Accept: "application/json"},
+        headers: {
+            Accept: "application/json",
+            ...(await getAuthHeader()),
+        },
         body: subCategory,
     });
 
@@ -48,7 +55,10 @@ export async function putSubCategory(id: string, subCategory: FormData): Promise
 export async function delSubCategory(id: string): Promise<number> {
     const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
         method: "DELETE",
-        headers: {"Content-Type": "application/json"},
+        headers: {
+            Accept: "application/json",
+            ...(await getAuthHeader()),
+        },
     });
 
     const text = await res.text().catch(() => "");

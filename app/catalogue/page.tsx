@@ -1,6 +1,5 @@
 import type {Category} from "@/app/lib/schemas/categorySchema";
 import {CategoryCard} from "@/app/ui/catalogue/cards/category-card";
-import {lusitana} from "@/app/ui/fonts";
 import {fetchCategories} from "@/app/lib/apis/categoryApi";
 import {CreateCategoryModal} from "@/app/ui/catalogue/category/create-dialog";
 
@@ -11,7 +10,7 @@ export default async function CategoriesPage() {
 	return (
 		<main>
 			<div className="mb-4 flex items-center justify-between">
-				<h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
+				<h1 className="mb-4 text-xl md:text-2xl">
 					Каталог
 				</h1>
 				<CreateCategoryModal />

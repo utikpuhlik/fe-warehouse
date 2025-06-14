@@ -4,7 +4,7 @@ import WaybillOffersTable from "@/app/ui/catalogue/waybill/waybill-offers-table"
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
-import { CreateWaybillOfferModal } from "@/app/ui/catalogue/waybill/create-waybill-offer";
+// import { CreateWaybillOfferModal } from "@/app/ui/catalogue/waybill/create-waybill-offer";
 import { DownloadButton } from "@/app/ui/catalogue/buttons/download-button";
 import { CommitWaybillButton } from "@/app/ui/catalogue/waybill/commit-waybill-button";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
@@ -46,9 +46,9 @@ export default async function WaybillPage(props: { params: Params }) {
                     <TooltipProvider>
                         <Tooltip>
                             <TooltipTrigger asChild>
-                                <div className="inline-block">
-                                    <CreateWaybillOfferModal waybill_id={waybill_id} disabled={!waybill.is_pending} />
-                                </div>
+                                {/*<div className="inline-block">*/}
+                                {/*    <CreateWaybillOfferModal waybill_id={waybill_id} disabled={!waybill.is_pending} />*/}
+                                {/*</div>*/}
                             </TooltipTrigger>
                             {!waybill.is_pending && (
                                 <TooltipContent>

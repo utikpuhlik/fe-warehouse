@@ -23,23 +23,22 @@ export function CardSkeleton() {
 export function CardSkeletonV2() {
 	return (
 		<div className="relative overflow-hidden rounded-xl border bg-background p-4 shadow-sm">
-			{/* Header */}
-			<div className="flex items-center space-x-2 mb-4">
-				<Skeleton className="h-6 w-6 rounded-md" />
-				<Skeleton className="h-6 w-20 rounded-md" />
+			{/* Content block */}
+			<div className="flex items-center justify-center rounded-xl bg-muted mb-4 size-[100px] mx-auto">
 			</div>
 
-			{/* Content block */}
-			<div className="flex items-center justify-center rounded-xl bg-muted px-4 py-10">
-				<Skeleton className="h-6 w-24 rounded-md" />
+			{/* Footer */}
+			<div className="flex items-center justify-center">
+				<Skeleton className="h-10 w-20 rounded-md mb-4" />
 			</div>
+
 		</div>
 	);
 }
 
 export function BreadcrumbsSkeleton() {
 	return (
-		<div className="flex items-center gap-2 mb-4">
+		<div className="flex items-center gap-2 mb-4 h-[48px]">
 			<Skeleton className="h-4 w-16" />
 			<span className="text-muted-foreground">/</span>
 			<Skeleton className="h-4 w-24" />

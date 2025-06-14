@@ -36,7 +36,7 @@ export default async function ProductsPage(props: { params: Params }) {
 					{
 						label: sub_category.category_name,
 						href: `/catalogue/${category_slug}`,
-						active: true,
+						active: false,
 					},
 					{
 						label: sub_category.name,

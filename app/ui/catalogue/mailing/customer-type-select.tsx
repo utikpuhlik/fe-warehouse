@@ -25,7 +25,7 @@ export function CustomerTypeSelect(user: UserSchema) {
     const handleChange = (value: typeof selected) => {
         setSelected(value);
         startTransition(() => {
-            updateUserAction(user)
+            updateUserAction({...user, customer_type: value})
                 .then(() => toast({ title: "Успешно", description: `Пользователь ${user.email} обновлён` }))
                 .catch(() =>
                     toast({
