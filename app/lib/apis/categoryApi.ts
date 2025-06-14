@@ -28,6 +28,7 @@ export async function postCategory(category: FormData): Promise<Category> {
     const res = await fetch(`${BASE_URL}/${ENTITY}`, {
         method: "POST",
         headers: {
+            // no header because of multipart
             Accept: "application/json",
             ...(await getAuthHeader()),
         },
@@ -46,6 +47,7 @@ export async function patchCategory(id: string, category: FormData): Promise<Cat
     const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
         method: "PATCH",
         headers: {
+            // no header because of multipart
             Accept: "application/json",
             ...(await getAuthHeader()),
         },

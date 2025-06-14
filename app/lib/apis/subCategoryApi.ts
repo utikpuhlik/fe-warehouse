@@ -20,6 +20,7 @@ export async function postSubCategory(subCategory: FormData): Promise<SubCategor
     const res = await fetch(`${BASE_URL}/${ENTITY}`, {
         method: "POST",
         headers: {
+            // no header because of multipart
             Accept: "application/json",
             ...(await getAuthHeader()),
         },
@@ -38,6 +39,7 @@ export async function putSubCategory(id: string, subCategory: FormData): Promise
     const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
         method: "PUT",
         headers: {
+            // no header because of multipart
             Accept: "application/json",
             ...(await getAuthHeader()),
         },

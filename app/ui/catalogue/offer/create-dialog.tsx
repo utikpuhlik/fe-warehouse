@@ -21,6 +21,7 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {type OfferPostSchema, zOfferPostSchema} from "@/app/lib/schemas/offerSchema";
 import {createOfferAction} from "@/app/lib/actions/offerAction";
+import {CirclePlus} from "lucide-react";
 
 export function CreateOfferModal(product: Product) {
     const [open, setOpen] = useState(false);
@@ -64,7 +65,7 @@ export function CreateOfferModal(product: Product) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button>Добавить предложение</Button>
+                <Button> <CirclePlus /> Создать</Button>
             </DialogTrigger>
 
             <DialogContent className="sm:max-w-md">

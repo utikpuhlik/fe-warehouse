@@ -21,6 +21,7 @@ import {
 } from "@/app/lib/schemas/subCategorySchema";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
+import {CirclePlus} from "lucide-react";
 
 export function CreateSubCategoryModal(category: Category) {
     const [open, setOpen] = useState(false);
@@ -68,7 +69,7 @@ export function CreateSubCategoryModal(category: Category) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button>Добавить подкатегорию</Button>
+                <Button> <CirclePlus /> Создать</Button>
             </DialogTrigger>
 
             <DialogContent className="sm:max-w-md">

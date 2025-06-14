@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { CirclePlus } from 'lucide-react';
 import {
     Dialog,
     DialogTrigger,
@@ -55,7 +56,9 @@ export function CreateWaybillModal({ user_id }: { user_id: string }) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button>Создать накладную</Button>
+                <Button>
+                    <CirclePlus /> Создать
+                </Button>
             </DialogTrigger>
 
             <DialogContent>

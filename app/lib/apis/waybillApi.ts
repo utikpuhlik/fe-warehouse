@@ -65,6 +65,7 @@ export async function postWaybill(waybill: WaybillPostSchema): Promise<WaybillSc
     const res = await fetch(`${BASE_URL}/waybills`, {
         method: "POST",
         headers: {
+            "Content-Type": "application/json",
             Accept: "application/json",
             ...(await getAuthHeader()),
         },
@@ -84,6 +85,7 @@ export async function commitWaybill(waybill_id: string): Promise<WaybillSchema> 
     const res = await fetch(`${BASE_URL}/waybills/${waybill_id}/commit`, {
         method: "POST",
         headers: {
+            "Content-Type": "application/json",
             Accept: "application/json",
             ...(await getAuthHeader()),
         },
@@ -106,6 +108,7 @@ export async function postWaybillOffer(
     const res = await fetch(`${BASE_URL}/waybills/${waybill_id}/offers`, {
         method: "POST",
         headers: {
+            "Content-Type": "application/json",
             Accept: "application/json",
             ...(await getAuthHeader()),
         },

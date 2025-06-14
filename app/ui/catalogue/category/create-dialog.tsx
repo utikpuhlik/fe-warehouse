@@ -19,6 +19,7 @@ import {useForm} from "react-hook-form";
 import {type CategoryPostSchema, zCategoryPostSchema} from "@/app/lib/schemas/categorySchema";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {ConflictError} from "@/app/lib/errors/apiErrors";
+import {CirclePlus} from "lucide-react";
 
 export function CreateCategoryModal() {
     const [open, setOpen] = useState(false);
@@ -63,7 +64,7 @@ export function CreateCategoryModal() {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button>Добавить категорию</Button>
+                <Button> <CirclePlus /> Создать</Button>
             </DialogTrigger>
 
             <DialogContent className="sm:max-w-md">

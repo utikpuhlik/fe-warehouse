@@ -25,6 +25,7 @@ export async function postProduct(product: FormData): Promise<Product> {
     const res = await fetch(`${BASE_URL}/${ENTITY}`, {
         method: "POST",
         headers: {
+            // no header because of multipart
             Accept: "application/json",
             ...(await getAuthHeader()),
         },
@@ -43,6 +44,7 @@ export async function putProduct(id: string, product: FormData): Promise<number>
     const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
         method: "PUT",
         headers: {
+            // no header because of multipart
             Accept: "application/json",
             ...(await getAuthHeader()),
         },
