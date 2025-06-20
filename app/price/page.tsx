@@ -19,10 +19,17 @@ export default function PricePage() {
 		try {
 			const res: Response = await fetchPriceList(priceType, ext);
 			const blob = await res.blob();
+
+			const disposition = res.headers.get("Content-Disposition");
+			const match = disposition?.match(/filename="?([^"]+)"?/);
+			const filename = match?.[1] ?? `price.${ext}`;
+
 			const link = document.createElement("a");
 			link.href = URL.createObjectURL(blob);
-			link.download = priceType === "wholesale" ? `price_wholesale.${ext}` : `price.${ext}`;
+			link.download = filename;
+			document.body.appendChild(link);
 			link.click();
+			link.remove();
 			URL.revokeObjectURL(link.href);
 		} catch (err) {
 			showToastError(err);
