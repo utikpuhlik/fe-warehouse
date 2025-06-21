@@ -3,7 +3,12 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import type {Metadata} from "next";
 
+
+export const metadata: Metadata = {
+    title: "Профиль | TCF"
+}
 export default async function ProfilePage() {
     const user = await fetchCurrentUser();
 

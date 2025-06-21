@@ -6,15 +6,34 @@ import type {Product, Products} from "@/app/lib/schemas/productSchema";
 import { CreateProductModal } from "@/app/ui/catalogue/product/create-dialog";
 import {notFound} from "next/navigation";
 import type {SubCategory} from "@/app/lib/schemas/subCategorySchema";
+import type {Metadata} from "next";
 
 // https://stackoverflow.com/questions/79113322/nextjs-react-type-does-not-satisfy-constraint
-type Params = Promise<{
-	sub_category_slug: string;
-}>;
+type Props = {
+	params: Promise<{ sub_category_slug: string }>
+};
 
-export default async function ProductsPage(props: { params: Params }) {
-	const params = await props.params;
-	const sub_category_slug = params.sub_category_slug;
+export async function generateMetadata(
+	{ params }: Props
+): Promise<Metadata> {
+	const { sub_category_slug } = await params;
+	const sub_category = await fetchSubCategoryBySlug(sub_category_slug);
+	if (!sub_category) {
+		return {
+			title: "Подкатегория не найдена | TCF",
+			description: "Запрошенная подкатегория не существует.",
+			robots: { index: false, follow: false },
+		};
+	}
+
+	return {
+		title: `${sub_category.name} | TCF`,
+		description: `Товары подкатегории ${sub_category.name} для категории ${sub_category.category_name}`,
+	};
+}
+
+export default async function ProductsPage({params}: Props ) {
+	const { sub_category_slug } = await params;
 
 	const sub_category: SubCategory = await fetchSubCategoryBySlug(sub_category_slug);
 

@@ -1,4 +1,9 @@
 import SideNav from "@/app/ui/dashboard/sidenav";
+import type {Metadata} from "next";
+
+export const metadata: Metadata = {
+	title: "Накладные | TCF"
+}
 
 export default function Layout({ children }: { children: React.ReactNode }) {
 	return (

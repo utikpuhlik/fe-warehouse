@@ -7,15 +7,33 @@ import {CreateSubCategoryModal} from "@/app/ui/catalogue/sub-category/create-dia
 import type {SubCategory} from "@/app/lib/schemas/subCategorySchema";
 import type {Category} from "@/app/lib/schemas/categorySchema";
 import { notFound } from "next/navigation";
+import type {Metadata} from "next";
 
-type Params = Promise<{
-	category_slug: string;
-}>;
+type Props = {
+	params: Promise<{ category_slug: string }>
+};
 
-export default async function SubCategoriesPage(props: { params: Params }) {
-	const params = await props.params;
-	const category_slug = params.category_slug;
+export async function generateMetadata(
+	{ params }: Props
+): Promise<Metadata> {
+	const { category_slug } = await params;
+	const category = await fetchCategoryBySlug(category_slug);
+	if (!category) {
+		return {
+			title: "Категория не найдена | TCF",
+			description: "Запрошенная категория не существует.",
+			robots: { index: false, follow: false },
+		};
+	}
 
+	return {
+		title: `${category.name} | TCF`,
+		description: `Подкатегории категории ${category.name}`,
+	};
+}
+
+export default async function SubCategoriesPage({params}: Props ) {
+	const { category_slug } = await params;
 	const category: Category = await fetchCategoryBySlug(category_slug);
 	if (!category) {
 		notFound();

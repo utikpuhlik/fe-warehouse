@@ -6,7 +6,7 @@ export async function fetchAndParse<T>(
     schema: ZodType<T>,
     init?: RequestInit,
     entity?: string
-): Promise<T> {
+): Promise<T | null> {
     const res = await fetch(url, init);
     const text = await res.text().catch(() => "");
 
@@ -20,6 +20,8 @@ export async function fetchAndParse<T>(
     } catch {
         throw new Error("Invalid JSON response");
     }
+
+    if (json === null) return null;
 
     return schema.parse(json);
 }

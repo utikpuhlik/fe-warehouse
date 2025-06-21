@@ -7,15 +7,33 @@ import type {OfferSchema, OffersSchema} from "@/app/lib/schemas/offerSchema";
 import {notFound} from "next/navigation";
 import { CreateOfferModal } from "@/app/ui/catalogue/offer/create-dialog";
 import type {Product} from "@/app/lib/schemas/productSchema";
+import type {Metadata} from "next";
 
 // https://stackoverflow.com/questions/79113322/nextjs-react-type-does-not-satisfy-constraint
-type Params = Promise<{
-	product_id: string;
-}>;
+type Props = {
+	params: Promise<{ product_id: string }>
+};
 
-export default async function OffersPage(props: { params: Params }) {
-	const params = await props.params;
-	const product_id = params.product_id;
+export async function generateMetadata(
+	{ params }: Props
+): Promise<Metadata> {
+	const { product_id } = await params;
+	const product = await fetchProductById(product_id);
+	if (!product) {
+		return {
+			title: "Товар не найден | TCF",
+			description: "Запрошенный товар не существует.",
+			robots: { index: false, follow: false },
+		};
+	}
+
+	return {
+		title: `${product.name} | TCF`,
+		description: `Предложения для товара ${product.name}, категория ${product.category_name}, подкатегория ${product.sub_category_name}`,
+	};
+}
+export default async function OffersPage({params}: Props ) {
+	const {product_id} = await params;
 
 	const product: Product = await fetchProductById(product_id);
 

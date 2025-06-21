@@ -1,5 +1,11 @@
 import SideNav from "@/app/ui/dashboard/sidenav";
 import { Toaster } from "@/components/ui/toaster";
+import type {Metadata} from "next";
+
+export const metadata: Metadata = {
+	title: "Каталог | TCF",
+	description: "Каталог автозапчастей Ford"
+}
 
 export default function Layout({ children }: { children: React.ReactNode }) {
 	return (
