@@ -14,7 +14,7 @@ export const zWaybillSchema = zWaybillBaseSchema.extend({
     updated_at: z.coerce.date(),
 })
 
-export const zWaybillPaginatedSchema = zWaybillBaseSchema.extend({
+export const zWaybillPaginatedSchema = z.object({
     items: z.array(zWaybillSchema),
     total: z.number().int().nonnegative(),
     page: z.number().int().positive(),

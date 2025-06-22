@@ -17,7 +17,7 @@ import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
-import { showToastError } from "@/app/lib/utils/toastError";
+import { showToastError } from "@/app/lib/errors/toastError";
 import {zWaybillPostSchema, type WaybillPostSchema,} from "@/app/lib/schemas/waybillSchema";
 import {createWaybillAction} from "@/app/lib/actions/waybillAction";
 
@@ -31,7 +31,6 @@ export function CreateWaybillModal({ user_id }: { user_id: string }) {
         defaultValues: {
             user_id,
             counterparty_name: "",
-            is_pending: true,
             waybill_type: "WAYBILL_IN",
         },
     });
@@ -40,7 +39,7 @@ export function CreateWaybillModal({ user_id }: { user_id: string }) {
         startTransition(async () => {
             try {
                 // ? TODO: redirect is possible
-                await createWaybillAction(values);
+                await createWaybillAction({...values, is_pending: true});
                 toast({
                     title: "Накладная создана",
                     description: `Контрагент: ${values.counterparty_name}`,

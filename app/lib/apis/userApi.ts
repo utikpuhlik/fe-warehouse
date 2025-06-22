@@ -4,7 +4,7 @@ import {
 } from "@/app/lib/schemas/userSchema";
 import {BASE_URL} from "@/app/lib/config/config";
 import {getAuthHeader} from "@/app/lib/apis/utils/getAuthHeader";
-import {handleApiError} from "@/app/lib/apis/utils/handleApiError";
+import {handleApiError} from "@/app/lib/errors/handleApiError";
 
 const ENTITY = "users"
 
@@ -55,7 +55,7 @@ export async function patchUser(id: string, user: UserSchema): Promise<UserSchem
 
     const text = await res.text().catch(() => "");
     if (!res.ok) {
-        handleApiError(res, text, {entity: "user"});
+        handleApiError(res, text, ENTITY);
     }
 
     return zUser.parse(JSON.parse(text));

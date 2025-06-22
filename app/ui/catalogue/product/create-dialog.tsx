@@ -13,7 +13,7 @@ import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {Button} from "@/components/ui/button";
 import {useToast} from "@/hooks/use-toast";
-import {showToastError} from "@/app/lib/utils/toastError";
+import {showToastError} from "@/app/lib/errors/toastError";
 import type {
     SubCategory,
 } from "@/app/lib/schemas/subCategorySchema";

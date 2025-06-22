@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label";
 import {FormProvider, useForm} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
-import { showToastError } from "@/app/lib/utils/toastError";
+import { showToastError } from "@/app/lib/errors/toastError";
 import {createWaybillOfferAction} from "@/app/lib/actions/waybillAction";
 import {type WaybillOfferPostSchema, zWaybillOfferPostSchema} from "@/app/lib/schemas/waybillOfferSchema";
 import {SelectOfferField} from "@/app/ui/catalogue/waybill/select-offer-field";

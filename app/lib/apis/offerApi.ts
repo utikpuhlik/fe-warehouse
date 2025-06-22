@@ -7,7 +7,7 @@ import {
     zOffersSchema,
 } from "@/app/lib/schemas/offerSchema";
 import { BASE_URL } from "@/app/lib/config/config";
-import { handleApiError } from "@/app/lib/apis/utils/handleApiError";
+import { handleApiError } from "@/app/lib/errors/handleApiError";
 import {fetchAndParse} from "@/app/lib/apis/utils/fetchJson";
 import {getAuthHeader} from "@/app/lib/apis/utils/getAuthHeader";
 
@@ -15,17 +15,17 @@ const ENTITY = "offers";
 
 export async function fetchOfferById(id: string): Promise<OfferSchema> {
     const url = `${BASE_URL}/${ENTITY}/${id}`;
-    return fetchAndParse(url, zOfferSchema, undefined, "offer");
+    return fetchAndParse(url, zOfferSchema, false, ENTITY);
 }
 
 export async function fetchOffersByProductId(product_id: string): Promise<OffersSchema> {
     const url = `${BASE_URL}/${ENTITY}?product_id=${product_id}`;
-    return fetchAndParse(url, zOffersSchema, undefined, "offer");
+    return fetchAndParse(url, zOffersSchema, false, ENTITY);
 }
 
 export async function fetchFilteredOffersWS(search_term: string): Promise<OffersSchema> {
     const url = `${BASE_URL}/${ENTITY}/search/wildcard?search_term=${search_term}`;
-    return fetchAndParse(url, zOffersSchema, undefined, "offer");
+    return fetchAndParse(url, zOffersSchema, false, ENTITY);
 }
 
 export async function fetchFilteredOffersTS(
@@ -34,7 +34,7 @@ export async function fetchFilteredOffersTS(
     page = 1
 ): Promise<OffersSchema> {
     const url = `${BASE_URL}/${ENTITY}/search/text_search?search_term=${search_term}&size=${size}&page=${page}`;
-    return fetchAndParse(url, zOffersSchema, undefined, "offer");
+    return fetchAndParse(url, zOffersSchema, false, ENTITY);
 }
 
 export async function postOffer(offer: OfferPostSchema): Promise<OfferSchema> {
@@ -50,7 +50,7 @@ export async function postOffer(offer: OfferPostSchema): Promise<OfferSchema> {
 
     const text = await res.text().catch(() => "");
     if (!res.ok) {
-        handleApiError(res, text, { entity: "offer" });
+        handleApiError(res, text, ENTITY);
     }
 
     return zOfferSchema.parse(JSON.parse(text));
@@ -69,7 +69,7 @@ export async function putOffer(id: string, offer: OfferPutSchema): Promise<Offer
 
     const text = await res.text().catch(() => "");
     if (!res.ok) {
-        handleApiError(res, text, { entity: "offer" });
+        handleApiError(res, text, ENTITY);
     }
 
     return zOfferSchema.parse(JSON.parse(text));
@@ -87,7 +87,7 @@ export async function delOffer(id: string): Promise<number> {
 
     const text = await res.text().catch(() => "");
     if (!res.ok) {
-        handleApiError(res, text, { entity: "offer" });
+        handleApiError(res, text, ENTITY);
     }
 
     return res.status;

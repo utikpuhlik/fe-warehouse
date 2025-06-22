@@ -14,7 +14,7 @@ import {Label} from "@/components/ui/label";
 import {Button} from "@/components/ui/button";
 import {useToast} from "@/hooks/use-toast";
 import {createSubCategoryAction} from "@/app/lib/actions/subCategoryAction";
-import {showToastError} from "@/app/lib/utils/toastError";
+import {showToastError} from "@/app/lib/errors/toastError";
 import type {Category} from "@/app/lib/schemas/categorySchema";
 import {
     type SubCategoryPostSchema, zSubCategoryPostSchema,

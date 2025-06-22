@@ -14,11 +14,10 @@ import {Label} from "@/components/ui/label";
 import {Button} from "@/components/ui/button";
 import {createCategoryAction} from "@/app/lib/actions/categoryAction";
 import {useToast} from "@/hooks/use-toast";
-import {showToastError} from "@/app/lib/utils/toastError";
+import {showToastError} from "@/app/lib/errors/toastError";
 import {useForm} from "react-hook-form";
 import {type CategoryPostSchema, zCategoryPostSchema} from "@/app/lib/schemas/categorySchema";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {ConflictError} from "@/app/lib/errors/apiErrors";
 import {CirclePlus} from "lucide-react";
 
 export function CreateCategoryModal() {
@@ -54,7 +53,6 @@ export function CreateCategoryModal() {
                     });
                     resetForm();
                 } catch (error) {
-                    console.log(error instanceof ConflictError);
                     showToastError(error);
                 }
             }

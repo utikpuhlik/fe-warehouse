@@ -19,7 +19,7 @@ import {useState, useTransition} from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
-import { showToastError } from "@/app/lib/utils/toastError";
+import { showToastError } from "@/app/lib/errors/toastError";
 import { updateCategoryAction } from "@/app/lib/actions/categoryAction";
 
 

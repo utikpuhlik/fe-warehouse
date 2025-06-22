@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import {fetchPriceList} from "@/app/lib/apis/documentApi";
-import {showToastError} from "@/app/lib/utils/toastError";
+import {showToastError} from "@/app/lib/errors/toastError";
 
 export default function PricePage() {
 	const [priceType, setPriceType] = useState<"retail" | "wholesale">("retail");

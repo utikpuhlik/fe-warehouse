@@ -4,7 +4,7 @@ import { useTransition } from "react";
 import { SaveButton } from "@/app/ui/catalogue/buttons/save-button";
 import { commitWaybillAction } from "@/app/lib/actions/waybillAction";
 import { useToast } from "@/hooks/use-toast";
-import { showToastError } from "@/app/lib/utils/toastError";
+import { showToastError } from "@/app/lib/errors/toastError";
 
 export function CommitWaybillButton({ waybill_id, disabled = false }: { waybill_id: string; disabled?: boolean }) {
     const [isPending, startTransition] = useTransition();
