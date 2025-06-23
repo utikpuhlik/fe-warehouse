@@ -84,7 +84,7 @@ export async function commitWaybill(waybill_id: string): Promise<WaybillSchema> 
         handleApiError(res, text, ENTITY);
     }
 
-    const json = await res.json();
+    const json = JSON.parse(text);
     return zWaybillSchema.parse(json);
 }
 
@@ -108,7 +108,7 @@ export async function postWaybillOffer(
         handleApiError(res, text, ENTITY);
     }
 
-    const json = await res.json();
+    const json = JSON.parse(text)
     return zWaybillOfferSchema.parse(json);
 }
 

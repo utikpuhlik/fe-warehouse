@@ -13,6 +13,7 @@ import { fetchWaybillOffers } from "@/app/lib/apis/waybillApi";
 import type { WaybillOfferSchema } from "@/app/lib/schemas/waybillOfferSchema";
 import type {WaybillSchema} from "@/app/lib/schemas/waybillSchema";
 import {DeleteWaybillOfferProxy} from "@/app/ui/catalogue/waybill/delete-waybill-offer";
+import Link from "next/link";
 
 export default async function WaybillOffersTable(waybill: WaybillSchema) {
     const offers: WaybillOfferSchema[] = await fetchWaybillOffers(waybill.id);
@@ -61,6 +62,10 @@ export default async function WaybillOffersTable(waybill: WaybillSchema) {
                             <TableCell>{index + 1}</TableCell>
                             <TableCell>{o.address_id}</TableCell>
                             <TableCell>
+                                <Link
+                                    href={`/catalogue/${o.category_slug}/${o.sub_category_slug}/${o.product_id}`}
+                                    className="px-3 py-2 flex items-center gap-3 w-full hover:bg-muted"
+                                >
                                 <Image
                                     src={o.image_url}
                                     alt={o.product_name}
@@ -68,6 +73,7 @@ export default async function WaybillOffersTable(waybill: WaybillSchema) {
                                     height={40}
                                     className="rounded"
                                 />
+                                </Link>
                             </TableCell>
                             <TableCell>{o.category_name}</TableCell>
                             <TableCell>{o.sub_category_name}</TableCell>

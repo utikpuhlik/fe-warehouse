@@ -25,7 +25,8 @@ export const zWaybillOfferSchema = zWaybillOfferBaseSchema.extend({
     category_slug: z.string(),
     category_name: z.string(),
     sub_category_slug: z.string(),
-    sub_category_name: z.string()
+    sub_category_name: z.string(),
+    product_id: z.string().uuid(),
 })
 
 export const zWaybillOfferPostSchema = zWaybillOfferBaseSchema.extend({
