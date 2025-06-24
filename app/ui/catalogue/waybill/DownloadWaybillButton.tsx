@@ -16,6 +16,7 @@ export function DownloadWaybillButton({ waybillId, full = true }: Props) {
     const handleDownload = async () => {
         setLoading(true);
         try {
+
             const res = await printWaybill(waybillId);
             const blob = await res.blob();
             const disposition = res.headers.get("Content-Disposition");
