@@ -4,7 +4,7 @@ import Table from "@/app/ui/catalogue/table";
 import { ProductsTableSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
 import type {OffersSchema} from "@/app/lib/schemas/offerSchema";
-import {fetchFilteredOffersTS} from "@/app/lib/apis/offerApi";
+import {fetchFilteredOffersTS} from "@/app/lib/apis/public/offerApi";
 
 export default async function Page(props: {
 	searchParams?: Promise<{
