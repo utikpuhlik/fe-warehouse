@@ -5,12 +5,12 @@ import {Suspense} from "react";
 import {Skeleton} from "@/components/ui/skeleton";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
 import { CreateWaybillOfferModal } from "@/app/ui/catalogue/waybill/create-waybill-offer";
-import {DownloadButton} from "@/app/ui/catalogue/buttons/download-button";
 import {CommitWaybillButton} from "@/app/ui/catalogue/waybill/commit-waybill-button";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
 import {DeleteEntityButton} from "@/app/ui/catalogue/buttons/delete-entity-button";
 import {deleteWaybillAction} from "@/app/lib/actions/waybillAction";
 import {notFound} from "next/navigation";
+import {DownloadWaybillButton} from "@/app/ui/catalogue/waybill/DownloadWaybillButton";
 
 type Params = Promise<{
     id: string;
@@ -45,7 +45,7 @@ export default async function WaybillPage(props: { params: Params }) {
                     ]}
                 />
                 <div className="flex space-x-2">
-                    <DownloadButton full={false}/>
+                    <DownloadWaybillButton waybillId={waybill_id} full={false}/>
                     <TooltipProvider>
                         <Tooltip>
                             <TooltipTrigger asChild>

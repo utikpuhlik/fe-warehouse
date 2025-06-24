@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import {fetchPriceList} from "@/app/lib/apis/documentApi";
+import {printPriceList} from "@/app/lib/apis/documentApi";
 import {showToastError} from "@/app/lib/errors/toastError";
 
 export default function PricePage() {
@@ -17,7 +17,7 @@ export default function PricePage() {
 		setIsDownloading(true);
 
 		try {
-			const res: Response = await fetchPriceList(priceType, ext);
+			const res: Response = await printPriceList(priceType, ext);
 			const blob = await res.blob();
 
 			const disposition = res.headers.get("Content-Disposition");
