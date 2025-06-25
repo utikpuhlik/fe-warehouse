@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { showToastError } from "@/app/lib/errors/toastError";
 import { TrashIcon } from "@heroicons/react/24/outline";
+import {isRedirectError} from "next/dist/client/components/redirect-error";
 
 type Props = {
     entityName: string;
@@ -38,6 +39,7 @@ export function DeleteEntityButton({
                 });
                 onDeleted?.();
             } catch (error) {
+                if (isRedirectError(error)) return;
                 showToastError(error);
             }
         });

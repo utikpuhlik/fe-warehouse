@@ -7,6 +7,7 @@ import type {WaybillOfferPostSchema} from "@/app/lib/schemas/waybillOfferSchema"
 import {redirect} from "next/navigation";
 
 export async function createWaybillAction(waybill: WaybillPostSchema): Promise<void> {
+    console.log(waybill)
     await postWaybill(waybill)
     revalidatePath("/waybills");
 }

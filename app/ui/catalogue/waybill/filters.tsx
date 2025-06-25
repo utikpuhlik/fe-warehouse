@@ -8,6 +8,9 @@ export function WaybillFilters() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
+    const currentWaybillType = searchParams.get("waybill_type") ?? "all";
+    const currentStatus = searchParams.get("is_pending") ?? "all";
+
     const updateParams = (key: string, value: string) => {
         const params = new URLSearchParams(searchParams.toString());
         if (value === "all") {
@@ -22,10 +25,11 @@ export function WaybillFilters() {
     return (
         <div className="flex gap-4">
             <Select
+                value={currentWaybillType}
                 onValueChange={(value) => updateParams("waybill_type", value)}
             >
                 <SelectTrigger className="w-[150px]">
-                    <SelectValue placeholder="Тип" />
+                    <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                     <SelectItem value="all">Все</SelectItem>
@@ -36,10 +40,11 @@ export function WaybillFilters() {
             </Select>
 
             <Select
+                value={currentStatus}
                 onValueChange={(value) => updateParams("is_pending", value)}
             >
                 <SelectTrigger className="w-[150px]">
-                    <SelectValue placeholder="Статус" />
+                    <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                     <SelectItem value="all">Все</SelectItem>

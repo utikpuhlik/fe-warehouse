@@ -71,7 +71,7 @@ export async function postWaybill(waybill: WaybillPostSchema): Promise<WaybillSc
         handleApiError(res, text, ENTITY);
     }
 
-    const json = await res.json();
+    const json = JSON.parse(text);
     return zWaybillSchema.parse(json);
 }
 

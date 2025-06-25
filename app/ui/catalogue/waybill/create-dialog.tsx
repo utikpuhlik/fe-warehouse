@@ -29,8 +29,9 @@ export function CreateWaybillModal({ user_id }: { user_id: string }) {
     const form = useForm<WaybillPostSchema>({
         resolver: zodResolver(zWaybillPostSchema),
         defaultValues: {
-            user_id,
+            user_id: user_id,
             counterparty_name: "",
+            is_pending: true,
             waybill_type: "WAYBILL_IN",
         },
     });
@@ -39,7 +40,7 @@ export function CreateWaybillModal({ user_id }: { user_id: string }) {
         startTransition(async () => {
             try {
                 // ? TODO: redirect is possible
-                await createWaybillAction({...values, is_pending: true});
+                await createWaybillAction(values);
                 toast({
                     title: "Накладная создана",
                     description: `Контрагент: ${values.counterparty_name}`,
