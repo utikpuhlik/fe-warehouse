@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { printWaybill } from "@/app/lib/apis/documentApi";
+import { printWaybill } from "@/app/lib/apis/client/documentApi";
 import { showToastError } from "@/app/lib/errors/toastError";
 import {DownloadButton} from "@/app/ui/catalogue/buttons/download-button";
 

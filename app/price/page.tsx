@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import {printPriceList} from "@/app/lib/apis/documentApi";
+import {printPriceList} from "@/app/lib/apis/client/documentApi";
 import {showToastError} from "@/app/lib/errors/toastError";
 
 export default function PricePage() {

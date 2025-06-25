@@ -12,7 +12,7 @@ export async function fetchAndParse<T>(
         headers: {
             Accept: "application/json",
         },
-        cache: "no-store",
+        cache: cache ? "default" : "no-store",
         next: cache ? { revalidate: 60 } : { revalidate: 0 },
     });
 

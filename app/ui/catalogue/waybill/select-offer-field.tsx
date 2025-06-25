@@ -12,7 +12,7 @@ import {ScrollArea} from "@/components/ui/scroll-area";
 import {Button} from "@/components/ui/button";
 import {Label} from "@/components/ui/label";
 
-import {fetchFilteredOffersTS} from "@/app/lib/apis/public/offerApi";
+import {fetchFilteredOffersTS} from "@/app/lib/apis/client/offerApi";
 import type {OfferSchema} from "@/app/lib/schemas/offerSchema";
 import {imageUrlPlaceholder} from "@/app/lib/config/config";
 
