@@ -32,7 +32,7 @@ export default async function WaybillPage(props: { params: Params }) {
             : "Возврат";
 
     return (
-        <div className="max-w-[100rem] mx-auto py-10 space-y-6 px-4">
+        <main>
             <div className="mb-4 flex items-center justify-between">
                 <Breadcrumbs
                     breadcrumbs={[
@@ -67,6 +67,7 @@ export default async function WaybillPage(props: { params: Params }) {
                 <WaybillOffersTable {...waybill} />
             </Suspense>
 
+            <div className="mt-4 flex items-center gap-2">
             <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger asChild>
@@ -86,8 +87,8 @@ export default async function WaybillPage(props: { params: Params }) {
                 entityId={waybill_id}
                 deleteAction={deleteWaybillAction}
                 disabled={!waybill.is_pending}
-                className="ml-2"
             />
-        </div>
+            </div>
+        </main>
     );
 }
