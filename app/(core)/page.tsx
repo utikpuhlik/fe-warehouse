@@ -35,7 +35,7 @@ export default async function Page() {
 					type="invoices"
 				/>
 				<Card
-					title="Кол-во Активных Позиций"
+					title="Кол-во Активных Позиций (случайное число)"
 					value={offersData.count - 4000}
 					type="invoices"
 				/>
