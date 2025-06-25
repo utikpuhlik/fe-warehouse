@@ -7,6 +7,7 @@ export async function middleware(request: NextRequest) {
     const path = url.pathname;
 
     const isPrivate = [
+        "/",
         "/dashboard",
         "/catalogue",
         "/profile",
@@ -62,6 +63,6 @@ export const config = {
         "/mailing/:path*",
         "/waybills/:path*",
         "/price/:path*",
-        "/",               // чтобы отправлять авторизованных на /catalogue
+        "/",
     ],
 };

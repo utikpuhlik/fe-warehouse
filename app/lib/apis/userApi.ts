@@ -5,6 +5,8 @@ import {
 import {BASE_URL} from "@/app/lib/config/config";
 import {getAuthHeader} from "@/app/lib/apis/utils/getAuthHeader";
 import {handleApiError} from "@/app/lib/errors/handleApiError";
+import {CountSchema, zCountSchema} from "@/app/lib/schemas/commonSchema";
+import {fetchWithAuthAndParse} from "@/app/lib/apis/utils/fetchJson";
 
 const ENTITY = "users"
 
@@ -22,6 +24,11 @@ export async function fetchUsers(
     const json = await res.json();
 
     return zUsers.parse(json);
+}
+
+export async function fetchUsersCount(): Promise<CountSchema> {
+    const url = `${BASE_URL}/${ENTITY}/meta/count`;
+    return fetchWithAuthAndParse(url, zCountSchema, false, ENTITY);
 }
 
 export async function fetchCurrentUser(): Promise<UserSchema | null> {

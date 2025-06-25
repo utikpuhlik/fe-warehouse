@@ -6,10 +6,11 @@ import {
     zOfferSchema,
     zOffersSchema,
 } from "@/app/lib/schemas/offerSchema";
-import { BASE_URL } from "@/app/lib/config/config";
-import { handleApiError } from "@/app/lib/errors/handleApiError";
+import {BASE_URL} from "@/app/lib/config/config";
+import {handleApiError} from "@/app/lib/errors/handleApiError";
 import {fetchAndParse} from "@/app/lib/apis/utils/fetchJson";
 import {getAuthHeader} from "@/app/lib/apis/utils/getAuthHeader";
+import {CountSchema, zCountSchema} from "@/app/lib/schemas/commonSchema";
 
 const ENTITY = "offers";
 
@@ -21,6 +22,11 @@ export async function fetchOfferById(id: string): Promise<OfferSchema> {
 export async function fetchOffersByProductId(product_id: string): Promise<OffersSchema> {
     const url = `${BASE_URL}/${ENTITY}?product_id=${product_id}`;
     return fetchAndParse(url, zOffersSchema, false, ENTITY);
+}
+
+export async function fetchOffersCount(): Promise<CountSchema> {
+    const url = `${BASE_URL}/${ENTITY}/meta/count`;
+    return fetchAndParse(url, zCountSchema, false, ENTITY);
 }
 
 export async function fetchFilteredOffersWS(search_term: string): Promise<OffersSchema> {

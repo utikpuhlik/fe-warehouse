@@ -2,13 +2,15 @@
 
 import {
 	ClipboardDocumentListIcon,
-	CurrencyDollarIcon,
+	// CurrencyDollarIcon,
 	ShoppingCartIcon,
 	TableCellsIcon,
 	UserGroupIcon,
 	InboxIcon,
 	DocumentArrowDownIcon,
-	UserIcon
+	UserIcon,
+	// EyeIcon,
+	HomeIcon
 
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
@@ -24,13 +26,12 @@ const links = [
 	// 	href: "/dashboard/invoices",
 	// 	icon: DocumentDuplicateIcon,
 	// },
+	{ name: "Панель", href: "/", icon: HomeIcon },
 	{ name: "Mailing", href: "/mailing", icon: InboxIcon },
-
 	{ name: "Customers", href: "/dashboard/customers", icon: UserGroupIcon },
 	{ name: "Catalogue", href: "/catalogue", icon: ClipboardDocumentListIcon },
 	{ name: "Catalogue Table", href: "/table", icon: TableCellsIcon },
 	{ name: "Orders", href: "/orders", icon: ShoppingCartIcon },
-	{ name: "Price", href: "/price", icon: CurrencyDollarIcon },
 	{ name: "Накладные", href: "/waybills", icon: DocumentArrowDownIcon},
 	{ name: "Профиль", href: "/profile", icon: UserIcon}
 ];

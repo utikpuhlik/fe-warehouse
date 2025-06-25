@@ -9,6 +9,7 @@ import {type WaybillOfferPostSchema, type WaybillOfferSchema, zWaybillOfferSchem
 import { getAuthHeader } from "@/app/lib/apis/utils/getAuthHeader"
 import {handleApiError} from "@/app/lib/errors/handleApiError";
 import {fetchWithAuthAndParse} from "@/app/lib/apis/utils/fetchJson";
+import {CountSchema, zCountSchema} from "@/app/lib/schemas/commonSchema";
 
 const ENTITY = "waybills";
 
@@ -35,6 +36,11 @@ export async function fetchWaybills(
 export async function fetchWaybillById(waybill_id: string): Promise<WaybillSchema> {
     const url = `${BASE_URL}/${ENTITY}/${waybill_id}`;
     return fetchWithAuthAndParse(url, zWaybillSchema, false, ENTITY);
+}
+
+export async function fetchWaybillsCount(): Promise<CountSchema> {
+    const url = `${BASE_URL}/${ENTITY}/meta/count`;
+    return fetchWithAuthAndParse(url, zCountSchema, false, ENTITY);
 }
 
 export async function fetchWaybillOffers(waybill_id: string): Promise<WaybillOfferSchema[]> {
