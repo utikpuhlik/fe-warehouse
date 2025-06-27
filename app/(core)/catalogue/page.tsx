@@ -2,8 +2,14 @@ import type {Category} from "@/app/lib/schemas/categorySchema";
 import {CategoryCard} from "@/app/ui/catalogue/cards/category-card";
 import {fetchCategories} from "@/app/lib/apis/categoryApi";
 import {CreateCategoryModal} from "@/app/ui/catalogue/category/create-dialog";
+import type {Metadata} from "next";
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = {
+	title: "Каталог | TCF",
+	description: "Каталог автозапчастей Ford",
+}
 
 export default async function CategoriesPage() {
 	const categories: Category[] = await fetchCategories();
