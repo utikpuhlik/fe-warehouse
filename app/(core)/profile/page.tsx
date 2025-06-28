@@ -37,12 +37,6 @@ export default async function ProfilePage() {
 
                     <div className="text-muted-foreground text-sm">{user.email}</div>
 
-                    {user.position && (
-                        <div className="text-sm">
-                            <span className="font-medium">Должность:</span> {user.position}
-                        </div>
-                    )}
-
                     <div className="flex flex-wrap gap-2 mt-2">
                         <Badge variant="secondary">{user.role}</Badge>
                         {user.is_superuser && <Badge variant="destructive">Суперпользователь</Badge>}
