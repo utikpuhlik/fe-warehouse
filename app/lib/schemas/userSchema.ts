@@ -11,9 +11,13 @@ export const zUser = z.object({
     is_superuser: z.boolean(),
     is_verified: z.boolean(),
     role: z.string(),
-    position: z.string().nullable(),
     customer_type: z.enum(["USER_RETAIL", "USER_WHOLESALE", "USER_SUPER_WHOLESALE"]),
     mailing: z.boolean(),
+    phone: z.string().nullable(),
+    city: z.string().nullable(),
+    notes: z.string().nullable(),
+    shipping_method: z.enum(["SELF_PICKUP", "CARGO", "OTHER"]).nullable(),
+    shipping_company: z.string().nullable(),
 });
 
 /** Array wrapper for list endpoints */

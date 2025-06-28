@@ -22,10 +22,14 @@ export default function MailingTable({ users }: { users: UserSchema[] }) {
                 <TableRow>
                     <TableHead className="w-[100px]">Имя</TableHead>
                     <TableHead>Фамилия</TableHead>
-                    <TableHead>Позиция</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Телефон</TableHead>
+                    <TableHead>Город</TableHead>
+                    <TableHead>Доставка</TableHead>
+                    <TableHead>Примечание</TableHead>
                     <TableHead>Тип клиента</TableHead>
                     <TableHead>Рассылка</TableHead>
-                    <TableHead className="text-right">Email</TableHead>
+                    <TableHead>Actions</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -33,16 +37,20 @@ export default function MailingTable({ users }: { users: UserSchema[] }) {
                     <TableRow key={user.id}>
                         <TableCell className="font-medium">{user.first_name}</TableCell>
                         <TableCell>{user.last_name ?? 'TCF'}</TableCell>
-                        <TableCell>{user.position}</TableCell>
+                        <TableCell>{user.email}</TableCell>
+                        <TableCell>{user.phone}</TableCell>
+                        <TableCell>{user.city}</TableCell>
+                        <TableCell>{user.shipping_company}</TableCell>
+                        <TableCell>{user.notes}</TableCell>
                         <TableCell><CustomerTypeSelect {...user} /></TableCell>
                         <TableCell><MailingToggle {...user} /></TableCell>
-                        <TableCell className="text-right">{user.email}</TableCell>
+                        <TableCell>...</TableCell>
                     </TableRow>
                 ))}
             </TableBody>
             <TableFooter>
                 <TableRow>
-                    <TableCell colSpan={5}>Total</TableCell>
+                    <TableCell colSpan={9}>Total</TableCell>
                     <TableCell className="text-right">{users.length}</TableCell>
                 </TableRow>
             </TableFooter>
