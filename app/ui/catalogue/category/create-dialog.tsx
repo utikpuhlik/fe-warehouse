@@ -39,14 +39,12 @@ export function CreateCategoryModal() {
         setFile(null);
     };
     const onSubmit = (data: CategoryPostSchema) => {
-        const formData = new FormData();
-        formData.append("category_payload", JSON.stringify({...data}));
-        if (file) {
-            formData.append("image_blob", file);
+        if (!file) {
+            return
         }
         startTransition(async () => {
                 try {
-                    await createCategoryAction(formData);
+                    await createCategoryAction(data, file);
                     toast({
                         title: "Категория создана",
                         description: `Категория "${data.name}" добавлена.`,

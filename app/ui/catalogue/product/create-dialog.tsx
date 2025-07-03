@@ -46,14 +46,12 @@ export function CreateProductModal(sub_category: SubCategory) {
     };
 
     const onSubmit = (data: ProductPostSchema) => {
-        const formData = new FormData();
-        formData.append("product", JSON.stringify({...data}));
-        if (file) {
-            formData.append("image_blob", file);
+        if (!file) {
+            return
         }
         startTransition(async () => {
             try {
-                await createProductAction(formData, sub_category.category_slug, sub_category.slug);
+                await createProductAction(data, file, sub_category.category_slug, sub_category.slug);
                 toast({
                     title: "Успешно",
                     description: `Товар "${data.name}" добавлен.`,

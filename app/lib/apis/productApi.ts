@@ -40,9 +40,9 @@ export async function postProduct(product: FormData): Promise<Product> {
     return zProduct.parse(JSON.parse(text));
 }
 
-export async function putProduct(id: string, product: FormData): Promise<number> {
+export async function patchProduct(id: string, product: FormData): Promise<number> {
     const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
             // no header because of multipart
             Accept: "application/json",

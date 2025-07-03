@@ -2,14 +2,18 @@
 
 import {delCategory, postCategory, patchCategory} from "@/app/lib/apis/categoryApi";
 import {revalidatePath} from "next/cache";
+import {CategoryPostSchema, CategoryPutSchema} from "@/app/lib/schemas/categorySchema";
+import {buildFormData} from "@/app/lib/utils/buildFormData"
 
-export async function createCategoryAction(category: FormData): Promise<void> {
-    await postCategory(category)
+export async function createCategoryAction(category: CategoryPostSchema, file: File): Promise<void> {
+    const formData = buildFormData(category, file)
+    await postCategory(formData)
     revalidatePath("/catalogue");
 }
 
-export async function updateCategoryAction(category_id: string, category: FormData): Promise<void> {
-    await patchCategory(category_id, category)
+export async function updateCategoryAction(category_id: string, category: CategoryPutSchema, file?: File): Promise<void> {
+    const formData = buildFormData(category, file)
+    await patchCategory(category_id, formData)
     revalidatePath("/catalogue");
 }
 

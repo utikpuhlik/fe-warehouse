@@ -44,17 +44,12 @@ export function CreateSubCategoryModal(category: Category) {
     };
 
     const onSubmit = (data: SubCategoryPostSchema) => {
-        const formData = new FormData();
-        formData.append("sub_category", JSON.stringify({
-            name: data.name,
-            category_id: data.category_id
-        }));
-        if (file) {
-            formData.append("image_blob", file);
+        if (!file) {
+            return
         }
         startTransition(async () => {
             try {
-                await createSubCategoryAction(formData, category.slug);
+                await createSubCategoryAction(data, file, category.slug);
                 toast({
                     title: "Успешно",
                     description: `Подкатегория "${data.name}" добавлена.`,

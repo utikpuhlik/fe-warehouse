@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const zOfferBaseSchema = z.object({
-  address_id: z.string().optional().nullable(),
+  address_id: z.string().nullable(),
   brand: z.string().min(1, "Бренд не может быть пустым"),
   internal_description: z.string().nullable(),
   manufacturer_number: z.string({
@@ -31,8 +31,8 @@ export const zOfferSchema = zOfferBaseSchema.extend({
   sub_category_slug: z.string(),
   sub_category_name: z.string(),
   product_name: z.string(),
-  cross_number: z.string().nullable().optional(),
-  image_url: z.string().url().nullable(),
+  cross_number: z.string().nullable(),
+  image_url: z.string().url(),
   wholesale_price_rub: z.number().nonnegative(),
 });
 

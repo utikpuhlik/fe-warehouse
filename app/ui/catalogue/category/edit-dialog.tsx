@@ -40,15 +40,9 @@ export function EditCategoryModal(category: Category) {
     };
 
     const onSubmit = (category: Category) => {
-        const formData = new FormData();
-        formData.append("category_payload", JSON.stringify(category));
-
-        if (file) {
-            formData.append("image_blob", file);
-        }
         startTransition(async () => {
             try {
-                await updateCategoryAction(category.id, formData);
+                await updateCategoryAction(category.id, category, file ?? undefined);
                 toast({
                     title: "Успешно",
                     description: `Категория "${category.name}" обновлена.`,

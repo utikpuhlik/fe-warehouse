@@ -1,40 +1,33 @@
 "use server"
 
-import {zProductPostSchema, zProductPutSchema} from "@/app/lib/schemas/productSchema";
-import {postProduct, delProduct, putProduct} from "@/app/lib/apis/productApi";
+import {
+    Product,
+    ProductPostSchema,
+} from "@/app/lib/schemas/productSchema";
+import {postProduct, delProduct, patchProduct} from "@/app/lib/apis/productApi";
 import {revalidatePath} from "next/cache";
+import {buildFormData} from "@/app/lib/utils/buildFormData";
 
-export async function createProductAction(product: FormData, category_slug: string, sub_category_slug: string): Promise<void> {
-    const raw = product.get("product");
-    if (typeof raw !== "string") {
-        throw new Error("No data in FormData object");
-    }
-    const valid = zProductPostSchema.parse(JSON.parse(raw));
-    if (!valid) {
-        throw new Error("Zod server validation failed")
-    }
-    await postProduct(product)
-
+export async function createProductAction(
+    product: ProductPostSchema,
+    file: File,
+    category_slug: string,
+    sub_category_slug: string,
+    ): Promise<void> {
+    const formData = buildFormData(product, file)
+    await postProduct(formData)
     revalidatePath(`/catalogue/${category_slug}/${sub_category_slug}`);
 }
 
 export async function updateProductAction(
     product_id: string,
-    product: FormData,
+    product: Product,
     category_slug: string,
-    sub_category_slug: string): Promise<void> {
+    sub_category_slug: string,
+    file?: File): Promise<void> {
 
-    // TODO: maybe pass Entity and image_blob in separate parameters to make easy server zod validation
-    const raw = product.get("product");
-    if (typeof raw !== "string") {
-        throw new Error("No data in FormData object");
-    }
-    const valid = zProductPutSchema.parse(JSON.parse(raw));
-    if (!valid) {
-        throw new Error("Zod server validation failed")
-    }
-
-    await putProduct(product_id, product)
+    const formData = buildFormData(product, file);
+    await patchProduct(product_id, formData)
 
     revalidatePath(`/catalogue/${category_slug}/${sub_category_slug}`);
 }

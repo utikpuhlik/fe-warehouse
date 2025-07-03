@@ -62,9 +62,9 @@ export async function postOffer(offer: OfferPostSchema): Promise<OfferSchema> {
     return zOfferSchema.parse(JSON.parse(text));
 }
 
-export async function putOffer(id: string, offer: OfferPutSchema): Promise<OfferSchema> {
+export async function patchOffer(id: string, offer: OfferPutSchema): Promise<OfferSchema> {
     const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",

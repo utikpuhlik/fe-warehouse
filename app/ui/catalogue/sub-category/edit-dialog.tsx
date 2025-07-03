@@ -40,15 +40,9 @@ export function EditSubCategoryModal(sub_category: SubCategory) {
     };
 
     const onSubmit = (sub_category: SubCategory) => {
-        const formData = new FormData();
-        formData.append("sub_category", JSON.stringify(sub_category));
-
-        if (file) {
-            formData.append("image_blob", file);
-        }
         startTransition(async () => {
             try {
-                await updateSubCategoryAction(sub_category.id, formData, sub_category.category_slug);
+                await updateSubCategoryAction(sub_category.id, sub_category, sub_category.category_slug, file ?? undefined);
                 toast({
                     title: "Успешно",
                     description: `Категория "${sub_category.name}" обновлена.`,

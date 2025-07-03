@@ -4,7 +4,6 @@ export const zProductBaseSchema = z.object({
     name: z.string().min(1, "Название не может быть пустым"),
     cross_number: z.string().optional().nullable(),
     description: z.string().optional().nullable(),
-    image_url: z.string().url().optional().nullable(),
     sub_category_id: z.string(),
 });
 
@@ -24,6 +23,7 @@ export const zProduct = zProductBaseSchema.extend({
     id: z.string().uuid(),
     bitrix_id: z.string().optional().nullable(),
     slug: z.string().nullable(),
+    image_url: z.string().url(),
     category_slug: z.string(),
     category_name: z.string(),
     sub_category_slug: z.string(),

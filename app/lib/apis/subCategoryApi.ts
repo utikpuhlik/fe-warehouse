@@ -12,7 +12,7 @@ export async function fetchSubCategories(category_id: string): Promise<SubCatego
 }
 
 export async function fetchSubCategoryBySlug(slug: string): Promise<SubCategory> {
-    const url = `${BASE_URL}/${ENTITY}/${slug}`;
+    const url = `${BASE_URL}/${ENTITY}/slug/${slug}`;
     return fetchAndParse(url, zSubCategorySchema,  false, ENTITY);
 }
 
@@ -35,9 +35,9 @@ export async function postSubCategory(subCategory: FormData): Promise<SubCategor
     return zSubCategorySchema.parse(JSON.parse(text));
 }
 
-export async function putSubCategory(id: string, subCategory: FormData): Promise<number> {
+export async function patchSubCategory(id: string, subCategory: FormData): Promise<number> {
     const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
             // no header because of multipart
             Accept: "application/json",

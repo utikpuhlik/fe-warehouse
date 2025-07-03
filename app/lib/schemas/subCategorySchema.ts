@@ -4,13 +4,13 @@ import {z} from "zod";
 export const zSubCategoryBaseSchema = z.object({
     name: z.string().min(1, "Название не может быть пустым"),
     category_id: z.string(),
-    image_url: z.string().nullable().optional(),
 })
 export const zSubCategorySchema = zSubCategoryBaseSchema.extend({
     id: z.string(),
     slug: z.string(),
     category_slug: z.string(),
-    category_name: z.string()
+    category_name: z.string(),
+    image_url: z.string().url(),
 
 });
 export const zSubCategoryArraySchema = z.array(zSubCategorySchema);

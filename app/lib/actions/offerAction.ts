@@ -6,7 +6,7 @@ import {
   zOfferPostSchema,
   zOfferPutSchema,
 } from "@/app/lib/schemas/offerSchema";
-import { postOffer, delOffer, putOffer } from "@/app/lib/apis/offerApi";
+import { postOffer, delOffer, patchOffer } from "@/app/lib/apis/offerApi";
 import { revalidatePath } from "next/cache";
 
 export async function createOfferAction(
@@ -36,7 +36,7 @@ export async function updateOfferAction(
   if (!valid) {
     throw new Error("Zod server validation failed")
   }
-  await putOffer(offer_id, offer);
+  await patchOffer(offer_id, offer);
   revalidatePath(
     `/catalogue/${category_slug}/${sub_category_slug}/${product_id}`,
   );

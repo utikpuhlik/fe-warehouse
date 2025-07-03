@@ -39,15 +39,9 @@ export function EditProductModal(product: Product) {
     };
 
     const onSubmit = (product: Product) => {
-        const formData = new FormData();
-        formData.append("product", JSON.stringify(product));
-
-        if (file) {
-            formData.append("image_blob", file);
-        }
         startTransition(async () => {
             try {
-                await updateProductAction(product.id, formData, product.category_slug, product.sub_category_slug);
+                await updateProductAction(product.id, product, product.category_slug, product.sub_category_slug, file ?? undefined);
                 toast({
                     title: "Успешно",
                     description: `Товар "${product.name}" обновлен.`,
