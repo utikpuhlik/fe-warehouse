@@ -1,9 +1,13 @@
-import type {Metadata} from "next";
+"use client";
 
-export const metadata: Metadata = {
-	title: "Заказы | TCF"
-}
+import { SearchDropdown } from "@/app/modules/search-dropdown/search-dropdown";
 
 export default function Page() {
-	return <p>Страница для управления заказами</p>;
+  return (
+    <>
+      <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
+        <SearchDropdown />
+      </div>
+    </>
+  );
 }
