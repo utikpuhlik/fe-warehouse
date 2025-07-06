@@ -12,18 +12,18 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchFilteredOffersTS } from "@/app/modules/search-dropdown/api";
 import { useSearchParams, useRouter } from "next/navigation";
 import { OfferSchema } from "@/app/lib/schemas/offerSchema";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import Link from "next/link";
 import { useInView } from "react-intersection-observer";
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const query = searchParams.get("query") || "";
-  const sort = searchParams.get("sort") || "name_desc";
+  const sort = searchParams.get("sort") || "name_asc";
   const size = 30;
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -117,5 +117,38 @@ export default function SearchPage() {
         )}
       </div>
     </div>
+  );
+}
+
+function SearchFallback() {
+  return (
+    <div className="container py-6">
+      <div className="animate-pulse">
+        <div className="h-8 bg-gray-200 rounded w-64 mb-4"></div>
+        <div className="h-4 bg-gray-200 rounded w-32 mb-4"></div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="border rounded-lg p-4">
+              <div className="flex gap-4">
+                <div className="w-16 h-16 bg-gray-200 rounded"></div>
+                <div className="flex-1">
+                  <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                  <div className="h-3 bg-gray-200 rounded mb-2 w-20"></div>
+                  <div className="h-3 bg-gray-200 rounded w-16"></div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<SearchFallback />}>
+      <SearchContent />
+    </Suspense>
   );
 }
