@@ -8,7 +8,7 @@ export const zWaybillOfferBaseSchema = z.object({
     }),
     quantity: z
         .number({ invalid_type_error: "Поле должно быть целым числом" })
-        .int().gt(0),
+        .int().gt(0, { message: "Кол-во должно быть > 0" }),
     price_rub: z
         .number({invalid_type_error: "Поле должно быть числом"})
         .nonnegative({

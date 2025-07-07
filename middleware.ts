@@ -13,6 +13,7 @@ export async function middleware(request: NextRequest) {
         "/profile",
         "/orders",
         "/mailing",
+        "/users",
         "/waybills",
         "/price",
     ].some((prefix) =>

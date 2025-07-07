@@ -11,7 +11,6 @@ export function SaveButton({ onClick, full = true, disabled = false }: SaveButto
     return (
         <Button
             variant="outline"
-            className="flex items-center gap-2 rounded-xl border border-input px-3 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
             onClick={onClick}
             disabled={disabled}
         >

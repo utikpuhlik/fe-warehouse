@@ -4,7 +4,7 @@ import WaybillOffersTable from "@/app/ui/catalogue/waybill/waybill-offers-table"
 import {Suspense} from "react";
 import {Skeleton} from "@/components/ui/skeleton";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
-import { CreateWaybillOfferModal } from "@/app/ui/catalogue/waybill/create-waybill-offer";
+import {CreateWaybillOfferForm} from "@/app/ui/catalogue/waybill/create-waybill-offer";
 import {CommitWaybillButton} from "@/app/ui/catalogue/waybill/commit-waybill-button";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
 import {DeleteEntityButton} from "@/app/ui/catalogue/buttons/delete-entity-button";
@@ -25,11 +25,11 @@ export default async function WaybillPage(props: { params: Params }) {
     if (!waybill) notFound();
 
     const waybill_type =
-    waybill.waybill_type === "WAYBILL_OUT"
-        ? "Расход"
-        : waybill.waybill_type === "WAYBILL_IN"
-            ? "Приход"
-            : "Возврат";
+        waybill.waybill_type === "WAYBILL_OUT"
+            ? "Расход"
+            : waybill.waybill_type === "WAYBILL_IN"
+                ? "Приход"
+                : "Возврат";
 
     return (
         <main>
@@ -50,7 +50,7 @@ export default async function WaybillPage(props: { params: Params }) {
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <div className="inline-block">
-                                    <CreateWaybillOfferModal waybill_id={waybill_id} disabled={!waybill.is_pending} />
+                                    <CommitWaybillButton waybill_id={waybill_id} disabled={!waybill.is_pending}/>
                                 </div>
                             </TooltipTrigger>
                             {!waybill.is_pending && (
@@ -60,35 +60,22 @@ export default async function WaybillPage(props: { params: Params }) {
                             )}
                         </Tooltip>
                     </TooltipProvider>
+                    <DeleteEntityButton
+                        entityName="накладную"
+                        entityId={waybill_id}
+                        deleteAction={deleteWaybillAction}
+                        disabled={!waybill.is_pending}
+                    />
                 </div>
+            </div>
+
+            <div className="mt-6 mb-4">
+                <CreateWaybillOfferForm waybill_id={waybill_id}/>
             </div>
 
             <Suspense fallback={<Skeleton className="h-32"/>}>
                 <WaybillOffersTable {...waybill} />
             </Suspense>
-
-            <div className="mt-4 flex items-center gap-2">
-            <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <div className="inline-block">
-                            <CommitWaybillButton waybill_id={waybill_id} disabled={!waybill.is_pending}/>
-                        </div>
-                    </TooltipTrigger>
-                    {!waybill.is_pending && (
-                        <TooltipContent>
-                            <p>Накладная уже проведена</p>
-                        </TooltipContent>
-                    )}
-                </Tooltip>
-            </TooltipProvider>
-            <DeleteEntityButton
-                entityName="накладную"
-                entityId={waybill_id}
-                deleteAction={deleteWaybillAction}
-                disabled={!waybill.is_pending}
-            />
-            </div>
         </main>
     );
 }
