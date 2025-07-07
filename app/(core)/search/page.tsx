@@ -17,6 +17,14 @@ import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import Link from "next/link";
 import { useInView } from "react-intersection-observer";
+import {
+  ArrowUp10,
+  ArrowDownAZ,
+  ArrowUpWideNarrow,
+  ArrowDownWideNarrow,
+  ArrowDown10,
+  ArrowUpAZ,
+} from "lucide-react";
 
 function SearchContent() {
   const searchParams = useSearchParams();
@@ -73,11 +81,42 @@ function SearchContent() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="name_asc">Название ↑</SelectItem>
-              <SelectItem value="name_desc">Название ↓</SelectItem>
-              <SelectItem value="price_asc">Цена ↑</SelectItem>
-              <SelectItem value="price_desc">Цена ↓</SelectItem>
-              <SelectItem value="quantity_desc">Остаток ↓</SelectItem>
+              <SelectItem value="name_asc">
+                <div className="flex items-center gap-2">
+                  <ArrowDownAZ size={15} />
+                  <span>Название</span>
+                </div>
+              </SelectItem>
+              <SelectItem value="name_desc">
+                <div className="flex items-center gap-2">
+                  <ArrowUpAZ size={15} />
+                  <span>Название</span>
+                </div>
+              </SelectItem>
+              <SelectItem value="price_asc">
+                <div className="flex items-center gap-2">
+                  <ArrowDownWideNarrow size={15} />
+                  <span>Цена</span>
+                </div>
+              </SelectItem>
+              <SelectItem value="price_desc">
+                <div className="flex items-center gap-2">
+                  <ArrowUpWideNarrow size={15} />
+                  <span>Цена</span>
+                </div>
+              </SelectItem>
+              <SelectItem value="quantity_asc">
+                <div className="flex items-center gap-2">
+                  <ArrowDown10 size={15} />
+                  <span>Остаток</span>
+                </div>
+              </SelectItem>
+              <SelectItem value="quantity_desc">
+                <div className="flex items-center gap-2">
+                  <ArrowUp10 size={15} />
+                  <span>Остаток</span>
+                </div>
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
