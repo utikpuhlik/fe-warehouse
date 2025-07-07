@@ -33,3 +33,30 @@ Use it in RootLayout as following:
     <QueryProvider>{children}</QueryProvider>
 </body>
 ```
+
+## Data Fetching Strategy
+```mermaid
+graph TD
+    page[Page] --> B{server or client?}
+    B -->|server| C[Server Component]
+    C --> D[server fetch function]
+    D -->|call external API| python[FastAPI backend]
+    python -->|return JSON| D
+    D --> |pass response as props| ClientComponent
+    ClientComponent -->|Suspense| page
+    B -->|client| auth{send cookies?}
+    auth -->|yes| E[Router proxy]
+    auth -->|no| F[Tanstack Query]
+```
+
+## Data Mutation Strategy
+```mermaid
+graph TD
+    page[Page] -->|has components| C[Client Component]
+    C -->|send form| action[server action]
+    action -->|build FormData| D[server fetch function - API call]
+    D -->|call external API| python[FastAPI backend]
+    python -->|return JSON| D
+    D -->|return Data| action
+    action --> |revalidate path| C
+```

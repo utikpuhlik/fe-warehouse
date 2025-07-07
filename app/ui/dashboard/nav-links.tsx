@@ -29,6 +29,7 @@ const links = [
   // },
   { name: "Панель", href: "/", icon: HomeIcon },
   { name: "Пользователи", href: "/mailing", icon: UserGroupIcon },
+  { name: "Users", href: "/users", icon: UserGroupIcon },
   { name: "Каталог", href: "/catalogue", icon: ClipboardDocumentListIcon },
   { name: "Поиск", href: "/search", icon: MagnifyingGlassIcon },
   { name: "Catalogue Table", href: "/table", icon: TableCellsIcon },

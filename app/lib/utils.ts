@@ -1,4 +1,35 @@
 import type { Revenue } from "./definitions";
+import {Metadata} from "next";
+
+
+export function generateAvatarFallback(string: string) {
+	const names = string.split(" ").filter((first_name: string) => first_name);
+	const mapped = names.map((first_name: string) => first_name.charAt(0).toUpperCase());
+
+	return mapped.join("");
+}
+
+export function generateMeta({
+								 title,
+								 description,
+								 canonical
+							 }: {
+	title: string;
+	description: string;
+	canonical: string;
+}): Metadata {
+	return {
+		title: `${title} - Shadcn UI Kit`,
+		description: description,
+		metadataBase: new URL(`https://shadcnuikit.com`),
+		alternates: {
+			canonical: `/dashboard${canonical}`
+		},
+		openGraph: {
+			images: [`https://bundui-images.netlify.app/seo.jpg`]
+		}
+	};
+}
 
 export const formatCurrency = (amount: number) => {
 	return (amount / 100).toLocaleString("en-US", {

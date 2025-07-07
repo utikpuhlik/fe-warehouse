@@ -12,7 +12,7 @@ import {
     TableRow
 } from "@/components/ui/table"
 import { CustomerTypeSelect } from "@/app/ui/catalogue/mailing/customer-type-select"
-import { MailingToggle } from "@/app/ui/catalogue/mailing/customer-mailing-toggle"
+import { MailingToggle } from "@/app/ui/catalogue/mailing/mailing-toggle"
 
 export default function MailingTable({ users }: { users: UserSchema[] }) {
     return (

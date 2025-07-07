@@ -10,7 +10,7 @@ export const zUser = z.object({
     is_active: z.boolean(),
     is_superuser: z.boolean(),
     is_verified: z.boolean(),
-    role: z.string(),
+    role: z.enum(["ADMIN", "EMPLOYEE", "USER"]),
     customer_type: z.enum(["USER_RETAIL", "USER_WHOLESALE", "USER_SUPER_WHOLESALE"]),
     mailing: z.boolean(),
     phone: z.string().nullable(),
