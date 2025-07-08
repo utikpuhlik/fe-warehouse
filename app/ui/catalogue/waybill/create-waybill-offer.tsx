@@ -15,7 +15,7 @@ import {
   zWaybillOfferPostSchema,
 } from "@/app/lib/schemas/waybillOfferSchema";
 import { SelectOfferField } from "@/app/ui/catalogue/waybill/select-offer-field";
-import {CirclePlus} from "lucide-react";
+import { CirclePlus, Package } from "lucide-react";
 
 export function CreateWaybillOfferForm({ waybill_id }: { waybill_id: string }) {
   const [isPending, startTransition] = useTransition();
@@ -48,51 +48,58 @@ export function CreateWaybillOfferForm({ waybill_id }: { waybill_id: string }) {
   };
 
   return (
-      <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 rounded-md border p-4">
-          <h2 className="text-lg font-semibold">Добавить позицию</h2>
-          <SelectOfferField />
-          <input type="hidden" {...form.register("offer_id")} />
-          <input type="hidden" {...form.register("brand")} />
-          <input type="hidden" {...form.register("manufacturer_number")} />
+    <FormProvider {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-4 rounded-md border p-4"
+      >
+        <h2 className="text-lg font-semibold">Добавить позицию</h2>
+        <SelectOfferField />
+        <input type="hidden" {...form.register("offer_id")} />
+        <input type="hidden" {...form.register("brand")} />
+        <input type="hidden" {...form.register("manufacturer_number")} />
 
-          <div className="flex items-end gap-4">
-            <div className="w-full max-w-[100px]">
-              <Label htmlFor="price_rub">Цена</Label>
-              <Input
-                  id="price_rub"
-                  type="number"
-                  step="1"
-                  {...form.register("price_rub", { valueAsNumber: true })}
-              />
-                {form.formState.errors.price_rub && (
-                    <p className="text-sm text-red-500">
-                      {form.formState.errors.price_rub.message}
-                    </p>
-                )}
-            </div>
-
-            <div className="w-full max-w-[100px]">
-              <Label htmlFor="quantity">Количество</Label>
-              <Input
-                  id="quantity"
-                  type="number"
-                  step="1"
-                  {...form.register("quantity", { valueAsNumber: true })}
-              />
-              {form.formState.errors.quantity && (
-                  <p className="text-sm text-red-500">
-                    {form.formState.errors.quantity.message}
-                  </p>
-              )}
-            </div>
-
-            <Button type="submit" disabled={isPending}>
-              <CirclePlus/>
-              {isPending ? "Добавляем..." : "Добавить позицию"}
-            </Button>
+        <div className="flex items-end gap-4">
+          <div className="w-full max-w-[75px]">
+            <Label htmlFor="price_rub">Цена</Label>
+            <Input
+              id="price_rub"
+              type="number"
+              step="1"
+              {...form.register("price_rub", { valueAsNumber: true })}
+            />
+            {form.formState.errors.price_rub && (
+              <p className="text-sm text-red-500">
+                {form.formState.errors.price_rub.message}
+              </p>
+            )}
           </div>
-        </form>
-      </FormProvider>
+
+          <div className="w-full max-w-[100px]">
+            <div className="flex items-center gap-1 mb-1">
+              <Label htmlFor="quantity">Кол-во</Label>
+              <Package size={15} />
+            </div>
+
+            <Input
+              id="quantity"
+              type="number"
+              step="1"
+              {...form.register("quantity", { valueAsNumber: true })}
+            />
+            {form.formState.errors.quantity && (
+              <p className="text-sm text-red-500">
+                {form.formState.errors.quantity.message}
+              </p>
+            )}
+          </div>
+
+          <Button type="submit" disabled={isPending}>
+            <CirclePlus />
+            {isPending ? "Добавляем..." : "Добавить позицию"}
+          </Button>
+        </div>
+      </form>
+    </FormProvider>
   );
 }
