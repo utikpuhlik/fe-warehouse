@@ -26,6 +26,13 @@ export async function fetchUsers(
     return zUsers.parse(json);
 }
 
+export async function fetchUser(
+    user_id: string
+): Promise<UserSchema> {
+    const url = `${BASE_URL}/${ENTITY}/${user_id}`
+    return fetchWithAuthAndParse(url, zUser, false, ENTITY)
+}
+
 export async function fetchUsersCount(): Promise<CountSchema> {
     const url = `${BASE_URL}/${ENTITY}/meta/count`;
     return fetchWithAuthAndParse(url, zCountSchema, false, ENTITY);

@@ -4,7 +4,7 @@ import {z} from "zod";
 export const zUser = z.object({
     id: z.string().uuid(),
     first_name: z.string(),
-    last_name: z.string().nullable(),
+    last_name: z.string(),
     avatar_url: z.string().url().nullable(),
     email: z.string().email(),
     is_active: z.boolean(),

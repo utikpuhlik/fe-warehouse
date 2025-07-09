@@ -2,18 +2,13 @@
 
 import {
   ClipboardDocumentListIcon,
-  // CurrencyDollarIcon,
   ShoppingCartIcon,
   TableCellsIcon,
   UserGroupIcon,
-  // InboxIcon,
   DocumentArrowDownIcon,
-  UserIcon,
-  // EyeIcon,
   HomeIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-// import { Users2Icon } from "lucide-react";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -28,14 +23,13 @@ const links = [
   // 	icon: DocumentDuplicateIcon,
   // },
   { name: "Панель", href: "/", icon: HomeIcon },
-  { name: "Пользователи", href: "/mailing", icon: UserGroupIcon },
   { name: "Users", href: "/users", icon: UserGroupIcon },
   { name: "Каталог", href: "/catalogue", icon: ClipboardDocumentListIcon },
   { name: "Поиск", href: "/search", icon: MagnifyingGlassIcon },
   { name: "Catalogue Table", href: "/table", icon: TableCellsIcon },
   { name: "Orders", href: "/orders", icon: ShoppingCartIcon },
   { name: "Накладные", href: "/waybills", icon: DocumentArrowDownIcon },
-  { name: "Профиль", href: "/profile", icon: UserIcon },
+  // { name: "Профиль", href: "/profile", icon: UserIcon },
 ];
 
 export default function NavLinks() {

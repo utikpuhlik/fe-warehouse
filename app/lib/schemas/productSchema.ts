@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const zProductBaseSchema = z.object({
+const zProductBaseSchema = z.object({
     name: z.string().min(1, "Название не может быть пустым"),
     cross_number: z.string().optional().nullable(),
     description: z.string().optional().nullable(),
