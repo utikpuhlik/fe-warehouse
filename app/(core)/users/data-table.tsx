@@ -248,7 +248,7 @@ export const columns: ColumnDef<UserSchema>[] = [
         id: "actions",
         enableHiding: false,
         cell: ({row}) => {
-            console.log(row)
+            console.log(row.id)
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
