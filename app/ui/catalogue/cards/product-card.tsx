@@ -11,7 +11,7 @@ import {v4 as uuidv4} from "uuid";
 export function ProductCard(product: Product) {
     return (
         <Card className="relative group">
-            <Link href={`/catalogue/${product.category_slug}/${product.sub_category_slug}/${product.id}`}>
+            <Link href={`/catalogue/${product.sub_category.category.slug}/${product.sub_category.slug}/${product.id}`}>
                 <CardContent className="flex flex-col items-center p-4">
                     <Image
                         src={product.image_url ?? imageUrlPlaceholder}

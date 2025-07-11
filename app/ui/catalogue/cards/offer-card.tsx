@@ -11,7 +11,7 @@ export function OfferCard(offer: OfferSchema) {
       <Card className="group relative flex h-[150px] w-[700px] overflow-hidden rounded-xl border">
             <div className="relative w-[150px] h-full flex-shrink-0">
                 <Image
-                    src={offer.image_url ?? "https://storage.yandexcloud.net/tcf-images/default.svg"}
+                    src={offer.product.image_url ?? "https://storage.yandexcloud.net/tcf-images/default.svg"}
                     alt={offer.internal_description ?? offer.manufacturer_number}
                     fill
                     className="object-cover"

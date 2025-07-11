@@ -1,8 +1,7 @@
 "use server"
 
 import {
-    Product,
-    ProductPostSchema,
+    ProductPostSchema, ProductPutSchema,
 } from "@/app/lib/schemas/productSchema";
 import {postProduct, delProduct, patchProduct} from "@/app/lib/apis/productApi";
 import {revalidatePath} from "next/cache";
@@ -21,7 +20,7 @@ export async function createProductAction(
 
 export async function updateProductAction(
     product_id: string,
-    product: Product,
+    product: ProductPutSchema,
     category_slug: string,
     sub_category_slug: string,
     file?: File): Promise<void> {

@@ -1,5 +1,3 @@
-import { promises as fs } from "fs";
-import path from "path";
 import { generateMeta } from "@/app/lib/utils";
 
 import Link from "next/link";
@@ -7,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { CirclePlus } from "lucide-react";
 import OrdersDataTable from "./data-table";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {fetchOrders} from "@/app/lib/apis/orderApi";
+import {OrderSchema} from "@/app/lib/schemas/orderSchema";
 
 export async function generateMetadata() {
   return generateMeta({
@@ -17,16 +17,8 @@ export async function generateMetadata() {
   });
 }
 
-async function getOrders() {
-  const data = await fs.readFile(
-    path.join(process.cwd(), "app/(core)/orders/data.json")
-  );
-
-  return JSON.parse(data.toString());
-}
-
 export default async function Page() {
-  const orders = await getOrders();
+  const orders: OrderSchema[] = await fetchOrders();
 
   return (
     <div className="space-y-4">

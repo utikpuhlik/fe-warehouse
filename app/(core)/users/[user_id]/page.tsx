@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { LatestActivity } from "@/app/(core)/users/[user_id]/latest-activity";
 import {ProfileCard} from "@/app/(core)/users/[user_id]/profile-card";
 import {UserSchema} from "@/app/lib/schemas/userSchema";
-import {fetchUser} from "@/app/lib/apis/userApi";
+import {fetchUserById} from "@/app/lib/apis/userApi";
 import {notFound} from "next/navigation";
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 
 export default async function Page({params}: Props) {
     const {user_id} = await params;
-    const user: UserSchema = await fetchUser(user_id);
+    const user: UserSchema = await fetchUserById(user_id);
     if (!user) {
         notFound()
     }

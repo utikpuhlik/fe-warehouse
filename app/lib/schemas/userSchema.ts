@@ -1,7 +1,7 @@
 import {z} from "zod";
 
 /** Single user */
-export const zUser = z.object({
+export const zUserReadSchema = z.object({
     id: z.string().uuid(),
     first_name: z.string(),
     last_name: z.string(),
@@ -21,7 +21,7 @@ export const zUser = z.object({
 });
 
 /** Array wrapper for list endpoints */
-export const zUsers = z.array(zUser);
+export const zUsers = z.array(zUserReadSchema);
 
 /** TypeScript helper */
-export type UserSchema = z.infer<typeof zUser>;
+export type UserSchema = z.infer<typeof zUserReadSchema>;

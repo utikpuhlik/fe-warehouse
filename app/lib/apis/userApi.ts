@@ -1,5 +1,5 @@
 import {
-    type UserSchema, zUser,
+    type UserSchema, zUserReadSchema,
     zUsers,
 } from "@/app/lib/schemas/userSchema";
 import {BASE_URL} from "@/app/lib/config/config";
@@ -26,11 +26,11 @@ export async function fetchUsers(
     return zUsers.parse(json);
 }
 
-export async function fetchUser(
+export async function fetchUserById(
     user_id: string
 ): Promise<UserSchema> {
     const url = `${BASE_URL}/${ENTITY}/${user_id}`
-    return fetchWithAuthAndParse(url, zUser, false, ENTITY)
+    return fetchWithAuthAndParse(url, zUserReadSchema, false, ENTITY)
 }
 
 export async function fetchUsersCount(): Promise<CountSchema> {
@@ -52,7 +52,7 @@ export async function fetchCurrentUser(): Promise<UserSchema | null> {
     }
 
     const json = await res.json();
-    return zUser.parse(json);
+    return zUserReadSchema.parse(json);
 }
 
 
@@ -72,5 +72,5 @@ export async function patchUser(id: string, user: UserSchema): Promise<UserSchem
         handleApiError(res, text, ENTITY);
     }
 
-    return zUser.parse(JSON.parse(text));
+    return zUserReadSchema.parse(JSON.parse(text));
 }

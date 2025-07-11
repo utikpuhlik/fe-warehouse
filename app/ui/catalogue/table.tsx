@@ -30,16 +30,16 @@ export default function OffersTable({offers}: { offers: OfferSchema[] }) {
                         <TableRow key={offer.id} className="group relative">
                             <TableCell>
                                 <Link
-                                    href={`/catalogue/${offer.category_slug}/${offer.sub_category_slug}/${offer.product_id}`}>
+                                    href={`/catalogue/${offer.product.sub_category.category.slug}/${offer.product.sub_category.slug}/${offer.product_id}`}>
                                     <div className="flex items-center gap-3">
                                         <Image
-                                            src={offer.image_url ?? imageUrlPlaceholder}
+                                            src={offer.product.image_url ?? imageUrlPlaceholder}
                                             className="rounded-full"
                                             width={28}
                                             height={28}
-                                            alt={`${offer.product_name}`}
+                                            alt={`${offer.product.name}`}
                                         />
-                                        <span>{offer.product_name}</span>
+                                        <span>{offer.product.name}</span>
                                     </div>
                                 </Link>
                             </TableCell>

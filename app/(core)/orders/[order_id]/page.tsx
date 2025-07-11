@@ -26,29 +26,11 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
+import {notFound} from "next/navigation";
+import {OrderSchema} from "@/app/lib/schemas/orderSchema";
+import {fetchOrderById} from "@/app/lib/apis/orderApi";
 
-type OrderStatus = "processing" | "shipped" | "out-for-delivery" | "delivered";
-
-interface Order {
-  id: string;
-  date: string;
-  status: OrderStatus;
-  customer: {
-    name: string;
-    email: string;
-    address: string;
-  };
-  items: {
-    id: number;
-    name: string;
-    image: string;
-    quantity: number;
-    price: number;
-  }[];
-  subtotal: number;
-  shipping: number;
-  total: number;
-}
+type OrderStatus = "NEW" | "IN_PROGRESS" | "SHIPPING" | "COMPLETED" | "CANCELLED";
 
 export async function generateMetadata() {
   return generateMeta({
@@ -59,42 +41,22 @@ export async function generateMetadata() {
   });
 }
 
-export default function Page() {
-  const order: Order = {
-    id: "ORD-12345",
-    date: "2025-04-15",
-    status: "shipped",
-    customer: {
-      name: "Alice Johnson",
-      email: "alice@example.com",
-      address: "123 Main St, Anytown, AN 12345"
-    },
-    items: [
-      {
-        id: 1,
-        name: "Wireless Headphones",
-        image: "/products/01.jpeg",
-        quantity: 2,
-        price: 25.99
-      },
-      {
-        id: 2,
-        name: "Bluetooth Speaker",
-        image: "/products/02.jpeg",
-        quantity: 1,
-        price: 49.99
-      }
-    ],
-    subtotal: 101.97,
-    shipping: 10.0,
-    total: 111.97
-  };
+type Props = {
+  params: Promise<{ order_id: string }>
+};
+export default async function Page({params}: Props) {
+  const {order_id} = await params;
+  const order: OrderSchema = await fetchOrderById(order_id);
+  if (!order) {
+    notFound()
+  }
 
   const statusSteps: Record<OrderStatus, string> = {
-    processing: "Processing",
-    shipped: "Shipped",
-    "out-for-delivery": "Out for Delivery",
-    delivered: "Delivered"
+    NEW: "Processing",
+    IN_PROGRESS: "Shipped",
+    SHIPPING: "Out for Delivery",
+    COMPLETED: "Delivered",
+    CANCELLED: "Cancelled"
   };
 
   const currentStep = statusSteps[order.status];
@@ -124,16 +86,19 @@ export default function Page() {
         <Card>
           <CardHeader>
             <CardTitle className="font-display text-2xl">Order {order.id}</CardTitle>
-            <p className="text-muted-foreground text-sm">Placed on {order.date}</p>
+            <p className="text-muted-foreground text-sm">Placed on {new Date(order.created_at).toLocaleDateString("ru-RU", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}</p>
           </CardHeader>
           <CardContent>
             <Separator className="mb-4" />
             <div className="space-y-4">
               <div className="space-y-2">
                 <h3 className="font-semibold">Customer Information</h3>
-                <p>{order.customer.name}</p>
-                <p>{order.customer.email}</p>
-                <p className="text-muted-foreground text-sm">{order.customer.address}</p>
+                <p>{order.user.first_name}</p>
+                <p>{order.user.email}</p>
+                <p className="text-muted-foreground text-sm">{order.address.city},{order.address.street}</p>
               </div>
               <div className="bg-muted flex items-center justify-between space-y-2 rounded-md border p-4">
                 <div className="space-y-1">
@@ -157,16 +122,17 @@ export default function Page() {
           <CardContent className="space-y-4">
             <div className="flex justify-between">
               <span>Subtotal</span>
-              <span>${order.subtotal.toFixed(2)}</span>
+              <span>${order.total_sum.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between">
-              <span>Shipping</span>
-              <span>${order.shipping.toFixed(2)}</span>
-            </div>
+            {/*TODO: add shipping cost*/}
+            {/*<div className="flex justify-between">*/}
+            {/*  <span>Shipping</span>*/}
+            {/*  <span>${order.address.shipping_cost.toFixed(2)}</span>*/}
+            {/*</div>*/}
             <Separator />
             <div className="flex justify-between font-semibold">
               <span>Total</span>
-              <span>${order.total.toFixed(2)}</span>
+              <span>${order.total_sum.toFixed(2)}</span>
             </div>
           </CardContent>
         </Card>
@@ -187,10 +153,11 @@ export default function Page() {
                       <CheckCircle className="size-5" />
                     ) : (
                       {
-                        processing: <Package className="size-5" />,
-                        shipped: <Truck className="size-5" />,
-                        "out-for-delivery": <Truck className="size-5" />,
-                        delivered: <CheckCircle2 className="size-5" />
+                        NEW: <Package className="size-5" />,
+                        IN_PROGRESS: <Truck className="size-5" />,
+                        SHIPPING: <Truck className="size-5" />,
+                        COMPLETED: <CheckCircle2 className="size-5" />,
+                        CANCELLED: <CheckCircle2 className="size-5" />
                       }[step as OrderStatus]
                     )}
                   </div>
@@ -230,24 +197,26 @@ export default function Page() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {order.items.map((item) => (
+              {order.order_offers.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell>
                     <div className="flex items-center gap-4">
                       <Image
-                        src={`https://bundui-images.netlify.app${item.image}`}
+                        src={`https://bundui-images.netlify.app${item.image_url}`}
                         width={60}
                         height={60}
                         alt=""
                         unoptimized
                       />
-                      <span>{item.name}</span>
+                      <span>{item.product_name}</span>
+                      <span>{item.brand}</span>
+                      <span>{item.manufacturer_number}</span>
                     </div>
                   </TableCell>
                   <TableCell className="text-right">{item.quantity}</TableCell>
-                  <TableCell className="text-right">${item.price.toFixed(2)}</TableCell>
+                  <TableCell className="text-right">${item.price_rub.toFixed(2)}</TableCell>
                   <TableCell className="text-right">
-                    ${(item.quantity * item.price).toFixed(2)}
+                    ${(item.quantity * item.price_rub).toFixed(2)}
                   </TableCell>
                 </TableRow>
               ))}

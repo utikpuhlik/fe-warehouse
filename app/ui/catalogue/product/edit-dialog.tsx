@@ -41,7 +41,13 @@ export function EditProductModal(product: Product) {
     const onSubmit = (product: Product) => {
         startTransition(async () => {
             try {
-                await updateProductAction(product.id, product, product.category_slug, product.sub_category_slug, file ?? undefined);
+                await updateProductAction(
+                    product.id,
+                    product,
+                    product.sub_category.category.slug,
+                    product.sub_category.slug,
+                    file ?? undefined
+                );
                 toast({
                     title: "Успешно",
                     description: `Товар "${product.name}" обновлен.`,
@@ -93,7 +99,11 @@ export function EditProductModal(product: Product) {
                     <DeleteEntityButton
                         entityName={product.name}
                         entityId={product.id}
-                        deleteAction={(id) => deleteProductAction(id, product.category_slug, product.sub_category_slug)}
+                        deleteAction={(id) => deleteProductAction(
+                            id,
+                            product.sub_category.category.slug,
+                            product.sub_category.slug
+                        )}
                         onDeleted={resetForm}
                     />
                     <Button type="submit" disabled={isPending}>

@@ -3,6 +3,7 @@ import type { WaybillSchema } from "@/app/lib/schemas/waybillSchema";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import {BadgeCheckIcon, FilePen} from "lucide-react";
+import {formatDateToLocal} from "@/app/lib/utils";
 
 
 function getWaybillMeta(type: string): {
@@ -30,12 +31,9 @@ export function WaybillCard(waybill: WaybillSchema) {
                 <div className="flex justify-between items-start">
                     <div>
                         <div className="font-semibold">{waybill.counterparty_name}</div>
-                        <div className="text-sm text-muted-foreground">Автор: {waybill.author}</div>
+                        <div className="text-sm text-muted-foreground">Автор: {`${waybill.user.first_name} ${waybill.user.last_name}`}</div>
                         <div className="text-sm text-muted-foreground">
-                            Создана: {new Date(waybill.created_at).toLocaleDateString("ru-RU", {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                        })}
+                            Создана: {formatDateToLocal(waybill.created_at, "ru-RU", true)}
                         </div>
                     </div>
                     <div className="flex flex-col items-end space-y-2">

@@ -38,11 +38,13 @@ export const formatCurrency = (amount: number) => {
 	});
 };
 
-export const formatDateToLocal = (dateStr: string, locale = "en-US") => {
+export const formatDateToLocal = (dateStr: string, locale = "ru-RU", numeric = false) => {
 	const date = new Date(dateStr);
 	const options: Intl.DateTimeFormatOptions = {
+		minute: "2-digit",
+		hour: "2-digit",
 		day: "numeric",
-		month: "short",
+		month: numeric ? "numeric" : "short",
 		year: "numeric",
 	};
 	const formatter = new Intl.DateTimeFormat(locale, options);

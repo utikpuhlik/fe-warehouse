@@ -1,4 +1,5 @@
 import {z} from "zod";
+import {zUserReadSchema} from "@/app/lib/schemas/userSchema";
 
 export const zWaybillBaseSchema = z.object({
     user_id: z.string().uuid(),
@@ -9,9 +10,9 @@ export const zWaybillBaseSchema = z.object({
 
 export const zWaybillSchema = zWaybillBaseSchema.extend({
     id: z.string().uuid(),
-    author: z.string(),
-    created_at: z.coerce.date(),
-    updated_at: z.coerce.date(),
+    user: zUserReadSchema,
+    created_at: z.string().datetime(),
+    updated_at: z.string().datetime()
 })
 
 export const zWaybillPaginatedSchema = z.object({

@@ -60,20 +60,20 @@ export function SearchDropdown() {
           {offers.map((offer: OfferSchema) => (
             <Card key={offer.id} className="hover:bg-gray-50 cursor-pointer">
               <Link
-                href={`/catalogue/${offer.category_slug}/${offer.sub_category_slug}/${offer.product_id}`}
+                href={`/catalogue/${offer.product.sub_category.category.slug}/${offer.product.sub_category.slug}/${offer.product_id}`}
                 className="px-3 py-2 flex items-center gap-3 w-full hover:bg-muted"
               >
                 <CardContent className="flex items-center gap-3 p-2">
                   <div className="relative w-12 h-12 rounded overflow-hidden">
                     <Image
-                      src={offer.image_url || "/placeholder.jpg"}
-                      alt={offer.product_name}
+                      src={offer.product.image_url || "/placeholder.jpg"}
+                      alt={offer.product.name}
                       fill
                       className="object-cover"
                     />
                   </div>
                   <div className="text-sm">
-                    <div className="font-medium">{offer.product_name}</div>
+                    <div className="font-medium">{offer.product.name}</div>
                     <div className="text-muted-foreground">{offer.brand}</div>
                   </div>
                 </CardContent>

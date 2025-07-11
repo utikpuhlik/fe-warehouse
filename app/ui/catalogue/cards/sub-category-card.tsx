@@ -12,7 +12,7 @@ import {v4 as uuidv4} from "uuid";
 export function SubCategoryCard(sub_category: SubCategory) {
     return (
         <Card className="relative group">
-            <Link href={`/catalogue/${sub_category.category_slug}/${sub_category.slug}`}>
+            <Link href={`/catalogue/${sub_category.category.slug}/${sub_category.slug}`}>
                 <CardContent className="flex flex-col items-center p-4">
                     <div className="w-[100px] h-[100px] flex items-center justify-center">
                     <Image

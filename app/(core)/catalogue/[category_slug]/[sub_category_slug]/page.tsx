@@ -25,7 +25,7 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
 
     return {
         title: `${sub_category.name} | TCF`,
-        description: `Товары подкатегории ${sub_category.name} для категории ${sub_category.category_name}`,
+        description: `Товары подкатегории ${sub_category.name} для категории ${sub_category.category.name}`,
     };
 }
 
@@ -35,7 +35,7 @@ export default async function ProductsPage({params}: Props) {
     const sub_category: SubCategory | null = await fetchSubCategoryBySlug(sub_category_slug);
     if (!sub_category) notFound();
 
-    const category_slug = sub_category.category_slug;
+    const category_slug = sub_category.category.slug;
     const productsData: Products = await fetchProducts(sub_category.id);
     const products: Product[] = productsData.items ?? [];
 
@@ -46,7 +46,7 @@ export default async function ProductsPage({params}: Props) {
                     breadcrumbs={[
                         {label: "Каталог", href: "/catalogue"},
                         {
-                            label: sub_category.category_name,
+                            label: sub_category.category.name,
                             href: `/catalogue/${category_slug}`,
                             active: false,
                         },

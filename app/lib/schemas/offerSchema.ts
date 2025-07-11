@@ -1,4 +1,5 @@
 import { z } from "zod";
+import {zProduct} from "@/app/lib/schemas/productSchema";
 
 export const zOfferBaseSchema = z.object({
   address_id: z.string().nullable(),
@@ -26,13 +27,7 @@ export const zOfferBaseSchema = z.object({
 export const zOfferSchema = zOfferBaseSchema.extend({
   id: z.string().uuid(),
   offer_bitrix_id: z.string().nullable().optional(),
-  category_slug: z.string(),
-  category_name: z.string(),
-  sub_category_slug: z.string(),
-  sub_category_name: z.string(),
-  product_name: z.string(),
-  cross_number: z.string().nullable(),
-  image_url: z.string().url(),
+  product: zProduct,
   wholesale_price_rub: z.number().nonnegative(),
 });
 

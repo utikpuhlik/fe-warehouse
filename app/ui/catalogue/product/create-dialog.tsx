@@ -51,7 +51,7 @@ export function CreateProductModal(sub_category: SubCategory) {
         }
         startTransition(async () => {
             try {
-                await createProductAction(data, file, sub_category.category_slug, sub_category.slug);
+                await createProductAction(data, file, sub_category.category.slug, sub_category.slug);
                 toast({
                     title: "Успешно",
                     description: `Товар "${data.name}" добавлен.`,

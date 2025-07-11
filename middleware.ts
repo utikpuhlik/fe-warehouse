@@ -10,12 +10,9 @@ export async function middleware(request: NextRequest) {
         "/",
         "/dashboard",
         "/catalogue",
-        "/profile",
         "/orders",
-        "/mailing",
         "/users",
         "/waybills",
-        "/price",
     ].some((prefix) =>
         path.startsWith(prefix)
     );
@@ -59,11 +56,9 @@ export const config = {
     matcher: [
         "/dashboard/:path*",
         "/catalogue/:path*",
-        "/profile/:path*",
         "/orders/:path*",
-        "/mailing/:path*",
         "/waybills/:path*",
-        "/price/:path*",
+        "/users/:path*",
         "/",
     ],
 };

@@ -1,4 +1,5 @@
 import {z} from "zod";
+import {zCategory} from "@/app/lib/schemas/categorySchema";
 
 
 export const zSubCategoryBaseSchema = z.object({
@@ -8,8 +9,7 @@ export const zSubCategoryBaseSchema = z.object({
 export const zSubCategorySchema = zSubCategoryBaseSchema.extend({
     id: z.string(),
     slug: z.string(),
-    category_slug: z.string(),
-    category_name: z.string(),
+    category: zCategory,
     image_url: z.string().url(),
 
 });

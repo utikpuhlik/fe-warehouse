@@ -1,4 +1,5 @@
 import { z } from "zod";
+import {zSubCategorySchema} from "@/app/lib/schemas/subCategorySchema";
 
 const zProductBaseSchema = z.object({
     name: z.string().min(1, "Название не может быть пустым"),
@@ -8,14 +9,12 @@ const zProductBaseSchema = z.object({
 });
 
 export const zProductPostSchema = zProductBaseSchema.extend({
-    cross_number: z.string().min(1, "Кросс номер не может быть пустым"),
 });
 
 export const zProductPutSchema = zProductBaseSchema.extend({
     name: z.string({
         invalid_type_error: "Название не может быть пустым",
     }),
-    cross_number: z.string().min(1, "Кросс номер не может быть пустым"),
 });
 
 
@@ -24,10 +23,7 @@ export const zProduct = zProductBaseSchema.extend({
     bitrix_id: z.string().optional().nullable(),
     slug: z.string().nullable(),
     image_url: z.string().url(),
-    category_slug: z.string(),
-    category_name: z.string(),
-    sub_category_slug: z.string(),
-    sub_category_name: z.string()
+    sub_category: zSubCategorySchema
 });
 
 export const zProducts = z.object({

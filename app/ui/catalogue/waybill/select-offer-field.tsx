@@ -37,7 +37,7 @@ export function SelectOfferField() {
         setValue("manufacturer_number", offer.manufacturer_number);
         setValue("price_rub", offer.price_rub);
         setValue("quantity", offer.quantity);
-        setInput(`${offer.product_name} | ${offer.brand}`);
+        setInput(`${offer.product.name} | ${offer.brand}`);
         setOpen(false);
     };
 
@@ -80,14 +80,14 @@ export function SelectOfferField() {
                                         >
                                             <div className="flex items-center gap-3">
                                                 <Image
-                                                    src={offer.image_url ?? imageUrlPlaceholder}
-                                                    alt={offer.product_name}
+                                                    src={offer.product.image_url ?? imageUrlPlaceholder}
+                                                    alt={offer.product.name}
                                                     width={40}
                                                     height={40}
                                                     className="rounded-md border bg-white object-contain"
                                                 />
                                                 <div className="flex flex-col">
-                                                    <span className="font-medium text-sm">{offer.product_name}</span>
+                                                    <span className="font-medium text-sm">{offer.product.name}</span>
                                                     <span className="text-xs text-muted-foreground">
         {offer.brand} | {offer.manufacturer_number}
       </span>

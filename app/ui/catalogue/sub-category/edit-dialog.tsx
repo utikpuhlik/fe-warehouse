@@ -42,7 +42,7 @@ export function EditSubCategoryModal(sub_category: SubCategory) {
     const onSubmit = (sub_category: SubCategory) => {
         startTransition(async () => {
             try {
-                await updateSubCategoryAction(sub_category.id, sub_category, sub_category.category_slug, file ?? undefined);
+                await updateSubCategoryAction(sub_category.id, sub_category, sub_category.category.slug, file ?? undefined);
                 toast({
                     title: "Успешно",
                     description: `Категория "${sub_category.name}" обновлена.`,
@@ -87,7 +87,7 @@ export function EditSubCategoryModal(sub_category: SubCategory) {
                     <DeleteEntityButton
                         entityName={sub_category.name}
                         entityId={sub_category.id}
-                        deleteAction={(id) => deleteSubCategoryAction(id, sub_category.category_slug)}
+                        deleteAction={(id) => deleteSubCategoryAction(id, sub_category.category.slug)}
                         onDeleted={resetForm}
                     />
                     <Button type="submit" disabled={isPending}>

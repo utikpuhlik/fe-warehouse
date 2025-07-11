@@ -44,8 +44,8 @@ export function EditOfferModal(offer: OfferSchema) {
         await updateOfferAction(
           offer.id,
           offer,
-          offer.category_slug,
-          offer.sub_category_slug,
+          offer.product.sub_category.category.slug,
+          offer.product.sub_category.slug,
           offer.product_id,
         );
         toast({
@@ -151,8 +151,8 @@ export function EditOfferModal(offer: OfferSchema) {
               deleteAction={(id) =>
                 deleteOfferAction(
                   id,
-                  offer.category_slug,
-                  offer.sub_category_slug,
+                  offer.product.sub_category.category.slug,
+                  offer.product.sub_category.slug,
                   offer.product_id,
                 )
               }

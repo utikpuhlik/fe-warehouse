@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import {
   ColumnDef,
@@ -54,24 +53,11 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
+import {OrderSchema} from "@/app/lib/schemas/orderSchema";
+import {formatDateToLocal} from "@/app/lib/utils";
 
-export type Order = {
-  id: number;
-  product_name: string;
-  image: string;
-  customer: Customer;
-  price?: string;
-  status: "active" | "transportation" | "pending" | "completed" | "cancel";
-  date?: string;
-  type?: string;
-};
 
-export type Customer = {
-  name?: string;
-  email?: string;
-};
-
-export const columns: ColumnDef<Order>[] = [
+export const columns: ColumnDef<OrderSchema>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -105,69 +91,56 @@ export const columns: ColumnDef<Order>[] = [
     )
   },
   {
-    accessorKey: "product_name",
-    header: "Product",
-    cell: ({ row }) => (
-      <div className="flex items-center gap-4">
-        <Image
-          src={`https://bundui-images.netlify.app${row.original.image}`}
-          width={60}
-          height={60}
-          unoptimized
-          alt="..."
-        />
-        {row.getValue("product_name")}
-      </div>
-    )
-  },
-  {
-    accessorKey: "price",
+    accessorKey: "total_sum",
     header: ({ column }) => {
       return (
         <Button
           className="-ml-3"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Price
+          Сумма
           <ArrowUpDown className="size-3" />
         </Button>
       );
     },
-    cell: ({ row }) => row.getValue("price")
+    cell: ({ row }) => row.getValue("total_sum")
   },
   {
     accessorKey: "customer",
     header: "Customer",
     cell: ({ row }) => {
-      const customer = row.original.customer;
+      const customer = row.original.user;
 
       return (
         <div className="space-y-1">
-          <div className="font-semibold">{customer.name}</div>
+          <div className="font-semibold">{customer.first_name}</div>
           <div className="text-muted-foreground">{customer.email}</div>
         </div>
       );
     }
   },
   {
-    accessorKey: "date",
+    accessorKey: "created_at",
     header: ({ column }) => {
       return (
         <Button
           className="-ml-3"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Date
+          created_at
           <ArrowUpDown className="size-3" />
         </Button>
       );
     },
-    cell: ({ row }) => row.getValue("date")
+    cell: ({ row }) => {
+      const raw: string = row.getValue("created_at")
+      return formatDateToLocal(raw, "ru-RU", true);
+    }
   },
   {
-    accessorKey: "type",
-    header: "Type",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("type")}</div>
+    accessorKey: "note",
+    header: "Note",
+    cell: ({ row }) => <div className="capitalize">{row.getValue("note")}</div>
   },
   {
     accessorKey: "status",
@@ -186,12 +159,11 @@ export const columns: ColumnDef<Order>[] = [
       const status = row.original.status;
 
       const statusMap = {
-        active: "success",
-        transportation: "info",
-        pending: "warning",
-        cancel: "destructive",
-        completed: "success",
-        delivered: "success"
+        NEW: "success",
+        IN_PROGRESS: "info",
+        SHIPPING: "warning",
+        COMPLETED: "success",
+        CANCELLED: "destructive",
       } as const;
 
       const statusClass = statusMap[status] ?? "secondary";
@@ -209,7 +181,7 @@ export const columns: ColumnDef<Order>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      console.log(row)
+      console.log(row.id)
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -231,7 +203,7 @@ export const columns: ColumnDef<Order>[] = [
   }
 ];
 
-export default function OrdersDataTable({ data }: { data: Order[] }) {
+export default function OrdersDataTable({ data }: { data: OrderSchema[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -275,29 +247,6 @@ export default function OrdersDataTable({ data }: { data: Order[] }) {
     }
   ];
 
-  const categories = [
-    {
-      value: "beauty",
-      label: "Beauty"
-    },
-    {
-      value: "technology",
-      label: "Technology"
-    },
-    {
-      value: "toys",
-      label: "Toys"
-    },
-    {
-      value: "food",
-      label: "Food"
-    },
-    {
-      value: "home-appliances",
-      label: "Home Appliances"
-    }
-  ];
-
   const Filters = () => {
     return (
       <>
@@ -331,36 +280,6 @@ export default function OrdersDataTable({ data }: { data: Order[] }) {
             </Command>
           </PopoverContent>
         </Popover>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline">
-              <PlusCircle />
-              Category
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-52 p-0">
-            <Command>
-              <CommandInput placeholder="Category" className="h-9" />
-              <CommandList>
-                <CommandEmpty>No category found.</CommandEmpty>
-                <CommandGroup>
-                  {categories.map((category) => (
-                    <CommandItem key={category.value} value={category.value}>
-                      <div className="flex items-center space-x-3 py-1">
-                        <Checkbox id={category.value} />
-                        <label
-                          htmlFor={category.value}
-                          className="leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                          {category.label}
-                        </label>
-                      </div>
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
       </>
     );
   };
@@ -371,9 +290,9 @@ export default function OrdersDataTable({ data }: { data: Order[] }) {
         <div className="flex gap-3">
           <Input
             placeholder="Search orders..."
-            value={(table.getColumn("product_name")?.getFilterValue() as string) ?? ""}
+            value={(table.getColumn("customer")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("product_name")?.setFilterValue(event.target.value)
+              table.getColumn("customer")?.setFilterValue(event.target.value)
             }
             className="md:max-w-sm"
           />

@@ -41,7 +41,7 @@ export function CreateOfferModal(product: Product) {
             product_id: product.id,
         },
     });
-    
+
 
     const resetForm = () => {
         form.reset();
@@ -51,7 +51,12 @@ export function CreateOfferModal(product: Product) {
     const onSubmit = (data: OfferPostSchema) => {
         startTransition(async () => {
             try {
-                await createOfferAction(data, product.category_slug, product.sub_category_slug, product.id);
+                await createOfferAction(
+                    data,
+                    product.sub_category.category.slug,
+                    product.sub_category.slug,
+                    product.id
+                );
                 toast({
                     title: "Успешно",
                     description: `Предложение "${data.brand}" для "${product.name}" добавлено.`,
@@ -65,7 +70,7 @@ export function CreateOfferModal(product: Product) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button> <CirclePlus /> Создать</Button>
+                <Button> <CirclePlus/> Создать</Button>
             </DialogTrigger>
 
             <DialogContent className="sm:max-w-md">
@@ -97,7 +102,8 @@ export function CreateOfferModal(product: Product) {
                     </div>
                     <div>
                         <Label htmlFor="price_rub">Цена розница</Label>
-                        <Input id="price_rub" type="number" step="1" {...form.register("price_rub", { valueAsNumber: true })} />
+                        <Input id="price_rub" type="number"
+                               step="1" {...form.register("price_rub", {valueAsNumber: true})} />
                         {form.formState.errors.price_rub && (
                             <p className="text-sm text-red-500">
                                 {form.formState.errors.price_rub.message}
@@ -106,7 +112,8 @@ export function CreateOfferModal(product: Product) {
                     </div>
                     <div>
                         <Label htmlFor="super_wholesale_price_rub">Супер-опт</Label>
-                        <Input id="super_wholesale_price_rub" type="number" step="1" {...form.register("super_wholesale_price_rub", { valueAsNumber: true })} />
+                        <Input id="super_wholesale_price_rub" type="number"
+                               step="1" {...form.register("super_wholesale_price_rub", {valueAsNumber: true})} />
                         {form.formState.errors.super_wholesale_price_rub && (
                             <p className="text-sm text-red-500">
                                 {form.formState.errors.super_wholesale_price_rub.message}
@@ -115,7 +122,8 @@ export function CreateOfferModal(product: Product) {
                     </div>
                     <div>
                         <Label htmlFor="quantity">Остаток</Label>
-                        <Input id="quantity" type="number" step="1" {...form.register("quantity", { valueAsNumber: true })} />
+                        <Input id="quantity" type="number"
+                               step="1" {...form.register("quantity", {valueAsNumber: true})} />
                         {form.formState.errors.quantity && (
                             <p className="text-sm text-red-500">
                                 {form.formState.errors.quantity.message}

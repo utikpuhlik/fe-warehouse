@@ -1,4 +1,7 @@
 import {z} from "zod";
+import {zUserReadSchema} from "@/app/lib/schemas/userSchema";
+import {zAddressSchema} from "@/app/lib/schemas/addressSchema";
+import {zOrderOfferSchema} from "@/app/lib/schemas/orderOfferSchema";
 
 const zOrderBaseSchema = z.object({
     user_id: z.string().uuid(),
@@ -9,10 +12,10 @@ const zOrderBaseSchema = z.object({
 
 export const zOrderSchema = zOrderBaseSchema.extend({
     id: z.string().uuid(),
-    user_first_name: z.string(),
-    user_last_name: z.string(),
-    user_email: z.string().email(),
-    user_phone: z.string().nullable(),
+    user: zUserReadSchema,
+    address: zAddressSchema,
+    order_offers: zOrderOfferSchema.array(),
+    created_at: z.string().datetime(),
     total_sum: z.number().int().nonnegative(),
 });
 

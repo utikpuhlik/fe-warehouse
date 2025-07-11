@@ -16,14 +16,14 @@ import { DeleteWaybillOfferProxy } from "@/app/ui/catalogue/waybill/delete-waybi
 import Link from "next/link";
 
 export default async function WaybillOffersTable(waybill: WaybillSchema) {
-  const offers: WaybillOfferSchema[] = await fetchWaybillOffers(waybill.id);
+  const waybill_offers: WaybillOfferSchema[] = await fetchWaybillOffers(waybill.id);
 
-  const totalSumRub = offers.reduce(
-    (acc: number, o: WaybillOfferSchema) => acc + o.price_rub * o.quantity,
+  const totalSumRub = waybill_offers.reduce(
+    (acc: number, wo: WaybillOfferSchema) => acc + wo.price_rub * wo.quantity,
     0,
   );
 
-  if (!offers.length) {
+  if (!waybill_offers.length) {
     return (
       <Card>
         <CardHeader>
@@ -57,18 +57,18 @@ export default async function WaybillOffersTable(waybill: WaybillSchema) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {offers.map((o: WaybillOfferSchema, index) => (
-            <TableRow key={o.id}>
+          {waybill_offers.map((wo: WaybillOfferSchema, index) => (
+            <TableRow key={wo.id}>
               <TableCell>{index + 1}</TableCell>
-              <TableCell>{o.address_id}</TableCell>
+              <TableCell>{wo.offer.address_id}</TableCell>
               <TableCell>
                 <Link
-                  href={`/catalogue/${o.category_slug}/${o.sub_category_slug}/${o.product_id}`}
+                  href={`/catalogue/${wo.offer.product.sub_category.category.slug}/${wo.offer.product.sub_category.slug}/${wo.offer.product_id}`}
                   className="px-3 py-2 flex items-center gap-3 w-full hover:bg-muted"
                 >
                   <Image
-                    src={o.image_url}
-                    alt={o.product_name}
+                    src={wo.offer.product.image_url}
+                    alt={wo.offer.product.name}
                     width={40}
                     height={40}
                     className="rounded"
@@ -76,26 +76,26 @@ export default async function WaybillOffersTable(waybill: WaybillSchema) {
                 </Link>
               </TableCell>
               <TableCell>
-                <Link href={`/catalogue/${o.category_slug}`}>
-                  {o.category_name}
+                <Link href={`/catalogue/${wo.offer.product.sub_category.category.slug}`}>
+                  {wo.offer.product.sub_category.category.name}
                 </Link>
               </TableCell>
               <TableCell>
                 <Link
-                  href={`/catalogue/${o.category_slug}/${o.sub_category_slug}`}
+                  href={`/catalogue/${wo.offer.product.sub_category.category.slug}/${wo.offer.product.sub_category.slug}`}
                 >
-                  {o.sub_category_name}
+                  {wo.offer.product.sub_category.name}
                 </Link>
               </TableCell>
-              <TableCell>{o.product_name}</TableCell>
-              <TableCell>{o.brand}</TableCell>
-              <TableCell>{o.manufacturer_number}</TableCell>
-              <TableCell>{o.quantity}</TableCell>
-              <TableCell>{o.price_rub.toFixed(2)} ₽</TableCell>
-              <TableCell>{(o.price_rub * o.quantity).toFixed(2)} ₽</TableCell>
+              <TableCell>{wo.offer.product.name}</TableCell>
+              <TableCell>{wo.brand}</TableCell>
+              <TableCell>{wo.manufacturer_number}</TableCell>
+              <TableCell>{wo.quantity}</TableCell>
+              <TableCell>{wo.price_rub.toFixed(2)} ₽</TableCell>
+              <TableCell>{(wo.price_rub * wo.quantity).toFixed(2)} ₽</TableCell>
               {waybill.is_pending && (
                 <TableCell>
-                  <DeleteWaybillOfferProxy {...o} />
+                  <DeleteWaybillOfferProxy {...wo} />
                 </TableCell>
               )}
             </TableRow>
