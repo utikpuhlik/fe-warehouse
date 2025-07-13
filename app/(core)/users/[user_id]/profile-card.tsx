@@ -26,15 +26,15 @@ export function ProfileCard({user}: {user: UserSchema}) {
           </div>
           <div className="bg-muted grid grid-cols-3 divide-x rounded-md border text-center *:py-3">
             <div>
-              <h5 className="text-lg font-semibold">184</h5>
+              <h5 className="text-lg font-semibold">0</h5>
               <div className="text-muted-foreground text-sm">Заказов</div>
             </div>
             <div>
-              <h5 className="text-lg font-semibold">32</h5>
+              <h5 className="text-lg font-semibold">1</h5>
               <div className="text-muted-foreground text-sm">Активных заказов</div>
             </div>
             <div>
-              <h5 className="text-lg font-semibold">4.5K</h5>
+              <h5 className="text-lg font-semibold">4.5KК</h5>
               <div className="text-muted-foreground text-sm">Оборот</div>
             </div>
           </div>

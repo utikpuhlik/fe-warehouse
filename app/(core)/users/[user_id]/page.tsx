@@ -7,6 +7,8 @@ import {ProfileCard} from "@/app/(core)/users/[user_id]/profile-card";
 import {UserSchema} from "@/app/lib/schemas/userSchema";
 import {fetchUserById} from "@/app/lib/apis/userApi";
 import {notFound} from "next/navigation";
+import {OrderSchema} from "@/app/lib/schemas/orderSchema";
+import {fetchOrders} from "@/app/lib/apis/orderApi";
 
 type Props = {
     params: Promise<{ user_id: string }>
@@ -15,6 +17,7 @@ type Props = {
 export default async function Page({params}: Props) {
     const {user_id} = await params;
     const user: UserSchema = await fetchUserById(user_id);
+    const orders: OrderSchema[] = await fetchOrders(user_id)
     if (!user) {
         notFound()
     }
@@ -38,7 +41,7 @@ export default async function Page({params}: Props) {
                     <ProfileCard user={user}/>
                 </div>
                 <div className="space-y-4 xl:col-span-2">
-                    <LatestActivity />
+                    <LatestActivity orders={orders}/>
                 </div>
             </div>
         </div>

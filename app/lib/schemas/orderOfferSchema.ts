@@ -1,4 +1,5 @@
 import {z} from "zod";
+import {zOfferSchema} from "@/app/lib/schemas/offerSchema";
 
 export const zOrderOfferBaseSchema = z.object({
     offer_id: z.string().uuid(),
@@ -19,14 +20,7 @@ export const zOrderOfferBaseSchema = z.object({
 export const zOrderOfferSchema = zOrderOfferBaseSchema.extend({
     id: z.string().uuid(),
     order_id: z.string().uuid(),
-    product_name: z.string(),
-    address_id: z.string().optional().nullable(),
-    image_url: z.string().url(),
-    category_slug: z.string(),
-    category_name: z.string(),
-    sub_category_slug: z.string(),
-    sub_category_name: z.string(),
-    product_id: z.string().uuid(),
+    offer: zOfferSchema
 })
 
 export const zOrderOfferPostSchema = zOrderOfferBaseSchema.extend({})

@@ -7,11 +7,10 @@ import {
   CreditCard,
   EditIcon,
   Package,
-  Pencil,
   Printer,
   Truck
 } from "lucide-react";
-import { generateMeta } from "@/app/lib/utils";
+import {formatDateToLocal, generateMeta} from "@/app/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -29,6 +28,7 @@ import { Progress } from "@/components/ui/progress";
 import {notFound} from "next/navigation";
 import {OrderSchema} from "@/app/lib/schemas/orderSchema";
 import {fetchOrderById} from "@/app/lib/apis/orderApi";
+import {EditOrderButton} from "@/app/ui/catalogue/buttons/edit-order-button";
 
 type OrderStatus = "NEW" | "IN_PROGRESS" | "SHIPPING" | "COMPLETED" | "CANCELLED";
 
@@ -75,10 +75,7 @@ export default async function Page({params}: Props) {
             <Printer />
             Print
           </Button>
-          <Button>
-            <Pencil />
-            Edit
-          </Button>
+          <EditOrderButton orderId={order_id}/>
         </div>
       </div>
 
@@ -86,19 +83,22 @@ export default async function Page({params}: Props) {
         <Card>
           <CardHeader>
             <CardTitle className="font-display text-2xl">Order {order.id}</CardTitle>
-            <p className="text-muted-foreground text-sm">Placed on {new Date(order.created_at).toLocaleDateString("ru-RU", {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}</p>
+            <p className="text-muted-foreground text-sm">Placed on {formatDateToLocal(
+                order.created_at,
+                "ru-RU",
+                true
+            )}</p>
           </CardHeader>
           <CardContent>
             <Separator className="mb-4" />
             <div className="space-y-4">
               <div className="space-y-2">
-                <h3 className="font-semibold">Customer Information</h3>
-                <p>{order.user.first_name}</p>
+                <h3 className="font-semibold mb-1">Customer Information</h3>
+                <Link href={`/users/${order.user_id}`} className="hover:underline">
+                  {order.user.first_name} {order.user.last_name}
+                </Link>
                 <p>{order.user.email}</p>
-                <p className="text-muted-foreground text-sm">{order.address.city},{order.address.street}</p>
+                <p className="text-muted-foreground text-sm">{order.address.city}, {order.address.street}</p>
               </div>
               <div className="bg-muted flex items-center justify-between space-y-2 rounded-md border p-4">
                 <div className="space-y-1">
@@ -190,34 +190,53 @@ export default async function Page({params}: Props) {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Product</TableHead>
-                <TableHead className="text-right">Quantity</TableHead>
-                <TableHead className="text-right">Price</TableHead>
-                <TableHead className="text-right">Total</TableHead>
+                <TableHead>№</TableHead>
+                <TableHead>Адресный код</TableHead>
+                <TableHead>Фото</TableHead>
+                <TableHead>Система</TableHead>
+                <TableHead>Подсистема</TableHead>
+                <TableHead>Наименование</TableHead>
+                <TableHead>Бренд</TableHead>
+                <TableHead>Артикул</TableHead>
+                <TableHead>Кол-во</TableHead>
+                <TableHead>Цена</TableHead>
+                <TableHead>Сумма</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {order.order_offers.map((item) => (
-                <TableRow key={item.id}>
+              {order.order_offers.map((order_offer, index) => (
+                <TableRow key={order_offer.id}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>{order_offer.offer.address_id}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-4">
                       <Image
-                        src={`https://bundui-images.netlify.app${item.image_url}`}
+                        src={order_offer.offer.product.image_url ?? undefined}
                         width={60}
                         height={60}
                         alt=""
                         unoptimized
                       />
-                      <span>{item.product_name}</span>
-                      <span>{item.brand}</span>
-                      <span>{item.manufacturer_number}</span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-right">{item.quantity}</TableCell>
-                  <TableCell className="text-right">${item.price_rub.toFixed(2)}</TableCell>
-                  <TableCell className="text-right">
-                    ${(item.quantity * item.price_rub).toFixed(2)}
+                  <TableCell>
+                    <Link href={`/catalogue/${order_offer.offer.product.sub_category.category.slug}`}>
+                      {order_offer.offer.product.sub_category.category.name}
+                    </Link>
                   </TableCell>
+                  <TableCell>
+                    <Link
+                        href={`/catalogue/${order_offer.offer.product.sub_category.category.slug}/${order_offer.offer.product.sub_category.slug}`}
+                    >
+                      {order_offer.offer.product.sub_category.name}
+                    </Link>
+                  </TableCell>
+                  <TableCell>{order_offer.offer.product.name}</TableCell>
+                  <TableCell>{order_offer.brand}</TableCell>
+                  <TableCell>{order_offer.manufacturer_number}</TableCell>
+                  <TableCell>{order_offer.quantity}</TableCell>
+                  <TableCell>{order_offer.price_rub.toFixed(2)} ₽</TableCell>
+                  <TableCell>{(order_offer.price_rub * order_offer.quantity).toFixed(2)} ₽</TableCell>
                 </TableRow>
               ))}
             </TableBody>

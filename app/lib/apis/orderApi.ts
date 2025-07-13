@@ -7,8 +7,16 @@ import {getAuthHeader} from "@/app/lib/apis/utils/getAuthHeader";
 
 const ENTITY = "orders";
 
-export async function fetchOrders(): Promise<OrderSchema[]> {
-    const url = `${BASE_URL}/${ENTITY}`;
+export async function fetchOrders(
+    user_id?: string,
+    order_status?: "NEW" | "IN_PROGRESS" | "SHIPPING" | "COMPLETED" | "CANCELLED",
+): Promise<OrderSchema[]> {
+    const params = new URLSearchParams();
+
+    if (user_id) params.append("user_id", user_id);
+    if (order_status) params.append("status", order_status);
+
+    const url = `${BASE_URL}/${ENTITY}?${params.toString()}`;
     return fetchWithAuthAndParse(url, zOrderSchema.array(), false, ENTITY);
 }
 

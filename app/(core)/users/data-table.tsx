@@ -50,13 +50,6 @@ import {MailingToggle} from "@/app/ui/catalogue/mailing/mailing-toggle";
 import {CustomerTypeSelect} from "@/app/ui/catalogue/mailing/customer-type-select";
 import Link from "next/link";
 
-export type User = {
-    id: number;
-    first_name: string;
-    lastName: string;
-    avatar_url: string;
-};
-
 export const columns: ColumnDef<UserSchema>[] = [
     {
         id: "select",
@@ -97,6 +90,27 @@ export const columns: ColumnDef<UserSchema>[] = [
         )
     },
     {
+        accessorKey: "last_name",
+        header: ({column}) => {
+            return (
+                <Button
+                    className="-ml-3"
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                    Фамилия
+                    <ArrowUpDown/>
+                </Button>
+            );
+        },
+        cell: ({row}) => (
+                <div className="capitalize">
+                    <Link
+                        href={`/users/${row.original.id}`}>{row.getValue("last_name")}
+                    </Link>
+                </div>
+        )
+    },
+    {
         accessorKey: "email",
         header: ({column}) => {
             return (
@@ -110,21 +124,6 @@ export const columns: ColumnDef<UserSchema>[] = [
             );
         },
         cell: ({row}) => row.getValue("email")
-    },
-    {
-        accessorKey: "role",
-        header: ({column}) => {
-            return (
-                <Button
-                    className="-ml-3"
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    Роль
-                    <ArrowUpDown/>
-                </Button>
-            );
-        },
-        cell: ({row}) => row.getValue("role")
     },
     {
         accessorKey: "phone",
@@ -308,21 +307,6 @@ export default function UsersDataTable({data}: { data: UserSchema[] }) {
         }
     ];
 
-    // const roles = [
-    //   {
-    //     value: "USER",
-    //     label: "Клиент"
-    //   },
-    //   {
-    //     value: "EMPLOYEE",
-    //     label: "Сотрудник"
-    //   },
-    //   {
-    //     value: "ADMIN",
-    //     label: "Админ"
-    //   }
-    // ];
-
     return (
         <div className="w-full">
             <div className="flex items-center gap-4 py-4">
@@ -377,42 +361,6 @@ export default function UsersDataTable({data}: { data: UserSchema[] }) {
                             </Command>
                         </PopoverContent>
                     </Popover>
-                    {/*<Popover>*/}
-                    {/*  <PopoverTrigger asChild>*/}
-                    {/*    <Button variant="outline">*/}
-                    {/*      <PlusCircle className="h-4 w-4" />*/}
-                    {/*      Роль*/}
-                    {/*    </Button>*/}
-                    {/*  </PopoverTrigger>*/}
-                    {/*  <PopoverContent className="w-52 p-0">*/}
-                    {/*    <Command>*/}
-                    {/*      <CommandInput placeholder="Role" className="h-9" />*/}
-                    {/*      <CommandList>*/}
-                    {/*        <CommandEmpty>No role found.</CommandEmpty>*/}
-                    {/*        <CommandGroup>*/}
-                    {/*          {roles.map((role) => (*/}
-                    {/*              <CommandItem*/}
-                    {/*                  key={role.value}*/}
-                    {/*                  value={role.value}*/}
-                    {/*                  onSelect={(currentValue) => {*/}
-                    {/*                    // setValue(currentValue === value ? "" : currentValue);*/}
-                    {/*                    // setOpen(false);*/}
-                    {/*                  }}>*/}
-                    {/*                <div className="flex items-center space-x-3 py-1">*/}
-                    {/*                  <Checkbox id={role.value} />*/}
-                    {/*                  <label*/}
-                    {/*                      htmlFor={role.value}*/}
-                    {/*                      className="leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">*/}
-                    {/*                    {role.label}*/}
-                    {/*                  </label>*/}
-                    {/*                </div>*/}
-                    {/*              </CommandItem>*/}
-                    {/*          ))}*/}
-                    {/*        </CommandGroup>*/}
-                    {/*      </CommandList>*/}
-                    {/*    </Command>*/}
-                    {/*  </PopoverContent>*/}
-                    {/*</Popover>*/}
                 </div>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
