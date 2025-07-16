@@ -6,9 +6,10 @@ import Search from "@/app/ui/catalogue/search";
 import Pagination from "@/app/ui/catalogue/pagination";
 import {CreateWaybillModal} from "@/app/ui/catalogue/waybill/create-dialog";
 import {WaybillFilters} from "@/app/ui/catalogue/waybill/filters";
-import {getCurrentUserAction} from "@/app/lib/actions/authAction";
 import type {UserSchema} from "@/app/lib/schemas/userSchema";
 import {notFound} from "next/navigation";
+import {currentUser} from "@clerk/nextjs/server";
+import {fetchUserByClerkId} from "@/app/lib/apis/userApi";
 
 export default async function WaybillsPage({searchParams}: {
 	searchParams?: Promise<{ query?: string; page?: string; waybill_type: string; is_pending?: string }>;
@@ -27,11 +28,12 @@ export default async function WaybillsPage({searchParams}: {
 		currentPage,
 		4);
 	const waybills: WaybillSchema[] = data.items;
-	const user: UserSchema | null = await getCurrentUserAction();
 
-	if (!user) {
-		notFound()
+	const clerk_user = await currentUser()
+	if (!clerk_user) {
+		notFound();
 	}
+	const user: UserSchema = await fetchUserByClerkId(clerk_user.id)
 
 	return (
 		<div className="p-4 space-y-4">

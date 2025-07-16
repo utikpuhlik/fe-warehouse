@@ -4,7 +4,7 @@ import {
     type WaybillSchema, zWaybillPaginatedSchema,
     zWaybillSchema
 } from "@/app/lib/schemas/waybillSchema";
-import {BASE_URL} from "@/app/lib/config/config";
+import { env } from "@/env";
 import {type WaybillOfferPostSchema, type WaybillOfferSchema, zWaybillOfferSchema} from "@/app/lib/schemas/waybillOfferSchema";
 import { getAuthHeader } from "@/app/lib/apis/utils/getAuthHeader"
 import {handleApiError} from "@/app/lib/errors/handleApiError";
@@ -29,23 +29,23 @@ export async function fetchWaybills(
     if (waybill_type) params.set("waybill_type", waybill_type);
     if (is_pending) params.set("is_pending", is_pending);
 
-    const url = `${BASE_URL}/${ENTITY}?${params.toString()}`;
+    const url = `${env.NEXT_PUBLIC_API_URL}/${ENTITY}?${params.toString()}`;
     return fetchWithAuthAndParse(url, zWaybillPaginatedSchema, false, ENTITY);
 }
 
 export async function fetchWaybillById(waybill_id: string): Promise<WaybillSchema> {
-    const url = `${BASE_URL}/${ENTITY}/${waybill_id}`;
+    const url = `${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${waybill_id}`;
     return fetchWithAuthAndParse(url, zWaybillSchema, false, ENTITY);
 }
 
 export async function fetchWaybillsCount(): Promise<CountSchema> {
-    const url = `${BASE_URL}/${ENTITY}/meta/count`;
+    const url = `${env.NEXT_PUBLIC_API_URL}/${ENTITY}/meta/count`;
     return fetchWithAuthAndParse(url, zCountSchema, false, ENTITY);
 }
 
 export async function fetchWaybillOffers(waybill_id: string): Promise<WaybillOfferSchema[]> {
     try {
-        const res = await fetch(`${BASE_URL}/${ENTITY}/${waybill_id}/offers`, {
+        const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${waybill_id}/offers`, {
             headers: await getAuthHeader(),
         });
         return res.json();
@@ -56,7 +56,7 @@ export async function fetchWaybillOffers(waybill_id: string): Promise<WaybillOff
 }
 
 export async function postWaybill(waybill: WaybillPostSchema): Promise<WaybillSchema> {
-    const res = await fetch(`${BASE_URL}/${ENTITY}`, {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -76,7 +76,7 @@ export async function postWaybill(waybill: WaybillPostSchema): Promise<WaybillSc
 }
 
 export async function commitWaybill(waybill_id: string): Promise<WaybillSchema> {
-    const res = await fetch(`${BASE_URL}/${ENTITY}/${waybill_id}/commit`, {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${waybill_id}/commit`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -99,7 +99,7 @@ export async function postWaybillOffer(
     waybill: WaybillOfferPostSchema,
     waybill_id: string
 ): Promise<WaybillOfferSchema> {
-    const res = await fetch(`${BASE_URL}/${ENTITY}/${waybill_id}/offers`, {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${waybill_id}/offers`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -119,7 +119,7 @@ export async function postWaybillOffer(
 }
 
 export async function delWaybill(id: string): Promise<number> {
-    const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${id}`, {
         method: "DELETE",
         headers: {
             Accept: "application/json",
@@ -135,7 +135,7 @@ export async function delWaybill(id: string): Promise<number> {
 }
 
 export async function delWaybillOffer(waybill_offer_id: string): Promise<number> {
-    const res = await fetch(`${BASE_URL}/waybill-offers/${waybill_offer_id}`, {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/waybill-offers/${waybill_offer_id}`, {
         method: "DELETE",
         headers: {
             Accept: "application/json",

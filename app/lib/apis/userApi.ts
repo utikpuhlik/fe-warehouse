@@ -2,7 +2,7 @@ import {
     type UserSchema, zUserReadSchema,
     zUsers,
 } from "@/app/lib/schemas/userSchema";
-import {BASE_URL} from "@/app/lib/config/config";
+import { env } from "@/env";
 import {getAuthHeader} from "@/app/lib/apis/utils/getAuthHeader";
 import {handleApiError} from "@/app/lib/errors/handleApiError";
 import {CountSchema, zCountSchema} from "@/app/lib/schemas/commonSchema";
@@ -13,7 +13,7 @@ const ENTITY = "users"
 export async function fetchUsers(
     role: string | null = null,
 ): Promise<UserSchema[]> {
-    const url = role ? `${BASE_URL}/${ENTITY}?role=${role}` : `${BASE_URL}/${ENTITY}`;
+    const url = role ? `${env.NEXT_PUBLIC_API_URL}/${ENTITY}?role=${role}` : `${env.NEXT_PUBLIC_API_URL}/${ENTITY}`;
 
     const res = await fetch(url, {
         headers: await getAuthHeader(),
@@ -29,17 +29,24 @@ export async function fetchUsers(
 export async function fetchUserById(
     user_id: string
 ): Promise<UserSchema> {
-    const url = `${BASE_URL}/${ENTITY}/${user_id}`
+    const url = `${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${user_id}`
+    return fetchWithAuthAndParse(url, zUserReadSchema, false, ENTITY)
+}
+
+export async function fetchUserByClerkId(
+    clerk_id: string
+): Promise<UserSchema> {
+    const url = `${env.NEXT_PUBLIC_API_URL}/${ENTITY}/clerk/${clerk_id}`
     return fetchWithAuthAndParse(url, zUserReadSchema, false, ENTITY)
 }
 
 export async function fetchUsersCount(): Promise<CountSchema> {
-    const url = `${BASE_URL}/${ENTITY}/meta/count`;
+    const url = `${env.NEXT_PUBLIC_API_URL}/${ENTITY}/meta/count`;
     return fetchWithAuthAndParse(url, zCountSchema, false, ENTITY);
 }
 
 export async function fetchCurrentUser(): Promise<UserSchema | null> {
-    const res = await fetch(`${BASE_URL}/${ENTITY}/me`, {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}/me`, {
         headers: await getAuthHeader(),
         cache: "no-store",
     });
@@ -57,7 +64,7 @@ export async function fetchCurrentUser(): Promise<UserSchema | null> {
 
 
 export async function patchUser(id: string, user: UserSchema): Promise<UserSchema> {
-    const res = await fetch(`${BASE_URL}/users/${id}`, {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/users/${id}`, {
         method: "PATCH",
         headers: {
             Accept: "application/json",

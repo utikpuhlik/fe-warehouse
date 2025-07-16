@@ -1,5 +1,4 @@
 import Image from "next/image";
-import {imageUrlPlaceholder} from "@/app/lib/config/config";
 import type {OfferSchema} from "@/app/lib/schemas/offerSchema";
 import {
     Table,
@@ -33,7 +32,7 @@ export default function OffersTable({offers}: { offers: OfferSchema[] }) {
                                     href={`/catalogue/${offer.product.sub_category.category.slug}/${offer.product.sub_category.slug}/${offer.product_id}`}>
                                     <div className="flex items-center gap-3">
                                         <Image
-                                            src={offer.product.image_url ?? imageUrlPlaceholder}
+                                            src={offer.product.image_url ?? undefined}
                                             className="rounded-full"
                                             width={28}
                                             height={28}

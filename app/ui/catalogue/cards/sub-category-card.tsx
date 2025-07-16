@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import {imageUrlPlaceholder} from "@/app/lib/config/config";
 import {EditSubCategoryModal} from "@/app/ui/catalogue/sub-category/edit-dialog";
 import type {SubCategory} from "@/app/lib/schemas/subCategorySchema";
 import {Card, CardContent} from "@/components/ui/card";
@@ -16,7 +15,7 @@ export function SubCategoryCard(sub_category: SubCategory) {
                 <CardContent className="flex flex-col items-center p-4">
                     <div className="w-[100px] h-[100px] flex items-center justify-center">
                     <Image
-                        src={sub_category.image_url ?? imageUrlPlaceholder}
+                        src={sub_category.image_url ?? undefined}
                         alt={sub_category.slug}
                         width={100}
                         height={100}

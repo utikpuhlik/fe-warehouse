@@ -1,5 +1,5 @@
 import {OrderSchema, zOrderSchema} from "@/app/lib/schemas/orderSchema";
-import {BASE_URL} from "@/app/lib/config/config";
+import { env } from "@/env";
 import {fetchWithAuthAndParse} from "@/app/lib/apis/utils/fetchJson";
 import {CountSchema, zCountSchema} from "@/app/lib/schemas/commonSchema";
 import type {OrderOfferSchema} from "@/app/lib/schemas/orderOfferSchema";
@@ -16,24 +16,24 @@ export async function fetchOrders(
     if (user_id) params.append("user_id", user_id);
     if (order_status) params.append("status", order_status);
 
-    const url = `${BASE_URL}/${ENTITY}?${params.toString()}`;
+    const url = `${env.NEXT_PUBLIC_API_URL}/${ENTITY}?${params.toString()}`;
     return fetchWithAuthAndParse(url, zOrderSchema.array(), false, ENTITY);
 }
 
 
 export async function fetchOrderById(order_id: string): Promise<OrderSchema> {
-    const url = `${BASE_URL}/${ENTITY}/${order_id}`;
+    const url = `${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${order_id}`;
     return fetchWithAuthAndParse(url, zOrderSchema, false, ENTITY);
 }
 
 export async function fetchOrdersCount(): Promise<CountSchema> {
-    const url = `${BASE_URL}/${ENTITY}/meta/count`;
+    const url = `${env.NEXT_PUBLIC_API_URL}/${ENTITY}/meta/count`;
     return fetchWithAuthAndParse(url, zCountSchema, false, ENTITY);
 }
 
 export async function fetchOrderOffers(order_id: string): Promise<OrderOfferSchema[]> {
     try {
-        const res = await fetch(`${BASE_URL}/${ENTITY}/${order_id}/offers`, {
+        const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${order_id}/offers`, {
             headers: await getAuthHeader(),
         });
         return res.json();
