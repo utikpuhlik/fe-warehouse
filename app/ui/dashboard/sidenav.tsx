@@ -2,6 +2,7 @@ import Logo from "@/app/ui/logo";
 import NavLinks from "@/app/ui/dashboard/nav-links";
 import Link from "next/link";
 import {SignedIn, UserButton} from "@clerk/nextjs";
+import {ModeToggle} from "@/app/ui/mode-toggle";
 
 export default function SideNav() {
   return (
@@ -17,9 +18,9 @@ export default function SideNav() {
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <NavLinks />
         <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block" />
-
           <SignedIn>
-              <div className="mt-4 flex items-center justify-start px-2">
+              <div className="mt-4 flex items-center justify-start px-2 space-x-2 md:justify-end md:px-0">
+                  <ModeToggle/>
                   <UserButton showName/>
               </div>
           </SignedIn>
