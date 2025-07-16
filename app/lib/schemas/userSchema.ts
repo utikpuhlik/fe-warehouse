@@ -3,6 +3,7 @@ import {z} from "zod";
 /** Single user */
 export const zUserReadSchema = z.object({
     id: z.string().uuid(),
+    clerk_id: z.string(),
     first_name: z.string(),
     last_name: z.string(),
     avatar_url: z.string().url().nullable(),

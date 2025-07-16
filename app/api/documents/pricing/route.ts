@@ -1,4 +1,4 @@
-import {BASE_URL} from "@/app/lib/config/config";
+import { env } from "@/env";
 const ENTITY = "documents";
 
 export async function GET(req: Request) {
@@ -7,7 +7,7 @@ export async function GET(req: Request) {
     const priceType = searchParams.get("type") ?? "retail";
     const ext = searchParams.get("ext") ?? "csv";
 
-    const url = `${BASE_URL}/${ENTITY}/price/${priceType}?ext=${ext}`;
+    const url = `${env.NEXT_PUBLIC_API_URL}/${ENTITY}/price/${priceType}?ext=${ext}`;
 
     const response = await fetch(url);
 

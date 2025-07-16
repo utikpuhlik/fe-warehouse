@@ -1,10 +1,10 @@
-import { BASE_URL } from "@/app/lib/config/config";
+import { env } from "@/env";
 
 export async function GET(req: Request) {
     const waybillId = new URL(req.url).searchParams.get("waybill_id");
     if (!waybillId) return new Response("Missing waybill_id", { status: 400 });
 
-    const res = await fetch(`${BASE_URL}/documents/waybills/${waybillId}/print`);
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/documents/waybills/${waybillId}/print`);
     if (!res.ok) return new Response("Ошибка при получении накладной", { status: 500 });
 
     const blob = await res.blob();

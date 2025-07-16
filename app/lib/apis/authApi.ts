@@ -1,4 +1,4 @@
-import {BASE_URL} from "@/app/lib/config/config";
+import { env } from "@/env";
 import type {AuthSchema} from "@/app/lib/schemas/authSchema";
 
 export async function loginApi(email: string, password: string): Promise<AuthSchema> {
@@ -7,7 +7,7 @@ export async function loginApi(email: string, password: string): Promise<AuthSch
     body.append("password", password);
     body.append("grant_type", "password");
 
-    const res = await fetch(`${BASE_URL}/auth/login`, {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: "POST",
         body,
         headers: {

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { zOffersSchema } from "@/app/lib/schemas/offerSchema";
 
-import {BASE_URL} from "@/app/lib/config/config";
+import { env } from "@/env";
 
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
     const size = searchParams.get("size") ?? "10";
     const page = searchParams.get("page") ?? "1";
 
-    const url = `${BASE_URL}/offers/search/text_search?search_term=${encodeURIComponent(search_term)}&size=${size}&page=${page}`;
+    const url = `${env.NEXT_PUBLIC_API_URL}/offers/search/text_search?search_term=${encodeURIComponent(search_term)}&size=${size}&page=${page}`;
 
     try {
         const res = await fetch(url, {

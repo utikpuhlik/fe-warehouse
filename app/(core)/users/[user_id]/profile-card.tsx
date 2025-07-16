@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Mail, MapPin, PhoneCall, Notebook, CheckCircle, List } from "lucide-react";
+import { Mail, MapPin, PhoneCall, Notebook, CheckCircle, List, IdCard } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -59,6 +59,14 @@ export function ProfileCard({user}: {user: UserSchema}) {
             <div className="flex items-center gap-3">
               <CheckCircle className="text-muted-foreground size-4" />
               {user.mailing ? "Подписан на рассылку" : "Не подписан на рассылку"}
+            </div>
+            <div className="flex items-center gap-3">
+              <IdCard className="text-muted-foreground size-4" />
+              {`Clerk: ${user.clerk_id}`}
+            </div>
+            <div className="flex items-center gap-3">
+              <IdCard className="text-muted-foreground size-4" />
+              {`Internal: ${user.id}`}
             </div>
           </div>
         </div>

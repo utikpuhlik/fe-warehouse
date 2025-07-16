@@ -10,6 +10,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Каталог | TCF",
   description: "Каталог автозапчастей Ford",
+
 };
 
 export default async function CategoriesPage() {

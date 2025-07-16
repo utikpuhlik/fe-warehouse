@@ -14,7 +14,6 @@ import {Label} from "@/components/ui/label";
 
 import {fetchFilteredOffersTS} from "@/app/lib/apis/client/offerApi";
 import type {OfferSchema} from "@/app/lib/schemas/offerSchema";
-import {imageUrlPlaceholder} from "@/app/lib/config/config";
 
 export function SelectOfferField() {
     const {setValue} = useFormContext();
@@ -80,7 +79,7 @@ export function SelectOfferField() {
                                         >
                                             <div className="flex items-center gap-3">
                                                 <Image
-                                                    src={offer.product.image_url ?? imageUrlPlaceholder}
+                                                    src={offer.product.image_url ?? undefined}
                                                     alt={offer.product.name}
                                                     width={40}
                                                     height={40}

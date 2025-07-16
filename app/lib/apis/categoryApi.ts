@@ -1,5 +1,5 @@
 import { type Category, zCategory, zCategories } from "@/app/lib/schemas/categorySchema";
-import { BASE_URL } from "@/app/lib/config/config";
+import { env } from "@/env";
 import { handleApiError } from "@/app/lib/errors/handleApiError";
 import {fetchAndParse} from "@/app/lib/apis/utils/fetchJson";
 import {getAuthHeader} from "@/app/lib/apis/utils/getAuthHeader";
@@ -7,19 +7,19 @@ import {getAuthHeader} from "@/app/lib/apis/utils/getAuthHeader";
 const ENTITY = "categories";
 
 export async function fetchCategories(): Promise<Category[]> {
-    return fetchAndParse(`${BASE_URL}/${ENTITY}?order_by=name`, zCategories, true, ENTITY);
+    return fetchAndParse(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}?order_by=name`, zCategories, true, ENTITY);
 }
 
 export async function fetchCategoryBySlug(slug: string): Promise<Category> {
-    return fetchAndParse(`${BASE_URL}/${ENTITY}/slug/${slug}`, zCategory, true, ENTITY);
+    return fetchAndParse(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}/slug/${slug}`, zCategory, true, ENTITY);
 }
 
 export async function fetchCategoryById(id: string): Promise<Category> {
-    return fetchAndParse(`${BASE_URL}/${ENTITY}/${id}`, zCategory, true, ENTITY);
+    return fetchAndParse(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${id}`, zCategory, true, ENTITY);
 }
 
 export async function postCategory(category: FormData): Promise<Category> {
-    const res = await fetch(`${BASE_URL}/${ENTITY}`, {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}`, {
         method: "POST",
         headers: {
             // no header because of multipart
@@ -38,7 +38,7 @@ export async function postCategory(category: FormData): Promise<Category> {
 }
 
 export async function patchCategory(id: string, category: FormData): Promise<Category> {
-    const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${id}`, {
         method: "PATCH",
         headers: {
             // no header because of multipart
@@ -57,7 +57,7 @@ export async function patchCategory(id: string, category: FormData): Promise<Cat
 }
 
 export async function delCategory(id: string): Promise<number> {
-    const res = await fetch(`${BASE_URL}/${ENTITY}/${id}`, {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${id}`, {
         method: "DELETE",
         headers: {
             Accept: "application/json",
