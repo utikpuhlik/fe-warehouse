@@ -5,6 +5,8 @@ import {useDebouncedCallback} from "use-debounce";
 import {useFormContext} from "react-hook-form";
 import Image from "next/image";
 import {ChevronDown} from "lucide-react";
+import { Loader } from "lucide-react";
+
 
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
@@ -20,10 +22,16 @@ export function SelectOfferField() {
     const [open, setOpen] = useState(false);
     const [input, setInput] = useState("");
     const [offers, setOffers] = useState<OfferSchema[]>([]);
+    const [loading, setLoading] = useState(false);
 
     const handleSearch = useDebouncedCallback(async (query: string) => {
-        const data = await fetchFilteredOffersTS(query, 10, 1);
-        setOffers(data.items);
+        setLoading(true);
+        try {
+            const data = await fetchFilteredOffersTS(query, 10, 1);
+            setOffers(data.items);
+        } finally {
+            setLoading(false);
+        }
     }, 300);
 
     useEffect(() => {
@@ -36,7 +44,7 @@ export function SelectOfferField() {
         setValue("manufacturer_number", offer.manufacturer_number);
         setValue("price_rub", offer.price_rub);
         setValue("quantity", offer.quantity);
-        setInput(`${offer.product.name} | ${offer.brand}`);
+        setInput(`${offer.product.name} | ${offer.brand} | ${offer.manufacturer_number} | ${offer.product.sub_category.name}`);
         setOpen(false);
     };
 
@@ -68,34 +76,41 @@ export function SelectOfferField() {
                         <ScrollArea className="max-h-64">
 
                             <CommandList>
-                                <CommandEmpty>Ничего не найдено.</CommandEmpty>
-                                <CommandGroup heading="Результаты">
-                                    {offers.map((offer: OfferSchema) => (
-                                        <CommandItem
-                                            key={offer.id}
-                                            value={offer.id}
-                                            onSelect={() => handleSelect(offer)}
-                                            className="px-3 py-2 cursor-pointer hover:bg-muted"
-                                        >
-                                            <div className="flex items-center gap-3">
-                                                <Image
-                                                    src={offer.product.image_url ?? undefined}
-                                                    alt={offer.product.name}
-                                                    width={40}
-                                                    height={40}
-                                                    className="rounded-md border bg-white object-contain"
-                                                />
-                                                <div className="flex flex-col">
-                                                    <span className="font-medium text-sm">{offer.product.name}</span>
-                                                    <span className="text-xs text-muted-foreground">
-        {offer.brand} | {offer.manufacturer_number}
-      </span>
+                                {loading ? (
+                                    <div className="flex justify-center items-center py-6">
+                                        <Loader className="animate-spin w-5 h-5 text-muted-foreground" />
+                                    </div>
+                                ) : offers.length === 0 ? (
+                                    <CommandEmpty>Ничего не найдено.</CommandEmpty>
+                                ) : (
+                                    <CommandGroup heading="Результаты">
+                                        {offers.map((offer: OfferSchema) => (
+                                            <CommandItem
+                                                key={offer.id}
+                                                value={offer.id}
+                                                onSelect={() => handleSelect(offer)}
+                                                className="px-3 py-2 cursor-pointer hover:bg-muted"
+                                            >
+                                                <div className="flex items-center gap-3">
+                                                    <Image
+                                                        src={offer.product.image_url ?? undefined}
+                                                        alt={offer.product.name}
+                                                        width={40}
+                                                        height={40}
+                                                        className="rounded-md border bg-white object-contain"
+                                                    />
+                                                    <div className="flex flex-col">
+                                                        <span
+                                                            className="font-medium text-sm">{offer.product.name}</span>
+                                                        <span className="text-xs text-muted-foreground">
+                {offer.brand} | {offer.manufacturer_number} | {offer.product.sub_category.name}
+              </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </CommandItem>
-
-                                    ))}
-                                </CommandGroup>
+                                            </CommandItem>
+                                        ))}
+                                    </CommandGroup>
+                                )}
                             </CommandList>
                         </ScrollArea>
 

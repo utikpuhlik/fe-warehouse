@@ -70,7 +70,7 @@ export default async function WaybillPage(props: { params: Params }) {
             </div>
 
             <div className="mt-6 mb-4">
-                <CreateWaybillOfferForm waybill_id={waybill_id}/>
+                <CreateWaybillOfferForm waybill={waybill}/>
             </div>
 
             <Suspense fallback={<Skeleton className="h-32"/>}>

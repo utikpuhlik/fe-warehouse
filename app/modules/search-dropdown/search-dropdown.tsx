@@ -74,7 +74,7 @@ export function SearchDropdown() {
                   </div>
                   <div className="text-sm">
                     <div className="font-medium">{offer.product.name}</div>
-                    <div className="text-muted-foreground">{offer.brand}</div>
+                    <div className="text-muted-foreground">{offer.brand} | {offer.manufacturer_number} | {offer.product.sub_category.name}</div>
                   </div>
                 </CardContent>
               </Link>

@@ -141,7 +141,7 @@ function SearchContent() {
                                 </div>
                                 <div>
                                     <p className="font-medium">{offer.product.name}</p>
-                                    <p className="text-sm text-muted-foreground">{offer.brand}</p>
+                                    <p className="text-sm text-muted-foreground">{offer.brand} | {offer.manufacturer_number} | {offer.product.sub_category.name}</p>
                                     <p className="text-sm mt-1">{offer.price_rub} ₽</p>
                                 </div>
                             </CardContent>

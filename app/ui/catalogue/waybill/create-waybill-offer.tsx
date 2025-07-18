@@ -16,8 +16,9 @@ import {
 } from "@/app/lib/schemas/waybillOfferSchema";
 import { SelectOfferField } from "@/app/ui/catalogue/waybill/select-offer-field";
 import { CirclePlus, Package } from "lucide-react";
+import {WaybillSchema} from "@/app/lib/schemas/waybillSchema";
 
-export function CreateWaybillOfferForm({ waybill_id }: { waybill_id: string }) {
+export function CreateWaybillOfferForm({ waybill }: { waybill: WaybillSchema }) {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
@@ -35,7 +36,7 @@ export function CreateWaybillOfferForm({ waybill_id }: { waybill_id: string }) {
   const onSubmit = (values: WaybillOfferPostSchema) => {
     startTransition(async () => {
       try {
-        await createWaybillOfferAction(values, waybill_id);
+        await createWaybillOfferAction(values, waybill.id);
         toast({
           title: "Позиция добавлена",
           description: `Позиция: ${values.brand}`,
@@ -53,7 +54,7 @@ export function CreateWaybillOfferForm({ waybill_id }: { waybill_id: string }) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-4 rounded-md border p-4"
       >
-        <h2 className="text-lg font-semibold">Добавить позицию</h2>
+        {/*<h2 className="text-lg font-semibold">Добавить позицию</h2>*/}
         <SelectOfferField />
         <input type="hidden" {...form.register("offer_id")} />
         <input type="hidden" {...form.register("brand")} />
@@ -67,6 +68,7 @@ export function CreateWaybillOfferForm({ waybill_id }: { waybill_id: string }) {
               type="number"
               step="1"
               {...form.register("price_rub", { valueAsNumber: true })}
+              disabled={waybill.waybill_type === "WAYBILL_IN"}
             />
             {form.formState.errors.price_rub && (
               <p className="text-sm text-red-500">
@@ -96,7 +98,7 @@ export function CreateWaybillOfferForm({ waybill_id }: { waybill_id: string }) {
 
           <Button type="submit" disabled={isPending}>
             <CirclePlus />
-            {isPending ? "Добавляем..." : "Добавить позицию"}
+            {isPending ? "Добавляем.." : "Добавить"}
           </Button>
         </div>
       </form>
