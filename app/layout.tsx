@@ -10,7 +10,7 @@ import {Metadata} from "next";
 import {ruRU} from "@clerk/localizations";
 import {experimental__simple} from "@clerk/themes"
 import {ThemeProvider} from "next-themes";
-import { GeistSans } from "geist/font/sans";
+import {GeistSans} from "geist/font/sans";
 import {ThemedTopLoader} from "@/app/shared/top-loader";
 
 export const metadata: Metadata = {
@@ -31,7 +31,7 @@ export default function RootLayout({
             }}
         >
             {/*https://ui.shadcn.com/docs/dark-mode/next*/}
-            <html lang="en" suppressHydrationWarning >
+            <html lang="en" suppressHydrationWarning>
             <body className={`${GeistSans.className} antialiased`}>
             <SignedOut>
                 {/*! I don't need it in my setup - all routes are private*/}
@@ -49,14 +49,14 @@ export default function RootLayout({
                 enableSystem
                 disableTransitionOnChange
             >
-                <ThemedTopLoader />
+                <ThemedTopLoader/>
                 <QueryProvider>
                     {children}
                 </QueryProvider>
             </ThemeProvider>
-            </body>
             <SpeedInsights/>
             <Analytics/>
+            </body>
             </html>
         </ClerkProvider>
     );
