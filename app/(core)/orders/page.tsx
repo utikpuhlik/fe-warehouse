@@ -10,10 +10,10 @@ import {OrderSchema} from "@/app/lib/schemas/orderSchema";
 
 export async function generateMetadata() {
   return generateMeta({
-    title: "Orders Page",
+    title: "Заказы | TCF",
     description:
-      "A list of orders generated using the Tanstack Table. Built with Tailwind CSS, shadcn/ui and Next.js.",
-    canonical: "/pages/orders"
+      "A list of orders generated using the Tanstack Table.",
+    canonical: "/orders"
   });
 }
 

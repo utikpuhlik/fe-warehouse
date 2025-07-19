@@ -18,15 +18,15 @@ export const zOfferBaseSchema = z.object({
     .nonnegative({
       message: "Цена не может быть меньше нуля",
     }),
-  quantity: z
-    .number({ invalid_type_error: "Поле должно быть целым числом" })
-    .int(),
   product_id: z.string().uuid(),
 });
 
 export const zOfferSchema = zOfferBaseSchema.extend({
   id: z.string().uuid(),
   offer_bitrix_id: z.string().nullable().optional(),
+  quantity: z
+      .number({ invalid_type_error: "Поле должно быть целым числом" })
+      .int(),
   product: zProduct,
   wholesale_price_rub: z.number().nonnegative(),
 });

@@ -68,10 +68,11 @@ export default async function WaybillPage(props: { params: Params }) {
                     />
                 </div>
             </div>
-
+            {waybill.is_pending && (
             <div className="mt-6 mb-4">
                 <CreateWaybillOfferForm waybill={waybill}/>
             </div>
+            )}
 
             <Suspense fallback={<Skeleton className="h-32"/>}>
                 <WaybillOffersTable {...waybill} />

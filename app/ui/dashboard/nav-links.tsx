@@ -8,22 +8,17 @@ import {
   DocumentArrowDownIcon,
   HomeIcon,
   MagnifyingGlassIcon,
-  ClockIcon
+  ClockIcon,
+  QuestionMarkCircleIcon
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {cn} from "@/lib/utils";
-import {LucideIcon} from "lucide-react";
+import { LucideIcon} from "lucide-react";
 
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
 const links = [
-  // { name: "Home", href: "/dashboard", icon: HomeIcon },
-  // {
-  // 	name: "Invoices",
-  // 	href: "/dashboard/invoices",
-  // 	icon: DocumentDuplicateIcon,
-  // },
   { name: "Панель", href: "/", icon: HomeIcon },
   { name: "Пользователи", href: "/users", icon: UserGroupIcon },
   { name: "Каталог", href: "/catalogue", icon: ClipboardDocumentListIcon },
@@ -32,6 +27,7 @@ const links = [
   { name: "Orders", href: "/orders", icon: ShoppingCartIcon },
   { name: "Накладные", href: "/waybills", icon: DocumentArrowDownIcon },
   { name: "История", href: "/history", icon: ClockIcon },
+  { name: "Помощь", href: "/help", icon: QuestionMarkCircleIcon },
 ];
 
 export default function NavLinks() {

@@ -19,6 +19,7 @@ export const zUserReadSchema = z.object({
     notes: z.string().nullable(),
     shipping_method: z.enum(["SELF_PICKUP", "CARGO", "OTHER"]).nullable(),
     shipping_company: z.string().nullable(),
+    // addresses: z.array(zAddressSchema),
 });
 
 /** Array wrapper for list endpoints */

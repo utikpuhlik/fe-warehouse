@@ -37,7 +37,6 @@ export function CreateOfferModal(product: Product) {
             internal_description: "",
             price_rub: 0,
             super_wholesale_price_rub: 0,
-            quantity: 0,
             product_id: product.id,
         },
     });
@@ -117,16 +116,6 @@ export function CreateOfferModal(product: Product) {
                         {form.formState.errors.super_wholesale_price_rub && (
                             <p className="text-sm text-red-500">
                                 {form.formState.errors.super_wholesale_price_rub.message}
-                            </p>
-                        )}
-                    </div>
-                    <div>
-                        <Label htmlFor="quantity">Остаток</Label>
-                        <Input id="quantity" type="number"
-                               step="1" {...form.register("quantity", {valueAsNumber: true})} />
-                        {form.formState.errors.quantity && (
-                            <p className="text-sm text-red-500">
-                                {form.formState.errors.quantity.message}
                             </p>
                         )}
                     </div>

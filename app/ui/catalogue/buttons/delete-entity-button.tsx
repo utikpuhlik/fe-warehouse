@@ -49,6 +49,7 @@ export function DeleteEntityButton({
         <Button
             type="button"
             variant="destructive"
+            size="icon"
             disabled={isPending || disabled}
             onClick={handleDelete}
             className={className}

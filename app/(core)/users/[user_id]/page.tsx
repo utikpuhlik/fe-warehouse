@@ -9,10 +9,22 @@ import {fetchUserById} from "@/app/lib/apis/userApi";
 import {notFound} from "next/navigation";
 import {OrderSchema} from "@/app/lib/schemas/orderSchema";
 import {fetchOrders} from "@/app/lib/apis/orderApi";
+import { CardBalance } from "@/app/(core)/users/[user_id]/card-balance";
+import type {Metadata} from "next";
 
 type Props = {
     params: Promise<{ user_id: string }>
 };
+export async function generateMetadata(
+    { params }: Props
+): Promise<Metadata> {
+    const { user_id } = await params;
+    const user: UserSchema = await fetchUserById(user_id);
+
+    return {
+        title: `${user.first_name} ${user.last_name} | TCF`
+    };
+}
 
 export default async function Page({params}: Props) {
     const {user_id} = await params;
@@ -39,6 +51,7 @@ export default async function Page({params}: Props) {
             <div className="grid gap-4 xl:grid-cols-3">
                 <div className="space-y-4 xl:col-span-1">
                     <ProfileCard user={user}/>
+                    <CardBalance />
                 </div>
                 <div className="space-y-4 xl:col-span-2">
                     <LatestActivity orders={orders}/>

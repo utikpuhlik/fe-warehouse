@@ -17,7 +17,7 @@ export async function generateMetadata(
 	{ params }: Props
 ): Promise<Metadata> {
 	const { category_slug } = await params;
-	const category = await fetchCategoryBySlug(category_slug);
+	const category: Category = await fetchCategoryBySlug(category_slug);
 	if (!category) {
 		return {
 			title: "Категория не найдена | TCF",

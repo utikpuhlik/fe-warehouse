@@ -130,20 +130,6 @@ export function EditOfferModal(offer: OfferSchema) {
               </p>
             )}
           </div>
-          <div>
-            <Label htmlFor="quantity">Остаток</Label>
-            <Input
-              id="quantity"
-              type="number"
-              step="1"
-              {...form.register("quantity", { valueAsNumber: true })}
-            />
-            {form.formState.errors.quantity && (
-              <p className="text-sm text-red-500">
-                {form.formState.errors.quantity.message}
-              </p>
-            )}
-          </div>
           <DialogFooter className="flex items-center justify-between">
             <DeleteEntityButton
               entityName={offer.brand}

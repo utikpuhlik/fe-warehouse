@@ -124,18 +124,6 @@ const orders: Order[] = [
     status: "paid"
   },
   {
-    id: 7145,
-    customer: {
-      name: "Sophia Martinez",
-      image: `https://bundui-images.netlify.app/avatars/07.png`
-    },
-    product: {
-      name: "Oil Filter"
-    },
-    amount: 220,
-    status: "success"
-  },
-  {
     id: 8167,
     customer: {
       name: "Liam Thompson",

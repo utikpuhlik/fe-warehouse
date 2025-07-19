@@ -10,6 +10,11 @@ import type {UserSchema} from "@/app/lib/schemas/userSchema";
 import {notFound} from "next/navigation";
 import {currentUser} from "@clerk/nextjs/server";
 import {fetchUserByClerkId} from "@/app/lib/apis/userApi";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+	title: 'Накладные | TCF',
+}
 
 export default async function WaybillsPage({searchParams}: {
 	searchParams?: Promise<{ query?: string; page?: string; waybill_type: string; is_pending?: string }>;

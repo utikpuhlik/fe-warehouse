@@ -2,7 +2,6 @@ import "@/app/ui/global.css";
 import {Analytics} from "@vercel/analytics/next";
 import {SpeedInsights} from "@vercel/speed-insights/next";
 import {QueryProvider} from "@/app/shared/api/queryProvider";
-import NextTopLoader from "nextjs-toploader";
 import {
     ClerkProvider,
     SignedOut,
@@ -12,6 +11,7 @@ import {ruRU} from "@clerk/localizations";
 import {experimental__simple} from "@clerk/themes"
 import {ThemeProvider} from "next-themes";
 import { GeistSans } from "geist/font/sans";
+import {ThemedTopLoader} from "@/app/shared/top-loader";
 
 export const metadata: Metadata = {
     title: "TCF | Login",
@@ -43,13 +43,13 @@ export default function RootLayout({
                 {/*    </button>*/}
                 {/*</SignUpButton>*/}
             </SignedOut>
-            <NextTopLoader color="#2A2F3C" showSpinner={false} shadow-sm="none"/>
             <ThemeProvider
                 attribute="class"
                 defaultTheme="light"
                 enableSystem
                 disableTransitionOnChange
             >
+                <ThemedTopLoader />
                 <QueryProvider>
                     {children}
                 </QueryProvider>
