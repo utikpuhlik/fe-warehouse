@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -12,6 +11,7 @@ import {
 import { printPriceList } from "@/app/lib/apis/client/documentApi";
 import { showToastError } from "@/app/lib/errors/toastError";
 import { Label } from "@/components/ui/label";
+import { DownloadButton } from "@/app/ui/catalogue/buttons/download-button";
 
 export function DownloadPrice() {
   const [priceType, setPriceType] = useState<"retail" | "wholesale">("retail");
@@ -73,13 +73,12 @@ export function DownloadPrice() {
         </Select>
       </div>
 
-      <Button
-        className="mt-2 sm:mt-0"
+      <DownloadButton
         onClick={handleDownload}
+        full={false}
+        loading={loading}
         disabled={loading}
-      >
-        {loading ? "Загрузка..." : "Скачать прайс"}
-      </Button>
+      />
     </div>
   );
 }

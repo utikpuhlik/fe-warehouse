@@ -16,9 +16,13 @@ import {
 } from "@/app/lib/schemas/waybillOfferSchema";
 import { SelectOfferField } from "@/app/ui/catalogue/waybill/select-offer-field";
 import { CirclePlus, Package } from "lucide-react";
-import {WaybillSchema} from "@/app/lib/schemas/waybillSchema";
+import { WaybillSchema } from "@/app/lib/schemas/waybillSchema";
 
-export function CreateWaybillOfferForm({ waybill }: { waybill: WaybillSchema }) {
+export function CreateWaybillOfferForm({
+  waybill,
+}: {
+  waybill: WaybillSchema;
+}) {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
