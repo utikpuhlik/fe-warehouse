@@ -21,7 +21,7 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {type ProductPostSchema, zProductPostSchema} from "@/app/lib/schemas/productSchema";
 import {createProductAction} from "@/app/lib/actions/productAction";
-import {CirclePlus} from "lucide-react";
+import {CreateButton} from "@/app/ui/catalogue/buttons/create-entity-button";
 
 export function CreateProductModal(sub_category: SubCategory) {
     const [open, setOpen] = useState(false);
@@ -66,7 +66,7 @@ export function CreateProductModal(sub_category: SubCategory) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button> <CirclePlus /> Создать</Button>
+                <CreateButton />
             </DialogTrigger>
 
             <DialogContent className="sm:max-w-md">
