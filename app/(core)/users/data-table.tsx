@@ -41,7 +41,7 @@ import {
     TableHeader,
     TableRow
 } from "@/components/ui/table";
-import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
+import {Avatar, AvatarFallback} from "@/components/ui/avatar";
 import {Badge} from "@/components/ui/badge";
 import {generateAvatarFallback} from "@/app/lib/utils";
 import {Checkbox} from "@/components/ui/checkbox";
@@ -78,7 +78,6 @@ export const columns: ColumnDef<UserSchema>[] = [
         cell: ({row}) => (
             <div className="flex items-center gap-4">
                 <Avatar>
-                    <AvatarImage src={row.original.avatar_url || undefined} alt="shadcn ui kit"/>
                     <AvatarFallback>{generateAvatarFallback(row.getValue("first_name"))}</AvatarFallback>
                 </Avatar>
                 <div className="capitalize">
