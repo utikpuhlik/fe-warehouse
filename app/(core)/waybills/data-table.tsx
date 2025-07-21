@@ -43,14 +43,12 @@ import {
 } from "@/components/ui/table";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
 import {Badge} from "@/components/ui/badge";
-import {generateAvatarFallback} from "@/app/lib/utils";
+import {formatDateToLocal, generateAvatarFallback} from "@/app/lib/utils";
 import {Checkbox} from "@/components/ui/checkbox";
-import {UserSchema} from "@/app/lib/schemas/userSchema";
-import {MailingToggle} from "@/app/ui/catalogue/mailing/mailing-toggle";
-import {CustomerTypeSelect} from "@/app/ui/catalogue/mailing/customer-type-select";
+import {WaybillSchema} from "@/app/lib/schemas/waybillSchema";
 import Link from "next/link";
 
-export const columns: ColumnDef<UserSchema>[] = [
+export const columns: ColumnDef<WaybillSchema>[] = [
     {
         id: "select",
         header: ({table}) => (
@@ -73,119 +71,22 @@ export const columns: ColumnDef<UserSchema>[] = [
         enableHiding: false
     },
     {
-        accessorKey: "first_name",
-        header: "Name",
+        accessorKey: "counterparty_name",
+        header: "Контрагент",
         cell: ({row}) => (
             <div className="flex items-center gap-4">
                 <Avatar>
-                    <AvatarFallback>{generateAvatarFallback(row.getValue("first_name"))}</AvatarFallback>
+                    <AvatarFallback>{generateAvatarFallback(row.getValue("counterparty_name"))}</AvatarFallback>
                 </Avatar>
                 <div className="capitalize">
-                    <Link
-                        href={`/users/${row.original.id}`}>{row.getValue("first_name")}
-                    </Link>
+                    {/*add link to counterparty use*/}
+                    {row.getValue("counterparty_name")}
                 </div>
             </div>
         )
     },
     {
-        accessorKey: "last_name",
-        header: ({column}) => {
-            return (
-                <Button
-                    className="-ml-3"
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    Фамилия
-                    <ArrowUpDown/>
-                </Button>
-            );
-        },
-        cell: ({row}) => (
-            <div className="capitalize">
-                <Link
-                    href={`/users/${row.original.id}`}>{row.getValue("last_name")}
-                </Link>
-            </div>
-        )
-    },
-    {
-        accessorKey: "email",
-        header: ({column}) => {
-            return (
-                <Button
-                    className="-ml-3"
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    Email
-                    <ArrowUpDown/>
-                </Button>
-            );
-        },
-        cell: ({row}) => row.getValue("email")
-    },
-    {
-        accessorKey: "phone",
-        header: ({column}) => {
-            return (
-                <Button
-                    className="-ml-3"
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    Телефон
-                    <ArrowUpDown/>
-                </Button>
-            );
-        },
-        cell: ({row}) => row.getValue("phone")
-    },
-    {
-        accessorKey: "city",
-        header: ({column}) => {
-            return (
-                <Button
-                    className="-ml-3"
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    Город
-                    <ArrowUpDown/>
-                </Button>
-            );
-        },
-        cell: ({row}) => row.getValue("city")
-    },
-    {
-        accessorKey: "shipping_company",
-        header: ({column}) => {
-            return (
-                <Button
-                    className="-ml-3"
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    Доставка
-                    <ArrowUpDown/>
-                </Button>
-            );
-        },
-        cell: ({row}) => row.getValue("shipping_company")
-    },
-    {
-        accessorKey: "notes",
-        header: ({column}) => {
-            return (
-                <Button
-                    className="-ml-3"
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    Примечание
-                    <ArrowUpDown/>
-                </Button>
-            );
-        },
-        cell: ({row}) => row.getValue("notes")
-    },
-    {
-        accessorKey: "customer_type",
+        accessorKey: "waybill_type",
         header: ({column}) => {
             return (
                 <Button
@@ -198,22 +99,22 @@ export const columns: ColumnDef<UserSchema>[] = [
             );
         },
         cell: ({row}) => {
-            const customer_type = row.original.customer_type;
+            const waybill_type = row.original.waybill_type;
 
-            const customerMap = {
-                USER_RETAIL: "warning",
-                USER_WHOLESALE: "info",
-                USER_SUPER_WHOLESALE: "success"
+            const waybillMap = {
+                WAYBILL_IN: "info",
+                WAYBILL_OUT: "success",
+                WAYBILL_RETURN: "warning"
             } as const;
 
             const labelMap = {
-                USER_RETAIL: "Розница",
-                USER_WHOLESALE: "Опт",
-                USER_SUPER_WHOLESALE: "Супер-Опт",
+                WAYBILL_IN: "Приход",
+                WAYBILL_OUT: "Расход",
+                WAYBILL_RETURN: "Возврат",
             };
 
-            const customerClass = customerMap[customer_type] ?? "outline";
-            const label = labelMap[customer_type] ?? customer_type;
+            const customerClass = waybillMap[waybill_type] ?? "outline";
+            const label = labelMap[waybill_type] ?? waybill_type;
 
             return (
                 <Badge variant={customerClass} className="capitalize">
@@ -223,24 +124,89 @@ export const columns: ColumnDef<UserSchema>[] = [
         }
     },
     {
-        accessorKey: "mailing",
-        header: "Рассылка",
-        cell: ({row}) => {
-            const user = row.original;
-            return <MailingToggle {...user} />;
+        accessorKey: "is_pending",
+        header: ({ column }) => {
+            return (
+                <Button
+                    className="-ml-3"
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Статус
+                    <ArrowUpDown />
+                </Button>
+            );
         },
-        enableSorting: false,
-        enableHiding: false,
+        cell: ({ row }) => {
+            const isPending: boolean = row.original.is_pending;
+
+            const statusMap: Record<"true" | "false", { variant: "info" | "success"; label: string }> = {
+                true: { variant: "info", label: "Черновик" },
+                false: { variant: "success", label: "Завершено" },
+            };
+
+            const { variant, label } = statusMap[String(isPending) as "true" | "false"];
+
+            return (
+                <Badge variant={variant} className="capitalize">
+                    {label}
+                </Badge>
+            );
+        },
     },
     {
-        accessorKey: "type_v2",
-        header: "Тип V2",
-        cell: ({row}) => {
-            const user = row.original;
-            return <CustomerTypeSelect {...user} />;
+        accessorKey: "author",
+        header: "Автор",
+        cell: ({ row }) => {
+            const user = row.original.user;
+            const fullName = `${user.first_name} ${user.last_name}`;
+
+            return (
+                <div className="flex items-center gap-4">
+                    <Avatar>
+                        <AvatarFallback>{generateAvatarFallback(fullName)}</AvatarFallback>
+                    </Avatar>
+                    <div className="capitalize">
+                        <Link href={`/users/${user.id}`} className="hover:underline">
+                            {fullName}
+                        </Link>
+                    </div>
+                </div>
+            );
         },
-        enableSorting: false,
-        enableHiding: false,
+    },
+    {
+        accessorKey: "note",
+        header: ({column}) => {
+            return (
+                <Button
+                    className="-ml-3"
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                    Примечание
+                    <ArrowUpDown/>
+                </Button>
+            );
+        },
+        cell: ({row}) => row.getValue("note")
+    },
+    {
+        accessorKey: "created_at",
+        header: ({column}) => {
+            return (
+                <Button
+                    className="-ml-3"
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                    Дата
+                    <ArrowUpDown/>
+                </Button>
+            );
+        },
+        cell: ({row}) => {
+            const raw: string = row.getValue("created_at")
+            return formatDateToLocal(raw, "ru-RU", true);
+        }
     },
     {
         id: "actions",
@@ -255,10 +221,9 @@ export const columns: ColumnDef<UserSchema>[] = [
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                        <DropdownMenuItem>
-                            <Link href={`/users/${row.original.id}`}>
-                                Редактировать
-                            </Link>
+                        <DropdownMenuItem><
+                            Link href={`/waybills/${row.original.id}`}>Редактировать
+                        </Link>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
@@ -267,7 +232,7 @@ export const columns: ColumnDef<UserSchema>[] = [
     }
 ];
 
-export default function UsersDataTable({data}: { data: UserSchema[] }) {
+export default function WaybillDataTable({data}: { data: WaybillSchema[] }) {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -293,31 +258,43 @@ export default function UsersDataTable({data}: { data: UserSchema[] }) {
         }
     });
 
-    const customer_types = [
+    const waybill_types = [
         {
-            value: "USER_RETAIL",
-            label: "Розница"
+            value: "WAYBILL_IN",
+            label: "Приход"
         },
         {
-            value: "USER_WHOLESALE",
-            label: "Опт"
+            value: "WAYBILL_OUT",
+            label: "Расход"
         },
         {
-            value: "USER_SUPER_WHOLESALE",
-            label: "Супер-Опт"
+            value: "WAYBILL_RETURN",
+            label: "Возврат"
         }
     ];
+
+    // const waybill_statuses = [
+    //     {
+    //         value: true,
+    //         label: "Черновик"
+    //     },
+    //     {
+    //         value: false,
+    //         label: "Проведена"
+    //     },
+    // ];
 
     return (
         <div className="w-full">
             <div className="flex items-center gap-4 py-4">
                 <div className="flex gap-2">
                     <Input
-                        placeholder="Search users..."
-                        value={(table.getColumn("first_name")?.getFilterValue() as string) ?? ""}
-                        onChange={(event) => table.getColumn("first_name")?.setFilterValue(event.target.value)}
+                        placeholder="Поиск.."
+                        value={(table.getColumn("counterparty_name")?.getFilterValue() as string) ?? ""}
+                        onChange={(event) => table.getColumn("counterparty_name")?.setFilterValue(event.target.value)}
                         className="max-w-sm"
                     />
+                    {/* TODO: make a custom component from popover and reuse over data tables*/}
                     <Popover>
                         <PopoverTrigger asChild>
                             <Button variant="outline">
@@ -329,30 +306,30 @@ export default function UsersDataTable({data}: { data: UserSchema[] }) {
                             <Command>
                                 <CommandInput placeholder="Тип" className="h-9"/>
                                 <CommandList>
-                                    <CommandEmpty>No customer_type found.</CommandEmpty>
+                                    <CommandEmpty>No waybill_type found.</CommandEmpty>
                                     <CommandGroup>
-                                        {customer_types.map((customer_type) => (
+                                        {waybill_types.map((waybill_type) => (
                                             <CommandItem
-                                                key={customer_type.value}
-                                                value={customer_type.value}
+                                                key={waybill_type.value}
+                                                value={waybill_type.value}
                                                 onSelect={(currentValue) => {
                                                     setCustomerTypeFilter((prev) => {
                                                         const newValue = currentValue === prev ? "" : currentValue;
-                                                        table.getColumn("customer_type")?.setFilterValue(newValue);
+                                                        table.getColumn("waybill_type")?.setFilterValue(newValue);
                                                         return newValue;
                                                     });
                                                 }}
                                             >
                                                 <div className="flex items-center space-x-3 py-1">
                                                     <Checkbox
-                                                        id={customer_type.value}
-                                                        checked={customerTypeFilter === customer_type.value}
+                                                        id={waybill_type.value}
+                                                        checked={customerTypeFilter === waybill_type.value}
                                                     />
                                                     <label
-                                                        htmlFor={customer_type.value}
+                                                        htmlFor={waybill_type.value}
                                                         className="leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                                     >
-                                                        {customer_type.label}
+                                                        {waybill_type.label}
                                                     </label>
                                                 </div>
                                             </CommandItem>

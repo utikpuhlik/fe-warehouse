@@ -3,7 +3,6 @@
 import {
   ClipboardDocumentListIcon,
   ShoppingCartIcon,
-  TableCellsIcon,
   UserGroupIcon,
   DocumentArrowDownIcon,
   HomeIcon,
@@ -23,8 +22,8 @@ const links = [
   { name: "Пользователи", href: "/users", icon: UserGroupIcon },
   { name: "Каталог", href: "/catalogue", icon: ClipboardDocumentListIcon },
   { name: "Поиск", href: "/search", icon: MagnifyingGlassIcon },
-  { name: "Catalogue Table", href: "/table", icon: TableCellsIcon },
-  { name: "Orders", href: "/orders", icon: ShoppingCartIcon },
+  // { name: "Catalogue Table", href: "/table", icon: TableCellsIcon },
+  { name: "Заказы", href: "/orders", icon: ShoppingCartIcon },
   { name: "Накладные", href: "/waybills", icon: DocumentArrowDownIcon },
   { name: "История", href: "/history", icon: ClockIcon },
   { name: "Помощь", href: "/help", icon: QuestionMarkCircleIcon },
