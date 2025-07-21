@@ -1,7 +1,8 @@
+import {CirclePlus} from "lucide-react";
 import {Button} from "@/components/ui/button";
-import {Loader, Save} from 'lucide-react';
+import {Loader} from 'lucide-react';
 
-type SaveButtonProps = {
+type CreateButtonProps = {
     onClick?: () => void;
     variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link"
     full?: boolean;
@@ -10,14 +11,14 @@ type SaveButtonProps = {
     className?: string;
 };
 
-export function SaveButton({
-    onClick,
-    variant = "outline",
-    full = true,
-    disabled = false,
-    loading = false,
-    className,
-    }: SaveButtonProps) {
+export function CreateButton(
+    {
+        onClick,
+        variant = "default",
+        disabled = false,
+        loading = false,
+        className,
+    }: CreateButtonProps) {
     return (
         <Button
             variant={variant}
@@ -29,8 +30,8 @@ export function SaveButton({
                 <Loader className="h-5 w-5 animate-spin" />
             ) : (
                 <>
-                    <Save className="h-5 w-5" />
-                    {full && <span>Сохранить</span>}
+                    <CirclePlus />
+                    {<span>Создать</span>}
                 </>
             )}
         </Button>

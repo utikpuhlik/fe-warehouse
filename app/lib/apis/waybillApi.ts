@@ -1,6 +1,6 @@
 import {
     type WaybillPaginatedSchema,
-    type WaybillPostSchema,
+    type WaybillPostSchema, WaybillPutSchema,
     type WaybillSchema, zWaybillPaginatedSchema,
     zWaybillSchema
 } from "@/app/lib/schemas/waybillSchema";
@@ -58,6 +58,27 @@ export async function fetchWaybillOffers(waybill_id: string): Promise<WaybillOff
 export async function postWaybill(waybill: WaybillPostSchema): Promise<WaybillSchema> {
     const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}`, {
         method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            ...(await getAuthHeader()),
+        },
+        body: JSON.stringify(waybill),
+    });
+
+    const text = await res.text().catch(() => "");
+    if (!res.ok) {
+        handleApiError(res, text, ENTITY);
+    }
+
+    const json = JSON.parse(text);
+    return zWaybillSchema.parse(json);
+}
+
+
+export async function patchWaybill(waybill_id: string, waybill: WaybillPutSchema): Promise<WaybillSchema> {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${waybill_id}`, {
+        method: "PATCH",
         headers: {
             "Content-Type": "application/json",
             Accept: "application/json",

@@ -1,15 +1,16 @@
 "use client";
 
-import { useTransition } from "react";
+import {useState, useTransition} from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { showToastError } from "@/app/lib/errors/toastError";
-import { createWaybillOfferAction } from "@/app/lib/actions/waybillAction";
+import {createWaybillOfferAction, updateWaybillAction} from "@/app/lib/actions/waybillAction";
 import {
   type WaybillOfferPostSchema,
   zWaybillOfferPostSchema,
@@ -17,13 +18,16 @@ import {
 import { SelectOfferField } from "@/app/ui/catalogue/waybill/select-offer-field";
 import { CirclePlus, Package } from "lucide-react";
 import { WaybillSchema } from "@/app/lib/schemas/waybillSchema";
+import {SaveButton} from "@/app/ui/catalogue/buttons/save-button";
 
 export function CreateWaybillOfferForm({
   waybill,
 }: {
   waybill: WaybillSchema;
 }) {
-  const [isPending, startTransition] = useTransition();
+  const [isSubmittingOffer, startOfferTransition] = useTransition();
+  const [isSavingNote, startNoteTransition] = useTransition();
+  const [note, setNote] = useState(waybill.note ?? "");
   const { toast } = useToast();
 
   const form = useForm<WaybillOfferPostSchema>({
@@ -37,8 +41,22 @@ export function CreateWaybillOfferForm({
     },
   });
 
+  const handleNoteUpdate = () => {
+    startNoteTransition(async () => {
+      try {
+        await updateWaybillAction(waybill.id, {
+          ...waybill,
+          note,
+        });
+        toast({ title: "Заметка обновлена" });
+      } catch (error) {
+        showToastError(error);
+      }
+    });
+  };
+
   const onSubmit = (values: WaybillOfferPostSchema) => {
-    startTransition(async () => {
+    startOfferTransition(async () => {
       try {
         await createWaybillOfferAction(values, waybill.id);
         toast({
@@ -59,13 +77,15 @@ export function CreateWaybillOfferForm({
         className="space-y-4 rounded-md border p-4"
       >
         {/*<h2 className="text-lg font-semibold">Добавить позицию</h2>*/}
-        <SelectOfferField />
+        <div className="flex justify-between">
+          <div>
+          <SelectOfferField />
         <input type="hidden" {...form.register("offer_id")} />
         <input type="hidden" {...form.register("brand")} />
         <input type="hidden" {...form.register("manufacturer_number")} />
 
-        <div className="flex items-end gap-4">
-          <div className="w-full max-w-[75px]">
+        <div className="flex items-end gap-4 mt-2">
+          <div className="w-full max-w-[150px]">
             <Label htmlFor="price_rub">Цена</Label>
             <Input
               id="price_rub"
@@ -81,7 +101,7 @@ export function CreateWaybillOfferForm({
             )}
           </div>
 
-          <div className="w-full max-w-[100px]">
+          <div className="w-full max-w-[150px]">
             <div className="flex items-center gap-1 mb-1">
               <Label htmlFor="quantity">Кол-во</Label>
               <Package size={15} />
@@ -100,10 +120,28 @@ export function CreateWaybillOfferForm({
             )}
           </div>
 
-          <Button type="submit" disabled={isPending}>
+          <Button type="submit" disabled={isSubmittingOffer}>
             <CirclePlus />
-            {isPending ? "Добавляем.." : "Добавить"}
+            {isSubmittingOffer ? "Добавляем.." : "Добавить"}
           </Button>
+        </div>
+        </div>
+          <div className="w-[300px] space-y-2">
+            <Label htmlFor="note">Заметка</Label>
+            <Textarea
+                id="note"
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                placeholder="Введите заметку..."
+                className="max-h-[100px]"
+            />
+            <SaveButton
+                onClick={handleNoteUpdate}
+                disabled={isSavingNote}
+                loading={isSavingNote}
+                className={"w-full"}>
+            </SaveButton>
+          </div>
         </div>
       </form>
     </FormProvider>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { CirclePlus } from 'lucide-react';
 import {
     Dialog,
     DialogTrigger,
@@ -20,6 +19,7 @@ import { useToast } from "@/hooks/use-toast";
 import { showToastError } from "@/app/lib/errors/toastError";
 import {zWaybillPostSchema, type WaybillPostSchema,} from "@/app/lib/schemas/waybillSchema";
 import {createWaybillAction} from "@/app/lib/actions/waybillAction";
+import {CreateButton} from "@/app/ui/catalogue/buttons/create-entity-button";
 
 export function CreateWaybillModal({ user_id }: { user_id: string }) {
     const [open, setOpen] = useState(false);
@@ -56,9 +56,7 @@ export function CreateWaybillModal({ user_id }: { user_id: string }) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button>
-                    <CirclePlus /> Создать
-                </Button>
+                <CreateButton />
             </DialogTrigger>
 
             <DialogContent>

@@ -1,13 +1,26 @@
 "use server"
 
-import {postWaybill, delWaybill, delWaybillOffer, postWaybillOffer, commitWaybill} from "@/app/lib/apis/waybillApi";
+import {
+    postWaybill,
+    delWaybill,
+    delWaybillOffer,
+    postWaybillOffer,
+    commitWaybill,
+    patchWaybill
+} from "@/app/lib/apis/waybillApi";
 import {revalidatePath} from "next/cache";
-import type {WaybillPostSchema} from "@/app/lib/schemas/waybillSchema";
+import type {WaybillPostSchema, WaybillPutSchema} from "@/app/lib/schemas/waybillSchema";
 import type {WaybillOfferPostSchema} from "@/app/lib/schemas/waybillOfferSchema";
 import {redirect} from "next/navigation";
 
 export async function createWaybillAction(waybill: WaybillPostSchema): Promise<void> {
     await postWaybill(waybill)
+    revalidatePath("/waybills");
+}
+
+export async function updateWaybillAction(waybill_id: string, waybill: WaybillPutSchema): Promise<void> {
+    await patchWaybill(waybill_id, waybill)
+    revalidatePath(`/waybills/${waybill_id}`);
     revalidatePath("/waybills");
 }
 

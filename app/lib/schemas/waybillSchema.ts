@@ -5,7 +5,8 @@ export const zWaybillBaseSchema = z.object({
     user_id: z.string().uuid(),
     waybill_type: z.enum(["WAYBILL_IN", "WAYBILL_OUT", "WAYBILL_RETURN"]),
     is_pending: z.boolean(),
-    counterparty_name: z.string().min(1, "Контрагент не может быть пустым")
+    counterparty_name: z.string().min(1, "Контрагент не может быть пустым"),
+    note: z.string().nullable(),
 })
 
 export const zWaybillSchema = zWaybillBaseSchema.extend({
