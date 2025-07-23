@@ -26,7 +26,7 @@ import { Label } from "@/components/ui/label";
 
 import { fetchFilteredOffersTS } from "@/app/lib/apis/client/offerApi";
 import type { OfferSchema } from "@/app/lib/schemas/offerSchema";
-import { TooltipInfo } from "@/app/ui/tooltip-info";
+import { TooltipInfo } from "@/app/ui/shared/tooltip-info";
 
 export function SelectOfferField() {
   const { setValue } = useFormContext();

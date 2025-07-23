@@ -18,7 +18,7 @@ import {showToastError} from "@/app/lib/errors/toastError";
 import {useForm} from "react-hook-form";
 import {type CategoryPostSchema, zCategoryPostSchema} from "@/app/lib/schemas/categorySchema";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {CreateButton} from "@/app/ui/catalogue/buttons/create-entity-button";
+import {CreateButton} from "@/app/ui/shared/buttons/create-entity-button";
 
 export function CreateCategoryModal() {
     const [open, setOpen] = useState(false);

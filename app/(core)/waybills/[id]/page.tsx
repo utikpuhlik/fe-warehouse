@@ -1,16 +1,16 @@
 import type {WaybillSchema} from "@/app/lib/schemas/waybillSchema";
 import {fetchWaybillById} from "@/app/lib/apis/waybillApi";
-import WaybillOffersTable from "@/app/ui/catalogue/waybill/waybill-offers-table";
+import WaybillOffersTable from "@/app/ui/waybill/waybill-offers-table";
 import {Suspense} from "react";
 import {Skeleton} from "@/components/ui/skeleton";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
-import {CreateWaybillOfferForm} from "@/app/ui/catalogue/waybill/create-waybill-offer";
-import {CommitWaybillButton} from "@/app/ui/catalogue/waybill/commit-waybill-button";
+import {CreateWaybillOfferForm} from "@/app/ui/waybill/create-waybill-offer";
+import {CommitWaybillButton} from "@/app/ui/waybill/commit-waybill-button";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
-import {DeleteEntityButton} from "@/app/ui/catalogue/buttons/delete-entity-button";
+import {DeleteEntityButton} from "@/app/ui/shared/buttons/delete-entity-button";
 import {deleteWaybillAction} from "@/app/lib/actions/waybillAction";
 import {notFound} from "next/navigation";
-import {DownloadWaybillButton} from "@/app/ui/catalogue/waybill/DownloadWaybillButton";
+import {DownloadWaybillButton} from "@/app/ui/waybill/DownloadWaybillButton";
 
 type Params = Promise<{
     id: string;

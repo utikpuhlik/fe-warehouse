@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { printWaybill } from "@/app/lib/apis/client/documentApi";
 import { showToastError } from "@/app/lib/errors/toastError";
-import { DownloadButton } from "@/app/ui/catalogue/buttons/download-button";
+import { DownloadButton } from "@/app/ui/shared/buttons/download-button";
 
 type Props = {
   waybillId: string;

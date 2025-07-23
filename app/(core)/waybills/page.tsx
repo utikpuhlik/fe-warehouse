@@ -1,7 +1,7 @@
 import { fetchWaybills } from "@/app/lib/apis/waybillApi";
 
 import type { WaybillPaginatedSchema } from "@/app/lib/schemas/waybillSchema";
-import { CreateWaybillModal } from "@/app/ui/catalogue/waybill/create-dialog";
+import { CreateWaybillModal } from "@/app/ui/waybill/create-dialog";
 import type { UserSchema } from "@/app/lib/schemas/userSchema";
 import { notFound } from "next/navigation";
 import { currentUser } from "@clerk/nextjs/server";
@@ -37,7 +37,7 @@ export default async function WaybillsPage({
     is_pending,
     query,
     currentPage,
-    5,
+    10,
   );
 
   const clerk_user = await currentUser();

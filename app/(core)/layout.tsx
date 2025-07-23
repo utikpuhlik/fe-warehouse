@@ -1,4 +1,4 @@
-import SideNav from "@/app/ui/dashboard/sidenav";
+import SideNav from "@/app/ui/shared/sidenav";
 import { Toaster } from "@/components/ui/toaster";
 
 export default function Layout({ children }: { children: React.ReactNode }) {

@@ -28,7 +28,7 @@ import {Progress} from "@/components/ui/progress";
 import {notFound} from "next/navigation";
 import {OrderSchema} from "@/app/lib/schemas/orderSchema";
 import {fetchOrderById} from "@/app/lib/apis/orderApi";
-import {EditOrderButton} from "@/app/ui/catalogue/buttons/edit-order-button";
+import {EditOrderButton} from "@/app/ui/shared/buttons/edit-order-button";
 import type {Metadata} from "next";
 
 type Props = {

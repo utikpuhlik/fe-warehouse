@@ -1,7 +1,7 @@
 import Pagination from "@/app/ui/catalogue/pagination";
 import Search from "@/app/ui/catalogue/search";
 import Table from "@/app/ui/catalogue/table";
-import { ProductsTableSkeleton } from "@/app/ui/skeletons";
+import { ProductsTableSkeleton } from "@/app/ui/skeletons/skeletons";
 import { Suspense } from "react";
 import type {OffersSchema} from "@/app/lib/schemas/offerSchema";
 import {fetchFilteredOffersTS} from "@/app/lib/apis/offerApi";

@@ -15,10 +15,10 @@ import {
   type WaybillOfferPostSchema,
   zWaybillOfferPostSchema,
 } from "@/app/lib/schemas/waybillOfferSchema";
-import { SelectOfferField } from "@/app/ui/catalogue/waybill/select-offer-field";
+import { SelectOfferField } from "@/app/ui/waybill/select-offer-field";
 import { CirclePlus, Package } from "lucide-react";
 import { WaybillSchema } from "@/app/lib/schemas/waybillSchema";
-import {SaveButton} from "@/app/ui/catalogue/buttons/save-button";
+import {SaveButton} from "@/app/ui/shared/buttons/save-button";
 
 export function CreateWaybillOfferForm({
   waybill,

@@ -21,7 +21,7 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {type OfferPostSchema, zOfferPostSchema} from "@/app/lib/schemas/offerSchema";
 import {createOfferAction} from "@/app/lib/actions/offerAction";
-import {CreateButton} from "@/app/ui/catalogue/buttons/create-entity-button";
+import {CreateButton} from "@/app/ui/shared/buttons/create-entity-button";
 
 export function CreateOfferModal(product: Product) {
     const [open, setOpen] = useState(false);

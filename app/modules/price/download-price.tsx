@@ -11,7 +11,7 @@ import {
 import { printPriceList } from "@/app/lib/apis/client/documentApi";
 import { showToastError } from "@/app/lib/errors/toastError";
 import { Label } from "@/components/ui/label";
-import { DownloadButton } from "@/app/ui/catalogue/buttons/download-button";
+import { DownloadButton } from "@/app/ui/shared/buttons/download-button";
 
 export function DownloadPrice() {
   const [priceType, setPriceType] = useState<"retail" | "wholesale">("retail");

@@ -1,9 +1,9 @@
 import type { Category } from "@/app/lib/schemas/categorySchema";
-import { CategoryCard } from "@/app/ui/catalogue/cards/category-card";
 import { fetchCategories } from "@/app/lib/apis/categoryApi";
 import { CreateCategoryModal } from "@/app/ui/catalogue/category/create-dialog";
 import type { Metadata } from "next";
 import { SearchDropdown } from "@/app/modules/search-dropdown/search-dropdown";
+import {CatalogueCard} from "@/app/ui/shared/cards/catalogue-card";
 
 export const dynamic = "force-dynamic";
 
@@ -24,7 +24,7 @@ export default async function CategoriesPage() {
       </div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
         {categories.map((category: Category) => (
-          <CategoryCard key={category.id} {...category} />
+            <CatalogueCard key={category.id} type="category" entity={category} />
         ))}
       </div>
     </main>

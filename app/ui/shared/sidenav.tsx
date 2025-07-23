@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SignedIn, UserButton } from "@clerk/nextjs";
-import NavLinks from "@/app/ui/dashboard/nav-links";
-import Logo from "@/app/ui/logo";
+import NavLinks from "@/app/ui/shared/nav-links";
+import Logo from "@/app/ui/shared/logo";
 import { ModeToggle } from "@/app/shared/mode-toggle";
 
 export default function SideNav() {
@@ -10,7 +10,7 @@ export default function SideNav() {
             <div>
                 <Link
                     className="mb-2 flex h-20 items-end justify-start rounded-md bg-blue-900 p-2 md:h-40"
-                    href="/"
+                    href="/public"
                 >
                     <div className="w-32 text-white md:w-40">
                         <Logo />

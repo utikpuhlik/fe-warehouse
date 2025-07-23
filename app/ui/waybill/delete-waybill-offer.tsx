@@ -2,7 +2,7 @@
 
 
 import { deleteWaybillOfferAction } from "@/app/lib/actions/waybillAction";
-import { DeleteEntityButton } from "../buttons/delete-entity-button";
+import { DeleteEntityButton } from "@/app/ui/shared/buttons/delete-entity-button";
 import type {WaybillOfferSchema} from "@/app/lib/schemas/waybillOfferSchema";
 
 

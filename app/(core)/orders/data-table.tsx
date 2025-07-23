@@ -18,7 +18,6 @@ import {
     ArrowUpDown,
     Columns,
     FilterIcon,
-    MoreHorizontal,
     PlusCircle
 } from "lucide-react";
 
@@ -36,7 +35,6 @@ import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
-    DropdownMenuItem,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import {Input} from "@/components/ui/input";
@@ -53,6 +51,7 @@ import {Checkbox} from "@/components/ui/checkbox";
 import {Card, CardContent} from "@/components/ui/card";
 import {OrderSchema} from "@/app/lib/schemas/orderSchema";
 import {formatDateToLocal} from "@/app/lib/utils";
+import {TableDetailsDropdown} from "@/app/ui/shared/table/table-details-dropdown";
 
 
 export const columns: ColumnDef<OrderSchema>[] = [
@@ -188,20 +187,7 @@ export const columns: ColumnDef<OrderSchema>[] = [
         enableHiding: false,
         cell: ({row}) => {
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal/>
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem><
-                            Link href={`/orders/${row.original.id}`}>Редактировать
-                        </Link>
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <TableDetailsDropdown href={`/orders/${row.original.id}`}/>
             );
         }
     }

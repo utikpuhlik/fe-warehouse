@@ -4,7 +4,7 @@ import { CreateInvoice } from "@/app/ui/invoices/buttons";
 import Pagination from "@/app/ui/invoices/pagination";
 import Table from "@/app/ui/invoices/table";
 import Search from "@/app/ui/search";
-import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
+import { InvoicesTableSkeleton } from "@/app/ui/skeletons/skeletons";
 import { Suspense } from "react";
 
 export default async function Page(props: {

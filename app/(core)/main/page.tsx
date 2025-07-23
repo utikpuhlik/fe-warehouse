@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { DownloadPrice } from "@/app/modules/price/download-price";
 import {Suspense} from "react";
-import {CardSkeleton} from "@/app/ui/catalogue/dashboard/card-skeleton";
+import {CardSkeleton} from "@/app/ui/dashboard/card-skeleton";
 
 import {
     ActiveOffersCard,

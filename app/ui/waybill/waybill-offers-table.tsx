@@ -12,7 +12,7 @@ import Image from "next/image";
 import { fetchWaybillOffers } from "@/app/lib/apis/waybillApi";
 import type { WaybillOfferSchema } from "@/app/lib/schemas/waybillOfferSchema";
 import type { WaybillSchema } from "@/app/lib/schemas/waybillSchema";
-import { DeleteWaybillOfferProxy } from "@/app/ui/catalogue/waybill/delete-waybill-offer";
+import { DeleteWaybillOfferProxy } from "@/app/ui/waybill/delete-waybill-offer";
 import Link from "next/link";
 
 export default async function WaybillOffersTable(waybill: WaybillSchema) {

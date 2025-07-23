@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { showToastError } from "@/app/lib/errors/toastError";
 import {deleteSubCategoryAction, updateSubCategoryAction} from "@/app/lib/actions/subCategoryAction";
-import { DeleteEntityButton } from "@/app/ui/catalogue/buttons/delete-entity-button";
+import { DeleteEntityButton } from "@/app/ui/shared/buttons/delete-entity-button";
 
 
 export function EditSubCategoryModal(sub_category: SubCategory) {

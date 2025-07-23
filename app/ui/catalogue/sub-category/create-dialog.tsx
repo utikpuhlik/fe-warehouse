@@ -21,7 +21,7 @@ import {
 } from "@/app/lib/schemas/subCategorySchema";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {CreateButton} from "@/app/ui/catalogue/buttons/create-entity-button";
+import {CreateButton} from "@/app/ui/shared/buttons/create-entity-button";
 
 export function CreateSubCategoryModal(category: Category) {
     const [open, setOpen] = useState(false);

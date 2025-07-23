@@ -19,7 +19,7 @@ import { useToast } from "@/hooks/use-toast";
 import { showToastError } from "@/app/lib/errors/toastError";
 import {zWaybillPostSchema, type WaybillPostSchema,} from "@/app/lib/schemas/waybillSchema";
 import {createWaybillAction} from "@/app/lib/actions/waybillAction";
-import {CreateButton} from "@/app/ui/catalogue/buttons/create-entity-button";
+import {CreateButton} from "@/app/ui/shared/buttons/create-entity-button";
 
 export function CreateWaybillModal({ user_id }: { user_id: string }) {
     const [open, setOpen] = useState(false);
@@ -33,6 +33,7 @@ export function CreateWaybillModal({ user_id }: { user_id: string }) {
             counterparty_name: "",
             is_pending: true,
             waybill_type: "WAYBILL_IN",
+            note: null
         },
     });
 

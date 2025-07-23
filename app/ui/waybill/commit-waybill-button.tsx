@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import { SaveButton } from "@/app/ui/catalogue/buttons/save-button";
+import { SaveButton } from "@/app/ui/shared/buttons/save-button";
 import { commitWaybillAction } from "@/app/lib/actions/waybillAction";
 import { useToast } from "@/hooks/use-toast";
 import { showToastError } from "@/app/lib/errors/toastError";

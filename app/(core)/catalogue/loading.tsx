@@ -1,4 +1,4 @@
-import {BreadcrumbsSkeleton, CardSkeletonV2} from "@/app/ui/skeletons";
+import {BreadcrumbsSkeleton, CardSkeletonV2} from "@/app/ui/skeletons/skeletons";
 
 
 export default function Loading() {

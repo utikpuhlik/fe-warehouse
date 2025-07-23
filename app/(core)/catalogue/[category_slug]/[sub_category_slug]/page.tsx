@@ -1,4 +1,3 @@
-import {ProductCard} from "@/app/ui/catalogue/cards/product-card";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
 import {fetchSubCategoryBySlug} from "@/app/lib/apis/subCategoryApi";
 import {fetchProducts} from "@/app/lib/apis/productApi";
@@ -7,6 +6,7 @@ import {CreateProductModal} from "@/app/ui/catalogue/product/create-dialog";
 import {notFound} from "next/navigation";
 import type {SubCategory} from "@/app/lib/schemas/subCategorySchema";
 import type {Metadata} from "next";
+import {CatalogueCard} from "@/app/ui/shared/cards/catalogue-card";
 
 type Props = {
     params: Promise<{ sub_category_slug: string }>;
@@ -62,7 +62,7 @@ export default async function ProductsPage({params}: Props) {
 
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
                 {products.map((product) => (
-                    <ProductCard key={product.id} {...product} />
+                    <CatalogueCard key={product.id} type="product" entity={product}/>
                 ))}
             </div>
         </main>

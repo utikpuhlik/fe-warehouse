@@ -13,7 +13,7 @@ import {
     getSortedRowModel,
     useReactTable
 } from "@tanstack/react-table";
-import {ArrowUpDown, Columns, MoreHorizontal, PlusCircle} from "lucide-react";
+import {ArrowUpDown, Columns, PlusCircle} from "lucide-react";
 
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {
@@ -29,7 +29,6 @@ import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
-    DropdownMenuItem,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import {Input} from "@/components/ui/input";
@@ -46,9 +45,10 @@ import {Badge} from "@/components/ui/badge";
 import {generateAvatarFallback} from "@/app/lib/utils";
 import {Checkbox} from "@/components/ui/checkbox";
 import {UserSchema} from "@/app/lib/schemas/userSchema";
-import {MailingToggle} from "@/app/ui/catalogue/mailing/mailing-toggle";
-import {CustomerTypeSelect} from "@/app/ui/catalogue/mailing/customer-type-select";
+import {MailingToggle} from "@/app/ui/users/mailing-toggle";
+import {CustomerTypeSelect} from "@/app/ui/users/customer-type-select";
 import Link from "next/link";
+import {TableDetailsDropdown} from "@/app/ui/shared/table/table-details-dropdown";
 
 export const columns: ColumnDef<UserSchema>[] = [
     {
@@ -247,21 +247,7 @@ export const columns: ColumnDef<UserSchema>[] = [
         enableHiding: false,
         cell: ({row}) => {
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal/>
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem>
-                            <Link href={`/users/${row.original.id}`}>
-                                Редактировать
-                            </Link>
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <TableDetailsDropdown href={`/users/${row.original.id}`}/>
             );
         }
     }

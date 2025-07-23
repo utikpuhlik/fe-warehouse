@@ -1,6 +1,6 @@
 
 import { Skeleton } from "@/components/ui/skeleton";
-import {WaybillCardSkeleton} from "@/app/ui/catalogue/skeletons/WaybillCardSkeleton";
+import {WaybillCardSkeleton} from "@/app/ui/skeletons/WaybillCardSkeleton";
 
 export default function Loading() {
     return (
