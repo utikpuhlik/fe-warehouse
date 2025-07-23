@@ -1,26 +1,41 @@
 "use client";
 
 import * as React from "react";
-import { Mail, MapPin, PhoneCall, Notebook, CheckCircle, List, IdCard } from "lucide-react";
+import {
+  Mail,
+  MapPin,
+  PhoneCall,
+  Notebook,
+  CheckCircle,
+  List,
+  IdCard,
+} from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {UserSchema} from "@/app/lib/schemas/userSchema";
+import { UserSchema } from "@/app/lib/schemas/userSchema";
 
-export function ProfileCard({user}: {user: UserSchema}) {
+export function ProfileCard({ user }: { user: UserSchema }) {
   return (
     <Card className="relative">
       <CardContent>
-        <Badge className="absolute start-4 top-4">{user.is_active ? "Active" : "False"}</Badge>
+        <Badge className="absolute start-4 top-4">
+          {user.is_active ? "Active" : "False"}
+        </Badge>
         <div className="space-y-12">
           <div className="flex flex-col items-center space-y-4">
             <Avatar className="size-20">
-              <AvatarImage src={`https://bundui-images.netlify.app/avatars/10.png`} alt="@shadcn" />
+              <AvatarImage
+                src={`https://bundui-images.netlify.app/avatars/10.png`}
+                alt="@shadcn"
+              />
               <AvatarFallback>AH</AvatarFallback>
             </Avatar>
             <div className="text-center">
-              <h5 className="text-xl font-semibold">{user.first_name} {user.last_name}</h5>
+              <h5 className="text-xl font-semibold">
+                {user.first_name} {user.last_name}
+              </h5>
               <div className="text-muted-foreground text-sm">{user.role}</div>
             </div>
           </div>
@@ -31,7 +46,9 @@ export function ProfileCard({user}: {user: UserSchema}) {
             </div>
             <div>
               <h5 className="text-lg font-semibold">1</h5>
-              <div className="text-muted-foreground text-sm">Активных заказов</div>
+              <div className="text-muted-foreground text-sm">
+                Активных заказов
+              </div>
             </div>
             <div>
               <h5 className="text-lg font-semibold">4.5KК</h5>
@@ -43,10 +60,12 @@ export function ProfileCard({user}: {user: UserSchema}) {
               <Mail className="text-muted-foreground size-4" /> {user.email}
             </div>
             <div className="flex items-center gap-3">
-              <PhoneCall className="text-muted-foreground size-4" /> {user.phone}
+              <PhoneCall className="text-muted-foreground size-4" />{" "}
+              {user.phone}
             </div>
             <div className="flex items-center gap-3">
-              <List className="text-muted-foreground size-4" /> {user.customer_type}
+              <List className="text-muted-foreground size-4" />{" "}
+              {user.customer_type}
             </div>
             <div className="flex items-center gap-3">
               <MapPin className="text-muted-foreground size-4" />
@@ -54,11 +73,13 @@ export function ProfileCard({user}: {user: UserSchema}) {
             </div>
             <div className="flex items-center gap-3">
               <Notebook className="text-muted-foreground size-4" />
-              {user.notes ?? "Нет заметок"}
+              {user.note ?? "Нет заметок"}
             </div>
             <div className="flex items-center gap-3">
               <CheckCircle className="text-muted-foreground size-4" />
-              {user.mailing ? "Подписан на рассылку" : "Не подписан на рассылку"}
+              {user.mailing
+                ? "Подписан на рассылку"
+                : "Не подписан на рассылку"}
             </div>
             <div className="flex items-center gap-3">
               <IdCard className="text-muted-foreground size-4" />
