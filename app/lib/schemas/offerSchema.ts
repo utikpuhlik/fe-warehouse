@@ -35,7 +35,7 @@ export const zOfferPostSchema = zOfferBaseSchema.extend({});
 
 export const zOfferPutSchema = zOfferBaseSchema.extend({});
 
-export const zOffersSchema = z.object({
+export const zOfferPaginatedSchema = z.object({
   items: z.array(zOfferSchema),
   total: z.number().int().nonnegative(),
   page: z.number().int().positive(),
@@ -47,4 +47,4 @@ export const zOffersSchema = z.object({
 export type OfferSchema = z.infer<typeof zOfferSchema>;
 export type OfferPostSchema = z.infer<typeof zOfferPostSchema>;
 export type OfferPutSchema = z.infer<typeof zOfferPutSchema>;
-export type OffersSchema = z.infer<typeof zOffersSchema>;
+export type OfferPaginatedSchema = z.infer<typeof zOfferPaginatedSchema>;

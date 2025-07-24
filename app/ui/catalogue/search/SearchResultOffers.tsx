@@ -1,12 +1,12 @@
 "use client";
 
 import { use } from "react";
-import type { OffersSchema } from "@/app/lib/schemas/offerSchema";
+import type { OfferPaginatedSchema } from "@/app/lib/schemas/offerSchema";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 type Props = {
-    offers: Promise<OffersSchema>;
+    offers: Promise<OfferPaginatedSchema>;
 };
 
 export default function SearchResultOffers({ offers }: Props) {

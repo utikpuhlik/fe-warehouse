@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zUserReadSchema } from "@/app/lib/schemas/userSchema";
+import { zUserSchema } from "@/app/lib/schemas/userSchema";
 
 export const zWaybillBaseSchema = z.object({
   author_id: z.string().uuid(),
@@ -12,8 +12,8 @@ export const zWaybillBaseSchema = z.object({
 
 export const zWaybillSchema = zWaybillBaseSchema.extend({
   id: z.string().uuid(),
-  author: zUserReadSchema,
-  customer: zUserReadSchema.nullable(),
+  author: zUserSchema,
+  customer: zUserSchema.nullable(),
   created_at: z.string().datetime(),
   updated_at: z.string().datetime(),
 });

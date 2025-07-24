@@ -3,7 +3,7 @@ import Search from "@/app/ui/catalogue/search";
 import Table from "@/app/ui/catalogue/table";
 import { ProductsTableSkeleton } from "@/app/ui/skeletons/skeletons";
 import { Suspense } from "react";
-import type {OffersSchema} from "@/app/lib/schemas/offerSchema";
+import type {OfferPaginatedSchema} from "@/app/lib/schemas/offerSchema";
 import {fetchFilteredOffersTS} from "@/app/lib/apis/offerApi";
 
 export default async function Page(props: {
@@ -16,7 +16,7 @@ export default async function Page(props: {
 	const query = searchParams?.query || "6000180";
 	const currentPage = Number(searchParams?.page) || 1;
 
-	const data: OffersSchema = await fetchFilteredOffersTS(query, 10, currentPage);
+	const data: OfferPaginatedSchema = await fetchFilteredOffersTS(query, 10, currentPage);
 
 	const { pages: totalPages, items } = data;
 	return (

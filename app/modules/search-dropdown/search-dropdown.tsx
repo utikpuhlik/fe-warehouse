@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { OfferSchema, OffersSchema } from "@/app/lib/schemas/offerSchema";
+import { OfferSchema, OfferPaginatedSchema } from "@/app/lib/schemas/offerSchema";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
@@ -31,7 +31,7 @@ export function SearchDropdown() {
 
   const { data, isLoading } = useQuery({
     queryKey: ["offers", debouncedSearchTerm],
-    queryFn: (): Promise<OffersSchema> =>
+    queryFn: (): Promise<OfferPaginatedSchema> =>
       fetchFilteredOffersTS(debouncedSearchTerm, 5, 1),
     enabled: debouncedSearchTerm.length >= 2,
   });

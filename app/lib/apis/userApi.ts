@@ -1,6 +1,7 @@
 import {
-    type UserSchema, zUserReadSchema,
-    zUsers,
+    type UserSchema, zUserSchema,
+    zUsers, UserPaginatedSchema,
+    zUserPaginatedSchema,
 } from "@/app/lib/schemas/userSchema";
 import { env } from "@/env";
 import {getAuthHeader} from "@/app/lib/apis/utils/getAuthHeader";
@@ -30,14 +31,14 @@ export async function fetchUserById(
     user_id: string
 ): Promise<UserSchema> {
     const url = `${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${user_id}`
-    return fetchWithAuthAndParse(url, zUserReadSchema, false, ENTITY)
+    return fetchWithAuthAndParse(url, zUserSchema, false, ENTITY)
 }
 
 export async function fetchUserByClerkId(
     clerk_id: string
 ): Promise<UserSchema> {
     const url = `${env.NEXT_PUBLIC_API_URL}/${ENTITY}/clerk/${clerk_id}`
-    return fetchWithAuthAndParse(url, zUserReadSchema, false, ENTITY)
+    return fetchWithAuthAndParse(url, zUserSchema, false, ENTITY)
 }
 
 export async function fetchUsersCount(): Promise<CountSchema> {
@@ -59,7 +60,24 @@ export async function fetchCurrentUser(): Promise<UserSchema | null> {
     }
 
     const json = await res.json();
-    return zUserReadSchema.parse(json);
+    return zUserSchema.parse(json);
+}
+
+export async function fetchFilteredUsersWS(
+    search_term: string,
+): Promise<UserPaginatedSchema> {
+    const url = `${env.NEXT_PUBLIC_API_URL}/${ENTITY}/search/wildcard?search_term=${search_term}`;
+
+    const res = await fetch(url, {
+        headers: await getAuthHeader(),
+        cache: "no-store"
+    });
+    console.log(res)
+    if (!res.ok) throw new Error(`Network error ${res.status}`);
+
+    const json = await res.json();
+
+    return zUserPaginatedSchema.parse(json);
 }
 
 
@@ -79,5 +97,5 @@ export async function patchUser(id: string, user: UserSchema): Promise<UserSchem
         handleApiError(res, text, ENTITY);
     }
 
-    return zUserReadSchema.parse(JSON.parse(text));
+    return zUserSchema.parse(JSON.parse(text));
 }

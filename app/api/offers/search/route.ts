@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { zOffersSchema } from "@/app/lib/schemas/offerSchema";
+import { zOfferPaginatedSchema } from "@/app/lib/schemas/offerSchema";
 
 import { env } from "@/env";
 
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
         }
 
         const data = await res.json();
-        const parsed = zOffersSchema.parse(data);
+        const parsed = zOfferPaginatedSchema.parse(data);
         return NextResponse.json(parsed);
     } catch (e) {
         console.error("Error fetching offers:", e);

@@ -18,7 +18,7 @@ import { LucideIcon} from "lucide-react";
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
 const links = [
-  { name: "Панель", href: "/", icon: HomeIcon },
+  { name: "Панель", href: "/main", icon: HomeIcon },
   { name: "Пользователи", href: "/users", icon: UserGroupIcon },
   { name: "Каталог", href: "/catalogue", icon: ClipboardDocumentListIcon },
   { name: "Поиск", href: "/search", icon: MagnifyingGlassIcon },

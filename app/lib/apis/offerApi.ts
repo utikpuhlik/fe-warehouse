@@ -2,9 +2,9 @@ import {
   type OfferPostSchema,
   type OfferPutSchema,
   type OfferSchema,
-  type OffersSchema,
+  type OfferPaginatedSchema,
   zOfferSchema,
-  zOffersSchema,
+  zOfferPaginatedSchema,
 } from "@/app/lib/schemas/offerSchema";
 import { env } from "@/env";
 import { handleApiError } from "@/app/lib/errors/handleApiError";
@@ -21,9 +21,9 @@ export async function fetchOfferById(id: string): Promise<OfferSchema> {
 
 export async function fetchOffersByProductId(
   product_id: string,
-): Promise<OffersSchema> {
+): Promise<OfferPaginatedSchema> {
   const url = `${env.NEXT_PUBLIC_API_URL}/${ENTITY}?product_id=${product_id}`;
-  return fetchAndParse(url, zOffersSchema, false, ENTITY);
+  return fetchAndParse(url, zOfferPaginatedSchema, false, ENTITY);
 }
 
 export async function fetchOffersCount(): Promise<CountSchema> {
@@ -33,18 +33,18 @@ export async function fetchOffersCount(): Promise<CountSchema> {
 
 export async function fetchFilteredOffersWS(
   search_term: string,
-): Promise<OffersSchema> {
+): Promise<OfferPaginatedSchema> {
   const url = `${env.NEXT_PUBLIC_API_URL}/${ENTITY}/search/wildcard?search_term=${search_term}`;
-  return fetchAndParse(url, zOffersSchema, undefined, "offer");
+  return fetchAndParse(url, zOfferPaginatedSchema, undefined, "offer");
 }
 
 export async function fetchFilteredOffersTS(
   search_term: string,
   size = 10,
   page = 1,
-): Promise<OffersSchema> {
+): Promise<OfferPaginatedSchema> {
   const url = `${env.NEXT_PUBLIC_API_URL}/${ENTITY}/search/text_search?search_term=${search_term}&size=${size}&page=${page}`;
-  return fetchAndParse(url, zOffersSchema, undefined, "offer");
+  return fetchAndParse(url, zOfferPaginatedSchema, undefined, "offer");
 }
 
 export async function postOffer(offer: OfferPostSchema): Promise<OfferSchema> {

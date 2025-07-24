@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 /** Single user */
-export const zUserReadSchema = z.object({
+export const zUserSchema = z.object({
   id: z.string().uuid(),
   clerk_id: z.string(),
   first_name: z.string(),
@@ -23,8 +23,17 @@ export const zUserReadSchema = z.object({
   // addresses: z.array(zAddressSchema),
 });
 
+export const zUserPaginatedSchema = z.object({
+  items: z.array(zUserSchema),
+  total: z.number().int().nonnegative(),
+  page: z.number().int().positive(),
+  size: z.number().int().positive(),
+  pages: z.number().int().nonnegative(),
+});
+
 /** Array wrapper for list endpoints */
-export const zUsers = z.array(zUserReadSchema);
+export const zUsers = z.array(zUserSchema);
 
 /** TypeScript helper */
-export type UserSchema = z.infer<typeof zUserReadSchema>;
+export type UserSchema = z.infer<typeof zUserSchema>;
+export type UserPaginatedSchema = z.infer<typeof zUserPaginatedSchema>;

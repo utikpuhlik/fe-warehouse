@@ -2,7 +2,7 @@ import {OfferCard} from "@/app/ui/shared/cards/offer-card";
 import {fetchProductById} from "@/app/lib/apis/productApi";
 import {fetchOffersByProductId} from "@/app/lib/apis/offerApi";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
-import type {OfferSchema, OffersSchema} from "@/app/lib/schemas/offerSchema";
+import type {OfferSchema, OfferPaginatedSchema} from "@/app/lib/schemas/offerSchema";
 import {notFound} from "next/navigation";
 import {CreateOfferModal} from "@/app/ui/catalogue/offer/create-dialog";
 import type {Product} from "@/app/lib/schemas/productSchema";
@@ -43,7 +43,7 @@ export default async function OffersPage({params}: Props) {
     const category_slug = product.sub_category.category.slug;
     const sub_category_slug = product.sub_category.slug;
 
-    const offersData: OffersSchema = await fetchOffersByProductId(product_id);
+    const offersData: OfferPaginatedSchema = await fetchOffersByProductId(product_id);
     const offers: OfferSchema[] = offersData.items ?? [];
 
     return (

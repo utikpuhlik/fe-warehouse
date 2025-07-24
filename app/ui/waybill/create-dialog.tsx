@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { useForm } from "react-hook-form";
+import {FormProvider, useForm} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
 import { showToastError } from "@/app/lib/errors/toastError";
@@ -29,6 +29,7 @@ import {
 } from "@/app/lib/schemas/waybillSchema";
 import { createWaybillAction } from "@/app/lib/actions/waybillAction";
 import { CreateButton } from "@/app/ui/shared/buttons/create-entity-button";
+import {SelectUserField} from "@/app/ui/users/select-user-field";
 
 export function CreateWaybillModal({ author_id }: { author_id: string }) {
   const [open, setOpen] = useState(false);
@@ -50,7 +51,6 @@ export function CreateWaybillModal({ author_id }: { author_id: string }) {
   const onSubmit = (values: WaybillPostSchema) => {
     startTransition(async () => {
       try {
-        // ? TODO: redirect is possible
         await createWaybillAction(values);
         toast({
           title: "Накладная создана",
@@ -75,46 +75,50 @@ export function CreateWaybillModal({ author_id }: { author_id: string }) {
           <DialogTitle>Создание накладной</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <Label>Тип</Label>
-            <Select
-              onValueChange={(
-                value: "WAYBILL_IN" | "WAYBILL_OUT" | "WAYBILL_RETURN",
-              ) => form.setValue("waybill_type", value)}
-              defaultValue={form.getValues("waybill_type")}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Выберите тип" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="WAYBILL_IN">Приход</SelectItem>
-                <SelectItem value="WAYBILL_OUT">Расход</SelectItem>
-                <SelectItem value="WAYBILL_RETURN">Возврат</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+        <FormProvider {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <div>
+              <Label>Тип</Label>
+              <Select
+                  onValueChange={(
+                      value: "WAYBILL_IN" | "WAYBILL_OUT" | "WAYBILL_RETURN"
+                  ) => form.setValue("waybill_type", value)}
+                  defaultValue={form.getValues("waybill_type")}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Выберите тип" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="WAYBILL_IN">Приход</SelectItem>
+                  <SelectItem value="WAYBILL_OUT">Расход</SelectItem>
+                  <SelectItem value="WAYBILL_RETURN">Возврат</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-          <div>
-            <Label>Контрагент</Label>
-            <Input
-              {...form.register("counterparty_name")}
-              placeholder="ООО Поставщик"
-            />
-            {form.formState.errors.counterparty_name && (
-              <p className="text-sm text-red-500">
-                {form.formState.errors.counterparty_name.message}
-              </p>
-            )}
-          </div>
+            <SelectUserField />
 
-          <DialogFooter>
-            <Button type="submit" disabled={isPending}>
-              {isPending ? "Создаем..." : "Создать"}
-            </Button>
-          </DialogFooter>
-        </form>
+            <div>
+              <Label>Контрагент</Label>
+              <Input
+                  {...form.register("counterparty_name")}
+                  placeholder="ООО Поставщик"
+              />
+              {form.formState.errors.counterparty_name && (
+                  <p className="text-sm text-red-500">
+                    {form.formState.errors.counterparty_name.message}
+                  </p>
+              )}
+            </div>
+
+            <DialogFooter>
+              <Button type="submit" disabled={isPending}>
+                {isPending ? "Создаем..." : "Создать"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </FormProvider>
       </DialogContent>
     </Dialog>
-  );
+  )
 }
