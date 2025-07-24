@@ -2,7 +2,8 @@ import { z } from "zod";
 import { zUserReadSchema } from "@/app/lib/schemas/userSchema";
 
 export const zWaybillBaseSchema = z.object({
-  user_id: z.string().uuid(),
+  author_id: z.string().uuid(),
+  customer_id: z.string().uuid().nullable(),
   waybill_type: z.enum(["WAYBILL_IN", "WAYBILL_OUT", "WAYBILL_RETURN"]),
   is_pending: z.boolean(),
   counterparty_name: z.string().min(1, "Контрагент не может быть пустым"),
@@ -11,7 +12,8 @@ export const zWaybillBaseSchema = z.object({
 
 export const zWaybillSchema = zWaybillBaseSchema.extend({
   id: z.string().uuid(),
-  user: zUserReadSchema,
+  author: zUserReadSchema,
+  customer: zUserReadSchema.nullable(),
   created_at: z.string().datetime(),
   updated_at: z.string().datetime(),
 });

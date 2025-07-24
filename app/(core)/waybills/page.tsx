@@ -50,7 +50,7 @@ export default async function WaybillsPage({
     <>
       <div className="flex items-center justify-between space-y-2">
         <h1 className="text-2xl font-bold tracking-tight">Накладные</h1>
-        <CreateWaybillModal user_id={user.id} />
+        <CreateWaybillModal author_id={user.id} />
       </div>
       <WaybillDataTable data={data} />
     </>
