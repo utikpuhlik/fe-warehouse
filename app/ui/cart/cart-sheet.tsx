@@ -1,5 +1,5 @@
 "use client"
-
+import Link from "next/link"
 import {
     Sheet,
     SheetContent,
@@ -69,7 +69,9 @@ export function CartSheet() {
                                                 <div className="flex justify-between items-start">
                                                     <div className="text-sm">
                                                         <div className="font-medium leading-tight">
+                                                          <Link href={`/catalogue/${item.product.sub_category.category.slug}/${item.product.sub_category.slug}/${item.product.id}`}>
                                                             {item.product.name}
+                                                          </Link>
                                                         </div>
                                                         <div className="text-muted-foreground text-xs">
                                                             {item.brand} — {item.manufacturer_number}
