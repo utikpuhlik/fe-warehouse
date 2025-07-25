@@ -40,7 +40,7 @@ export function SelectUserField() {
         const res = await fetch(`/api/users/search?q=${encodeURIComponent(query)}`, {
             cache: "no-store",
         })
-        if (!res.ok) throw new Error("Ошибка поиска пользователей")
+        if (!res.ok) throw new Error("Ошибка поиска клиента")
         return await res.json()
     }
 
@@ -59,7 +59,7 @@ export function SelectUserField() {
     return (
         <div className="space-y-2">
             <div className="flex items-center gap-1">
-                <Label htmlFor="user-search">Пользователь</Label>
+                <Label htmlFor="user-search">Клиент</Label>
                 <TooltipInfo content="Начните вводить имя, фамилию или email" />
             </div>
 
@@ -72,7 +72,7 @@ export function SelectUserField() {
                         className="w-full justify-between"
                     >
                         {input || (
-                            <span className="text-muted-foreground">Выбери пользователя</span>
+                            <span className="text-muted-foreground">Выберите клиента</span>
                         )}
                         <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>

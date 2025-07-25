@@ -12,7 +12,7 @@ export const zWaybillBaseSchema = z.object({
 export const zWaybillSchema = zWaybillBaseSchema.extend({
   id: z.string().uuid(),
   author: zUserSchema,
-  customer: zUserSchema.nullable(),
+  customer: zUserSchema,
   created_at: z.string().datetime(),
   updated_at: z.string().datetime(),
 });

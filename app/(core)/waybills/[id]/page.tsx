@@ -30,7 +30,7 @@ export default async function WaybillPage(props: { params: Params }) {
             : waybill.waybill_type === "WAYBILL_IN"
                 ? "Приход"
                 : "Возврат";
-
+    const fullName = `${waybill.customer.first_name} ${waybill.customer.last_name}`;
     return (
         <main>
             <div className="mb-4 flex items-center justify-between">
@@ -38,7 +38,7 @@ export default async function WaybillPage(props: { params: Params }) {
                     breadcrumbs={[
                         {label: waybill_type, href: "/waybills"},
                         {
-                            label: waybill.counterparty_name,
+                            label: fullName,
                             href: `/waybills/${waybill_id}`,
                             active: true,
                         },
