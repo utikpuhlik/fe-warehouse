@@ -90,8 +90,8 @@ const columns: ColumnDef<OrderSchema>[] = [
         cell: ({row}) => {
             const total_sum = Number.parseFloat(row.getValue("total_sum"));
 
-            // Format the amount as a dollar amount
-            const formatted = new Intl.NumberFormat("en-US", {
+            // Format the amount as a rub amount
+            const formatted = new Intl.NumberFormat("ru-RU", {
                 style: "currency",
                 currency: "RUB"
             }).format(total_sum);

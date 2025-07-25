@@ -24,7 +24,7 @@ import {
   updateOfferAction,
 } from "@/app/lib/actions/offerAction";
 
-export function EditOfferModal(offer: OfferSchema) {
+export function EditOfferModal({offer}: { offer: OfferSchema }) {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
@@ -63,9 +63,9 @@ export function EditOfferModal(offer: OfferSchema) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          variant="ghost"
+          variant="outline"
           size="icon"
-          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+          className="shadow-sm"
         >
           <Pencil className="w-4 h-4 text-muted-foreground" />
         </Button>

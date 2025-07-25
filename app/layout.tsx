@@ -12,6 +12,7 @@ import {experimental__simple} from "@clerk/themes"
 import {ThemeProvider} from "next-themes";
 import {GeistSans} from "geist/font/sans";
 import {ThemedTopLoader} from "@/app/shared/top-loader";
+import { CartStoreProvider } from "@/app/shared/api/cartStoreProvider";
 
 export const metadata: Metadata = {
     title: "TCF | Login",
@@ -34,14 +35,6 @@ export default function RootLayout({
             <html lang="en" suppressHydrationWarning>
             <body className={`${GeistSans.className} antialiased`}>
             <SignedOut>
-                {/*! I don't need it in my setup - all routes are private*/}
-                {/*<SignInButton/>*/}
-                {/*<SignUpButton>*/}
-                {/*    <button*/}
-                {/*        className="bg-[#6c47ff] text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">*/}
-                {/*        Sign Up*/}
-                {/*    </button>*/}
-                {/*</SignUpButton>*/}
             </SignedOut>
             <ThemeProvider
                 attribute="class"
@@ -51,7 +44,9 @@ export default function RootLayout({
             >
                 <ThemedTopLoader/>
                 <QueryProvider>
+                    <CartStoreProvider>
                     {children}
+                    </CartStoreProvider>
                 </QueryProvider>
             </ThemeProvider>
             <SpeedInsights/>

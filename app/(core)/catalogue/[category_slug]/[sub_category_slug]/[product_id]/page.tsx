@@ -75,7 +75,7 @@ export default async function OffersPage({params}: Props) {
                 {offers.map((offer) => (
                     <OfferCard
                         key={offer.id}
-                        {...offer}
+                        offer={offer}
                     />
                 ))}
             </div>

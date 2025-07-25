@@ -6,7 +6,6 @@ export const zWaybillBaseSchema = z.object({
   customer_id: z.string().uuid().nullable(),
   waybill_type: z.enum(["WAYBILL_IN", "WAYBILL_OUT", "WAYBILL_RETURN"]),
   is_pending: z.boolean(),
-  counterparty_name: z.string().min(1, "Контрагент не может быть пустым"),
   note: z.string().nullable(),
 });
 

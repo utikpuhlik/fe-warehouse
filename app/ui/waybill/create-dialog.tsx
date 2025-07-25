@@ -9,7 +9,6 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -41,7 +40,6 @@ export function CreateWaybillModal({ author_id }: { author_id: string }) {
     defaultValues: {
       author_id: author_id,
       customer_id: null,
-      counterparty_name: "",
       is_pending: true,
       waybill_type: "WAYBILL_IN",
       note: null,
@@ -54,7 +52,7 @@ export function CreateWaybillModal({ author_id }: { author_id: string }) {
         await createWaybillAction(values);
         toast({
           title: "Накладная создана",
-          description: `Контрагент: ${values.counterparty_name}`,
+          description: `Клиент: ${values.author_id}`,
         });
         setOpen(false);
         form.reset();
@@ -97,19 +95,6 @@ export function CreateWaybillModal({ author_id }: { author_id: string }) {
             </div>
 
             <SelectUserField />
-
-            <div>
-              <Label>Контрагент</Label>
-              <Input
-                  {...form.register("counterparty_name")}
-                  placeholder="ООО Поставщик"
-              />
-              {form.formState.errors.counterparty_name && (
-                  <p className="text-sm text-red-500">
-                    {form.formState.errors.counterparty_name.message}
-                  </p>
-              )}
-            </div>
 
             <DialogFooter>
               <Button type="submit" disabled={isPending}>
