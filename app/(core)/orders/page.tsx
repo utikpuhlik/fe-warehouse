@@ -10,7 +10,7 @@ import {OrderSchema} from "@/app/lib/schemas/orderSchema";
 
 export async function generateMetadata() {
   return generateMeta({
-    title: "Заказы | TCF",
+    title: "Заказы",
     description:
       "A list of orders generated using the Tanstack Table.",
     canonical: "/orders"

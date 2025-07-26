@@ -50,8 +50,8 @@ export function AddToCartButtonWithQuantity({ offer }: { offer: OfferSchema }) {
             {errors.quantity && (
                 <p className="text-xs text-red-500">{errors.quantity.message}</p>
             )}
-            <Button type="submit" size="icon" variant="outline">
-                <CirclePlus className="w-3 h-3" />
+            <Button type="submit" size="default" variant="outline">
+               <CirclePlus className="w-3 h-3" /> Добавить в корзину
             </Button>
         </form>
     )
