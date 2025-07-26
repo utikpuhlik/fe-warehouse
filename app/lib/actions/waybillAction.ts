@@ -9,11 +9,11 @@ import {
     patchWaybill
 } from "@/app/lib/apis/waybillApi";
 import {revalidatePath} from "next/cache";
-import type {WaybillPostSchema, WaybillPutSchema} from "@/app/lib/schemas/waybillSchema";
+import {WaybillPutSchema, WaybillWithOffersPostSchema,} from "@/app/lib/schemas/waybillSchema";
 import type {WaybillOfferPostSchema} from "@/app/lib/schemas/waybillOfferSchema";
 import {redirect} from "next/navigation";
 
-export async function createWaybillAction(waybill: WaybillPostSchema): Promise<void> {
+export async function createWaybillAction(waybill: WaybillWithOffersPostSchema): Promise<void> {
     await postWaybill(waybill)
     revalidatePath("/waybills");
 }

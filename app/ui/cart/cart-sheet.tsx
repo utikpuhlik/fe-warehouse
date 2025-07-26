@@ -14,6 +14,8 @@ import { Trash2, ShoppingCart, Minus, Plus } from "lucide-react"
 import { useCartStore } from "@/app/shared/api/cartStoreProvider"
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
+import {CreateWaybillFromCartDialog} from "@/app/ui/cart/create-waybill-from-cart-dialog";
+import { useUser } from "@clerk/nextjs"
 
 export function CartSheet() {
     const items = useCartStore((state) => state.items)
@@ -21,6 +23,8 @@ export function CartSheet() {
     const clear = useCartStore((state) => state.clear)
     const increment = useCartStore((state) => state.increment)
     const decrement = useCartStore((state) => state.decrement)
+    const { isSignedIn, user, isLoaded } = useUser();
+
 
     return (
         <div className="fixed top-4 right-4 z-50">
@@ -132,7 +136,9 @@ export function CartSheet() {
                     >
                         Очистить корзину
                     </Button>
-                    <Button disabled={items.length === 0}>Создать накладную</Button>
+                    {isLoaded && isSignedIn && items.length > 0 && (
+                        <CreateWaybillFromCartDialog author_id={user?.publicMetadata._id as string} items={items} />
+                    )}
                 </SheetFooter>
             </SheetContent>
         </Sheet>

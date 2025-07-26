@@ -16,6 +16,5 @@ export async function updateUserAction(
 
 export async function searchUsersAction(search: string): Promise<UserPaginatedSchema> {
     const users: UserPaginatedSchema = await fetchFilteredUsersWS(search)
-    console.log(users)
     return zUserPaginatedSchema.parse(users)
 }

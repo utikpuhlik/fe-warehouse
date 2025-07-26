@@ -1,7 +1,7 @@
 import {
     type WaybillPaginatedSchema,
     type WaybillPostSchema, WaybillPutSchema,
-    type WaybillSchema, zWaybillPaginatedSchema,
+    type WaybillSchema, WaybillWithOffersPostSchema, zWaybillPaginatedSchema,
     zWaybillSchema
 } from "@/app/lib/schemas/waybillSchema";
 import { env } from "@/env";
@@ -55,7 +55,7 @@ export async function fetchWaybillOffers(waybill_id: string): Promise<WaybillOff
     }
 }
 
-export async function postWaybill(waybill: WaybillPostSchema): Promise<WaybillSchema> {
+export async function postWaybill(waybill: WaybillWithOffersPostSchema | WaybillPostSchema): Promise<WaybillSchema> {
     const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}`, {
         method: "POST",
         headers: {

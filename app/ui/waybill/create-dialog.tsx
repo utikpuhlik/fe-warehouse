@@ -22,9 +22,7 @@ import {FormProvider, useForm} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
 import { showToastError } from "@/app/lib/errors/toastError";
-import {
-  zWaybillPostSchema,
-  type WaybillPostSchema,
+import {WaybillWithOffersPostSchema, zWaybillWithOffersPostSchema,
 } from "@/app/lib/schemas/waybillSchema";
 import { createWaybillAction } from "@/app/lib/actions/waybillAction";
 import { CreateButton } from "@/app/ui/shared/buttons/create-entity-button";
@@ -34,19 +32,19 @@ export function CreateWaybillModal({ author_id }: { author_id: string }) {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
-
-  const form = useForm<WaybillPostSchema>({
-    resolver: zodResolver(zWaybillPostSchema),
+  const form = useForm<WaybillWithOffersPostSchema>({
+    resolver: zodResolver(zWaybillWithOffersPostSchema),
     defaultValues: {
       author_id: author_id,
       customer_id: null,
       is_pending: true,
       waybill_type: "WAYBILL_IN",
       note: null,
+      waybill_offers: [],
     },
   });
 
-  const onSubmit = (values: WaybillPostSchema) => {
+  const onSubmit = (values: WaybillWithOffersPostSchema) => {
     startTransition(async () => {
       try {
         await createWaybillAction(values);

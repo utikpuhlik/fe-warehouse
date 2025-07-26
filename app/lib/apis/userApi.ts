@@ -72,7 +72,6 @@ export async function fetchFilteredUsersWS(
         headers: await getAuthHeader(),
         cache: "no-store"
     });
-    console.log(res)
     if (!res.ok) throw new Error(`Network error ${res.status}`);
 
     const json = await res.json();
