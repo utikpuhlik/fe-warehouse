@@ -1,7 +1,7 @@
 import {OfferCard} from "@/app/ui/shared/cards/offer-card";
 import {fetchProductById} from "@/app/lib/apis/productApi";
 import {fetchOffersByProductId} from "@/app/lib/apis/offerApi";
-import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
+import Breadcrumbs from "@/app/ui/shared/breadcrumbs";
 import type {OfferSchema, OfferPaginatedSchema} from "@/app/lib/schemas/offerSchema";
 import {notFound} from "next/navigation";
 import {CreateOfferModal} from "@/app/ui/catalogue/offer/create-dialog";

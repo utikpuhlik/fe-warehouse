@@ -16,7 +16,7 @@ export default async function Page() {
   return (
     <>
       <div className="flex items-center justify-between space-y-2">
-        <h1 className="text-2xl font-bold tracking-tight">Users</h1>
+        <h1 className="text-2xl font-bold tracking-tight">Пользователи</h1>
         <Button asChild>
           <Link href="#">
             <CirclePlus /> Add New User

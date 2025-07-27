@@ -1,4 +1,4 @@
-import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
+import Breadcrumbs from "@/app/ui/shared/breadcrumbs";
 import {fetchSubCategoryBySlug} from "@/app/lib/apis/subCategoryApi";
 import {fetchProducts} from "@/app/lib/apis/productApi";
 import type {Product, Products} from "@/app/lib/schemas/productSchema";

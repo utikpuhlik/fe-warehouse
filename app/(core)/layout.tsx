@@ -1,23 +1,31 @@
-import SideNav from "@/app/ui/shared/sidenav";
 import {Toaster} from "@/components/ui/toaster";
-import {CartSheet} from "@/app/ui/cart/cart-sheet";
+import Header from "@/components/layout/header";
+import {SidebarInset, SidebarProvider} from "@/components/ui/sidebar";
+import {cookies} from "next/headers";
+import Sidebar from "@/components/layout/sidebar";
 
-export default function Layout({children}: { children: React.ReactNode }) {
+export default async function CoreLayout(
+    {
+        children
+    }: Readonly<{
+        children: React.ReactNode;
+    }>) {
+    const cookieStore = await cookies();
+    const defaultOpen =
+        cookieStore.get("sidebar_state")?.value === "true" ||
+        cookieStore.get("sidebar_state") === undefined;
+
     return (
-        <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-            <div className="w-full flex-none md:w-64">
-                <SideNav/>
-            </div>
-            <div className="relative flex-grow p-6 md:overflow-y-auto md:p-12">
-                {/* Корзина должна быть доступна в любом месте */}
-                <div className="absolute top-6 right-6 z-50">
-                    <CartSheet/>
+        <SidebarProvider defaultOpen={defaultOpen}>
+            <Sidebar/>
+            <SidebarInset>
+                <Header/>
+                <div
+                    className="@container/main p-4 xl:group-data-[theme-content-layout=centered]/layout:container xl:group-data-[theme-content-layout=centered]/layout:mx-auto xl:group-data-[theme-content-layout=centered]/layout:mt-8">
+                    {children}
                 </div>
-
-                {children}
-            </div>
-
-            <Toaster/>
-        </div>
+                <Toaster/>
+            </SidebarInset>
+        </SidebarProvider>
     );
 }

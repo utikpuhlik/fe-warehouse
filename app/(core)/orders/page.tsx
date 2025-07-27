@@ -23,7 +23,7 @@ export default async function Page() {
   return (
     <div className="space-y-4">
       <div className="flex flex-row items-center justify-between">
-        <h1 className="text-xl font-bold tracking-tight lg:text-2xl">Orders</h1>
+        <h1 className="text-xl font-bold tracking-tight lg:text-2xl">Заказы</h1>
         <Button asChild>
           <Link href="#">
             <CirclePlus /> Create Order

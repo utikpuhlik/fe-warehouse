@@ -8,14 +8,14 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Button } from "@/components/ui/button"
-import { Trash2, ShoppingCart, Minus, Plus } from "lucide-react"
-import { useCartStore } from "@/app/shared/api/cartStoreProvider"
-import { Badge } from "@/components/ui/badge"
+import {ScrollArea} from "@/components/ui/scroll-area"
+import {Button} from "@/components/ui/button"
+import {Trash2, ShoppingCart, Minus, Plus} from "lucide-react"
+import {useCartStore} from "@/app/shared/api/cartStoreProvider"
+import {Badge} from "@/components/ui/badge"
 import Image from "next/image"
 import {CreateWaybillFromCartDialog} from "@/app/ui/cart/create-waybill-from-cart-dialog";
-import { useUser } from "@clerk/nextjs"
+import {useUser} from "@clerk/nextjs"
 
 export function CartSheet() {
     const items = useCartStore((state) => state.items)
@@ -23,15 +23,14 @@ export function CartSheet() {
     const clear = useCartStore((state) => state.clear)
     const increment = useCartStore((state) => state.increment)
     const decrement = useCartStore((state) => state.decrement)
-    const { isSignedIn, user, isLoaded } = useUser();
+    const {isSignedIn, user, isLoaded} = useUser();
 
 
     return (
-        <div className="fixed top-4 right-4 z-50">
         <Sheet>
             <SheetTrigger asChild>
                 <Button variant="outline" size="icon" className="relative">
-                    <ShoppingCart className="w-5 h-5" />
+                    <ShoppingCart className="w-5 h-5"/>
                     {items.length > 0 && (
                         <Badge
                             variant="secondary"
@@ -43,7 +42,8 @@ export function CartSheet() {
                 </Button>
             </SheetTrigger>
 
-            <SheetContent className="w-[500px] sm:w-[540px] flex flex-col justify-between max-h-screen overflow-y-scroll">
+            <SheetContent
+                className="w-[500px] sm:w-[540px] flex flex-col justify-between max-h-screen overflow-y-scroll">
                 <div>
                     <SheetHeader>
                         <SheetTitle>Корзина</SheetTitle>
@@ -73,9 +73,10 @@ export function CartSheet() {
                                                 <div className="flex justify-between items-start">
                                                     <div className="text-sm">
                                                         <div className="font-medium leading-tight">
-                                                          <Link href={`/catalogue/${item.product.sub_category.category.slug}/${item.product.sub_category.slug}/${item.product.id}`}>
-                                                            {item.product.name}
-                                                          </Link>
+                                                            <Link
+                                                                href={`/catalogue/${item.product.sub_category.category.slug}/${item.product.sub_category.slug}/${item.product.id}`}>
+                                                                {item.product.name}
+                                                            </Link>
                                                         </div>
                                                         <div className="text-muted-foreground text-xs">
                                                             {item.brand} — {item.manufacturer_number}
@@ -89,7 +90,7 @@ export function CartSheet() {
                                                         variant="ghost"
                                                         onClick={() => remove(item.id)}
                                                     >
-                                                        <Trash2 className="w-4 h-4 text-destructive" />
+                                                        <Trash2 className="w-4 h-4 text-destructive"/>
                                                     </Button>
                                                 </div>
 
@@ -100,7 +101,7 @@ export function CartSheet() {
                                                             variant="outline"
                                                             onClick={() => decrement(item.id)}
                                                         >
-                                                            <Minus className="w-4 h-4" />
+                                                            <Minus className="w-4 h-4"/>
                                                         </Button>
                                                         <span className="text-sm">{item.quantity} шт</span>
                                                         <Button
@@ -108,7 +109,7 @@ export function CartSheet() {
                                                             variant="outline"
                                                             onClick={() => increment(item.id)}
                                                         >
-                                                            <Plus className="w-4 h-4" />
+                                                            <Plus className="w-4 h-4"/>
                                                         </Button>
                                                     </div>
 
@@ -137,11 +138,10 @@ export function CartSheet() {
                         Очистить корзину
                     </Button>
                     {isLoaded && isSignedIn && items.length > 0 && (
-                        <CreateWaybillFromCartDialog author_id={user?.publicMetadata._id as string} items={items} />
+                        <CreateWaybillFromCartDialog author_id={user?.publicMetadata._id as string} items={items}/>
                     )}
                 </SheetFooter>
             </SheetContent>
         </Sheet>
-        </div>
     )
 }

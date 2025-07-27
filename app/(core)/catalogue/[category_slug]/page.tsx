@@ -1,4 +1,4 @@
-import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
+import Breadcrumbs from "@/app/ui/shared/breadcrumbs";
 import {fetchCategoryBySlug} from "@/app/lib/apis/categoryApi";
 import {fetchSubCategories} from "@/app/lib/apis/subCategoryApi";
 import {CreateSubCategoryModal} from "@/app/ui/catalogue/sub-category/create-dialog";

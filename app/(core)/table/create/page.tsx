@@ -1,4 +1,4 @@
-import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
+import Breadcrumbs from "@/app/ui/shared/breadcrumbs";
 // import {fetchUsers} from "@/app/lib/apis/userApi";
 // import {fetchCategories} from "@/app/lib/apis/categoryApi";
 // import type {Category} from "@/app/lib/schemas/categorySchema";

@@ -3,7 +3,7 @@ import {fetchWaybillById} from "@/app/lib/apis/waybillApi";
 import WaybillOffersTable from "@/app/ui/waybill/waybill-offers-table";
 import {Suspense} from "react";
 import {Skeleton} from "@/components/ui/skeleton";
-import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
+import Breadcrumbs from "@/app/ui/shared/breadcrumbs";
 import {CreateWaybillOfferForm} from "@/app/ui/waybill/create-waybill-offer";
 import {CommitWaybillButton} from "@/app/ui/waybill/commit-waybill-button";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";

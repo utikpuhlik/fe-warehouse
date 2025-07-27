@@ -1,5 +1,5 @@
 import { fetchUsers } from "@/app/lib/apis/userApi";
-import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
+import Breadcrumbs from "@/app/ui/shared/breadcrumbs";
 import { notFound } from "next/navigation";
 import {fetchProductById} from "@/app/lib/apis/productApi";
 

@@ -11,7 +11,7 @@ import {ruRU} from "@clerk/localizations";
 import {experimental__simple} from "@clerk/themes"
 import {ThemeProvider} from "next-themes";
 import {GeistSans} from "geist/font/sans";
-import {ThemedTopLoader} from "@/app/shared/top-loader";
+import {ThemedTopLoader} from "@/components/layout/top-loader";
 import { CartStoreProvider } from "@/app/shared/api/cartStoreProvider";
 
 export const metadata: Metadata = {

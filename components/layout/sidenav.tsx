@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { SignedIn, UserButton } from "@clerk/nextjs";
-import NavLinks from "@/app/ui/shared/nav-links";
-import Logo from "@/app/ui/shared/logo";
-import { ModeToggle } from "@/app/shared/mode-toggle";
+import NavLinks from "@/components/layout/nav-links";
+import Logo from "@/components/layout/logo";
+import { ThemeToggle } from "@/components/layout/header/theme-toggle";
 
 export default function SideNav() {
   return (
@@ -21,7 +21,7 @@ export default function SideNav() {
 
       <SignedIn>
         <div className="flex items-center justify-between gap-2 mt-4">
-          <ModeToggle />
+          <ThemeToggle />
           <UserButton showName />
         </div>
       </SignedIn>

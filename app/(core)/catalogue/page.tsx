@@ -18,7 +18,7 @@ export default async function CategoriesPage() {
   return (
     <main>
       <div className="mb-4 flex items-center justify-between">
-        <h1 className="mb-4 text-xl md:text-2xl">Каталог</h1>
+          <h1 className="text-xl font-bold tracking-tight lg:text-2xl">Каталог</h1>
         <SearchDropdown />
         <CreateCategoryModal />
       </div>

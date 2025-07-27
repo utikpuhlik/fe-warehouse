@@ -277,7 +277,7 @@ export default function OrdersDataTable({data}: { data: OrderSchema[] }) {
     return (
         <Card>
             <CardContent className="space-y-6">
-                <div className="flex gap-3">
+                <div className="flex gap-2 mt-4">
                     <Input
                         placeholder="Search orders..."
                         value={(table.getColumn("customer")?.getFilterValue() as string) ?? ""}
