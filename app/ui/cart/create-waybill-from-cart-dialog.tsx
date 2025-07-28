@@ -78,7 +78,7 @@ export function CreateWaybillFromCartDialog(
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button disabled={items.length === 0}>Создать накладную</Button>
+                <Button className="w-full" disabled={items.length === 0}>Создать накладную</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

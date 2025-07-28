@@ -30,12 +30,14 @@ export function generateMeta({
 	};
 }
 
-export const formatCurrency = (amount: number) => {
-	return (amount / 100).toLocaleString("en-US", {
+export function formatCurrency(value: number): string {
+	return new Intl.NumberFormat("ru-RU", {
 		style: "currency",
-		currency: "USD",
-	});
-};
+		currency: "RUB",
+		// minimumFractionDigits: 0,
+		// maximumFractionDigits: 2,
+	}).format(value);
+}
 
 export const formatDateToLocal = (dateStr: string, locale = "ru-RU", numeric = false) => {
 	const date = new Date(dateStr);

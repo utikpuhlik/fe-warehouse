@@ -33,7 +33,7 @@ import {Input} from "@/components/ui/input";
 import {Badge} from "@/components/ui/badge";
 import {TableDetailsDropdown} from "@/app/ui/shared/table/table-details-dropdown";
 import {OrderSchema} from "@/app/lib/schemas/orderSchema";
-import {generateAvatarFallback} from "@/app/lib/utils";
+import {formatCurrency, generateAvatarFallback} from "@/app/lib/utils";
 
 
 const columns: ColumnDef<OrderSchema>[] = [
@@ -89,14 +89,7 @@ const columns: ColumnDef<OrderSchema>[] = [
         },
         cell: ({row}) => {
             const total_sum = Number.parseFloat(row.getValue("total_sum"));
-
-            // Format the amount as a rub amount
-            const formatted = new Intl.NumberFormat("ru-RU", {
-                style: "currency",
-                currency: "RUB"
-            }).format(total_sum);
-
-            return <div className="font-medium">{formatted}</div>;
+            return <div className="font-medium">{formatCurrency(total_sum)}</div>;
         }
     },
     {
