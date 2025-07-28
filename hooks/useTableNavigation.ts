@@ -31,6 +31,17 @@ export function useTableNavigation() {
         router.replace(`${pathname}?${params.toString()}`);
     };
 
+    const updateSearch = (value: string) => {
+        const params = new URLSearchParams(searchParams);
+        params.set("page", "1");
+        if (value) {
+            params.set("query", value);
+        } else {
+            params.delete("query");
+        }
+        router.replace(`${pathname}?${params.toString()}`);
+    };
+
     const updatePage = (newPage: number) => {
         const params = new URLSearchParams(searchParams);
         params.set("page", newPage.toString());
@@ -42,6 +53,7 @@ export function useTableNavigation() {
         updateParam,
         updateFilter,
         updatePage,
+        updateSearch,
         pathname,
         searchParams,
     };

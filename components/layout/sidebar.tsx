@@ -30,7 +30,7 @@ export default function Sidebar() {
             <SidebarHeader className="p-0 overflow-hidden rounded-t-md">
                 <Link
                     href="/main"
-                    className="flex h-20 md:h-30 items-center justify-center bg-blue-900"
+                    className="flex h-20 md:h-30 px-2 bg-blue-900"
                 >
                     <Logo />
                 </Link>

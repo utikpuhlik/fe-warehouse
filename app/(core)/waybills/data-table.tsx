@@ -21,7 +21,7 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-// import {Input} from "@/components/ui/input";
+import {Input} from "@/components/ui/input";
 import {
     Table,
     TableBody,
@@ -245,6 +245,7 @@ export default function WaybillDataTable({
         getParam,
         updateFilter,
         updatePage,
+        updateSearch,
         // searchParams,
     } = useTableNavigation();
 
@@ -254,6 +255,7 @@ export default function WaybillDataTable({
 
     const waybillTypeParam = getParam("waybill_type");
     const isPendingParam = getParam("is_pending");
+    const query = getParam("query", "");
 
     const table = useReactTable({
         data: data.items,
@@ -306,20 +308,12 @@ export default function WaybillDataTable({
         <div className="w-full">
             <div className="flex items-center gap-4 py-4">
                 <div className="flex gap-2">
-                    {/*<Input*/}
-                    {/*    placeholder="Поиск.."*/}
-                    {/*    value={*/}
-                    {/*        (table*/}
-                    {/*            .getColumn("counterparty_name")*/}
-                    {/*            ?.getFilterValue() as string) ?? ""*/}
-                    {/*    }*/}
-                    {/*    onChange={(event) =>*/}
-                    {/*        table*/}
-                    {/*            .getColumn("counterparty_name")*/}
-                    {/*            ?.setFilterValue(event.target.value)*/}
-                    {/*    }*/}
-                    {/*    className="max-w-sm"*/}
-                    {/*/>*/}
+                    <Input
+                        placeholder="Поиск по клиенту, примечанию..."
+                        value={query}
+                        onChange={(e) => updateSearch(e.target.value)}
+                        className="max-w-sm"
+                    />
                     <TablePopover
                         options={waybill_types}
                         selected={waybillTypeParam}

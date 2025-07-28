@@ -16,7 +16,7 @@ const ENTITY = "waybills";
 export async function fetchWaybills(
     waybill_type: string | undefined,
     is_pending: string | undefined,
-    search_term: string,
+    search_term: string | undefined = "",
     page: number,
     size = 10
 ): Promise<WaybillPaginatedSchema> {
