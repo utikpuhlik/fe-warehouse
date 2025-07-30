@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from "next/server"
-import { searchUsersAction } from "@/app/lib/actions/userAction"
+import type {UserPaginatedSchema} from "@/app/lib/schemas/userSchema";
+import {fetchFilteredUsersWS} from "@/app/lib/apis/userApi";
 
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url)
     const search = searchParams.get("q") ?? ""
     try {
-        const users = await searchUsersAction(search)
+        const users: UserPaginatedSchema = await fetchFilteredUsersWS(search)
         return NextResponse.json(users)
     } catch (e) {
-        console.error("Error fetching offers:", e);
+        console.error("Error fetching users:", e);
         return NextResponse.json({ error: "Internal error" }, { status: 500 });
     }
 }

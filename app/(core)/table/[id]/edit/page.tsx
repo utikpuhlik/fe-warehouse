@@ -1,4 +1,3 @@
-import { fetchUsers } from "@/app/lib/apis/userApi";
 import Breadcrumbs from "@/app/ui/shared/breadcrumbs";
 import { notFound } from "next/navigation";
 import {fetchProductById} from "@/app/lib/apis/productApi";
@@ -10,14 +9,12 @@ type Params = Promise<{
 export default async function Page(props: { params: Params }) {
 	const params = await props.params;
 	const id = params.id;
-	const [product, users] = await Promise.all([
+	const [product] = await Promise.all([
 		fetchProductById(id),
-		fetchUsers(),
 	]);
 	if (!product) {
 		notFound();
 	}
-	console.log(users)
 	return (
 		<main>
 			<Breadcrumbs

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
-import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command";
+import {Command, CommandGroup, CommandItem, CommandList} from "@/components/ui/command";
 import {Button} from "@/components/ui/button";
 import {Checkbox} from "@/components/ui/checkbox";
 import {PlusCircle} from "lucide-react";
@@ -21,7 +21,6 @@ export function TablePopover(
         selected,
         onSelect,
         label,
-        placeholder = "Выбрать...",
     }: TablePopoverProps) {
 
     return (
@@ -34,9 +33,7 @@ export function TablePopover(
             </PopoverTrigger>
             <PopoverContent className="w-52 p-0">
                 <Command>
-                    <CommandInput placeholder={placeholder} className="h-9"/>
                     <CommandList>
-                        <CommandEmpty>Ничего не найдено</CommandEmpty>
                         <CommandGroup>
                             {options.map((opt) => (
                                 <CommandItem

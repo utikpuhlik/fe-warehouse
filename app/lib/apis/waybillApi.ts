@@ -15,7 +15,7 @@ const ENTITY = "waybills";
 
 export async function fetchWaybills(
     waybill_type: string | undefined,
-    is_pending: string | undefined,
+    is_pending: boolean | undefined,
     search_term: string | undefined = "",
     page: number,
     size = 10
@@ -27,7 +27,7 @@ export async function fetchWaybills(
     });
 
     if (waybill_type) params.set("waybill_type", waybill_type);
-    if (is_pending) params.set("is_pending", is_pending);
+    if (is_pending) params.set("is_pending", String(is_pending));
 
     const url = `${env.NEXT_PUBLIC_API_URL}/${ENTITY}?${params.toString()}`;
     return fetchWithAuthAndParse(url, zWaybillPaginatedSchema, false, ENTITY);

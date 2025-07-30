@@ -12,9 +12,9 @@
 Flow: Component -> Action -> External API call to FastAPI backend
 
 ## Call API from Client with Auth (User search is implemented this way)
-1. Create server action
-2. Create a router and call the server action
-3. Call the router from the client with Tanstack Query for caching and data fetching
+1. Create a router and call the external API from the server
+2. Call the router from the client with Tanstack Query for caching and data fetching'
+
 ## Tanstack Query
 1. Install with pnpm `pnpm add @tanstack/react-query`
 2. Create QueryProvider
