@@ -17,19 +17,8 @@ import {
 import {
     ArrowUpDown,
     Columns,
-    FilterIcon,
-    PlusCircle
 } from "lucide-react";
 
-import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList
-} from "@/components/ui/command";
 import {Button} from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -46,12 +35,14 @@ import {
     TableHeader,
     TableRow
 } from "@/components/ui/table";
-import {Badge} from "@/components/ui/badge";
 import {Checkbox} from "@/components/ui/checkbox";
 import {Card, CardContent} from "@/components/ui/card";
 import {OrderSchema} from "@/app/lib/schemas/orderSchema";
 import {formatDateToLocal} from "@/app/lib/utils";
 import {TableDetailsDropdown} from "@/app/ui/shared/table/table-details-dropdown";
+import {TablePopover} from "@/app/ui/shared/table/table-popover";
+import {ORDER_STATUS_LABELS} from "@/app/lib/schemas/commonSchema";
+import {OrderBadge} from "@/app/ui/orders/order-badge";
 
 
 export const columns: ColumnDef<OrderSchema>[] = [
@@ -162,24 +153,7 @@ export const columns: ColumnDef<OrderSchema>[] = [
         },
         cell: ({row}) => {
             const status = row.original.status;
-
-            const statusMap = {
-                NEW: "success",
-                IN_PROGRESS: "info",
-                SHIPPING: "warning",
-                COMPLETED: "success",
-                CANCELLED: "destructive",
-            } as const;
-
-            const statusClass = statusMap[status] ?? "secondary";
-
-            return (
-                <div>
-                    <Badge variant={statusClass} className="capitalize">
-                        {status.replaceAll("-", " ")}
-                    </Badge>
-                </div>
-            );
+            return <OrderBadge orderStatus={status}/>
         }
     },
     {
@@ -198,6 +172,7 @@ export default function OrdersDataTable({data}: { data: OrderSchema[] }) {
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = React.useState({});
+    const [orderStatusFilter, setOrderStatusFilter] = React.useState<string>("");
 
     const table = useReactTable({
         data,
@@ -218,63 +193,13 @@ export default function OrdersDataTable({data}: { data: OrderSchema[] }) {
         }
     });
 
-    const statuses = [
-        {
-            value: "pending",
-            label: "Pending"
-        },
-        {
-            value: "completed",
-            label: "Completed"
-        },
-        {
-            value: "shipped",
-            label: "Shipped"
-        },
-        {
-            value: "delivered",
-            label: "Delivered"
-        }
-    ];
-
-    const Filters = () => {
-        return (
-            <>
-                <Popover>
-                    <PopoverTrigger asChild>
-                        <Button variant="outline">
-                            <PlusCircle/>
-                            Status
-                        </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-52 p-0">
-                        <Command>
-                            <CommandInput placeholder="Status" className="h-9"/>
-                            <CommandList>
-                                <CommandEmpty>No status found.</CommandEmpty>
-                                <CommandGroup>
-                                    {statuses.map((status) => (
-                                        <CommandItem key={status.value} value={status.value}>
-                                            <div className="flex items-center space-x-3 py-1">
-                                                <Checkbox id={status.value}/>
-                                                <label
-                                                    htmlFor={status.value}
-                                                    className="leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                                                    {status.label}
-                                                </label>
-                                            </div>
-                                        </CommandItem>
-                                    ))}
-                                </CommandGroup>
-                            </CommandList>
-                        </Command>
-                    </PopoverContent>
-                </Popover>
-            </>
-        );
-    };
+    const statuses = Object.entries(ORDER_STATUS_LABELS).map(([value, label]) => ({
+        value,
+        label
+    }));
 
     return (
+        <>
         <Card>
             <CardContent className="space-y-6">
                 <div className="flex gap-2 mt-4">
@@ -287,22 +212,19 @@ export default function OrdersDataTable({data}: { data: OrderSchema[] }) {
                         className="md:max-w-sm"
                     />
                     <div className="hidden gap-2 md:flex">
-                        <Filters/>
-                    </div>
-                    {/*filter for mobile*/}
-                    <div className="inline md:hidden">
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button variant="outline" size="icon">
-                                    <FilterIcon/>
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-60 p-4">
-                                <div className="grid space-y-2">
-                                    <Filters/>
-                                </div>
-                            </PopoverContent>
-                        </Popover>
+                        <TablePopover
+                            options={statuses}
+
+                            onSelect={(currentValue) => {
+                                setOrderStatusFilter((prev) => {
+                                    const newValue = currentValue === prev ? "" : currentValue;
+                                    table.getColumn("status")?.setFilterValue(newValue);
+                                    return newValue;
+                                });
+                            }}
+                            selected={orderStatusFilter}
+                            label={"Статус"}
+                        />
                     </div>
                     <div className="ms-auto">
                         <DropdownMenu>
@@ -392,5 +314,6 @@ export default function OrdersDataTable({data}: { data: OrderSchema[] }) {
                 </div>
             </CardContent>
         </Card>
+        </>
     );
 }

@@ -2,11 +2,12 @@ import {z} from "zod";
 import {zUserSchema} from "@/app/lib/schemas/userSchema";
 import {zAddressSchema} from "@/app/lib/schemas/addressSchema";
 import {zOrderOfferSchema} from "@/app/lib/schemas/orderOfferSchema";
+import {zOrderStatusEnum} from "@/app/lib/schemas/commonSchema";
 
 const zOrderBaseSchema = z.object({
     user_id: z.string().uuid(),
     address_id: z.string().uuid(),
-    status: z.enum(["NEW", "IN_PROGRESS", "SHIPPING", "COMPLETED", "CANCELLED"]),
+    status: zOrderStatusEnum,
     note: z.string().nullable(),
 })
 

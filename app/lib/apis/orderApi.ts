@@ -9,7 +9,7 @@ const ENTITY = "orders";
 
 export async function fetchOrders(
     user_id?: string,
-    order_status?: "NEW" | "IN_PROGRESS" | "SHIPPING" | "COMPLETED" | "CANCELLED",
+    order_status?: "NEW" | "IN_PROGRESS" | "SHIPPING" | "COMPLETED" | "CANCELED",
 ): Promise<OrderSchema[]> {
     const params = new URLSearchParams();
 

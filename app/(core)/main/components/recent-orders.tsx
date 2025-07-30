@@ -103,7 +103,7 @@ const columns: ColumnDef<OrderSchema>[] = [
                 IN_PROGRESS: "info",
                 SHIPPING: "warning",
                 COMPLETED: "success",
-                CANCELLED: "destructive"
+                CANCELED: "destructive"
             } as const;
 
             const statusClass = statusMap[status] ?? "default";

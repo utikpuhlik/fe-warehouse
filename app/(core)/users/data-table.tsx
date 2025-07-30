@@ -13,17 +13,8 @@ import {
     getSortedRowModel,
     useReactTable
 } from "@tanstack/react-table";
-import {ArrowUpDown, Columns, PlusCircle} from "lucide-react";
+import {ArrowUpDown, Columns} from "lucide-react";
 
-import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList
-} from "@/components/ui/command";
 import {Button} from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -41,7 +32,6 @@ import {
     TableRow
 } from "@/components/ui/table";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
-import {Badge} from "@/components/ui/badge";
 import {generateAvatarFallback} from "@/app/lib/utils";
 import {Checkbox} from "@/components/ui/checkbox";
 import {UserSchema} from "@/app/lib/schemas/userSchema";
@@ -49,6 +39,9 @@ import {MailingToggle} from "@/app/ui/users/mailing-toggle";
 import {CustomerTypeSelect} from "@/app/ui/users/customer-type-select";
 import Link from "next/link";
 import {TableDetailsDropdown} from "@/app/ui/shared/table/table-details-dropdown";
+import {CustomerBadge} from "@/app/ui/users/customer-badge";
+import {TablePopover} from "@/app/ui/shared/table/table-popover";
+import {USER_TYPE_LABELS} from "@/app/lib/schemas/commonSchema";
 
 export const columns: ColumnDef<UserSchema>[] = [
     {
@@ -199,27 +192,7 @@ export const columns: ColumnDef<UserSchema>[] = [
         },
         cell: ({row}) => {
             const customer_type = row.original.customer_type;
-
-            const customerMap = {
-                USER_RETAIL: "warning",
-                USER_WHOLESALE: "info",
-                USER_SUPER_WHOLESALE: "success"
-            } as const;
-
-            const labelMap = {
-                USER_RETAIL: "Розница",
-                USER_WHOLESALE: "Опт",
-                USER_SUPER_WHOLESALE: "Супер-Опт",
-            };
-
-            const customerClass = customerMap[customer_type] ?? "outline";
-            const label = labelMap[customer_type] ?? customer_type;
-
-            return (
-                <Badge variant={customerClass} className="capitalize">
-                    {label}
-                </Badge>
-            );
+            return <CustomerBadge customerType={customer_type}/>
         }
     },
     {
@@ -279,20 +252,10 @@ export default function UsersDataTable({data}: { data: UserSchema[] }) {
         }
     });
 
-    const customer_types = [
-        {
-            value: "USER_RETAIL",
-            label: "Розница"
-        },
-        {
-            value: "USER_WHOLESALE",
-            label: "Опт"
-        },
-        {
-            value: "USER_SUPER_WHOLESALE",
-            label: "Супер-Опт"
-        }
-    ];
+    const customer_types = Object.entries(USER_TYPE_LABELS).map(([value, label]) => ({
+        value,
+        label
+    }));
 
     return (
         <div className="w-full">
@@ -304,50 +267,18 @@ export default function UsersDataTable({data}: { data: UserSchema[] }) {
                         onChange={(event) => table.getColumn("first_name")?.setFilterValue(event.target.value)}
                         className="max-w-sm"
                     />
-                    <Popover>
-                        <PopoverTrigger asChild>
-                            <Button variant="outline">
-                                <PlusCircle/>
-                                Тип
-                            </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-52 p-0">
-                            <Command>
-                                <CommandInput placeholder="Тип" className="h-9"/>
-                                <CommandList>
-                                    <CommandEmpty>No customer_type found.</CommandEmpty>
-                                    <CommandGroup>
-                                        {customer_types.map((customer_type) => (
-                                            <CommandItem
-                                                key={customer_type.value}
-                                                value={customer_type.value}
-                                                onSelect={(currentValue) => {
-                                                    setCustomerTypeFilter((prev) => {
-                                                        const newValue = currentValue === prev ? "" : currentValue;
-                                                        table.getColumn("customer_type")?.setFilterValue(newValue);
-                                                        return newValue;
-                                                    });
-                                                }}
-                                            >
-                                                <div className="flex items-center space-x-3 py-1">
-                                                    <Checkbox
-                                                        id={customer_type.value}
-                                                        checked={customerTypeFilter === customer_type.value}
-                                                    />
-                                                    <label
-                                                        htmlFor={customer_type.value}
-                                                        className="leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                                    >
-                                                        {customer_type.label}
-                                                    </label>
-                                                </div>
-                                            </CommandItem>
-                                        ))}
-                                    </CommandGroup>
-                                </CommandList>
-                            </Command>
-                        </PopoverContent>
-                    </Popover>
+                    <TablePopover
+                        options={customer_types}
+                        selected={customerTypeFilter}
+                        onSelect={(currentValue) => {
+                            setCustomerTypeFilter((prev) => {
+                                const newValue = currentValue === prev ? "" : currentValue;
+                                table.getColumn("customer_type")?.setFilterValue(newValue);
+                                return newValue;
+                            });
+                        }}
+                        label={"Тип"}
+                    />
                 </div>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -365,7 +296,7 @@ export default function UsersDataTable({data}: { data: UserSchema[] }) {
                                         key={column.id}
                                         className="capitalize"
                                         checked={column.getIsVisible()}
-                                        onCheckedChange={(value) => column.toggleVisibility(!!value)}>
+                                        onCheckedChange={(value) => column.toggleVisibility(value)}>
                                         {column.id}
                                     </DropdownMenuCheckboxItem>
                                 );

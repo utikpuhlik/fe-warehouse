@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
 import { useCartStore } from "@/app/shared/api/cartStoreProvider"
 import type { OfferSchema } from "@/app/lib/schemas/offerSchema"
-import { CirclePlus } from "lucide-react"
+import { ShoppingCart } from "lucide-react"
 import {useForm} from "react-hook-form";
 import {QuantityFormSchema, zQuantityFormSchema} from "@/app/lib/schemas/commonSchema";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -51,7 +51,7 @@ export function AddToCartButtonWithQuantity({ offer }: { offer: OfferSchema }) {
                 <p className="text-xs text-red-500">{errors.quantity.message}</p>
             )}
             <Button type="submit" size="default" variant="outline">
-               <CirclePlus className="w-3 h-3" /> Добавить в корзину
+               <ShoppingCart className="w-3 h-3" /> Добавить в корзину
             </Button>
         </form>
     )

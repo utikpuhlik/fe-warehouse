@@ -34,7 +34,7 @@ import type {Metadata} from "next";
 type Props = {
     params: Promise<{ order_id: string }>
 };
-type OrderStatus = "NEW" | "IN_PROGRESS" | "SHIPPING" | "COMPLETED" | "CANCELLED";
+type OrderStatus = "NEW" | "IN_PROGRESS" | "SHIPPING" | "COMPLETED" | "CANCELED";
 
 export async function generateMetadata(
     {params}: Props
@@ -60,7 +60,7 @@ export default async function Page({params}: Props) {
         IN_PROGRESS: "Shipped",
         SHIPPING: "Out for Delivery",
         COMPLETED: "Delivered",
-        CANCELLED: "Cancelled"
+        CANCELED: "Canceled"
     };
 
     const currentStep = statusSteps[order.status];
@@ -161,7 +161,7 @@ export default async function Page({params}: Props) {
                                                 IN_PROGRESS: <Truck className="size-5"/>,
                                                 SHIPPING: <Truck className="size-5"/>,
                                                 COMPLETED: <CheckCircle2 className="size-5"/>,
-                                                CANCELLED: <CheckCircle2 className="size-5"/>
+                                                CANCELED: <CheckCircle2 className="size-5"/>
                                             }[step as OrderStatus]
                                         )}
                                     </div>
