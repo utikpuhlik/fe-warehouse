@@ -14,6 +14,8 @@ import type {WaybillOfferSchema} from "@/app/lib/schemas/waybillOfferSchema";
 import type {WaybillSchema} from "@/app/lib/schemas/waybillSchema";
 import {DeleteWaybillOfferProxy} from "@/app/ui/waybill/delete-waybill-offer";
 import Link from "next/link";
+import {WaybillBadge} from "@/app/ui/waybill/waybill-badge";
+import {CustomerBadge} from "@/app/ui/users/customer-badge";
 
 export default async function WaybillOffersTable(waybill: WaybillSchema) {
     const waybill_offers: WaybillOfferSchema[] = await fetchWaybillOffers(waybill.id);
@@ -28,6 +30,7 @@ export default async function WaybillOffersTable(waybill: WaybillSchema) {
             <Card>
                 <CardHeader>
                     <CardTitle>Состав накладной</CardTitle>
+                    <WaybillBadge waybillType={waybill.waybill_type}/>
                 </CardHeader>
                 <div className="p-4 text-muted-foreground">Позиции не добавлены</div>
             </Card>
@@ -37,7 +40,13 @@ export default async function WaybillOffersTable(waybill: WaybillSchema) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Состав накладной</CardTitle>
+                <CardTitle className="flex items-center justify-between">
+                    Состав накладной
+                    <div className="flex items-center space-x-2">
+                        <WaybillBadge waybillType={waybill.waybill_type}/>
+                        <CustomerBadge customerType={waybill.customer.customer_type}/>
+                    </div>
+                </CardTitle>
             </CardHeader>
             <Table>
                 <TableHeader>

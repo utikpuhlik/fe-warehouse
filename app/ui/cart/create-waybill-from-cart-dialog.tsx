@@ -25,6 +25,8 @@ import type {OfferSchema} from "@/app/lib/schemas/offerSchema"
 import {SelectUserField} from "@/app/ui/users/select-user-field"
 import {useCartStore} from "@/app/shared/api/cartStoreProvider"
 import {WaybillOfferPostSchema} from "@/app/lib/schemas/waybillOfferSchema";
+import Link from "next/link";
+import {WaybillTypeEnum} from "@/app/lib/schemas/commonSchema";
 
 export function CreateWaybillFromCartDialog(
     {
@@ -65,7 +67,7 @@ export function CreateWaybillFromCartDialog(
                 await createWaybillAction(values)
                 toast({
                     title: "Накладная создана",
-                    description: `${values.waybill_offers!.length} позиций`,
+                    description: <Link href={`/waybills`}>${values.waybill_offers!.length} позиций</Link>,
                 })
                 clearCart()
                 setOpen(false)
@@ -95,7 +97,7 @@ export function CreateWaybillFromCartDialog(
                             <Label>Тип</Label>
                             <Select
                                 onValueChange={(
-                                    value: "WAYBILL_IN" | "WAYBILL_OUT" | "WAYBILL_RETURN"
+                                    value: WaybillTypeEnum
                                 ) => form.setValue("waybill_type", value)}
                                 defaultValue={form.getValues("waybill_type")}
                             >

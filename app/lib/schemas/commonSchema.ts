@@ -43,9 +43,9 @@ export const USER_TYPE_LABELS: Record<UserTypeEnum, string> = {
 }
 
 export const WAYBILL_TYPE_LABELS: Record<WaybillTypeEnum, string> = {
-    WAYBILL_IN: "Приходная накладная",
-    WAYBILL_OUT: "Расходная накладная",
-    WAYBILL_RETURN: "Возвратная накладная"
+    WAYBILL_IN: "Приход",
+    WAYBILL_OUT: "Расход",
+    WAYBILL_RETURN: "Возврат"
 }
 
 export const ORDER_STATUS_LABELS: Record<OrderStatusEnum, string> = {
@@ -58,6 +58,6 @@ export const ORDER_STATUS_LABELS: Record<OrderStatusEnum, string> = {
 
 export const SHIPPING_METHOD_LABELS: Record<ShippingMethodEnum, string> = {
     SELF_PICKUP: "Самовывоз",
-    CARGO: "Курьерская доставка",
+    CARGO: "Курьер",
     OTHER: "Другое"
 }

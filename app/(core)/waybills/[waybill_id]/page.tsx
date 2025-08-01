@@ -11,32 +11,44 @@ import {DeleteEntityButton} from "@/app/ui/shared/buttons/delete-entity-button";
 import {deleteWaybillAction} from "@/app/lib/actions/waybillAction";
 import {notFound} from "next/navigation";
 import {DownloadWaybillButton} from "@/app/ui/waybill/DownloadWaybillButton";
+import {USER_TYPE_LABELS, WAYBILL_TYPE_LABELS} from "@/app/lib/schemas/commonSchema";
+import type {Metadata} from "next";
 
-type Params = Promise<{
-    id: string;
-}>;
+type Props = {
+    params: Promise<{ waybill_id: string }>
+};
 
-export default async function WaybillPage(props: { params: Params }) {
-    const params = await props.params;
-    const waybill_id: string = params.id;
+export async function generateMetadata(
+    {params}: Props
+): Promise<Metadata> {
+    const {waybill_id} = await params;
+    const waybill: WaybillSchema = await fetchWaybillById(waybill_id);
+    if (!waybill) {
+        return {
+            title: "Накладная не найдена | TCF",
+            robots: {index: false, follow: false},
+        };
+    }
+    return {
+        title: `Накладная - ${WAYBILL_TYPE_LABELS[waybill.waybill_type]} | TCF`,
+    };
+}
+
+export default async function WaybillPage({params}: Props) {
+    const {waybill_id} = await params;
 
     // TODO: обновить fetchJson для работы с null и 404
     const waybill: WaybillSchema = await fetchWaybillById(waybill_id);
     if (!waybill) notFound();
 
-    const waybill_type =
-        waybill.waybill_type === "WAYBILL_OUT"
-            ? "Расход"
-            : waybill.waybill_type === "WAYBILL_IN"
-                ? "Приход"
-                : "Возврат";
     const fullName = `${waybill.customer.first_name} ${waybill.customer.last_name}`;
     return (
         <main>
             <div className="mb-4 flex items-center justify-between">
                 <Breadcrumbs
                     breadcrumbs={[
-                        {label: waybill_type, href: "/waybills"},
+                        {label: WAYBILL_TYPE_LABELS[waybill.waybill_type], href: `/waybills?waybill_type=${waybill.waybill_type}`},
+                        {label: USER_TYPE_LABELS[waybill.customer.customer_type], href: "/waybills"},
                         {
                             label: fullName,
                             href: `/waybills/${waybill_id}`,

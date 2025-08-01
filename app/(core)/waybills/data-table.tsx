@@ -46,6 +46,7 @@ import { WaybillSchema } from "@/app/lib/schemas/waybillSchema";
 import { UserSchema } from "@/app/lib/schemas/userSchema";
 import { TableDetailsDropdown } from "@/app/ui/shared/table/table-details-dropdown";
 import { TablePopover } from "@/app/ui/shared/table/table-popover"; // Assuming this is the path to your TablePopover
+import { WaybillBadge } from "@/app/ui/waybill/waybill-badge";
 
 // --- Column Definitions (No changes here) ---
 export const columns: ColumnDef<WaybillSchema>[] = [
@@ -105,19 +106,7 @@ export const columns: ColumnDef<WaybillSchema>[] = [
         ),
         cell: ({ row }) => {
             const waybill_type = row.original.waybill_type;
-            const waybillMap = {
-                WAYBILL_IN: "info",
-                WAYBILL_OUT: "success",
-                WAYBILL_RETURN: "warning",
-            } as const;
-            const labelMap = {
-                WAYBILL_IN: "Приход",
-                WAYBILL_OUT: "Расход",
-                WAYBILL_RETURN: "Возврат",
-            };
-            const variant = waybillMap[waybill_type] ?? "outline";
-            const label = labelMap[waybill_type] ?? waybill_type;
-            return <Badge variant={variant} className="capitalize">{label}</Badge>;
+            return <WaybillBadge waybillType={waybill_type} />;
         },
     },
     {
