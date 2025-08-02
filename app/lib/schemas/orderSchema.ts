@@ -17,6 +17,7 @@ export const zOrderSchema = zOrderBaseSchema.extend({
     address: zAddressSchema,
     order_offers: zOrderOfferSchema.array(),
     created_at: z.string().datetime(),
+    updated_at: z.string().datetime(),
     total_sum: z.number().int().nonnegative(),
 });
 

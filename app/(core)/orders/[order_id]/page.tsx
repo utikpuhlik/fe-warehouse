@@ -1,16 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import {
-    CheckCircle,
-    CheckCircle2,
     ChevronLeft,
     CreditCard,
     EditIcon,
-    Package,
     Printer,
-    Truck
 } from "lucide-react";
-import {formatDateToLocal} from "@/app/lib/utils";
+import {formatCurrency, formatDateToLocal} from "@/app/lib/utils";
 
 import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
@@ -22,19 +18,21 @@ import {
     TableHeader,
     TableRow
 } from "@/components/ui/table";
-import {Badge} from "@/components/ui/badge";
 import {Separator} from "@/components/ui/separator";
-import {Progress} from "@/components/ui/progress";
 import {notFound} from "next/navigation";
 import {OrderSchema} from "@/app/lib/schemas/orderSchema";
 import {fetchOrderById} from "@/app/lib/apis/orderApi";
 import {EditOrderButton} from "@/app/ui/shared/buttons/edit-order-button";
 import type {Metadata} from "next";
+import {getDictionary} from "@/app/lib/i18n";
+import {OrderProgressTracker} from "@/app/ui/orders/order-progress-tracker";
+
+const currentLang = "ru";
+const dict = getDictionary(currentLang);
 
 type Props = {
     params: Promise<{ order_id: string }>
 };
-type OrderStatus = "NEW" | "IN_PROGRESS" | "SHIPPING" | "COMPLETED" | "CANCELED";
 
 export async function generateMetadata(
     {params}: Props
@@ -46,25 +44,12 @@ export async function generateMetadata(
         title: `${order.id} | TCF`
     };
 }
-
-
 export default async function Page({params}: Props) {
     const {order_id} = await params;
     const order: OrderSchema = await fetchOrderById(order_id);
     if (!order) {
         notFound()
     }
-
-    const statusSteps: Record<OrderStatus, string> = {
-        NEW: "Processing",
-        IN_PROGRESS: "Shipped",
-        SHIPPING: "Out for Delivery",
-        COMPLETED: "Delivered",
-        CANCELED: "Canceled"
-    };
-
-    const currentStep = statusSteps[order.status];
-    const currentStepIndex = Object.keys(statusSteps).indexOf(order.status);
 
     return (
         <div className="mx-auto max-w-screen-lg space-y-4 lg:mt-10">
@@ -86,8 +71,8 @@ export default async function Page({params}: Props) {
             <div className="grid gap-4 md:grid-cols-2">
                 <Card>
                     <CardHeader>
-                        <CardTitle className="font-display text-2xl">Order {order.id}</CardTitle>
-                        <p className="text-muted-foreground text-sm">Placed on {formatDateToLocal(
+                        <CardTitle className="font-display text-2xl">{dict.order} {order.id}</CardTitle>
+                        <p className="text-muted-foreground text-sm">{dict.createdAt} {formatDateToLocal(
                             order.created_at,
                             "ru-RU",
                             true
@@ -97,7 +82,7 @@ export default async function Page({params}: Props) {
                         <Separator className="mb-4"/>
                         <div className="space-y-4">
                             <div className="space-y-2">
-                                <h3 className="font-semibold mb-1">Customer Information</h3>
+                                <h3 className="font-semibold mb-1">{dict.customerInfo}</h3>
                                 <Link href={`/users/${order.user_id}`} className="hover:underline">
                                     {order.user.first_name} {order.user.last_name}
                                 </Link>
@@ -106,7 +91,7 @@ export default async function Page({params}: Props) {
                             </div>
                             <div className="bg-muted flex items-center justify-between space-y-2 rounded-md border p-4">
                                 <div className="space-y-1">
-                                    <h3 className="font-semibold">Payment Method</h3>
+                                    <h3 className="font-semibold">{dict.paymentMethod}</h3>
                                     <div className="text-muted-foreground flex items-center gap-2 text-sm">
                                         <CreditCard className="size-4"/> Visa ending in **** 1234
                                     </div>
@@ -121,90 +106,48 @@ export default async function Page({params}: Props) {
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Order Summary</CardTitle>
+                        <CardTitle>{dict.orderSummary}</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div className="flex justify-between">
-                            <span>Subtotal</span>
-                            <span>${order.total_sum.toFixed(2)}</span>
+                            <span>{dict.subTotal}</span>
+                            <span>{formatCurrency(order.total_sum)}</span>
                         </div>
                         {/*TODO: add shipping cost*/}
                         {/*<div className="flex justify-between">*/}
                         {/*  <span>Shipping</span>*/}
-                        {/*  <span>${order.address.shipping_cost.toFixed(2)}</span>*/}
+                        {/*  <span>{10}</span>*/}
                         {/*</div>*/}
                         <Separator/>
                         <div className="flex justify-between font-semibold">
-                            <span>Total</span>
-                            <span>${order.total_sum.toFixed(2)}</span>
+                            <span>{dict.total}</span>
+                            <span>{formatCurrency(order.total_sum)}</span>
                         </div>
                     </CardContent>
                 </Card>
             </div>
 
-            <Card>
-                <CardHeader>
-                    <CardTitle className="flex items-center">Delivery Status</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <div className="relative space-y-6 pt-1">
-                        <div className="mb-2 flex items-center justify-between">
-                            {Object.keys(statusSteps).map((step, index) => (
-                                <div key={index} className="text-center">
-                                    <div
-                                        className={`mx-auto flex size-12 items-center justify-center rounded-full text-lg ${index <= currentStepIndex ? "bg-green-600 text-white dark:bg-green-900" : "bg-muted border"} `}>
-                                        {index < currentStepIndex ? (
-                                            <CheckCircle className="size-5"/>
-                                        ) : (
-                                            {
-                                                NEW: <Package className="size-5"/>,
-                                                IN_PROGRESS: <Truck className="size-5"/>,
-                                                SHIPPING: <Truck className="size-5"/>,
-                                                COMPLETED: <CheckCircle2 className="size-5"/>,
-                                                CANCELED: <CheckCircle2 className="size-5"/>
-                                            }[step as OrderStatus]
-                                        )}
-                                    </div>
-                                    <div className="mt-2 text-xs">{statusSteps[step as OrderStatus]}</div>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="space-y-6">
-                            <Progress
-                                className="w-full"
-                                value={(currentStepIndex / (Object.keys(statusSteps).length - 1)) * 100}
-                                color="bg-green-200 dark:bg-green-800"
-                            />
-                            <div className="text-muted-foreground text-sm">
-                                <Badge variant="info" className="me-1">
-                                    {currentStep}
-                                </Badge>{" "}
-                                on December 23, 2024
-                            </div>
-                        </div>
-                    </div>
-                </CardContent>
-            </Card>
+            <OrderProgressTracker status={order.status} updatedAt={order.updated_at}/>
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Order Items</CardTitle>
+                    <CardTitle>{dict.orderItems}</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead>№</TableHead>
-                                <TableHead>Адресный код</TableHead>
-                                <TableHead>Фото</TableHead>
-                                <TableHead>Система</TableHead>
-                                <TableHead>Подсистема</TableHead>
-                                <TableHead>Наименование</TableHead>
-                                <TableHead>Бренд</TableHead>
-                                <TableHead>Артикул</TableHead>
-                                <TableHead>Кол-во</TableHead>
-                                <TableHead>Цена</TableHead>
-                                <TableHead>Сумма</TableHead>
+                                <TableHead>{dict.table.number}</TableHead>
+                                <TableHead>{dict.table.addressCode}</TableHead>
+                                <TableHead>{dict.table.photo}</TableHead>
+                                <TableHead>{dict.table.system}</TableHead>
+                                <TableHead>{dict.table.subsystem}</TableHead>
+                                <TableHead>{dict.table.product_name}</TableHead>
+                                <TableHead>{dict.table.brand}</TableHead>
+                                <TableHead>{dict.table.manufacturerNumber}</TableHead>
+                                <TableHead>{dict.table.quantity}</TableHead>
+                                <TableHead>{dict.table.price}</TableHead>
+                                <TableHead>{dict.table.total}</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -215,7 +158,7 @@ export default async function Page({params}: Props) {
                                     <TableCell>
                                         <div className="flex items-center gap-4">
                                             <Image
-                                                src={order_offer.offer.product.image_url ?? undefined}
+                                                src={order_offer.offer.product.image_url}
                                                 width={60}
                                                 height={60}
                                                 alt=""
@@ -236,11 +179,15 @@ export default async function Page({params}: Props) {
                                             {order_offer.offer.product.sub_category.name}
                                         </Link>
                                     </TableCell>
-                                    <TableCell>{order_offer.offer.product.name}</TableCell>
+                                    <TableCell>
+                                        <Link href={`/catalogue/${order_offer.offer.product.sub_category.category.slug}/${order_offer.offer.product.sub_category.slug}/${order_offer.offer.product.id}`}>
+                                            {order_offer.offer.product.name}
+                                        </Link>
+                                        </TableCell>
                                     <TableCell>{order_offer.brand}</TableCell>
                                     <TableCell>{order_offer.manufacturer_number}</TableCell>
                                     <TableCell>{order_offer.quantity}</TableCell>
-                                    <TableCell>{order_offer.price_rub.toFixed(2)} ₽</TableCell>
+                                    <TableCell>{formatCurrency(order_offer.price_rub)}</TableCell>
                                     <TableCell>{(order_offer.price_rub * order_offer.quantity).toFixed(2)} ₽</TableCell>
                                 </TableRow>
                             ))}

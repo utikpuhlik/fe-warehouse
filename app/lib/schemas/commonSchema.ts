@@ -50,7 +50,7 @@ export const WAYBILL_TYPE_LABELS: Record<WaybillTypeEnum, string> = {
 
 export const ORDER_STATUS_LABELS: Record<OrderStatusEnum, string> = {
     NEW: "Новый",
-    IN_PROGRESS: "В сборке",
+    IN_PROGRESS: "Сборка",
     SHIPPING: "Отправлен",
     COMPLETED: "Завершен",
     CANCELED: "Отменен"
