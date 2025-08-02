@@ -4,7 +4,6 @@ import {
     ChevronLeft,
     CreditCard,
     EditIcon,
-    Printer,
 } from "lucide-react";
 import {formatCurrency, formatDateToLocal} from "@/app/lib/utils";
 
@@ -22,10 +21,11 @@ import {Separator} from "@/components/ui/separator";
 import {notFound} from "next/navigation";
 import {OrderSchema} from "@/app/lib/schemas/orderSchema";
 import {fetchOrderById} from "@/app/lib/apis/orderApi";
-import {EditOrderButton} from "@/app/ui/shared/buttons/edit-order-button";
+import {EditOrderButton} from "@/app/ui/orders/edit-order-button";
 import type {Metadata} from "next";
 import {getDictionary} from "@/app/lib/i18n";
 import {OrderProgressTracker} from "@/app/ui/orders/order-progress-tracker";
+import {PrintButton} from "@/app/ui/shared/buttons/print-button";
 
 const currentLang = "ru";
 const dict = getDictionary(currentLang);
@@ -60,10 +60,7 @@ export default async function Page({params}: Props) {
                     </Link>
                 </Button>
                 <div className="flex gap-2">
-                    <Button variant="outline">
-                        <Printer/>
-                        Print
-                    </Button>
+                    <PrintButton orderId={order_id}/>
                     <EditOrderButton orderId={order_id}/>
                 </div>
             </div>

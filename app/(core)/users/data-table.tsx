@@ -42,6 +42,9 @@ import {TableDetailsDropdown} from "@/app/ui/shared/table/table-details-dropdown
 import {CustomerBadge} from "@/app/ui/users/customer-badge";
 import {TablePopover} from "@/app/ui/shared/table/table-popover";
 import {USER_TYPE_LABELS} from "@/app/lib/schemas/commonSchema";
+import {getDictionary} from "@/app/lib/i18n";
+const currentLang = "ru";
+const dict = getDictionary(currentLang);
 
 export const columns: ColumnDef<UserSchema>[] = [
     {
@@ -66,41 +69,32 @@ export const columns: ColumnDef<UserSchema>[] = [
         enableHiding: false
     },
     {
-        accessorKey: "first_name",
-        header: "Name",
-        cell: ({row}) => (
-            <div className="flex items-center gap-4">
+        accessorKey: "customer",
+        header: dict.orderDataTable.customer,
+        cell: ({row}) => {
+            const customer = row.original;
+            const fullName = `${customer.first_name} ${customer.last_name}`;
+
+            return (
+                <div className="flex items-center gap-4">
                 <Avatar>
-                    <AvatarFallback>{generateAvatarFallback(row.getValue("first_name"))}</AvatarFallback>
+                    <AvatarFallback>{generateAvatarFallback(fullName)}</AvatarFallback>
                 </Avatar>
-                <div className="capitalize">
-                    <Link
-                        href={`/users/${row.original.id}`}>{row.getValue("first_name")}
-                    </Link>
+                <div className="space-y-1">
+                    <div className="font-semibold capitalize">
+                        <Link href={`/users/${customer.id}`} className="hover:underline">
+                            {fullName}
+                        </Link>
+                    </div>
+                    <div className="text-muted-foreground">
+                        <Link href={`/users/${customer.id}`} className="hover:underline">
+                            {customer.email}
+                        </Link>
+                    </div>
                 </div>
             </div>
-        )
-    },
-    {
-        accessorKey: "last_name",
-        header: ({column}) => {
-            return (
-                <Button
-                    className="-ml-3"
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    Фамилия
-                    <ArrowUpDown/>
-                </Button>
             );
-        },
-        cell: ({row}) => (
-            <div className="capitalize">
-                <Link
-                    href={`/users/${row.original.id}`}>{row.getValue("last_name")}
-                </Link>
-            </div>
-        )
+        }
     },
     {
         accessorKey: "email",
@@ -263,8 +257,8 @@ export default function UsersDataTable({data}: { data: UserSchema[] }) {
                 <div className="flex gap-2">
                     <Input
                         placeholder="Search users..."
-                        value={(table.getColumn("first_name")?.getFilterValue() as string) ?? ""}
-                        onChange={(event) => table.getColumn("first_name")?.setFilterValue(event.target.value)}
+                        value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+                        onChange={(event) => table.getColumn("email")?.setFilterValue(event.target.value)}
                         className="max-w-sm"
                     />
                     <TablePopover

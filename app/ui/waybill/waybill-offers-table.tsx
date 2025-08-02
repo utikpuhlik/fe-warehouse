@@ -30,8 +30,13 @@ export default async function WaybillOffersTable(waybill: WaybillSchema) {
         return (
             <Card>
                 <CardHeader>
-                    <CardTitle>Состав накладной</CardTitle>
-                    <WaybillBadge waybillType={waybill.waybill_type}/>
+                    <CardTitle className="flex items-center justify-between">
+                        Состав накладной
+                        <div className="flex items-center space-x-2">
+                            <WaybillBadge waybillType={waybill.waybill_type}/>
+                            <CustomerBadge customerType={waybill.customer.customer_type}/>
+                        </div>
+                    </CardTitle>
                 </CardHeader>
                 <div className="p-4 text-muted-foreground">Позиции не добавлены</div>
             </Card>

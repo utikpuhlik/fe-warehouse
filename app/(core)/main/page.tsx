@@ -8,7 +8,7 @@ import {
     ActiveOffersCard,
     EcommerceBestSellingProductsCard,
     EcommerceRecentOrdersCard,
-    OffersCard, UsersCard, WaybillsCard, OrdersCard
+    OffersCard, UsersCard, WaybillsCard, OrdersCard, OffersWithImageCard
 } from "@/app/(core)/main/components";
 import {OrderPaginatedSchema, OrderSchema} from "@/app/lib/schemas/orderSchema";
 import {fetchOrders} from "@/app/lib/apis/orderApi";
@@ -23,12 +23,15 @@ export default async function Page() {
     return (
         <main>
             <h1 className="mb-4 text-xl md:text-2xl">Панель управления</h1>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
                 <Suspense fallback={<CardSkeleton/>}>
                     <OffersCard/>
                 </Suspense>
                 <Suspense fallback={<CardSkeleton/>}>
                     <ActiveOffersCard/>
+                </Suspense>
+                <Suspense fallback={<CardSkeleton/>}>
+                    <OffersWithImageCard/>
                 </Suspense>
                 <Suspense fallback={<CardSkeleton/>}>
                     <WaybillsCard/>

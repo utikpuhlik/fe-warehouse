@@ -81,8 +81,13 @@ export const ru = {
         updatedAt: "Дата обновления",
     },
     actions: {
+        create: "Создать",
         edit: "Редактировать",
         delete: "Удалить",
+        cancel: "Отменить",
+        print: "Печать",
+        view: "Просмотр",
+        details: "Подробности",
         viewDetails: "Просмотр деталей",
     }
 };

@@ -6,8 +6,8 @@ interface OrderBadgeProps {
 }
 
 export function OrderBadge({ orderStatus }: OrderBadgeProps) {
-    const orderMap: Record<OrderStatusEnum, "warning" | "info" | "success" | "outline" | "destructive"> = {
-        NEW: "outline",
+    const orderMap: Record<OrderStatusEnum, "warning" | "info" | "success" | "attention" | "destructive"> = {
+        NEW: "attention",
         IN_PROGRESS: "info",
         SHIPPING: "warning",
         COMPLETED: "success",
