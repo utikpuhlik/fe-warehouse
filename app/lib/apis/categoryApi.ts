@@ -29,7 +29,7 @@ export async function postCategory(category: FormData): Promise<Category> {
         body: category,
     });
 
-    const text = await res.text().catch(() => "");
+    const text = await res.text();
     if (!res.ok) {
         handleApiError(res, text, ENTITY);
     }
@@ -48,7 +48,7 @@ export async function patchCategory(id: string, category: FormData): Promise<Cat
         body: category,
     });
 
-    const text = await res.text().catch(() => "");
+    const text = await res.text();
     if (!res.ok) {
         handleApiError(res, text, ENTITY);
     }
@@ -66,7 +66,7 @@ export async function delCategory(id: string): Promise<number> {
     });
 
     if (!res.ok) {
-        handleApiError(res, await res.text().catch(() => ""), ENTITY);
+        handleApiError(res, await res.text(), ENTITY);
     }
 
     return res.status;

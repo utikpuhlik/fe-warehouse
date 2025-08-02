@@ -16,6 +16,7 @@ import {DeleteWaybillOfferProxy} from "@/app/ui/waybill/delete-waybill-offer";
 import Link from "next/link";
 import {WaybillBadge} from "@/app/ui/waybill/waybill-badge";
 import {CustomerBadge} from "@/app/ui/users/customer-badge";
+import {formatCurrency} from "@/app/lib/utils";
 
 export default async function WaybillOffersTable(waybill: WaybillSchema) {
     const waybill_offers: WaybillOfferSchema[] = await fetchWaybillOffers(waybill.id);
@@ -101,8 +102,8 @@ export default async function WaybillOffersTable(waybill: WaybillSchema) {
                             <TableCell>{wo.brand}</TableCell>
                             <TableCell>{wo.manufacturer_number}</TableCell>
                             <TableCell>{wo.quantity}</TableCell>
-                            <TableCell>{wo.price_rub.toFixed(2)} ₽</TableCell>
-                            <TableCell>{(wo.price_rub * wo.quantity).toFixed(2)} ₽</TableCell>
+                            <TableCell>{formatCurrency(wo.price_rub)}</TableCell>
+                            <TableCell>{formatCurrency(wo.price_rub * wo.quantity)}</TableCell>
                             {waybill.is_pending && (
                                 <TableCell>
                                     <DeleteWaybillOfferProxy {...wo} />
@@ -115,7 +116,7 @@ export default async function WaybillOffersTable(waybill: WaybillSchema) {
                     <TableRow className="font-semibold bg-muted/40">
                         <TableCell colSpan={9}/>
                         <TableCell className="text-right">Σ</TableCell>
-                        <TableCell>{totalSumRub.toFixed(2)} ₽</TableCell>
+                        <TableCell>{formatCurrency(totalSumRub)}</TableCell>
                         {waybill.is_pending && <TableCell/>}
                     </TableRow>
                 </TableFooter>

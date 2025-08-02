@@ -58,7 +58,7 @@ export async function postOffer(offer: OfferPostSchema): Promise<OfferSchema> {
     body: JSON.stringify(offer),
   });
 
-  const text = await res.text().catch(() => "");
+  const text = await res.text();
   if (!res.ok) {
     handleApiError(res, text, ENTITY);
   }
@@ -80,7 +80,7 @@ export async function patchOffer(
     body: JSON.stringify(offer),
   });
 
-  const text = await res.text().catch(() => "");
+  const text = await res.text();
   if (!res.ok) {
     handleApiError(res, text, ENTITY);
   }
@@ -98,7 +98,7 @@ export async function delOffer(id: string): Promise<number> {
     },
   });
 
-  const text = await res.text().catch(() => "");
+  const text = await res.text();
   if (!res.ok) {
     handleApiError(res, text, ENTITY);
   }

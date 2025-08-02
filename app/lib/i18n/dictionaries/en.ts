@@ -36,4 +36,33 @@ export const en = {
         price: "Price",
         total: "Total",
     },
+    userDataTable: {
+        name: "Имя",
+        email: "Email",
+        phone: "Телефон",
+        role: "Роль",
+        type: "Тип пользователя",
+        createdAt: "Дата создания",
+        updatedAt: "Дата обновления",
+    },
+    waybillDataTable: {
+        number: "Номер накладной",
+        type: "Тип накладной",
+        date: "Дата",
+        totalSum: "Сумма",
+    },
+    orderDataTable: {
+        number: "Номер заказа",
+        status: "Статус",
+        customer: "Customer",
+        totalSum: "Сумма",
+        note: "Note",
+        createdAt: "Дата создания",
+        updatedAt: "Дата обновления",
+    },
+    actions: {
+        edit: "Редактировать",
+        delete: "Удалить",
+        viewDetails: "Просмотр деталей",
+    }
 };

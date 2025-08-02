@@ -16,6 +16,7 @@ import {useUser} from "@clerk/nextjs"
 import {CartItemCard} from "@/app/ui/cart/cart-item-card";
 import {OfferSchema} from "@/app/lib/schemas/offerSchema";
 import {CartSummaryCard} from "@/app/ui/cart/cart-summary-card";
+import {CreateOrderFromCartButton} from "./create-order-from-cart-button"
 
 export function CartSheet() {
     const items = useCartStore((state) => state.items)
@@ -93,10 +94,17 @@ export function CartSheet() {
                         </Button>
 
                         {isLoaded && isSignedIn && items.length > 0 && (
-                            <CreateWaybillFromCartDialog
-                                author_id={user?.publicMetadata._id as string}
-                                items={items}
-                            />
+                            <>
+                                <CreateWaybillFromCartDialog
+                                    author_id={user?.publicMetadata._id as string}
+                                    items={items}
+                                />
+                                <CreateOrderFromCartButton
+                                    user_id={user?.publicMetadata._id as string}
+                                    address_id="356f1d6f-0514-4e40-aad5-d59b91674320"
+                                    items={items}
+                                />
+                            </>
                         )}
                     </div>
                 </SheetFooter>

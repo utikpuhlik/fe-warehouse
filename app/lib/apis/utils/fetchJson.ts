@@ -16,7 +16,7 @@ export async function fetchAndParse<T>(
         next: cache ? { revalidate: 60 } : { revalidate: 0 },
     });
 
-    const text = await res.text().catch(() => "");
+    const text = await res.text();
 
     if (!res.ok) {
         handleApiError(res, text, entity);
@@ -50,7 +50,7 @@ export async function fetchWithAuthAndParse<T>(
         next: cache ? { revalidate: 60 } : { revalidate: 0 },
     });
 
-    const text = await res.text().catch(() => "");
+    const text = await res.text();
     if (!res.ok) {
         handleApiError(res, text, entity);
     }
@@ -61,6 +61,5 @@ export async function fetchWithAuthAndParse<T>(
     } catch {
         throw new Error("Invalid JSON response");
     }
-
     return schema.parse(json);
 }

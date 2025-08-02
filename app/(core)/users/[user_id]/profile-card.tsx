@@ -15,15 +15,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UserSchema } from "@/app/lib/schemas/userSchema";
+import {USER_ROLE_LABELS, USER_TYPE_LABELS} from "@/app/lib/schemas/commonSchema";
 
 export function ProfileCard({ user }: { user: UserSchema }) {
   return (
     <Card className="relative">
       <CardContent>
         <Badge className="absolute start-4 top-4">
-          {user.is_active ? "Active" : "False"}
+          {USER_TYPE_LABELS[user.customer_type]}
         </Badge>
-        <div className="space-y-12">
+        <div className="space-y-12 mt-4">
           <div className="flex flex-col items-center space-y-4">
             <Avatar className="size-20">
               <AvatarImage
@@ -36,7 +37,7 @@ export function ProfileCard({ user }: { user: UserSchema }) {
               <h5 className="text-xl font-semibold">
                 {user.first_name} {user.last_name}
               </h5>
-              <div className="text-muted-foreground text-sm">{user.role}</div>
+              <div className="text-muted-foreground text-sm">{USER_ROLE_LABELS[user.role]}</div>
             </div>
           </div>
           <div className="bg-muted grid grid-cols-3 divide-x rounded-md border text-center *:py-3">
@@ -65,7 +66,7 @@ export function ProfileCard({ user }: { user: UserSchema }) {
             </div>
             <div className="flex items-center gap-3">
               <List className="text-muted-foreground size-4" />{" "}
-              {user.customer_type}
+              {USER_TYPE_LABELS[user.customer_type]}
             </div>
             <div className="flex items-center gap-3">
               <MapPin className="text-muted-foreground size-4" />

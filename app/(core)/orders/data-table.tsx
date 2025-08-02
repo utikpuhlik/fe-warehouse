@@ -36,14 +36,15 @@ import {
     TableRow
 } from "@/components/ui/table";
 import {Checkbox} from "@/components/ui/checkbox";
-import {Card, CardContent} from "@/components/ui/card";
 import {OrderSchema} from "@/app/lib/schemas/orderSchema";
 import {formatDateToLocal} from "@/app/lib/utils";
 import {TableDetailsDropdown} from "@/app/ui/shared/table/table-details-dropdown";
 import {TablePopover} from "@/app/ui/shared/table/table-popover";
 import {ORDER_STATUS_LABELS} from "@/app/lib/schemas/commonSchema";
 import {OrderBadge} from "@/app/ui/orders/order-badge";
-
+import {getDictionary} from "@/app/lib/i18n";
+const currentLang = "ru";
+const dict = getDictionary(currentLang);
 
 export const columns: ColumnDef<OrderSchema>[] = [
     {
@@ -69,7 +70,7 @@ export const columns: ColumnDef<OrderSchema>[] = [
     },
     {
         accessorKey: "id",
-        header: "# Какое правило использовать для номера заказа? композит?",
+        header: dict.orderDataTable.number,
         cell: ({row}) => (
             <Link
                 href={`/orders/${row.getValue("id")}`}
@@ -79,23 +80,26 @@ export const columns: ColumnDef<OrderSchema>[] = [
         )
     },
     {
-        accessorKey: "total_sum",
+        accessorKey: "created_at",
         header: ({column}) => {
             return (
                 <Button
                     className="-ml-3"
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    Сумма
+                    {dict.orderDataTable.createdAt}
                     <ArrowUpDown className="size-3"/>
                 </Button>
             );
         },
-        cell: ({row}) => `${row.getValue("total_sum")} ₽`
+        cell: ({row}) => {
+            const raw: string = row.getValue("created_at")
+            return formatDateToLocal(raw, "ru-RU", true);
+        }
     },
     {
         accessorKey: "customer",
-        header: "Customer",
+        header: dict.orderDataTable.customer,
         cell: ({row}) => {
             const customer = row.original.user;
 
@@ -116,29 +120,6 @@ export const columns: ColumnDef<OrderSchema>[] = [
         }
     },
     {
-        accessorKey: "created_at",
-        header: ({column}) => {
-            return (
-                <Button
-                    className="-ml-3"
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    created_at
-                    <ArrowUpDown className="size-3"/>
-                </Button>
-            );
-        },
-        cell: ({row}) => {
-            const raw: string = row.getValue("created_at")
-            return formatDateToLocal(raw, "ru-RU", true);
-        }
-    },
-    {
-        accessorKey: "note",
-        header: "Note",
-        cell: ({row}) => <div className="capitalize">{row.getValue("note")}</div>
-    },
-    {
         accessorKey: "status",
         header: ({column}) => {
             return (
@@ -146,7 +127,7 @@ export const columns: ColumnDef<OrderSchema>[] = [
                     className="-ml-3"
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    Status
+                    {dict.orderDataTable.status}
                     <ArrowUpDown className="size-3"/>
                 </Button>
             );
@@ -155,6 +136,26 @@ export const columns: ColumnDef<OrderSchema>[] = [
             const status = row.original.status;
             return <OrderBadge orderStatus={status}/>
         }
+    },
+    {
+        accessorKey: "total_sum",
+        header: ({column}) => {
+            return (
+                <Button
+                    className="-ml-3"
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+                    {dict.orderDataTable.totalSum}
+                    <ArrowUpDown className="size-3"/>
+                </Button>
+            );
+        },
+        cell: ({row}) => `${row.getValue("total_sum")} ₽`
+    },
+    {
+        accessorKey: "note",
+        header: dict.orderDataTable.note,
+        cell: ({row}) => <div className="capitalize">{row.getValue("note")}</div>
     },
     {
         id: "actions",
@@ -200,9 +201,9 @@ export default function OrdersDataTable({data}: { data: OrderSchema[] }) {
 
     return (
         <>
-        <Card>
-            <CardContent className="space-y-6">
-                <div className="flex gap-2 mt-4">
+            <div className="w-full">
+                <div className="flex items-center gap-4 py-4">
+                    <div className="flex gap-2">
                     <Input
                         placeholder="Search orders..."
                         value={(table.getColumn("customer")?.getFilterValue() as string) ?? ""}
@@ -211,7 +212,6 @@ export default function OrdersDataTable({data}: { data: OrderSchema[] }) {
                         }
                         className="md:max-w-sm"
                     />
-                    <div className="hidden gap-2 md:flex">
                         <TablePopover
                             options={statuses}
 
@@ -226,11 +226,11 @@ export default function OrdersDataTable({data}: { data: OrderSchema[] }) {
                             label={"Статус"}
                         />
                     </div>
-                    <div className="ms-auto">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="outline">
-                                    <span className="hidden lg:inline">Columns</span> <Columns/>
+                                <Button size="icon" variant="outline" className="ml-auto">
+                                    {/*<span className="hidden lg:inline">Columns</span>*/}
+                                     <Columns/>
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
@@ -250,7 +250,6 @@ export default function OrdersDataTable({data}: { data: OrderSchema[] }) {
                                     })}
                             </DropdownMenuContent>
                         </DropdownMenu>
-                    </div>
                 </div>
                 <div className="rounded-md border">
                     <Table>
@@ -290,7 +289,7 @@ export default function OrdersDataTable({data}: { data: OrderSchema[] }) {
                         </TableBody>
                     </Table>
                 </div>
-                <div className="flex items-center justify-end space-x-2">
+                <div className="flex items-center justify-end space-x-2 pt-4">
                     <div className="text-muted-foreground flex-1 text-sm">
                         {table.getFilteredSelectedRowModel().rows.length} of{" "}
                         {table.getFilteredRowModel().rows.length} row(s) selected.
@@ -312,8 +311,7 @@ export default function OrdersDataTable({data}: { data: OrderSchema[] }) {
                         </Button>
                     </div>
                 </div>
-            </CardContent>
-        </Card>
+            </div>
         </>
     );
 }

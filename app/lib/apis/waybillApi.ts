@@ -66,7 +66,7 @@ export async function postWaybill(waybill: WaybillWithOffersPostSchema | Waybill
         body: JSON.stringify(waybill),
     });
 
-    const text = await res.text().catch(() => "");
+    const text = await res.text();
     if (!res.ok) {
         handleApiError(res, text, ENTITY);
     }
@@ -87,7 +87,7 @@ export async function patchWaybill(waybill_id: string, waybill: WaybillPutSchema
         body: JSON.stringify(waybill),
     });
 
-    const text = await res.text().catch(() => "");
+    const text = await res.text();
     if (!res.ok) {
         handleApiError(res, text, ENTITY);
     }
@@ -106,7 +106,7 @@ export async function commitWaybill(waybill_id: string): Promise<WaybillSchema> 
         },
     });
 
-    const text = await res.text().catch(() => "");
+    const text = await res.text();
     if (!res.ok) {
         handleApiError(res, text, ENTITY);
     }
@@ -130,7 +130,7 @@ export async function postWaybillOffer(
         body: JSON.stringify(waybill),
     });
 
-    const text = await res.text().catch(() => "");
+    const text = await res.text();
     if (!res.ok) {
         handleApiError(res, text, ENTITY);
     }

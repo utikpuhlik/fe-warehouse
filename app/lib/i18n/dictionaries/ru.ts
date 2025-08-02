@@ -56,4 +56,33 @@ export const ru = {
         price: "Цена",
         total: "Сумма",
     },
+   userDataTable: {
+        name: "Имя",
+        email: "Email",
+        phone: "Телефон",
+        role: "Роль",
+        type: "Тип пользователя",
+        createdAt: "Дата создания",
+        updatedAt: "Дата обновления",
+    },
+    waybillDataTable: {
+        number: "Номер накладной",
+        type: "Тип накладной",
+        date: "Дата",
+        totalSum: "Сумма",
+    },
+    orderDataTable: {
+        number: "Номер заказа",
+        status: "Статус",
+        customer: "Клиент",
+        totalSum: "Сумма",
+        note: "Заметка",
+        createdAt: "Дата создания",
+        updatedAt: "Дата обновления",
+    },
+    actions: {
+        edit: "Редактировать",
+        delete: "Удалить",
+        viewDetails: "Просмотр деталей",
+    }
 };

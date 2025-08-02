@@ -7,7 +7,7 @@ import {ProfileCard} from "@/app/(core)/users/[user_id]/profile-card";
 import {UserSchema} from "@/app/lib/schemas/userSchema";
 import {fetchUserById} from "@/app/lib/apis/userApi";
 import {notFound} from "next/navigation";
-import {OrderSchema} from "@/app/lib/schemas/orderSchema";
+import {OrderPaginatedSchema, OrderSchema} from "@/app/lib/schemas/orderSchema";
 import {fetchOrders} from "@/app/lib/apis/orderApi";
 import { CardBalance } from "@/app/(core)/users/[user_id]/card-balance";
 import type {Metadata} from "next";
@@ -29,7 +29,8 @@ export async function generateMetadata(
 export default async function Page({params}: Props) {
     const {user_id} = await params;
     const user: UserSchema = await fetchUserById(user_id);
-    const orders: OrderSchema[] = await fetchOrders(user_id)
+    const data: OrderPaginatedSchema = await fetchOrders(user_id);
+    const orders: OrderSchema[] = data.items;
     if (!user) {
         notFound()
     }

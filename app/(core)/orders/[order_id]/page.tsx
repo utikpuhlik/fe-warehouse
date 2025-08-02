@@ -188,7 +188,7 @@ export default async function Page({params}: Props) {
                                     <TableCell>{order_offer.manufacturer_number}</TableCell>
                                     <TableCell>{order_offer.quantity}</TableCell>
                                     <TableCell>{formatCurrency(order_offer.price_rub)}</TableCell>
-                                    <TableCell>{(order_offer.price_rub * order_offer.quantity).toFixed(2)} ₽</TableCell>
+                                    <TableCell>{formatCurrency(order_offer.price_rub * order_offer.quantity)}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

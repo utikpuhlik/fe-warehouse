@@ -10,7 +10,7 @@ import {
     EcommerceRecentOrdersCard,
     OffersCard, UsersCard, WaybillsCard, OrdersCard
 } from "@/app/(core)/main/components";
-import {OrderSchema} from "@/app/lib/schemas/orderSchema";
+import {OrderPaginatedSchema, OrderSchema} from "@/app/lib/schemas/orderSchema";
 import {fetchOrders} from "@/app/lib/apis/orderApi";
 
 export const metadata: Metadata = {
@@ -18,7 +18,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-    const orders: OrderSchema[] = await fetchOrders();
+    const data: OrderPaginatedSchema = await fetchOrders();
+    const orders: OrderSchema[] = data.items;
     return (
         <main>
             <h1 className="mb-4 text-xl md:text-2xl">Панель управления</h1>

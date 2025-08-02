@@ -30,11 +30,14 @@ import {
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
 import {Input} from "@/components/ui/input";
-import {Badge} from "@/components/ui/badge";
 import {TableDetailsDropdown} from "@/app/ui/shared/table/table-details-dropdown";
 import {OrderSchema} from "@/app/lib/schemas/orderSchema";
 import {formatCurrency, generateAvatarFallback} from "@/app/lib/utils";
+import {getDictionary} from "@/app/lib/i18n";
+import {OrderBadge} from "@/app/ui/orders/order-badge";
 
+const currentLang = "ru";
+const dict = getDictionary(currentLang);
 
 const columns: ColumnDef<OrderSchema>[] = [
     {
@@ -48,7 +51,7 @@ const columns: ColumnDef<OrderSchema>[] = [
     },
     {
         accessorKey: "customer",
-        header: "Customer",
+        header: dict.orderDataTable.customer,
         cell: ({row}) => {
             const customer = row.original.user;
             const fullName = `${customer.first_name} ${customer.last_name}`;
@@ -82,36 +85,22 @@ const columns: ColumnDef<OrderSchema>[] = [
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     className="p-0! hover:bg-transparent!">
-                    Amount
+                    {dict.orderDataTable.totalSum}
                     <ArrowUpDown className="size-3"/>
                 </Button>
             );
         },
         cell: ({row}) => {
-            const total_sum = Number.parseFloat(row.getValue("total_sum"));
-            return <div className="font-medium">{formatCurrency(total_sum)}</div>;
+            return <div className="font-medium">{formatCurrency(row.getValue("total_sum"))}</div>;
         }
     },
     {
         accessorKey: "status",
-        header: "Status",
+        header: dict.orderDataTable.status,
         cell: ({row}) => {
             const status = row.original.status;
-
-            const statusMap = {
-                NEW: "success",
-                IN_PROGRESS: "info",
-                SHIPPING: "warning",
-                COMPLETED: "success",
-                CANCELED: "destructive"
-            } as const;
-
-            const statusClass = statusMap[status] ?? "default";
-
             return (
-                <Badge variant={statusClass} className="capitalize">
-                    {status.replace("-", " ")}
-                </Badge>
+                <OrderBadge orderStatus={status}/>
             );
         }
     },
