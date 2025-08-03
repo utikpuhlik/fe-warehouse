@@ -1,19 +1,69 @@
 import {Metadata} from "next";
+import {CircleHelp} from "lucide-react";
+import {getDictionary} from "@/app/lib/i18n";
+
+const currentLang = "ru";
+const dict = getDictionary(currentLang);
 
 export const metadata: Metadata = {
     title: 'Помощь | TCF',
+    description: "Внутренняя документация бизнес-процессов TCF",
 }
 
-export default async function Page() {
+const faqs = [
+    {
+        question: "Процесс - Создание заказа",
+        answer:
+            "1. Корзина собрана - подтверждение\n" +
+            "2. Автоматически создается заказ со статусом `Новый`\n" +
+            "3. Печать - передача кладовщику `Сборка`\n" +
+            "4. Контакт клиента - финальное подтверждение\n" +
+            "5. Отправка и перевод в состояние `Выполнен`",
+
+    },
+    {
+        question: "Как создать накладную?",
+        answer:
+            "Вы можете создать накладную из корзины, выбрав её тип и указав клиента, или же со страницы Накладные, нажав создать."
+    },
+];
+
+
+export default function Page() {
     return (
-        <main>
-            <h1>Здесь будет FAQ</h1>
-            <h3>Процесс - создание заказа</h3>
-            <p>1. Корзина собрана - подтверждение</p>
-            <p>2. Автоматически создается заказа со статусом `Новый`</p>
-            <p>3. Печать - передача кладовщику `Сборка`</p>
-            <p>4. Контакт клиента - финальное подтверждение</p>
-            <p>5. Отправка и перевод в состояние `Выполнен`</p>
-        </main>
-    )
+        <>
+            <div className="max-w-[85rem] container mx-auto px-4 md:px-6 2xl:max-w-[1400px] py-24 lg:py-32">
+                {/* <!-- Title --> */}
+                <div className="max-w-2xl mx-auto mb-10 lg:mb-14">
+                    <h2 className="text-2xl font-bold md:text-4xl md:leading-tight">
+                        {dict.faq.title}
+                    </h2>
+                </div>
+                {/* <!-- End Title --> */}
+
+                {/* <!-- FAQs --> */}
+                <div className="max-w-2xl mx-auto divide-y divide-border">
+                    {faqs.map((faq) => (
+                        <div key={faq.question} className="py-8 first:pt-0 last:pb-0">
+                            <div className="flex gap-x-5">
+                                <CircleHelp className="shrink-0 mt-1 size-6 text-muted-foreground"/>
+                                <div className="grow">
+                                    <h3 className="md:text-lg font-semibold">{faq.question}</h3>
+                                    <p className="mt-1 text-muted-foreground">
+                                        {faq.answer.split("\n").map((line, index) => (
+                                            <span key={index}>
+                                                    {line}
+                                                <br/>
+                                            </span>
+                                        ))}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                {/* <!-- End FAQs --> */}
+            </div>
+        </>
+    );
 }

@@ -2,8 +2,6 @@
 
 import * as React from "react";
 import {PanelLeftIcon} from "lucide-react";
-
-// TODO: start using the new sidebar component
 import {useSidebar} from "@/components/ui/sidebar";
 
 import Search from "@/components/layout/header/search";

@@ -3,6 +3,7 @@ import Header from "@/components/layout/header";
 import {SidebarInset, SidebarProvider} from "@/components/ui/sidebar";
 import {cookies} from "next/headers";
 import Sidebar from "@/components/layout/sidebar";
+// import Footer from "@/components/layout/footer/footer";
 
 export default async function CoreLayout(
     {
@@ -24,6 +25,7 @@ export default async function CoreLayout(
                     className="@container/main p-4 xl:group-data-[theme-content-layout=centered]/layout:container xl:group-data-[theme-content-layout=centered]/layout:mx-auto xl:group-data-[theme-content-layout=centered]/layout:mt-8">
                     {children}
                 </div>
+                {/*<Footer/>*/}
                 <Toaster/>
             </SidebarInset>
         </SidebarProvider>

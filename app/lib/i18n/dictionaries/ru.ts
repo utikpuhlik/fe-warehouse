@@ -89,5 +89,8 @@ export const ru = {
         view: "Просмотр",
         details: "Подробности",
         viewDetails: "Просмотр деталей",
+    },
+    faq: {
+        title: "Часто задаваемые вопросы",
     }
 };
