@@ -78,7 +78,7 @@ export function SelectOfferField() {
             className="w-full justify-between"
           >
             {input || (
-              <span className="text-muted-foreground">Выбери предложение</span>
+              <span className="text-muted-foreground">Выберите предложение</span>
             )}
             <ChevronDown className="h-4 w-4 ml-2 shrink-0 opacity-50" />
           </Button>

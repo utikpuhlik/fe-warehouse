@@ -41,8 +41,9 @@ import {formatDateToLocal} from "@/app/lib/utils";
 import {TableDetailsDropdown} from "@/app/ui/shared/table/table-details-dropdown";
 import {TablePopover} from "@/app/ui/shared/table/table-popover";
 import {ORDER_STATUS_LABELS} from "@/app/lib/schemas/commonSchema";
-import {OrderBadge} from "@/app/ui/orders/order-badge";
 import {getDictionary} from "@/app/lib/i18n";
+import {OrderStatusSelect} from "@/app/ui/orders/order-status-select";
+
 const currentLang = "ru";
 const dict = getDictionary(currentLang);
 
@@ -121,20 +122,11 @@ export const columns: ColumnDef<OrderSchema>[] = [
     },
     {
         accessorKey: "status",
-        header: ({column}) => {
-            return (
-                <Button
-                    className="-ml-3"
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    {dict.orderDataTable.status}
-                    <ArrowUpDown className="size-3"/>
-                </Button>
-            );
-        },
+        header: dict.orderDataTable.status,
         cell: ({row}) => {
-            const status = row.original.status;
-            return <OrderBadge orderStatus={status}/>
+            const order: OrderSchema = row.original;
+            return <OrderStatusSelect order={order}/>
+
         }
     },
     {
@@ -204,14 +196,14 @@ export default function OrdersDataTable({data}: { data: OrderSchema[] }) {
             <div className="w-full">
                 <div className="flex items-center gap-4 py-4">
                     <div className="flex gap-2">
-                    <Input
-                        placeholder="Search orders..."
-                        value={(table.getColumn("customer")?.getFilterValue() as string) ?? ""}
-                        onChange={(event) =>
-                            table.getColumn("customer")?.setFilterValue(event.target.value)
-                        }
-                        className="md:max-w-sm"
-                    />
+                        <Input
+                            placeholder="Search orders..."
+                            value={(table.getColumn("customer")?.getFilterValue() as string) ?? ""}
+                            onChange={(event) =>
+                                table.getColumn("customer")?.setFilterValue(event.target.value)
+                            }
+                            className="md:max-w-sm"
+                        />
                         <TablePopover
                             options={statuses}
 
@@ -226,30 +218,30 @@ export default function OrdersDataTable({data}: { data: OrderSchema[] }) {
                             label={"Статус"}
                         />
                     </div>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button size="icon" variant="outline" className="ml-auto">
-                                    {/*<span className="hidden lg:inline">Columns</span>*/}
-                                     <Columns/>
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                {table
-                                    .getAllColumns()
-                                    .filter((column) => column.getCanHide())
-                                    .map((column) => {
-                                        return (
-                                            <DropdownMenuCheckboxItem
-                                                key={column.id}
-                                                className="capitalize"
-                                                checked={column.getIsVisible()}
-                                                onCheckedChange={(value) => column.toggleVisibility(value)}>
-                                                {column.id}
-                                            </DropdownMenuCheckboxItem>
-                                        );
-                                    })}
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button size="icon" variant="outline" className="ml-auto">
+                                {/*<span className="hidden lg:inline">Columns</span>*/}
+                                <Columns/>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            {table
+                                .getAllColumns()
+                                .filter((column) => column.getCanHide())
+                                .map((column) => {
+                                    return (
+                                        <DropdownMenuCheckboxItem
+                                            key={column.id}
+                                            className="capitalize"
+                                            checked={column.getIsVisible()}
+                                            onCheckedChange={(value) => column.toggleVisibility(value)}>
+                                            {column.id}
+                                        </DropdownMenuCheckboxItem>
+                                    );
+                                })}
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
                 <div className="rounded-md border">
                     <Table>

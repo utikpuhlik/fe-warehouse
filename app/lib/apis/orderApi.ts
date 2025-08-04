@@ -71,6 +71,7 @@ export async function postOrder(order: OrderWithOffersPostSchema | OrderPostSche
 }
 
 export async function patchOrder(order_id: string, order: OrderPutSchema): Promise<OrderSchema> {
+    console.log("Updating order:", order_id, order);
     const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${order_id}`, {
         method: "PATCH",
         headers: {

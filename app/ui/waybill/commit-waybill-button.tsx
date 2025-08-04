@@ -11,6 +11,8 @@ export function CommitWaybillButton({ waybill_id, disabled = false }: { waybill_
     const { toast } = useToast();
 
     const handleCommit = () => {
+        const confirmed = confirm(`Вы уверены, что хотите провести накладную?\nРедактирование больше не будет возможно!`);
+        if (!confirmed) return;
         startTransition(async () => {
             try {
                 await commitWaybillAction(waybill_id);

@@ -39,7 +39,6 @@ import {MailingToggle} from "@/app/ui/users/mailing-toggle";
 import {CustomerTypeSelect} from "@/app/ui/users/customer-type-select";
 import Link from "next/link";
 import {TableDetailsDropdown} from "@/app/ui/shared/table/table-details-dropdown";
-import {CustomerBadge} from "@/app/ui/users/customer-badge";
 import {TablePopover} from "@/app/ui/shared/table/table-popover";
 import {USER_TYPE_LABELS} from "@/app/lib/schemas/commonSchema";
 import {getDictionary} from "@/app/lib/i18n";
@@ -157,6 +156,16 @@ export const columns: ColumnDef<UserSchema>[] = [
         cell: ({row}) => row.getValue("shipping_company")
     },
     {
+        accessorKey: "customer_type",
+        header: "Тип",
+        cell: ({row}) => {
+            const user = row.original;
+            return <CustomerTypeSelect user={user} />;
+        },
+        enableSorting: false,
+        enableHiding: false,
+    },
+    {
         accessorKey: "notes",
         header: ({column}) => {
             return (
@@ -172,39 +181,11 @@ export const columns: ColumnDef<UserSchema>[] = [
         cell: ({row}) => row.getValue("notes")
     },
     {
-        accessorKey: "customer_type",
-        header: ({column}) => {
-            return (
-                <Button
-                    className="-ml-3"
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    Тип
-                    <ArrowUpDown/>
-                </Button>
-            );
-        },
-        cell: ({row}) => {
-            const customer_type = row.original.customer_type;
-            return <CustomerBadge customerType={customer_type}/>
-        }
-    },
-    {
         accessorKey: "mailing",
         header: "Рассылка",
         cell: ({row}) => {
             const user = row.original;
-            return <MailingToggle {...user} />;
-        },
-        enableSorting: false,
-        enableHiding: false,
-    },
-    {
-        accessorKey: "type_v2",
-        header: "Тип V2",
-        cell: ({row}) => {
-            const user = row.original;
-            return <CustomerTypeSelect {...user} />;
+            return <MailingToggle user={user} />;
         },
         enableSorting: false,
         enableHiding: false,

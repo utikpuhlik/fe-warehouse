@@ -6,8 +6,10 @@ import type {UserSchema} from "@/app/lib/schemas/userSchema";
 
 
 export async function updateUserAction(
+    user_id: string,
     user: UserSchema
-) {
-    await patchUser(user.id, user);
-    revalidatePath("/mailing");
+): Promise<void> {
+    await patchUser(user_id, user);
+    revalidatePath("/users");
+    revalidatePath(`/users/${user_id}`);
 }
