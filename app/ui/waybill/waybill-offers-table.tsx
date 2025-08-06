@@ -17,6 +17,7 @@ import Link from "next/link";
 import {WaybillBadge} from "@/app/ui/waybill/waybill-badge";
 import {CustomerBadge} from "@/app/ui/users/customer-badge";
 import {formatCurrency} from "@/app/lib/utils";
+import {WaybillOfferQuantityEditor} from "@/app/ui/waybill/quantity-editor";
 
 export default async function WaybillOffersTable(waybill: WaybillSchema) {
     const waybill_offers: WaybillOfferSchema[] = await fetchWaybillOffers(waybill.id);
@@ -106,7 +107,9 @@ export default async function WaybillOffersTable(waybill: WaybillSchema) {
                             </TableCell>
                             <TableCell>{wo.brand}</TableCell>
                             <TableCell>{wo.manufacturer_number}</TableCell>
-                            <TableCell>{wo.quantity}</TableCell>
+                            <TableCell>
+                                <WaybillOfferQuantityEditor waybillOffer={wo}/>
+                            </TableCell>
                             <TableCell>{formatCurrency(wo.price_rub)}</TableCell>
                             <TableCell>{formatCurrency(wo.price_rub * wo.quantity)}</TableCell>
                             {waybill.is_pending && (

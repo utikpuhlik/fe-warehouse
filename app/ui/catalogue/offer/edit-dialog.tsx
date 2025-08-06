@@ -23,6 +23,7 @@ import {
   deleteOfferAction,
   updateOfferAction,
 } from "@/app/lib/actions/offerAction";
+import {SaveButton} from "@/app/ui/shared/buttons/save-button";
 
 export function EditOfferModal({offer}: { offer: OfferSchema }) {
   const [open, setOpen] = useState(false);
@@ -144,9 +145,7 @@ export function EditOfferModal({offer}: { offer: OfferSchema }) {
               }
               onDeleted={resetForm}
             />
-            <Button type="submit" disabled={isPending}>
-              {isPending ? "Сохраняем.." : "Сохранить"}
-            </Button>
+            <SaveButton variant="default" type="submit" disabled={isPending} loading={isPending}/>
           </DialogFooter>
         </form>
       </DialogContent>

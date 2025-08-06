@@ -4,6 +4,7 @@ import {Loader, Save} from 'lucide-react';
 type SaveButtonProps = {
     onClick?: () => void;
     variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link"
+    type?: "button" | "submit" | "reset";
     full?: boolean;
     disabled?: boolean;
     loading?: boolean
@@ -13,6 +14,7 @@ type SaveButtonProps = {
 export function SaveButton({
     onClick,
     variant = "outline",
+    type = "button",
     full = true,
     disabled = false,
     loading = false,
@@ -21,6 +23,7 @@ export function SaveButton({
     return (
         <Button
             variant={variant}
+            type={type}
             onClick={onClick}
             disabled={disabled}
             className={className}

@@ -6,11 +6,14 @@ import {
     delWaybillOffer,
     postWaybillOffer,
     commitWaybill,
-    patchWaybill
+    patchWaybill, patchWaybillOffer
 } from "@/app/lib/apis/waybillApi";
 import {revalidatePath} from "next/cache";
 import {WaybillPutSchema, WaybillWithOffersPostSchema,} from "@/app/lib/schemas/waybillSchema";
-import type {WaybillOfferPostSchema} from "@/app/lib/schemas/waybillOfferSchema";
+import {
+    WaybillOfferPostSchema,
+    WaybillOfferPutSchema,
+} from "@/app/lib/schemas/waybillOfferSchema";
 import {redirect} from "next/navigation";
 
 export async function createWaybillAction(waybill: WaybillWithOffersPostSchema): Promise<void> {
@@ -42,5 +45,10 @@ export async function deleteWaybillAction(waybill_id: string): Promise<void> {
 
 export async function deleteWaybillOfferAction(waybill_offer_id: string, waybill_id: string): Promise<void> {
     await delWaybillOffer(waybill_offer_id)
+    revalidatePath(`/waybills/${waybill_id}`);
+}
+
+export async function updateWaybillOfferAction(waybill_offer_id: string, waybill_id: string, waybill_offer: WaybillOfferPutSchema): Promise<void> {
+    await patchWaybillOffer(waybill_offer_id, waybill_offer)
     revalidatePath(`/waybills/${waybill_id}`);
 }

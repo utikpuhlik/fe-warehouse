@@ -21,6 +21,7 @@ import { toast } from "@/hooks/use-toast";
 import { showToastError } from "@/app/lib/errors/toastError";
 import {deleteSubCategoryAction, updateSubCategoryAction} from "@/app/lib/actions/subCategoryAction";
 import { DeleteEntityButton } from "@/app/ui/shared/buttons/delete-entity-button";
+import {SaveButton} from "@/app/ui/shared/buttons/save-button";
 
 
 export function EditSubCategoryModal(sub_category: SubCategory) {
@@ -90,9 +91,7 @@ export function EditSubCategoryModal(sub_category: SubCategory) {
                         deleteAction={(id) => deleteSubCategoryAction(id, sub_category.category.slug)}
                         onDeleted={resetForm}
                     />
-                    <Button type="submit" disabled={isPending}>
-                        {isPending ? "Сохраняем.." : "Сохранить"}
-                    </Button>
+                    <SaveButton variant="default" type="submit" disabled={isPending} loading={isPending}/>
                 </DialogFooter>
                 </form>
             </DialogContent>

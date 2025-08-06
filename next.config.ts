@@ -23,13 +23,6 @@ module.exports = {
                 pathname: '/tcf-images/**',
                 search: '',
             },
-            {
-                protocol: 'https',
-                hostname: 'chibisafe.eucalytics.uk',
-                port: '',
-                pathname: '**',
-                search: '',
-            },
         ],
     },
 }

@@ -20,6 +20,7 @@ import { showToastError } from "@/app/lib/errors/toastError";
 import { DeleteEntityButton } from "@/app/ui/shared/buttons/delete-entity-button";
 import {type Product, zProduct} from "@/app/lib/schemas/productSchema";
 import {deleteProductAction, updateProductAction} from "@/app/lib/actions/productAction";
+import {SaveButton} from "@/app/ui/shared/buttons/save-button";
 
 
 export function EditProductModal(product: Product) {
@@ -106,9 +107,7 @@ export function EditProductModal(product: Product) {
                         )}
                         onDeleted={resetForm}
                     />
-                    <Button type="submit" disabled={isPending}>
-                        {isPending ? "Сохраняем.." : "Сохранить"}
-                    </Button>
+                    <SaveButton variant="default" type="submit" disabled={isPending} loading={isPending}/>
                 </DialogFooter>
                 </form>
             </DialogContent>

@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { showToastError } from "@/app/lib/errors/toastError";
 import { updateCategoryAction } from "@/app/lib/actions/categoryAction";
+import {SaveButton} from "@/app/ui/shared/buttons/save-button";
 
 
 export function EditCategoryModal(category: Category) {
@@ -83,10 +84,7 @@ export function EditCategoryModal(category: Category) {
                             required={false}
                         />
                     </div>
-
-                    <Button type="submit" disabled={isPending}>
-                        {isPending ? "Сохраняем..." : "Сохранить"}
-                    </Button>
+                    <SaveButton variant="default" type="submit" disabled={isPending} loading={isPending}/>
                 </form>
             </DialogContent>
         </Dialog>

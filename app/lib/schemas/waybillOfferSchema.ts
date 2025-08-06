@@ -26,6 +26,10 @@ export const zWaybillOfferSchema = zWaybillOfferBaseSchema.extend({
 export const zWaybillOfferPostSchema = zWaybillOfferBaseSchema.extend({
 })
 
+export const zWaybillOfferPutSchema = zWaybillOfferBaseSchema.extend({
+})
+
 /** TypeScript helper */
 export type WaybillOfferSchema = z.infer<typeof zWaybillOfferSchema>;
 export type WaybillOfferPostSchema = z.infer<typeof zWaybillOfferPostSchema>;
+export type WaybillOfferPutSchema = z.infer<typeof zWaybillOfferPutSchema>;

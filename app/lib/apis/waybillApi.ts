@@ -5,7 +5,12 @@ import {
     zWaybillSchema
 } from "@/app/lib/schemas/waybillSchema";
 import { env } from "@/env";
-import {type WaybillOfferPostSchema, type WaybillOfferSchema, zWaybillOfferSchema} from "@/app/lib/schemas/waybillOfferSchema";
+import {
+    type WaybillOfferPostSchema,
+    WaybillOfferPutSchema,
+    type WaybillOfferSchema,
+    zWaybillOfferSchema
+} from "@/app/lib/schemas/waybillOfferSchema";
 import { getAuthHeader } from "@/app/lib/apis/utils/getAuthHeader"
 import {handleApiError} from "@/app/lib/errors/handleApiError";
 import {fetchWithAuthAndParse} from "@/app/lib/apis/utils/fetchJson";
@@ -136,6 +141,29 @@ export async function postWaybillOffer(
     }
 
     const json = JSON.parse(text)
+    return zWaybillOfferSchema.parse(json);
+}
+
+export async function patchWaybillOffer(
+    waybill_offer_id: string,
+    waybill_offer: WaybillOfferPutSchema
+): Promise<WaybillOfferSchema> {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/waybill-offers/${waybill_offer_id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            ...(await getAuthHeader()),
+        },
+        body: JSON.stringify(waybill_offer),
+    });
+
+    const text = await res.text();
+    if (!res.ok) {
+        handleApiError(res, text, ENTITY);
+    }
+
+    const json = JSON.parse(text);
     return zWaybillOfferSchema.parse(json);
 }
 
