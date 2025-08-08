@@ -32,7 +32,7 @@ export async function postProduct(product: FormData): Promise<Product> {
         body: product,
     });
 
-    const text = await res.text().catch(() => "");
+    const text = await res.text();
     if (!res.ok) {
         handleApiError(res, text, ENTITY);
     }
@@ -51,7 +51,7 @@ export async function patchProduct(id: string, product: FormData): Promise<numbe
         body: product,
     });
 
-    const text = await res.text().catch(() => "");
+    const text = await res.text();
     if (!res.ok) {
         handleApiError(res, text, ENTITY);
     }
@@ -68,7 +68,7 @@ export async function delProduct(id: string): Promise<number> {
         },
     });
 
-    const text = await res.text().catch(() => "");
+    const text = await res.text();
     if (!res.ok) {
         handleApiError(res, text, ENTITY);
     }

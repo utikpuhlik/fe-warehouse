@@ -11,7 +11,7 @@ export async function printPriceList(price_type: string, ext: string): Promise<R
 
 
 export async function printWaybill(waybill_id: string): Promise<Response> {
-    const url = `/api/documents/waybill/?waybill_id=${waybill_id}`;
+    const url = `/api/print/waybills/?waybill_id=${waybill_id}`;
     const res = await fetch(url);
 
     if (!res.ok) {

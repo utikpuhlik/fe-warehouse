@@ -8,6 +8,6 @@ export async function fetchFilteredOffersTS(
 ): Promise<OfferPaginatedSchema> {
   const url = `${env.NEXT_PUBLIC_API_URL}/offers/search/text_search?search_term=${search_term}&size=${size}&page=${page}`;
   const res = await fetch(url);
-  const text = await res.text().catch(() => "");
+  const text = await res.text();
   return zOfferPaginatedSchema.parse(JSON.parse(text));
 }
