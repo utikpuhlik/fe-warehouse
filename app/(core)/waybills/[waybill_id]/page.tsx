@@ -10,9 +10,10 @@ import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/compon
 import {DeleteEntityButton} from "@/app/ui/shared/buttons/delete-entity-button";
 import {deleteWaybillAction} from "@/app/lib/actions/waybillAction";
 import {notFound} from "next/navigation";
-import {DownloadWaybillButton} from "@/app/ui/waybill/DownloadWaybillButton";
+import {DownloadWaybillWord} from "@/app/ui/waybill/download-waybill-word";
 import {USER_TYPE_LABELS, WAYBILL_TYPE_LABELS} from "@/app/lib/schemas/commonSchema";
 import type {Metadata} from "next";
+import {DownloadWaybillExcel} from "@/app/ui/waybill/download-waybill-excel";
 
 type Props = {
     params: Promise<{ waybill_id: string }>
@@ -57,7 +58,8 @@ export default async function WaybillPage({params}: Props) {
                     ]}
                 />
                 <div className="flex space-x-2">
-                    <DownloadWaybillButton waybillId={waybill_id} full={false}/>
+                    <DownloadWaybillWord waybillId={waybill_id} full={true}/>
+                    <DownloadWaybillExcel waybillId={waybill_id} full={true}/>
                     <TooltipProvider>
                         <Tooltip>
                             <TooltipTrigger asChild>

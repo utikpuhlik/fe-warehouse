@@ -14,7 +14,7 @@ export function TooltipInfo({ content }: Props) {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <InfoIcon className="h-5 w-5" />
+          <InfoIcon className="h-4 w-4" />
         </TooltipTrigger>
         <TooltipContent>
           <p>{content}</p>

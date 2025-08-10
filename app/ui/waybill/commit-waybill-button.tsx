@@ -26,5 +26,5 @@ export function CommitWaybillButton({ waybill_id, disabled = false }: { waybill_
         });
     };
 
-    return <SaveButton onClick={handleCommit} disabled={disabled || isPending} />;
+    return <SaveButton onClick={handleCommit} disabled={disabled || isPending} text="Сохранить накладную"/>;
 }

@@ -195,7 +195,7 @@ export const columns: ColumnDef<UserSchema>[] = [
         enableHiding: false,
         cell: ({row}) => {
             return (
-                <TableDetailsDropdown href={`/users/${row.original.id}`}/>
+                <TableDetailsDropdown href_details={`/users/${row.original.id}`} href_edit={`/users/${row.original.id}`}/>
             );
         }
     }

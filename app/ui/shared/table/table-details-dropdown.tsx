@@ -5,21 +5,25 @@ import Link from "next/link";
 import * as React from "react";
 
 type TableDetailsDropdownProps = {
-    href: string;
+    href_edit: string;
+    href_details: string;
 }
 
-export function TableDetailsDropdown({ href }:  TableDetailsDropdownProps) {
+export function TableDetailsDropdown({href_edit, href_details}: TableDetailsDropdownProps) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
                     <span className="sr-only">Открыть меню</span>
-                    <MoreHorizontal />
+                    <MoreHorizontal/>
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 <DropdownMenuItem>
-                    <Link href={href}>Редактировать</Link>
+                    <Link href={href_details}>Детали</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                    <Link href={href_edit}>Редактировать</Link>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

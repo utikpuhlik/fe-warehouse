@@ -154,7 +154,8 @@ export const columns: ColumnDef<OrderSchema>[] = [
         enableHiding: false,
         cell: ({row}) => {
             return (
-                <TableDetailsDropdown href={`/orders/${row.original.id}`}/>
+                <TableDetailsDropdown href_details={`/orders/${row.original.id}`}
+                                      href_edit={`/orders/${row.original.id}/edit`}/>
             );
         }
     }

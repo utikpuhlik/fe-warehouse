@@ -1,33 +1,50 @@
 import { Button } from "@/components/ui/button";
-import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import { Loader } from "lucide-react";
+import { FileText, FileSpreadsheet, Download } from "lucide-react";
+import type { ComponentType } from "react";
+
 
 type DownloadButtonProps = {
   onClick?: () => void;
+  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+  format: "default" |"docx" | "xlsx";
   full?: boolean;
   disabled?: boolean;
   loading?: boolean;
+  className?: string;
+};
+
+const FORMAT_MAP: Record<string, { Icon: ComponentType<{ className?: string }>; label: string }> = {
+  xlsx: { Icon: FileSpreadsheet, label: "Excel" },
+  docx: { Icon: FileText, label: "Word" },
+  default: { Icon: Download, label: "Download" },
 };
 
 export function DownloadButton({
   onClick,
+  variant = "outline",
+  format,
   full = true,
   disabled = false,
   loading = false,
+  className,
 }: DownloadButtonProps) {
+  const { Icon, label } = FORMAT_MAP[format];
+
   return (
     <Button
-      variant="outline"
-      className="flex items-center gap-2 rounded-xl border border-input px-3 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+      variant={variant}
+      className={className}
       onClick={onClick}
       disabled={disabled}
+      aria-label={full ? undefined : label}
     >
       {loading ? (
         <Loader className="h-5 w-5 animate-spin" />
       ) : (
-        <ArrowDownTrayIcon className="h-5 w-5" />
+        <Icon className="h-5 w-5" />
       )}
-      {full && <span>{loading ? "Загрузка..." : "Скачать"}</span>}
+      {full && <span>{label}</span>}
     </Button>
   );
 }

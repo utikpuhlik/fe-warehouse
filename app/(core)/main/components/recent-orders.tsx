@@ -35,6 +35,7 @@ import {OrderSchema} from "@/app/lib/schemas/orderSchema";
 import {formatCurrency, generateAvatarFallback} from "@/app/lib/utils";
 import {getDictionary} from "@/app/lib/i18n";
 import {OrderBadge} from "@/app/ui/orders/order-badge";
+import {OrderStatusEnum} from "@/app/lib/schemas/commonSchema";
 
 const currentLang = "ru";
 const dict = getDictionary(currentLang);
@@ -98,7 +99,7 @@ const columns: ColumnDef<OrderSchema>[] = [
         accessorKey: "status",
         header: dict.orderDataTable.status,
         cell: ({row}) => {
-            const status = row.original.status;
+            const status: OrderStatusEnum = row.original.status;
             return (
                 <OrderBadge orderStatus={status}/>
             );
@@ -109,7 +110,8 @@ const columns: ColumnDef<OrderSchema>[] = [
         enableHiding: false,
         cell: ({row}) => {
             return (
-                <TableDetailsDropdown href={`/orders/${row.original.id}`}/>
+                <TableDetailsDropdown href_details={`/orders/${row.original.id}`}
+                                      href_edit={`/orders/${row.original.id}/edit`}/>
             );
         }
     }

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -15,21 +15,20 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronLeft, ChevronRight, Columns } from "lucide-react";
-import { useDebouncedCallback } from "use-debounce";
+import {ArrowUpDown, ChevronLeft, ChevronRight, Columns} from "lucide-react";
+import {useDebouncedCallback} from "use-debounce";
 
 // Custom hook for fetching data
-import { useWaybills } from "@/hooks/useTableNavigation";
+import {useWaybills} from "@/hooks/useTableNavigation";
 
-// UI Components and Utilities
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
+import {Input} from "@/components/ui/input";
 import {
     Table,
     TableBody,
@@ -38,21 +37,20 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import { formatDateToLocal, generateAvatarFallback } from "@/app/lib/utils";
-import { WaybillSchema } from "@/app/lib/schemas/waybillSchema";
-import { UserSchema } from "@/app/lib/schemas/userSchema";
-import { TableDetailsDropdown } from "@/app/ui/shared/table/table-details-dropdown";
-import { TablePopover } from "@/app/ui/shared/table/table-popover"; // Assuming this is the path to your TablePopover
-import { WaybillBadge } from "@/app/ui/waybill/waybill-badge";
+import {Avatar, AvatarFallback} from "@/components/ui/avatar";
+import {Badge} from "@/components/ui/badge";
+import {Checkbox} from "@/components/ui/checkbox";
+import {formatDateToLocal, generateAvatarFallback} from "@/app/lib/utils";
+import {WaybillSchema} from "@/app/lib/schemas/waybillSchema";
+import {UserSchema} from "@/app/lib/schemas/userSchema";
+import {TableDetailsDropdown} from "@/app/ui/shared/table/table-details-dropdown";
+import {TablePopover} from "@/app/ui/shared/table/table-popover";
+import {WaybillBadge} from "@/app/ui/waybill/waybill-badge";
 
-// --- Column Definitions (No changes here) ---
 export const columns: ColumnDef<WaybillSchema>[] = [
     {
         id: "select",
-        header: ({ table }) => (
+        header: ({table}) => (
             <Checkbox
                 checked={
                     table.getIsAllPageRowsSelected() ||
@@ -62,7 +60,7 @@ export const columns: ColumnDef<WaybillSchema>[] = [
                 aria-label="Select all"
             />
         ),
-        cell: ({ row }) => (
+        cell: ({row}) => (
             <Checkbox
                 checked={row.getIsSelected()}
                 onCheckedChange={(value) => row.toggleSelected(!!value)}
@@ -75,7 +73,7 @@ export const columns: ColumnDef<WaybillSchema>[] = [
     {
         accessorKey: "customer",
         header: "Клиент",
-        cell: ({ row }) => {
+        cell: ({row}) => {
             const customer: UserSchema = row.original.customer;
             const fullName = `${customer.first_name} ${customer.last_name || ''}`;
             return (
@@ -94,39 +92,39 @@ export const columns: ColumnDef<WaybillSchema>[] = [
     },
     {
         accessorKey: "waybill_type",
-        header: ({ column }) => (
+        header: ({column}) => (
             <Button
                 className="-ml-3"
                 variant="ghost"
                 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
                 Тип
-                <ArrowUpDown className="ml-2 h-4 w-4" />
+                <ArrowUpDown className="ml-2 h-4 w-4"/>
             </Button>
         ),
-        cell: ({ row }) => {
+        cell: ({row}) => {
             const waybill_type = row.original.waybill_type;
-            return <WaybillBadge waybillType={waybill_type} />;
+            return <WaybillBadge waybillType={waybill_type}/>;
         },
     },
     {
         accessorKey: "is_pending",
-        header: ({ column }) => (
+        header: ({column}) => (
             <Button
                 className="-ml-3"
                 variant="ghost"
                 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
                 Статус
-                <ArrowUpDown className="ml-2 h-4 w-4" />
+                <ArrowUpDown className="ml-2 h-4 w-4"/>
             </Button>
         ),
-        cell: ({ row }) => {
+        cell: ({row}) => {
             const isPending: boolean = row.original.is_pending;
 
-            const { variant, label }: { variant: "info" | "success"; label: string } = isPending
-                ? { variant: "info", label: "Черновик" }
-                : { variant: "success", label: "Завершено" };
+            const {variant, label}: { variant: "info" | "success"; label: string } = isPending
+                ? {variant: "info", label: "Черновик"}
+                : {variant: "success", label: "Завершено"};
 
             return <Badge variant={variant} className="capitalize">{label}</Badge>;
         },
@@ -134,7 +132,7 @@ export const columns: ColumnDef<WaybillSchema>[] = [
     {
         accessorKey: "author",
         header: "Автор",
-        cell: ({ row }) => {
+        cell: ({row}) => {
             const author = row.original.author;
             const fullName = `${author.first_name} ${author.last_name || ''}`;
             return (
@@ -153,31 +151,31 @@ export const columns: ColumnDef<WaybillSchema>[] = [
     },
     {
         accessorKey: "note",
-        header: ({ column }) => (
+        header: ({column}) => (
             <Button
                 className="-ml-3"
                 variant="ghost"
                 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
                 Примечание
-                <ArrowUpDown className="ml-2 h-4 w-4" />
+                <ArrowUpDown className="ml-2 h-4 w-4"/>
             </Button>
         ),
-        cell: ({ row }) => <div className="max-w-[200px] truncate">{row.getValue("note")}</div>,
+        cell: ({row}) => <div className="max-w-[200px] truncate">{row.getValue("note")}</div>,
     },
     {
         accessorKey: "created_at",
-        header: ({ column }) => (
+        header: ({column}) => (
             <Button
                 className="-ml-3"
                 variant="ghost"
                 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
                 Дата
-                <ArrowUpDown className="ml-2 h-4 w-4" />
+                <ArrowUpDown className="ml-2 h-4 w-4"/>
             </Button>
         ),
-        cell: ({ row }) => {
+        cell: ({row}) => {
             const raw: string = row.getValue("created_at");
             return formatDateToLocal(raw, "ru-RU", true);
         },
@@ -185,7 +183,9 @@ export const columns: ColumnDef<WaybillSchema>[] = [
     {
         id: "actions",
         enableHiding: false,
-        cell: ({ row }) => <TableDetailsDropdown href={`/waybills/${row.original.id}`} />,
+        cell: ({row}) => <TableDetailsDropdown
+            href_details={`/waybills/${row.original.id}`}
+            href_edit={`/waybills/${row.original.id}`}/>,
     },
 ];
 
@@ -218,7 +218,7 @@ export default function WaybillDataTable() {
     }), [page, pageSize]);
 
     // --- Data Fetching via Custom Hook ---
-    const { data, isLoading, isError } = useWaybills(query, pagination, waybillTypeParam, isPendingParam);
+    const {data, isLoading, isError} = useWaybills(query, pagination, waybillTypeParam, isPendingParam);
 
     // --- Handlers to update URL ---
     const updateURLParams = (newParams: Record<string, string | null>) => {
@@ -235,7 +235,7 @@ export default function WaybillDataTable() {
     };
 
     const debouncedSearch = useDebouncedCallback((value: string) => {
-        updateURLParams({ q: value });
+        updateURLParams({q: value});
     }, 300);
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -244,21 +244,21 @@ export default function WaybillDataTable() {
     };
 
     const updateFilter = (key: string, value: string | null) => {
-        updateURLParams({ [key]: value });
+        updateURLParams({[key]: value});
     };
 
     // Options for TablePopovers
     const waybill_types = [
-        { label: "Все типы", value: "" },
-        { label: "Приход", value: "WAYBILL_IN" },
-        { label: "Расход", value: "WAYBILL_OUT" },
-        { label: "Возврат", value: "WAYBILL_RETURN" },
+        {label: "Все типы", value: ""},
+        {label: "Приход", value: "WAYBILL_IN"},
+        {label: "Расход", value: "WAYBILL_OUT"},
+        {label: "Возврат", value: "WAYBILL_RETURN"},
     ];
 
     const waybill_statuses = [
-        { label: "Все статусы", value: "" },
-        { label: "Черновик", value: "true" },
-        { label: "Завершено", value: "false" },
+        {label: "Все статусы", value: ""},
+        {label: "Черновик", value: "true"},
+        {label: "Завершено", value: "false"},
     ];
 
 
@@ -323,7 +323,7 @@ export default function WaybillDataTable() {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button size="icon" variant="outline">
-                                <Columns className="h-4 w-4" />
+                                <Columns className="h-4 w-4"/>
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
@@ -420,7 +420,7 @@ export default function WaybillDataTable() {
                         onClick={() => table.previousPage()}
                         disabled={!table.getCanPreviousPage()}
                     >
-                        <ChevronLeft className="h-4 w-4" />
+                        <ChevronLeft className="h-4 w-4"/>
                     </Button>
                     <span className="text-sm">
                         {table.getState().pagination.pageIndex + 1}/{table.getPageCount()}
@@ -431,7 +431,7 @@ export default function WaybillDataTable() {
                         onClick={() => table.nextPage()}
                         disabled={!table.getCanNextPage()}
                     >
-                        <ChevronRight className="h-4 w-4" />
+                        <ChevronRight className="h-4 w-4"/>
                     </Button>
                 </div>
             </div>

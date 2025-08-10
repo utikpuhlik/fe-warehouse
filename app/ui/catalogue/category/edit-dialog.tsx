@@ -2,7 +2,7 @@
 
 import {
     Dialog,
-    DialogContent,
+    DialogContent, DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -84,7 +84,9 @@ export function EditCategoryModal(category: Category) {
                             required={false}
                         />
                     </div>
-                    <SaveButton variant="default" type="submit" disabled={isPending} loading={isPending}/>
+                    <DialogFooter className="flex items-center justify-between">
+                        <SaveButton variant="default" type="submit" disabled={isPending} loading={isPending}/>
+                    </DialogFooter>
                 </form>
             </DialogContent>
         </Dialog>

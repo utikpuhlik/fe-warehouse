@@ -63,7 +63,7 @@ export function CatalogueCard({ type, entity }: CatalogueCardProps) {
     };
 
     return (
-        <Card className="relative group">
+        <Card className="relative group overflow-hidden">
             <Link href={getHref()}>
                 <CardContent className="flex flex-col items-center p-4">
                     <div className="w-[100px] h-[100px] flex items-center justify-center">

@@ -10,7 +10,7 @@ type Props = {
   full?: boolean;
 };
 
-export function DownloadWaybillButton({ waybillId, full = true }: Props) {
+export function DownloadWaybillExcel({ waybillId, full = true }: Props) {
   const [loading, setLoading] = useState(false);
 
   const handleDownload = async () => {
@@ -18,10 +18,7 @@ export function DownloadWaybillButton({ waybillId, full = true }: Props) {
     try {
       const res = await printWaybill(waybillId);
       const blob = await res.blob();
-      const disposition = res.headers.get("Content-Disposition");
-      const filename =
-        disposition?.match(/filename="?([^"]+)"?/)?.[1] ??
-        `waybill_${waybillId}.docx`;
+      const filename = `waybill_${waybillId}.docx`;
 
       const link = document.createElement("a");
       link.href = URL.createObjectURL(blob);
@@ -40,6 +37,7 @@ export function DownloadWaybillButton({ waybillId, full = true }: Props) {
   return (
     <DownloadButton
       onClick={handleDownload}
+      format="xlsx"
       full={full}
       loading={loading}
       disabled={loading}

@@ -75,6 +75,7 @@ export function DownloadPrice() {
 
       <DownloadButton
         onClick={handleDownload}
+        format="xlsx"
         full={false}
         loading={loading}
         disabled={loading}

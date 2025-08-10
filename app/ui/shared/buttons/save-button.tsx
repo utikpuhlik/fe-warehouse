@@ -8,6 +8,7 @@ type SaveButtonProps = {
     full?: boolean;
     disabled?: boolean;
     loading?: boolean
+    text?: string;
     className?: string;
 };
 
@@ -18,6 +19,7 @@ export function SaveButton({
     full = true,
     disabled = false,
     loading = false,
+    text,
     className,
     }: SaveButtonProps) {
     return (
@@ -33,7 +35,7 @@ export function SaveButton({
             ) : (
                 <>
                     <Save className="h-5 w-5" />
-                    {full && <span>Сохранить</span>}
+                    {full && <span>{text ?? "Сохранить"}</span>}
                 </>
             )}
         </Button>

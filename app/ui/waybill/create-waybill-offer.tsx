@@ -140,6 +140,7 @@ export function CreateWaybillOfferForm({
                             onClick={handleNoteUpdate}
                             disabled={isSavingNote}
                             loading={isSavingNote}
+                            text="Сохранить заметку"
                             className={"w-full"}
                         ></SaveButton>
                     </div>
