@@ -71,6 +71,8 @@ export const ru = {
         type: "Тип накладной",
         date: "Дата",
         totalSum: "Сумма",
+        note: "Заметка",
+        composition: "Состав накладной"
     },
     orderDataTable: {
         number: "Номер заказа",
@@ -78,6 +80,7 @@ export const ru = {
         customer: "Клиент",
         totalSum: "Сумма",
         note: "Заметка",
+        composition: "Состав заказа",
         createdAt: "Дата создания",
         updatedAt: "Дата обновления",
     },

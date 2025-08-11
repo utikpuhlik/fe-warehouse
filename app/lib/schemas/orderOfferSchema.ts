@@ -25,6 +25,9 @@ export const zOrderOfferSchema = zOrderOfferBaseSchema.extend({
 
 export const zOrderOfferPostSchema = zOrderOfferBaseSchema.extend({})
 
+export const zOrderOfferPutSchema = zOrderOfferBaseSchema.extend({})
+
 /** TypeScript helper */
 export type OrderOfferSchema = z.infer<typeof zOrderOfferSchema>;
 export type OrderOfferPostSchema = z.infer<typeof zOrderOfferPostSchema>;
+export type OrderOfferPutSchema = z.infer<typeof zOrderOfferPutSchema>;

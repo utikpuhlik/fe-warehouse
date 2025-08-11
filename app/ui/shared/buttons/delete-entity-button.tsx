@@ -1,10 +1,10 @@
 "use client";
 
-import { useTransition } from "react";
-import { Button } from "@/components/ui/button";
-import { toast } from "@/hooks/use-toast";
-import { showToastError } from "@/app/lib/errors/toastError";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import {useTransition} from "react";
+import {Button} from "@/components/ui/button";
+import {toast} from "@/hooks/use-toast";
+import {showToastError} from "@/app/lib/errors/toastError";
+import {TrashIcon} from "@heroicons/react/24/outline";
 import {isRedirectError} from "next/dist/client/components/redirect-error";
 
 type Props = {
@@ -16,14 +16,15 @@ type Props = {
     disabled?: boolean;
 };
 
-export function DeleteEntityButton({
-                                       entityName,
-                                       entityId,
-                                       deleteAction,
-                                       onDeleted,
-                                       className,
-                                       disabled,
-                                   }: Props) {
+export function DeleteEntityButton(
+    {
+        entityName,
+        entityId,
+        deleteAction,
+        onDeleted,
+        className,
+        disabled,
+    }: Props) {
     const [isPending, startTransition] = useTransition();
 
     const handleDelete = () => {

@@ -12,7 +12,7 @@ export async function createProductAction(
     file: File,
     category_slug: string,
     sub_category_slug: string,
-    ): Promise<void> {
+): Promise<void> {
     const formData = buildFormData(product, file)
     await postProduct(formData)
     revalidatePath(`/catalogue/${category_slug}/${sub_category_slug}`);
@@ -23,7 +23,8 @@ export async function updateProductAction(
     product: ProductPutSchema,
     category_slug: string,
     sub_category_slug: string,
-    file?: File): Promise<void> {
+    file?: File
+): Promise<void> {
 
     const formData = buildFormData(product, file);
     await patchProduct(product_id, formData)
@@ -31,8 +32,11 @@ export async function updateProductAction(
     revalidatePath(`/catalogue/${category_slug}/${sub_category_slug}`);
 }
 
-export async function deleteProductAction(product_id: string, category_slug: string,
-                                          sub_category_slug: string): Promise<void> {
+export async function deleteProductAction(
+    product_id: string,
+    category_slug: string,
+    sub_category_slug: string
+): Promise<void> {
     await delProduct(product_id);
 
     revalidatePath(`/catalogue/${category_slug}/${sub_category_slug}`);

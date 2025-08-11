@@ -19,3 +19,14 @@ export async function printWaybill(waybill_id: string): Promise<Response> {
     }
     return res;
 }
+
+// TODO: change URL to order!
+export async function printOrder(waybill_id: string): Promise<Response> {
+    const url = `/api/print/waybills/?waybill_id=${waybill_id}`;
+    const res = await fetch(url);
+
+    if (!res.ok) {
+        throw new Error("Ошибка при получении заказа");
+    }
+    return res;
+}

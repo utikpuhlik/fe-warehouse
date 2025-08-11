@@ -101,6 +101,22 @@ export async function patchWaybill(waybill_id: string, waybill: WaybillPutSchema
     return zWaybillSchema.parse(json);
 }
 
+export async function delWaybill(id: string): Promise<number> {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${id}`, {
+        method: "DELETE",
+        headers: {
+            Accept: "application/json",
+            ...(await getAuthHeader()),
+        },
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to delete waybill: ${res.status}`);
+    }
+
+    return res.status;
+}
+
 export async function commitWaybill(waybill_id: string): Promise<WaybillSchema> {
     const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${waybill_id}/commit`, {
         method: "POST",
@@ -167,21 +183,6 @@ export async function patchWaybillOffer(
     return zWaybillOfferSchema.parse(json);
 }
 
-export async function delWaybill(id: string): Promise<number> {
-    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${id}`, {
-        method: "DELETE",
-        headers: {
-            Accept: "application/json",
-            ...(await getAuthHeader()),
-        },
-    });
-
-    if (!res.ok) {
-        throw new Error(`Failed to delete waybill: ${res.status}`);
-    }
-
-    return res.status;
-}
 
 export async function delWaybillOffer(waybill_offer_id: string): Promise<number> {
     const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/waybill-offers/${waybill_offer_id}`, {

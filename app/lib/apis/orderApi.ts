@@ -8,10 +8,15 @@ import {
 import { env } from "@/env";
 import {fetchWithAuthAndParse} from "@/app/lib/apis/utils/fetchJson";
 import {CountSchema, zCountSchema} from "@/app/lib/schemas/commonSchema";
-import type {OrderOfferSchema} from "@/app/lib/schemas/orderOfferSchema";
 import {getAuthHeader} from "@/app/lib/apis/utils/getAuthHeader";
 import {OrderStatusEnum} from "@/app/lib/schemas/commonSchema";
 import {handleApiError} from "@/app/lib/errors/handleApiError";
+import {
+    OrderOfferPostSchema,
+    OrderOfferPutSchema,
+    OrderOfferSchema,
+    zOrderOfferSchema
+} from "@/app/lib/schemas/orderOfferSchema";
 
 const ENTITY = "orders";
 
@@ -71,7 +76,6 @@ export async function postOrder(order: OrderWithOffersPostSchema | OrderPostSche
 }
 
 export async function patchOrder(order_id: string, order: OrderPutSchema): Promise<OrderSchema> {
-    console.log("Updating order:", order_id, order);
     const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${order_id}`, {
         method: "PATCH",
         headers: {
@@ -88,4 +92,83 @@ export async function patchOrder(order_id: string, order: OrderPutSchema): Promi
     }
 
     return zOrderSchema.parse(JSON.parse(text));
+}
+
+export async function delOrder(order_id: string): Promise<number> {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${order_id}`, {
+        method: "DELETE",
+        headers: {
+            Accept: "application/json",
+            ...(await getAuthHeader()),
+        },
+    });
+
+    const text = await res.text();
+    if (!res.ok) {
+        handleApiError(res, text, ENTITY);
+    }
+
+    return res.status;
+}
+
+export async function postOrderOffer(
+    order: OrderOfferPostSchema,
+    order_id: string
+): Promise<OrderOfferSchema> {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${order_id}/offers`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            ...(await getAuthHeader()),
+        },
+        body: JSON.stringify(order),
+    });
+
+    const text = await res.text();
+    if (!res.ok) {
+        handleApiError(res, text, ENTITY);
+    }
+
+    const json = JSON.parse(text)
+    return zOrderOfferSchema.parse(json);
+}
+
+export async function patchOrderOffer(
+    order_offer_id: string,
+    order_offer: OrderOfferPutSchema
+): Promise<OrderOfferSchema> {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/order-offers/${order_offer_id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            ...(await getAuthHeader()),
+        },
+        body: JSON.stringify(order_offer),
+    });
+
+    const text = await res.text();
+    if (!res.ok) {
+        handleApiError(res, text, ENTITY);
+    }
+
+    const json = JSON.parse(text);
+    return zOrderOfferSchema.parse(json);
+}
+
+export async function delOrderOffer(order_offer_id: string): Promise<number> {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/order-offers/${order_offer_id}`, {
+        method: "DELETE",
+        headers: {
+            Accept: "application/json",
+            ...(await getAuthHeader()),
+        },
+    });
+
+    if (!res.ok) {
+        throw new Error(`Failed to delete order offer: ${res.status}`);
+    }
+
+    return res.status;
 }

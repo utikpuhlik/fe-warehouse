@@ -89,7 +89,7 @@ export default async function WaybillPage({params}: Props) {
             )}
 
             <Suspense fallback={<Skeleton className="h-32"/>}>
-                <WaybillOffersTable {...waybill} />
+                <WaybillOffersTable waybill={waybill} />
             </Suspense>
         </main>
     );
