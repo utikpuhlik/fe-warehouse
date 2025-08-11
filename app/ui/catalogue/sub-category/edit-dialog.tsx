@@ -8,8 +8,6 @@ import {
     DialogTrigger,
     DialogFooter
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {type SubCategory, zSubCategorySchema
@@ -22,6 +20,7 @@ import { showToastError } from "@/app/lib/errors/toastError";
 import {deleteSubCategoryAction, updateSubCategoryAction} from "@/app/lib/actions/subCategoryAction";
 import { DeleteEntityButton } from "@/app/ui/shared/buttons/delete-entity-button";
 import {SaveButton} from "@/app/ui/shared/buttons/save-button";
+import {EditButton} from "@/app/ui/shared/buttons/edit-button";
 
 
 export function EditSubCategoryModal(sub_category: SubCategory) {
@@ -58,9 +57,7 @@ export function EditSubCategoryModal(sub_category: SubCategory) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="ghost" size="icon" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Pencil className="w-4 h-4 text-muted-foreground" />
-                </Button>
+                <EditButton variant="ghost" size="icon" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"/>
             </DialogTrigger>
 
             <DialogContent>

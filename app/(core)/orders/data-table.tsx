@@ -38,7 +38,7 @@ import {
 import {Checkbox} from "@/components/ui/checkbox";
 import {OrderSchema} from "@/app/lib/schemas/orderSchema";
 import {formatDateToLocal} from "@/app/lib/utils";
-import {TableDetailsDropdown} from "@/app/ui/shared/table/table-details-dropdown";
+import {TableDetailsOrderDropdown} from "@/app/ui/shared/table/table-details-dropdown";
 import {TablePopover} from "@/app/ui/shared/table/table-popover";
 import {ORDER_STATUS_LABELS} from "@/app/lib/schemas/commonSchema";
 import {getDictionary} from "@/app/lib/i18n";
@@ -154,8 +154,12 @@ export const columns: ColumnDef<OrderSchema>[] = [
         enableHiding: false,
         cell: ({row}) => {
             return (
-                <TableDetailsDropdown href_details={`/orders/${row.original.id}`}
-                                      href_edit={`/orders/${row.original.id}/edit`}/>
+                <TableDetailsOrderDropdown
+                    href_details={`/orders/${row.original.id}`}
+                    href_edit={`/orders/${row.original.id}/edit`}
+                    href_print={`/orders/${row.original.id}/print`}
+                    href_convert={`/orders/${row.original.id}/convert`}
+                />
             );
         }
     }

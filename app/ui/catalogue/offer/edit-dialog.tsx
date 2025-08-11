@@ -8,8 +8,6 @@ import {
   DialogTrigger,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
@@ -24,6 +22,7 @@ import {
   updateOfferAction,
 } from "@/app/lib/actions/offerAction";
 import {SaveButton} from "@/app/ui/shared/buttons/save-button";
+import {EditButton} from "@/app/ui/shared/buttons/edit-button";
 
 export function EditOfferModal({offer}: { offer: OfferSchema }) {
   const [open, setOpen] = useState(false);
@@ -63,13 +62,7 @@ export function EditOfferModal({offer}: { offer: OfferSchema }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          size="icon"
-          className="shadow-sm"
-        >
-          <Pencil className="w-4 h-4 text-muted-foreground" />
-        </Button>
+          <EditButton variant="outline" size="icon" className="shadow-sm"/>
       </DialogTrigger>
 
       <DialogContent>

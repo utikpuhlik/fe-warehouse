@@ -40,16 +40,14 @@ Use it in RootLayout as following:
 ## Data Fetching Strategy
 ```mermaid
 graph TD
-    page[Page] --> B{server or client?}
-    B -->|server| C[Server Component]
-    C --> D[server fetch function]
-    D -->|call external API| python[FastAPI backend]
-    python -->|return JSON| D
-    D --> |pass response as props| ClientComponent
-    ClientComponent -->|Suspense| page
-    B -->|client| auth{send cookies?}
-    auth -->|yes| E[Router proxy]
-    auth -->|no| F[Tanstack Query]
+    page[Page] --> ServerOrClient{server or client?}
+    ServerOrClient -->|server| ServerFetch[server fetch function]
+    ServerOrClient --> ClientFetchStrategy{Tanstack Query or Fetch?}
+    ClientFetchStrategy -->|Tanstack Query| RouterProxy[Router Proxy]
+    ClientFetchStrategy -->|Fetch| RouterProxy[Router Proxy]
+    RouterProxy --> ServerFetch
+    ServerFetch -->|call external API| python[FastAPI backend]
+    python -->|return JSON| ServerFetch
 ```
 
 ## Data Mutation Strategy

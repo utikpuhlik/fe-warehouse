@@ -2,14 +2,13 @@
 
 import { useState, useTransition } from "react"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Pencil } from "lucide-react"
 import { WaybillOfferSchema } from "@/app/lib/schemas/waybillOfferSchema"
 import { updateWaybillOfferAction } from "@/app/lib/actions/waybillAction"
 import { showToastError } from "@/app/lib/errors/toastError"
 import { useToast } from "@/hooks/use-toast"
 import {CheckButton} from "@/app/ui/shared/buttons/check-button";
 import {CancelButton} from "@/app/ui/shared/buttons/cancel-button";
+import {EditButton} from "@/app/ui/shared/buttons/edit-button";
 
 type Props = {
     waybillOffer: WaybillOfferSchema
@@ -58,9 +57,11 @@ export function WaybillOfferQuantityEditor({ waybillOffer }: Props) {
     ) : (
         <div className="flex items-center gap-2">
             {waybillOffer.quantity}
-            <Button variant="ghost" size="icon" onClick={() => setEditing(true)}>
-                <Pencil className="w-4 h-4 text-muted-foreground" />
-            </Button>
+            <EditButton
+                onClick={() => setEditing(true)}
+                variant="ghost"
+                size="icon"
+            />
         </div>
     )
 }

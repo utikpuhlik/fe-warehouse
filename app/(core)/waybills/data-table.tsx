@@ -183,9 +183,7 @@ export const columns: ColumnDef<WaybillSchema>[] = [
     {
         id: "actions",
         enableHiding: false,
-        cell: ({row}) => <TableDetailsDropdown
-            href_details={`/waybills/${row.original.id}`}
-            href_edit={`/waybills/${row.original.id}`}/>,
+        cell: ({row}) => <TableDetailsDropdown href_edit={`/waybills/${row.original.id}`}/>,
     },
 ];
 

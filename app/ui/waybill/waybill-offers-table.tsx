@@ -18,7 +18,10 @@ import {WaybillBadge} from "@/app/ui/waybill/waybill-badge";
 import {CustomerBadge} from "@/app/ui/users/customer-badge";
 import {formatCurrency} from "@/app/lib/utils";
 import {WaybillOfferQuantityEditor} from "@/app/ui/waybill/quantity-editor";
+import {getDictionary} from "@/app/lib/i18n";
 
+const currentLang = "ru";
+const dict = getDictionary(currentLang);
 export default async function WaybillOffersTable(waybill: WaybillSchema) {
     const waybill_offers: WaybillOfferSchema[] = await fetchWaybillOffers(waybill.id);
 
@@ -58,17 +61,17 @@ export default async function WaybillOffersTable(waybill: WaybillSchema) {
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>№</TableHead>
-                        <TableHead>Адресный код</TableHead>
-                        <TableHead>Фото</TableHead>
-                        <TableHead>Система</TableHead>
-                        <TableHead>Подсистема</TableHead>
-                        <TableHead>Наименование</TableHead>
-                        <TableHead>Бренд</TableHead>
-                        <TableHead>Артикул</TableHead>
-                        <TableHead>Кол-во</TableHead>
-                        <TableHead>Цена</TableHead>
-                        <TableHead>Сумма</TableHead>
+                        <TableHead>{dict.table.number}</TableHead>
+                        <TableHead>{dict.table.address_code}</TableHead>
+                        <TableHead>{dict.table.photo}</TableHead>
+                        <TableHead>{dict.table.system}</TableHead>
+                        <TableHead>{dict.table.subsystem}</TableHead>
+                        <TableHead>{dict.table.product_name}</TableHead>
+                        <TableHead>{dict.table.manufacturer}</TableHead>
+                        <TableHead>{dict.table.manufacturer_number}</TableHead>
+                        <TableHead>{dict.table.quantity}</TableHead>
+                        <TableHead>{dict.table.price}</TableHead>
+                        <TableHead>{dict.table.total}</TableHead>
                         {waybill.is_pending && <TableHead/>}
                     </TableRow>
                 </TableHeader>
@@ -112,7 +115,7 @@ export default async function WaybillOffersTable(waybill: WaybillSchema) {
                             </TableCell>
                             <TableCell>{formatCurrency(wo.price_rub)}</TableCell>
                             <TableCell>{formatCurrency(wo.price_rub * wo.quantity)}</TableCell>
-                            {waybill.is_pending && (
+                            {waybill.is_pending &&  (
                                 <TableCell>
                                     <DeleteWaybillOfferProxy {...wo} />
                                 </TableCell>

@@ -135,13 +135,13 @@ export default async function Page({params}: Props) {
                         <TableHeader>
                             <TableRow>
                                 <TableHead>{dict.table.number}</TableHead>
-                                <TableHead>{dict.table.addressCode}</TableHead>
+                                <TableHead>{dict.table.address_code}</TableHead>
                                 <TableHead>{dict.table.photo}</TableHead>
                                 <TableHead>{dict.table.system}</TableHead>
                                 <TableHead>{dict.table.subsystem}</TableHead>
                                 <TableHead>{dict.table.product_name}</TableHead>
-                                <TableHead>{dict.table.brand}</TableHead>
-                                <TableHead>{dict.table.manufacturerNumber}</TableHead>
+                                <TableHead>{dict.table.manufacturer}</TableHead>
+                                <TableHead>{dict.table.manufacturer_number}</TableHead>
                                 <TableHead>{dict.table.quantity}</TableHead>
                                 <TableHead>{dict.table.price}</TableHead>
                                 <TableHead>{dict.table.total}</TableHead>

@@ -54,7 +54,7 @@ export function CreateWaybillFromCartDialog(
         defaultValues: {
             author_id,
             customer_id: null,
-            waybill_type: "WAYBILL_OUT",
+            waybill_type: "WAYBILL_IN",
             is_pending: true,
             note: null,
             waybill_offers: defaultOffers,
@@ -106,7 +106,6 @@ export function CreateWaybillFromCartDialog(
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="WAYBILL_IN">Приход</SelectItem>
-                                    <SelectItem value="WAYBILL_OUT">Расход</SelectItem>
                                     <SelectItem value="WAYBILL_RETURN">Возврат</SelectItem>
                                 </SelectContent>
                             </Select>

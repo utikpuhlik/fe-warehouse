@@ -7,8 +7,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -22,6 +20,7 @@ import { toast } from "@/hooks/use-toast";
 import { showToastError } from "@/app/lib/errors/toastError";
 import { updateCategoryAction } from "@/app/lib/actions/categoryAction";
 import {SaveButton} from "@/app/ui/shared/buttons/save-button";
+import {EditButton} from "@/app/ui/shared/buttons/edit-button";
 
 
 export function EditCategoryModal(category: Category) {
@@ -58,9 +57,7 @@ export function EditCategoryModal(category: Category) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="ghost" size="icon" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Pencil className="w-4 h-4 text-muted-foreground" />
-                </Button>
+                <EditButton variant="ghost" size="icon" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"/>
             </DialogTrigger>
 
             <DialogContent>

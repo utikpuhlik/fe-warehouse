@@ -1,7 +1,7 @@
 import {Button} from "@/components/ui/button";
-import {Check, Loader} from 'lucide-react';
+import {Loader, Pencil} from 'lucide-react';
 
-type CheckButtonProps = {
+type EditButtonProps = {
     onClick?: () => void;
     variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link"
     size?: "default" | "sm" | "lg" | "icon";
@@ -11,16 +11,16 @@ type CheckButtonProps = {
     className?: string;
 };
 
-export function CheckButton(
+export function EditButton(
     {
         onClick,
         variant = "outline",
         size = "icon",
-        full = true,
+        full = false,
         disabled = false,
         loading = false,
         className,
-    }: CheckButtonProps) {
+    }: EditButtonProps) {
     return (
         <Button
             variant={variant}
@@ -33,8 +33,8 @@ export function CheckButton(
                 <Loader className="h-4 w-4 animate-spin"/>
             ) : (
                 <>
-                    <Check className="h-4 w-4"/>
-                    {full && <span>Сохранить</span>}
+                    <Pencil className="h-4 w-4 text-muted-foreground"/>
+                    {full && <span>Редактировать</span>}
                 </>
             )}
         </Button>

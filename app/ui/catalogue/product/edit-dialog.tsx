@@ -8,8 +8,6 @@ import {
     DialogTrigger,
     DialogFooter
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {useState, useTransition} from "react";
@@ -21,6 +19,7 @@ import { DeleteEntityButton } from "@/app/ui/shared/buttons/delete-entity-button
 import {type Product, zProduct} from "@/app/lib/schemas/productSchema";
 import {deleteProductAction, updateProductAction} from "@/app/lib/actions/productAction";
 import {SaveButton} from "@/app/ui/shared/buttons/save-button";
+import {EditButton} from "@/app/ui/shared/buttons/edit-button";
 
 
 export function EditProductModal(product: Product) {
@@ -63,9 +62,7 @@ export function EditProductModal(product: Product) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant="ghost" size="icon" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Pencil className="w-4 h-4 text-muted-foreground" />
-                </Button>
+                <EditButton variant="ghost" size="icon" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"/>
             </DialogTrigger>
 
             <DialogContent>

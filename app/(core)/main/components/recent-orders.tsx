@@ -30,7 +30,7 @@ import {
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
 import {Input} from "@/components/ui/input";
-import {TableDetailsDropdown} from "@/app/ui/shared/table/table-details-dropdown";
+import {TableDetailsOrderDropdown} from "@/app/ui/shared/table/table-details-dropdown";
 import {OrderSchema} from "@/app/lib/schemas/orderSchema";
 import {formatCurrency, generateAvatarFallback} from "@/app/lib/utils";
 import {getDictionary} from "@/app/lib/i18n";
@@ -110,8 +110,12 @@ const columns: ColumnDef<OrderSchema>[] = [
         enableHiding: false,
         cell: ({row}) => {
             return (
-                <TableDetailsDropdown href_details={`/orders/${row.original.id}`}
-                                      href_edit={`/orders/${row.original.id}/edit`}/>
+                <TableDetailsOrderDropdown
+                    href_details={`/orders/${row.original.id}`}
+                    href_edit={`/orders/${row.original.id}/edit`}
+                    href_print={`/orders/${row.original.id}/print`}
+                    href_convert={`/orders/${row.original.id}/convert`}
+                />
             );
         }
     }
