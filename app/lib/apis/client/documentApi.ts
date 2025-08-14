@@ -24,9 +24,8 @@ export async function printWaybill(
   return res;
 }
 
-// TODO: change URL to order!
-export async function printOrder(waybill_id: string): Promise<Response> {
-  const url = `/api/print/waybills/?waybill_id=${waybill_id}`;
+export async function printOrder(order_id: string): Promise<Response> {
+  const url = `/api/print/orders/order_id/${order_id}`;
   const res = await fetch(url);
 
   if (!res.ok) {
