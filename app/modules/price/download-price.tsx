@@ -12,6 +12,7 @@ import { printPriceList } from "@/app/lib/apis/client/documentApi";
 import { showToastError } from "@/app/lib/errors/toastError";
 import { Label } from "@/components/ui/label";
 import { DownloadButton } from "@/app/ui/shared/buttons/download-button";
+import { downloadBlob } from "@/app/lib/utils/downloadBlob";
 
 export function DownloadPrice() {
   const [priceType, setPriceType] = useState<"retail" | "wholesale">("retail");
@@ -23,18 +24,8 @@ export function DownloadPrice() {
       setLoading(true);
       const res = await printPriceList(priceType, ext);
       const blob = await res.blob();
-      const filename =
-        res.headers
-          .get("Content-Disposition")
-          ?.match(/filename="?([^"]+)"?/)?.[1] ?? `price.${ext}`;
-
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(link.href);
+      const filename = `price.${ext}`;
+      downloadBlob(blob, filename);
     } catch (err) {
       showToastError(err);
     } finally {
