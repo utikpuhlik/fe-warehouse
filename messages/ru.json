@@ -9,6 +9,7 @@
   },
   "Actions": {
     "create": "Создать",
+    "add": "Добавить",
     "save": "Сохранить",
     "edit": "Редактировать",
     "delete": "Удалить",
@@ -49,8 +50,36 @@
     "order": "Заказ",
     "orders": "Заказы"
   },
+  "CreateOrderOffer": {
+    "note_update_success": "Заметка обновлена",
+    "offer_add_success": "Позиция добавлена",
+    "item": "Позиция",
+    "price": "Цена",
+    "quantity": "Кол-во",
+    "note": "Заметка",
+    "note_placeholder": "Введите заметку..",
+    "save_note": "Сохранить заметку"
+  },
   "WaybillsPage": {
     "waybill": "Накладная",
     "waybills": "Накладные"
+  },
+  "CreateWaybillOffer": {
+    "note_update_success": "Заметка обновлена",
+    "offer_add_success": "Позиция добавлена",
+    "item": "Позиция",
+    "price": "Цена",
+    "quantity": "Кол-во",
+    "note": "Заметка",
+    "note_placeholder": "Введите заметку..",
+    "save_note": "Сохранить заметку"
+  },
+  "SelectOfferField": {
+    "search_tooltip": "Начните поиск, выберете позицию и нажмите кнопку Добавить",
+    "offer": "Предложение",
+    "select_offer": "Выберите предложение",
+    "search_placeholder": "Поиск по товару, бренду, номеру..",
+    "search_not_found": "Ничего не найдено",
+    "search_results": "Результаты"
   }
 }

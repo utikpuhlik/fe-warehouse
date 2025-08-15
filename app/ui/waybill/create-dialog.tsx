@@ -37,7 +37,7 @@ export function CreateWaybillModal({ author_id }: { author_id: string }) {
     resolver: zodResolver(zWaybillWithOffersPostSchema),
     defaultValues: {
       author_id: author_id,
-      customer_id: null,
+      customer_id: author_id, // default customer is author
       is_pending: true,
       waybill_type: "WAYBILL_IN",
       note: null,

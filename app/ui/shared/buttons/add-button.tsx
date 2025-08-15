@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Loader } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-type CreateButtonProps = {
+type AddButtonProps = {
   onClick?: () => void;
   variant?:
     | "default"
@@ -20,7 +20,7 @@ type CreateButtonProps = {
   className?: string;
 };
 
-export function CreateButton({
+export function AddButton({
   onClick,
   variant = "default",
   type = "button",
@@ -28,7 +28,7 @@ export function CreateButton({
   loading = false,
   text,
   className,
-}: CreateButtonProps) {
+}: AddButtonProps) {
   const t = useTranslations("Actions");
   return (
     <Button
@@ -43,7 +43,7 @@ export function CreateButton({
       ) : (
         <>
           <CirclePlus />
-          {<span>{text ?? t("create")}</span>}
+          {<span>{text ?? t("add")}</span>}
         </>
       )}
     </Button>

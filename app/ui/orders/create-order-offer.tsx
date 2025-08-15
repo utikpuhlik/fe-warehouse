@@ -10,33 +10,29 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { showToastError } from "@/app/lib/errors/toastError";
 import {
-  createWaybillOfferAction,
-  updateWaybillAction,
-} from "@/app/lib/actions/waybillAction";
+  createOrderOfferAction,
+  updateOrderAction,
+} from "@/app/lib/actions/orderAction";
 import {
-  type WaybillOfferPostSchema,
-  zWaybillOfferPostSchema,
-} from "@/app/lib/schemas/waybillOfferSchema";
+  type OrderOfferPostSchema,
+  zOrderOfferPostSchema,
+} from "@/app/lib/schemas/orderOfferSchema";
 import { SelectOfferField } from "@/app/ui/shared/select-offer-field";
 import { Package } from "lucide-react";
-import { WaybillSchema } from "@/app/lib/schemas/waybillSchema";
+import { OrderSchema } from "@/app/lib/schemas/orderSchema";
 import { SaveButton } from "@/app/ui/shared/buttons/save-button";
 import { AddButton } from "@/app/ui/shared/buttons/add-button";
 import { useTranslations } from "next-intl";
 
-export function CreateWaybillOfferForm({
-  waybill,
-}: {
-  waybill: WaybillSchema;
-}) {
-  const t = useTranslations("CreateWaybillOffer");
+export function CreateOrderOfferForm({ order }: { order: OrderSchema }) {
+  const t = useTranslations("CreateOrderOffer");
   const [isSubmittingOffer, startOfferTransition] = useTransition();
   const [isSavingNote, startNoteTransition] = useTransition();
-  const [note, setNote] = useState(waybill.note ?? "");
+  const [note, setNote] = useState(order.note ?? "");
   const { toast } = useToast();
 
-  const form = useForm<WaybillOfferPostSchema>({
-    resolver: zodResolver(zWaybillOfferPostSchema),
+  const form = useForm<OrderOfferPostSchema>({
+    resolver: zodResolver(zOrderOfferPostSchema),
     defaultValues: {
       offer_id: "",
       brand: "",
@@ -49,8 +45,8 @@ export function CreateWaybillOfferForm({
   const handleNoteUpdate = () => {
     startNoteTransition(async () => {
       try {
-        await updateWaybillAction(waybill.id, {
-          ...waybill,
+        await updateOrderAction(order.id, {
+          ...order,
           note,
         });
         toast({ title: t("note_update_success") });
@@ -60,10 +56,10 @@ export function CreateWaybillOfferForm({
     });
   };
 
-  const onSubmit = (values: WaybillOfferPostSchema) => {
+  const onSubmit = (values: OrderOfferPostSchema) => {
     startOfferTransition(async () => {
       try {
-        await createWaybillOfferAction(values, waybill.id);
+        await createOrderOfferAction(values, order.id);
         toast({
           title: t("offer_add_success"),
           description: `${t("item")} ${values.brand}`,

@@ -27,8 +27,10 @@ import { Label } from "@/components/ui/label";
 import { fetchFilteredOffersTS } from "@/app/lib/apis/client/offerApi";
 import type { OfferSchema } from "@/app/lib/schemas/offerSchema";
 import { TooltipInfo } from "@/app/ui/shared/tooltip-info";
+import { useTranslations } from "next-intl";
 
 export function SelectOfferField() {
+  const t = useTranslations("SelectOfferField");
   const { setValue } = useFormContext();
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
@@ -64,10 +66,8 @@ export function SelectOfferField() {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-1">
-        <Label htmlFor="offer-search">Предложение</Label>
-        <TooltipInfo
-          content={"Начните поиск, выберете позицию и нажмите кнопку Добавить"}
-        />
+        <Label htmlFor="offer-search">{t("offer")}</Label>
+        <TooltipInfo content={t("search_tooltip")} />
       </div>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
@@ -78,7 +78,7 @@ export function SelectOfferField() {
             className="w-full justify-between"
           >
             {input || (
-              <span className="text-muted-foreground">Выберите предложение</span>
+              <span className="text-muted-foreground">{t("select_offer")}</span>
             )}
             <ChevronDown className="h-4 w-4 ml-2 shrink-0 opacity-50" />
           </Button>
@@ -94,7 +94,7 @@ export function SelectOfferField() {
               value={input}
               onValueChange={setInput}
               onFocus={() => setOpen(true)}
-              placeholder="Поиск по товару, бренду, номеру..."
+              placeholder={t("search_placeholder")}
             />
             <ScrollArea className="max-h-64">
               <CommandList>
@@ -103,9 +103,9 @@ export function SelectOfferField() {
                     <Loader className="animate-spin w-5 h-5 text-muted-foreground" />
                   </div>
                 ) : offers.length === 0 ? (
-                  <CommandEmpty>Ничего не найдено.</CommandEmpty>
+                  <CommandEmpty>{t("search_not_found")}</CommandEmpty>
                 ) : (
-                  <CommandGroup heading="Результаты">
+                  <CommandGroup heading={t("search_results")}>
                     {offers.map((offer: OfferSchema) => (
                       <CommandItem
                         key={offer.id}
@@ -115,7 +115,7 @@ export function SelectOfferField() {
                       >
                         <div className="flex items-center gap-3">
                           <Image
-                            src={offer.product.image_url ?? undefined}
+                            src={offer.product.image_url}
                             alt={offer.product.name}
                             width={40}
                             height={40}

@@ -9,6 +9,7 @@
   },
   "Actions": {
     "create": "Create",
+    "add": "Add",
     "save": "Save",
     "edit": "Edit",
     "delete": "Delete",
@@ -39,8 +40,36 @@
     "order": "Order",
     "orders": "Orders"
   },
+  "CreateOrderOffer": {
+    "note_update_success": "Note updated",
+    "offer_add_success": "Item added",
+    "item": "Item",
+    "price": "Price",
+    "quantity": "Quantity",
+    "note": "Note",
+    "note_placeholder": "Enter a note..",
+    "save_note": "Save note"
+  },
   "WaybillsPage": {
     "waybill": "Waybill",
     "waybills": "Waybills"
+  },
+  "CreateWaybillOffer": {
+    "note_update_success": "Note updated",
+    "offer_add_success": "Item added",
+    "item": "Item",
+    "price": "Price",
+    "quantity": "Quantity",
+    "note": "Note",
+    "note_placeholder": "Enter a note..",
+    "save_note": "Save note"
+  },
+  "SelectOfferField": {
+    "search_tooltip": "Start a search, select an item, and click the Add button",
+    "offer": "Offer",
+    "select_offer": "Select an offer",
+    "search_placeholder": "Search by product, brand or part number...",
+    "search_not_found": "No results found",
+    "search_results": "Results"
   }
 }
