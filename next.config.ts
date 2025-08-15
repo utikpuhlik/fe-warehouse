@@ -31,11 +31,10 @@ const sentryOptions = {
   widenClientFileUpload: true,
   tunnelRoute: "/monitoring",
   disableLogger: true,
-  automaticVercelMonitors: false,
+  automaticVercelMonitors: true,
 };
 
 const withPlugins = (config: NextConfig): NextConfig =>
   withSentryConfig(withNextIntl(config), sentryOptions);
 
-// 4) Single default export
 export default withPlugins(baseConfig);
