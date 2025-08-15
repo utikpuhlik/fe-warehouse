@@ -9,6 +9,7 @@ import {Button} from "@/components/ui/button";
 import {ThemeToggle} from "@/components/layout/header/theme-toggle";
 import {UserButton} from "@clerk/nextjs";
 import {CartSheet} from "@/app/ui/cart/cart-sheet";
+import LocaleSwitcher from "@/components/layout/header/locale-swithcer";
 
 export default function Header() {
     const {toggleSidebar} = useSidebar();
@@ -24,6 +25,7 @@ export default function Header() {
                     <PanelLeftIcon/>
                 </Button>
                 <Search/>
+                <LocaleSwitcher/>
                 <CartSheet/>
                 <ThemeToggle/>
                 <UserButton showName/>

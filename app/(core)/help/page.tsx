@@ -1,9 +1,6 @@
 import {Metadata} from "next";
 import {CircleHelp} from "lucide-react";
-import {getDictionary} from "@/app/lib/i18n";
-
-const currentLang = "ru";
-const dict = getDictionary(currentLang);
+import {useTranslations} from "next-intl";
 
 export const metadata: Metadata = {
     title: 'Помощь | TCF',
@@ -42,13 +39,14 @@ const faqs = [
 
 
 export default function Page() {
+    const t = useTranslations('HomePage');
     return (
         <>
             <div className="max-w-[85rem] container mx-auto px-4 md:px-6 2xl:max-w-[1400px] py-24 lg:py-32">
                 {/* <!-- Title --> */}
                 <div className="max-w-2xl mx-auto mb-10 lg:mb-14">
                     <h2 className="text-2xl font-bold md:text-4xl md:leading-tight">
-                        {dict.faq.title}
+                        {t('title')}
                     </h2>
                 </div>
                 {/* <!-- End Title --> */}

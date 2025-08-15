@@ -12,18 +12,22 @@ import {experimental__simple} from "@clerk/themes"
 import {ThemeProvider} from "next-themes";
 import {GeistSans} from "geist/font/sans";
 import {ThemedTopLoader} from "@/components/layout/top-loader";
-import { CartStoreProvider } from "@/app/shared/api/cartStoreProvider";
-
+import {CartStoreProvider} from "@/app/shared/api/cartStoreProvider";
+import {NextIntlClientProvider} from 'next-intl';
+import {getLocale} from 'next-intl/server';
 export const metadata: Metadata = {
     title: "TCF | Login",
     description: "TCF | Login",
 };
 
-export default function RootLayout({
-                                       children,
-                                   }: Readonly<{
-    children: React.ReactNode;
-}>) {
+export default async function RootLayout(
+    {
+        children,
+    }: Readonly<{
+        children: React.ReactNode;
+    }>) {
+    const locale = await getLocale();
+
     return (
         <ClerkProvider
             localization={ruRU}
@@ -32,7 +36,7 @@ export default function RootLayout({
             }}
         >
             {/*https://ui.shadcn.com/docs/dark-mode/next*/}
-            <html lang="en" suppressHydrationWarning>
+            <html lang={locale} suppressHydrationWarning>
             <body className={`${GeistSans.className} antialiased`}>
             <SignedOut>
             </SignedOut>
@@ -45,7 +49,9 @@ export default function RootLayout({
                 <ThemedTopLoader/>
                 <QueryProvider>
                     <CartStoreProvider>
-                    {children}
+                        <NextIntlClientProvider>
+                            {children}
+                        </NextIntlClientProvider>
                     </CartStoreProvider>
                 </QueryProvider>
             </ThemeProvider>

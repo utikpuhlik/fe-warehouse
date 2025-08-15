@@ -1,15 +1,12 @@
-import {withSentryConfig} from '@sentry/nextjs';
-import type { NextConfig } from 'next';
+// next.config.ts
+import type { NextConfig } from 'next'
+import { withSentryConfig } from '@sentry/nextjs'
+import createNextIntlPlugin from 'next-intl/plugin'
 
-const nextConfig: NextConfig = {
+// 1) Base config you control
+const baseConfig: NextConfig = {
     experimental: {
         ppr: 'incremental',
-    }
-};
-
-
-module.exports = {
-    experimental: {
         serverActions: {
             bodySizeLimit: '3mb',
         },
@@ -27,34 +24,23 @@ module.exports = {
     },
 }
 
-export default withSentryConfig(nextConfig, {
-// For all available options, see:
-// https://www.npmjs.com/package/@sentry/webpack-plugin#options
+// 2) Initialize wrappers
+const withNextIntl = createNextIntlPlugin()
 
-org: "cad-models",
-project: "fe-warehouse",
+const sentryOptions = {
+    org: 'cad-models',
+    project: 'fe-warehouse',
+    silent: !process.env.CI,
+    widenClientFileUpload: true,
+    tunnelRoute: '/monitoring',
+    disableLogger: true,
+    automaticVercelMonitors: true,
+}
 
-// Only print logs for uploading source maps in CI
-silent: !process.env.CI,
+// 3) Compose: wrap baseConfig with your plugins
+// Order rarely matters here, but keeping Sentry outermost is common.
+const withPlugins = (config: NextConfig): NextConfig =>
+    withSentryConfig(withNextIntl(config), sentryOptions)
 
-// For all available options, see:
-// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-
-// Upload a larger set of source maps for prettier stack traces (increases build time)
-widenClientFileUpload: true,
-
-// Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
-// This can increase your server load as well as your hosting bill.
-// Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
-// side errors will fail.
-tunnelRoute: "/monitoring",
-
-// Automatically tree-shake Sentry logger statements to reduce bundle size
-disableLogger: true,
-
-// Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
-// See the following for more information:
-// https://docs.sentry.io/product/crons/
-// https://vercel.com/docs/cron-jobs
-automaticVercelMonitors: true,
-});
+// 4) Single default export
+export default withPlugins(baseConfig)
