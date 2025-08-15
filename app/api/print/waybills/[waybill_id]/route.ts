@@ -1,11 +1,13 @@
 import { env } from "@/env";
+import { NextRequest } from "next/server";
 
 export async function GET(
-  req: Request,
-  { params }: { params: { waybill_id: string } },
+  request: NextRequest,
+  { params }: { params: Promise<{ waybill_id: string }> },
 ) {
-  const { waybill_id } = params;
-  const format = new URL(req.url).searchParams.get("format") || "docx";
+  const { waybill_id } = await params;
+  const searchParams = request.nextUrl.searchParams;
+  const format = searchParams.get("format") || "docx";
 
   const res = await fetch(
     `${env.NEXT_PUBLIC_API_DOCX3R}/print/waybills/${waybill_id}?format=${format}`,

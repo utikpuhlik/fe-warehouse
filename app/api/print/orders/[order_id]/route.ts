@@ -1,7 +1,11 @@
 import { env } from "@/env";
+import { NextRequest } from "next/server";
 
-export async function GET({ params }: { params: { order_id: string } }) {
-  const { order_id } = params;
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ order_id: string }> },
+) {
+  const { order_id } = await params;
 
   const res = await fetch(
     `${env.NEXT_PUBLIC_API_DOCX3R}/print/orders/${order_id}`,

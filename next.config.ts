@@ -1,9 +1,7 @@
-// next.config.ts
 import type { NextConfig } from "next";
 import { withSentryConfig } from "@sentry/nextjs";
 import createNextIntlPlugin from "next-intl/plugin";
 
-// 1) Base config you control
 const baseConfig: NextConfig = {
   experimental: {
     ppr: "incremental",
@@ -24,7 +22,6 @@ const baseConfig: NextConfig = {
   },
 };
 
-// 2) Initialize wrappers
 const withNextIntl = createNextIntlPlugin();
 
 const sentryOptions = {
@@ -37,8 +34,6 @@ const sentryOptions = {
   automaticVercelMonitors: false,
 };
 
-// 3) Compose: wrap baseConfig with your plugins
-// Order rarely matters here, but keeping Sentry outermost is common.
 const withPlugins = (config: NextConfig): NextConfig =>
   withSentryConfig(withNextIntl(config), sentryOptions);
 
