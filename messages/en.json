@@ -1,10 +1,46 @@
 {
-  "HomePage": {
-    "title": "Hello world!"
+  "FaqPage": {
+    "title": "Frequently Asked Questions"
   },
   "LocaleSwitcher": {
-    "label": "Язык",
-    "en": "Английский",
-    "ru": "Русский"
+    "label": "Language",
+    "en": "English",
+    "ru": "Russian"
+  },
+  "Actions": {
+    "create": "Create",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View",
+    "search": "Search.."
+  },
+  "FileFormats": {
+    "docx": "Word",
+    "xlsx": "Excel",
+    "pdf": "PDF"
+  },
+  "UsersPage": {
+    "user": "User",
+    "users": "Users",
+    "client": "Client",
+    "email": "Email",
+    "phone": "Phone",
+    "city": "City",
+    "delivery": "Delivery",
+    "type": "Type",
+    "note": "Note",
+    "mailing": "Mailing"
+  },
+  "CataloguePage": {
+    "catalogue": "Catalog"
+  },
+  "OrdersPage": {
+    "order": "Order",
+    "orders": "Orders"
+  },
+  "WaybillsPage": {
+    "waybill": "Waybill",
+    "waybills": "Waybills"
   }
 }

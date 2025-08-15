@@ -1,36 +1,41 @@
-import {generateMeta} from "@/app/lib/utils";
+import { generateMeta } from "@/app/lib/utils";
 
 import Link from "next/link";
-import {Button} from "@/components/ui/button";
-import {CirclePlus} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { CirclePlus } from "lucide-react";
 import OrdersDataTable from "./data-table";
-import {fetchOrders} from "@/app/lib/apis/orderApi";
-import {OrderPaginatedSchema, OrderSchema} from "@/app/lib/schemas/orderSchema";
+import { fetchOrders } from "@/app/lib/apis/orderApi";
+import {
+  OrderPaginatedSchema,
+  OrderSchema,
+} from "@/app/lib/schemas/orderSchema";
+import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata() {
-    return generateMeta({
-        title: "Заказы",
-        description:
-            "A list of orders generated using the Tanstack Table.",
-        canonical: "/orders"
-    });
+  return generateMeta({
+    title: "Заказы",
+    description: "A list of orders generated using the Tanstack Table.",
+    canonical: "/orders",
+  });
 }
 
 export default async function Page() {
-    const data: OrderPaginatedSchema = await fetchOrders();
-    const orders: OrderSchema[] = data.items;
+  const t = await getTranslations("OrdersPage");
+  const a = await getTranslations("Actions");
+  const data: OrderPaginatedSchema = await fetchOrders();
+  const orders: OrderSchema[] = data.items;
 
-    return (
-        <>
-            <div className="flex items-center justify-between space-y-2">
-                <h1 className="text-2xl font-bold tracking-tight">Заказы</h1>
-                <Button asChild>
-                    <Link href="#">
-                        <CirclePlus/> Create Order
-                    </Link>
-                </Button>
-            </div>
-            <OrdersDataTable data={orders}/>
-        </>
-    );
+  return (
+    <>
+      <div className="flex items-center justify-between space-y-2">
+        <h1 className="text-2xl font-bold tracking-tight">{t("orders")}</h1>
+        <Button asChild>
+          <Link href="#">
+            <CirclePlus /> {a("create")}
+          </Link>
+        </Button>
+      </div>
+      <OrdersDataTable data={orders} />
+    </>
+  );
 }

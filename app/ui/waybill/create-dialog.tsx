@@ -9,7 +9,6 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectTrigger,
@@ -18,15 +17,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import {FormProvider, useForm} from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
 import { showToastError } from "@/app/lib/errors/toastError";
-import {WaybillWithOffersPostSchema, zWaybillWithOffersPostSchema,
+import {
+  WaybillWithOffersPostSchema,
+  zWaybillWithOffersPostSchema,
 } from "@/app/lib/schemas/waybillSchema";
 import { createWaybillAction } from "@/app/lib/actions/waybillAction";
 import { CreateButton } from "@/app/ui/shared/buttons/create-entity-button";
-import {SelectUserField} from "@/app/ui/users/select-user-field";
+import { SelectUserField } from "@/app/ui/users/select-user-field";
 
 export function CreateWaybillModal({ author_id }: { author_id: string }) {
   const [open, setOpen] = useState(false);
@@ -76,10 +77,10 @@ export function CreateWaybillModal({ author_id }: { author_id: string }) {
             <div>
               <Label>Тип</Label>
               <Select
-                  onValueChange={(
-                      value: "WAYBILL_IN" | "WAYBILL_RETURN"
-                  ) => form.setValue("waybill_type", value)}
-                  defaultValue={form.getValues("waybill_type")}
+                onValueChange={(value: "WAYBILL_IN" | "WAYBILL_RETURN") =>
+                  form.setValue("waybill_type", value)
+                }
+                defaultValue={form.getValues("waybill_type")}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Выберите тип" />
@@ -94,13 +95,15 @@ export function CreateWaybillModal({ author_id }: { author_id: string }) {
             <SelectUserField />
 
             <DialogFooter>
-              <Button type="submit" disabled={isPending}>
-                {isPending ? "Создаем..." : "Создать"}
-              </Button>
+              <CreateButton
+                type="submit"
+                disabled={isPending}
+                loading={isPending}
+              />
             </DialogFooter>
           </form>
         </FormProvider>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

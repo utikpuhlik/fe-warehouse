@@ -1,10 +1,56 @@
 {
-  "HomePage": {
-    "title": "123!"
+  "FaqPage": {
+    "title": "Часто задаваемые вопросы"
   },
   "LocaleSwitcher": {
     "label": "Язык",
     "en": "Английский",
     "ru": "Русский"
+  },
+  "Actions": {
+    "create": "Создать",
+    "save": "Сохранить",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "view": "Просмотр",
+    "search": "Поиск.."
+  },
+  "FileFormats": {
+    "docx": "Word",
+    "xlsx": "Excel",
+    "pdf": "PDF"
+  },
+  "SideNav": {
+    "panel": "Панель",
+    "catalogue": "Каталог",
+    "users": "Пользователи",
+    "orders": "Заказы",
+    "search": "Поиск",
+    "waybills": "Накладные",
+    "history": "История",
+    "help": "Помощь"
+  },
+  "UsersPage": {
+    "user": "Пользователь",
+    "users": "Пользователи",
+    "client": "Клиент",
+    "email": "Email",
+    "phone": "Телефон",
+    "city": "Город",
+    "delivery": "Доставка",
+    "type": "Тип",
+    "note": "Примечание",
+    "mailing": "Рассылка"
+  },
+  "CataloguePage": {
+    "catalogue": "Каталог"
+  },
+  "OrdersPage": {
+    "order": "Заказ",
+    "orders": "Заказы"
+  },
+  "WaybillsPage": {
+    "waybill": "Накладная",
+    "waybills": "Накладные"
   }
 }

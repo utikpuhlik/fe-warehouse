@@ -37,6 +37,25 @@ Use it in RootLayout as following:
 </body>
 ```
 
+## next-intl or i18n
+docs next-intl: [link](https://next-intl.dev/docs/getting-started/app-router/without-i18n-routing) &
+demo source code: [link](https://github.com/amannn/next-intl/tree/main/examples/example-app-router-without-i18n-routing)
+```
+├── messages
+│   ├── en.json
+│   └── ...
+├── next.config.ts
+└── src
+    ├── i18n
+    │   ├── request.ts
+    │   └── config.ts
+    ├── services
+    │   └── locale.ts
+    └── app
+        ├── layout.tsx
+        └── page.tsx
+```
+
 ## Data Fetching Strategy
 ```mermaid
 graph TD
