@@ -25,7 +25,7 @@ export async function printWaybill(
 }
 
 export async function printOrder(order_id: string): Promise<Response> {
-  const url = `/api/print/orders/order_id/${order_id}`;
+  const url = `/api/print/orders/${order_id}`;
   const res = await fetch(url);
 
   if (!res.ok) {
