@@ -63,6 +63,17 @@
     "total": "Итого",
     "sub_total": "Промежуточный итог"
   },
+  "ConvertOrderToWaybill": {
+    "convert_success_title": "Успешно",
+    "convert_success_desc": "Заказ был преобразован в накладную",
+    "convert_error_title": "Ошибка",
+    "converting": "Преобразование..",
+    "convert": "Преобразовать",
+    "confirm_convert_title": "Вы хотите преобразовать заказ в накладную?",
+    "confirm_convert_desc": "Это действие создаст расходную накладную",
+    "cancel": "Отмена",
+    "confirm": "Подтвердить"
+  },
   "CreateOrderOffer": {
     "note_update_success": "Заметка обновлена",
     "offer_add_success": "Позиция добавлена",

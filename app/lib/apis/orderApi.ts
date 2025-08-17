@@ -89,7 +89,7 @@ export async function convertOrder(
   author_id: string,
 ): Promise<WaybillSchema> {
   const res = await fetch(
-    `${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${order_id}/convert`,
+    `${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${order_id}/convert?author_id=${author_id}`,
     {
       method: "POST",
       headers: {

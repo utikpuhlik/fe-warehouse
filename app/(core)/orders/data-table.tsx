@@ -156,14 +156,7 @@ export const columns: ColumnDef<OrderSchema>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      return (
-        <TableDetailsOrderDropdown
-          href_details={`/orders/${row.original.id}`}
-          href_edit={`/orders/${row.original.id}/edit`}
-          href_print={`/orders/${row.original.id}/print`}
-          href_convert={`/orders/${row.original.id}/convert`}
-        />
-      );
+      return <TableDetailsOrderDropdown order_id={row.original.id} />;
     },
   },
 ];

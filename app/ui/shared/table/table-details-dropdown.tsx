@@ -9,16 +9,14 @@ import { MoreHorizontal } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 import { useTranslations } from "next-intl";
+import { ConvertOrderToWaybill } from "@/app/ui/orders/convert-order-to-waybill";
 
 type TableDetailsDropdownProps = {
   href_edit: string;
 };
 
 type TableDetailsOrderDropdownProps = {
-  href_edit: string;
-  href_details: string;
-  href_print: string;
-  href_convert: string;
+  order_id: string;
 };
 
 export function TableDetailsDropdown({ href_edit }: TableDetailsDropdownProps) {
@@ -41,10 +39,7 @@ export function TableDetailsDropdown({ href_edit }: TableDetailsDropdownProps) {
 }
 
 export function TableDetailsOrderDropdown({
-  href_edit,
-  href_details,
-  href_convert,
-  href_print,
+  order_id,
 }: TableDetailsOrderDropdownProps) {
   const t = useTranslations("TableDetailsOrderDropdown");
   return (
@@ -57,17 +52,15 @@ export function TableDetailsOrderDropdown({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem>
-          <Link href={href_details}>{t("details")}</Link>
+          <Link href={`/orders/${order_id}`}>{t("details")}</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Link href={href_edit}>{t("edit")}</Link>
+          <Link href={`/orders/${order_id}/edit`}>{t("edit")}</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Link href={href_print}>{t("print")}</Link>
+          <Link href={`/orders/${order_id}/print`}>{t("print")}</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Link href={href_convert}>{t("convert")}</Link>
-        </DropdownMenuItem>
+        <ConvertOrderToWaybill orderId={order_id} />
       </DropdownMenuContent>
     </DropdownMenu>
   );

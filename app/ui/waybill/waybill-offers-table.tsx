@@ -18,7 +18,6 @@ import { WaybillBadge } from "@/app/ui/waybill/waybill-badge";
 import { CustomerBadge } from "@/app/ui/users/customer-badge";
 import { formatCurrency } from "@/app/lib/utils";
 import { WaybillOfferQuantityEditor } from "@/app/ui/waybill/quantity-editor";
-import { getDictionary } from "@/app/lib/i18n";
 import { getTranslations } from "next-intl/server";
 
 type WaybillOffersTableProps = {

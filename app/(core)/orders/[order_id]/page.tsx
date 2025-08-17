@@ -19,7 +19,6 @@ import { OrderSchema } from "@/app/lib/schemas/orderSchema";
 import { fetchOrderById } from "@/app/lib/apis/orderApi";
 import { EditOrderButton } from "@/app/ui/orders/edit-order-button";
 import type { Metadata } from "next";
-import { getDictionary } from "@/app/lib/i18n";
 import { OrderProgressTracker } from "@/app/ui/orders/order-progress-tracker";
 import { PrintButton } from "@/app/ui/shared/buttons/print-button";
 import { getTranslations } from "next-intl/server";

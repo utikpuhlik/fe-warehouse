@@ -63,6 +63,17 @@
     "total": "Total",
     "sub_total": "Subtotal"
   },
+  "ConvertOrderToWaybill": {
+    "convert_success_title": "Success",
+    "convert_success_desc": "Order has been converted to a Waybill",
+    "convert_error_title": "Error",
+    "converting": "Converting..",
+    "convert": "Convert",
+    "confirm_convert_title": "Do you want convert Order to Waybill?",
+    "confirm_convert_desc": "This action will create the OUT Waybill",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
   "CreateOrderOffer": {
     "note_update_success": "Note updated",
     "offer_add_success": "Item added",
