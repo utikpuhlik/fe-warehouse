@@ -1,0 +1,135 @@
+{
+  "FaqPage": {
+    "title": "Sıkça Sorulan Sorular"
+  },
+  "LocaleSwitcher": {
+    "label": "Dil",
+    "en": "İngilizce",
+    "ru": "Rusça",
+    "tr": "Türkçe"
+  },
+  "Actions": {
+    "create": "Oluştur",
+    "add": "Ekle",
+    "save": "Kaydet",
+    "edit": "Düzenle",
+    "delete": "Sil",
+    "view": "Görüntüle",
+    "search": "Ara.."
+  },
+  "FileFormats": {
+    "docx": "Word",
+    "xlsx": "Excel",
+    "pdf": "PDF"
+  },
+  "SideNav": {
+    "panel": "Kontrol Paneli",
+    "catalogue": "Katalog",
+    "users": "Kullanıcılar",
+    "orders": "Siparişler",
+    "search": "Arama",
+    "waybills": "Sevkiyat Fişleri",
+    "history": "Geçmiş",
+    "help": "Yardım"
+  },
+  "UsersPage": {
+    "user": "Kullanıcı",
+    "users": "Kullanıcılar",
+    "client": "Müşteri",
+    "email": "E-posta",
+    "phone": "Telefon",
+    "city": "Şehir",
+    "delivery": "Teslimat",
+    "type": "Tür",
+    "note": "Not",
+    "mailing": "Posta"
+  },
+  "CataloguePage": {
+    "catalogue": "Katalog"
+  },
+  "OrdersPage": {
+    "order": "Sipariş",
+    "orders": "Siparişler"
+  },
+  "OrderDetailPage": {
+    "order": "Sipariş",
+    "created_at": "Oluşturulma",
+    "updated_at": "Güncellenme",
+    "customer_info": "Müşteri Bilgileri",
+    "payment_method": "Ödeme Yöntemi",
+    "order_summary": "Sipariş Özeti",
+    "order_items": "Sipariş Kalemleri",
+    "quantity": "Miktar",
+    "price": "Fiyat",
+    "total": "Toplam",
+    "sub_total": "Ara Toplam"
+  },
+  "ConvertOrderToWaybill": {
+    "convert_success_title": "Başarılı",
+    "convert_success_desc": "Sipariş sevkiyat fişine dönüştürüldü",
+    "convert_error_title": "Hata",
+    "converting": "Dönüştürülüyor..",
+    "convert": "Dönüştür",
+    "confirm_convert_title": "Siparişi sevkiyat fişine dönüştürmek istiyor musunuz?",
+    "confirm_convert_desc": "Bu işlem GİDEN sevkiyat fişi oluşturacak",
+    "cancel": "İptal",
+    "confirm": "Onayla"
+  },
+  "CreateOrderOffer": {
+    "note_update_success": "Not güncellendi",
+    "offer_add_success": "Öğe eklendi",
+    "item": "Öğe",
+    "price": "Fiyat",
+    "quantity": "Miktar",
+    "note": "Not",
+    "note_placeholder": "Not girin..",
+    "save_note": "Notu kaydet"
+  },
+  "WaybillsPage": {
+    "waybill": "Sevkiyat Fişi",
+    "waybills": "Sevkiyat Fişleri",
+    "waybill_items": "Sevkiyat Fişi Kalemleri"
+  },
+  "CreateWaybillOffer": {
+    "note_update_success": "Not güncellendi",
+    "offer_add_success": "Öğe eklendi",
+    "item": "Öğe",
+    "price": "Fiyat",
+    "quantity": "Miktar",
+    "note": "Not",
+    "note_placeholder": "Not girin..",
+    "save_note": "Notu kaydet"
+  },
+  "OrderAndWaybillTable": {
+    "number": "№",
+    "address_code": "Adres Kodu",
+    "photo": "Fotoğraf",
+    "system": "Sistem",
+    "subsystem": "Alt Sistem",
+    "product_name": "Ürün Adı",
+    "manufacturer": "Üretici",
+    "manufacturer_number": "Üretici Numarası",
+    "quantity": "Miktar",
+    "price": "Fiyat",
+    "total": "Tutar"
+  },
+  "SelectOfferField": {
+    "search_tooltip": "Aramaya başlayın, bir öğe seçin ve Ekle'ye tıklayın",
+    "offer": "Teklif",
+    "select_offer": "Teklif seçin",
+    "search_placeholder": "Ürün, marka veya parça numarası ile arayın...",
+    "search_not_found": "Sonuç bulunamadı",
+    "search_results": "Sonuçlar"
+  },
+  "TableDetailsDropdown": {
+    "accessibility": "Menüyü aç",
+    "edit": "Düzenle"
+  },
+  "TableDetailsOrderDropdown": {
+    "accessibility": "Menüyü aç",
+    "details": "Detaylar",
+    "edit": "Düzenle",
+    "print": "Yazdır",
+    "convert": "Dönüştür"
+  }
+}
