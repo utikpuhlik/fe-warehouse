@@ -50,6 +50,19 @@
     "order": "Заказ",
     "orders": "Заказы"
   },
+  "OrderDetailPage": {
+    "order": "Заказ",
+    "created_at": "Создан",
+    "updated_at": "Обновлён",
+    "customer_info": "Информация о клиенте",
+    "payment_method": "Способ оплаты",
+    "order_summary": "Детали заказа",
+    "order_items": "Состав заказа",
+    "quantity": "Количество",
+    "price": "Цена",
+    "total": "Итого",
+    "sub_total": "Промежуточный итог"
+  },
   "CreateOrderOffer": {
     "note_update_success": "Заметка обновлена",
     "offer_add_success": "Позиция добавлена",
@@ -62,7 +75,8 @@
   },
   "WaybillsPage": {
     "waybill": "Накладная",
-    "waybills": "Накладные"
+    "waybills": "Накладные",
+    "waybill_items": "Состав накладной"
   },
   "CreateWaybillOffer": {
     "note_update_success": "Заметка обновлена",
@@ -74,6 +88,19 @@
     "note_placeholder": "Введите заметку..",
     "save_note": "Сохранить заметку"
   },
+  "OrderAndWaybillTable": {
+    "number": "№",
+    "address_code": "Адресный код",
+    "photo": "Фото",
+    "system": "Система",
+    "subsystem": "Подсистема",
+    "product_name": "Наименование",
+    "manufacturer": "Производитель",
+    "manufacturer_number": "Артикул",
+    "quantity": "Кол-во",
+    "price": "Цена",
+    "total": "Сумма"
+  },
   "SelectOfferField": {
     "search_tooltip": "Начните поиск, выберете позицию и нажмите кнопку Добавить",
     "offer": "Предложение",
@@ -81,5 +108,16 @@
     "search_placeholder": "Поиск по товару, бренду, номеру..",
     "search_not_found": "Ничего не найдено",
     "search_results": "Результаты"
+  },
+  "TableDetailsDropdown": {
+    "accessibility": "Открыть меню",
+    "edit": "Редактировать"
+  },
+  "TableDetailsOrderDropdown": {
+    "accessibility": "Открыть меню",
+    "details": "Детали",
+    "edit": "Редактировать",
+    "print": "Печать",
+    "convert": "Конвертировать"
   }
 }

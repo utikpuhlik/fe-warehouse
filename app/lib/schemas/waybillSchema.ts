@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { zUserSchema } from "@/app/lib/schemas/userSchema";
-import {zWaybillOfferPostSchema} from "@/app/lib/schemas/waybillOfferSchema";
+import { zWaybillOfferPostSchema } from "@/app/lib/schemas/waybillOfferSchema";
 
 const zWaybillBaseSchema = z.object({
   author_id: z.string().uuid(),
@@ -12,6 +12,7 @@ const zWaybillBaseSchema = z.object({
 
 export const zWaybillSchema = zWaybillBaseSchema.extend({
   id: z.string().uuid(),
+  order_id: z.string().uuid().nullable(),
   author: zUserSchema,
   customer: zUserSchema,
   created_at: z.string().datetime(),
@@ -30,15 +31,16 @@ export const zWaybillPostSchema = zWaybillBaseSchema.extend({});
 
 export const zWaybillWithOffersPostSchema = zWaybillBaseSchema.extend({
   // workaround with optional to use default value
-  waybill_offers: z.array(zWaybillOfferPostSchema).default([]).optional()
-})
-
+  waybill_offers: z.array(zWaybillOfferPostSchema).default([]).optional(),
+});
 
 export const zWaybillPutSchema = zWaybillBaseSchema.extend({});
 
 /** TypeScript helper */
 export type WaybillSchema = z.infer<typeof zWaybillSchema>;
 export type WaybillPostSchema = z.infer<typeof zWaybillPostSchema>;
-export type WaybillWithOffersPostSchema = z.infer<typeof zWaybillWithOffersPostSchema>;
+export type WaybillWithOffersPostSchema = z.infer<
+  typeof zWaybillWithOffersPostSchema
+>;
 export type WaybillPutSchema = z.infer<typeof zWaybillPutSchema>;
 export type WaybillPaginatedSchema = z.infer<typeof zWaybillPaginatedSchema>;

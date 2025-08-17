@@ -21,6 +21,16 @@
     "xlsx": "Excel",
     "pdf": "PDF"
   },
+  "SideNav": {
+    "panel": "Dashboard",
+    "catalogue": "Catalog",
+    "users": "Users",
+    "orders": "Orders",
+    "search": "Search",
+    "waybills": "Waybills",
+    "history": "History",
+    "help": "Help"
+  },
   "UsersPage": {
     "user": "User",
     "users": "Users",
@@ -40,6 +50,19 @@
     "order": "Order",
     "orders": "Orders"
   },
+  "OrderDetailPage": {
+    "order": "Order",
+    "created_at": "Created",
+    "updated_at": "Updated",
+    "customer_info": "Customer Information",
+    "payment_method": "Payment Method",
+    "order_summary": "Order Details",
+    "order_items": "Order Items",
+    "quantity": "Quantity",
+    "price": "Price",
+    "total": "Total",
+    "sub_total": "Subtotal"
+  },
   "CreateOrderOffer": {
     "note_update_success": "Note updated",
     "offer_add_success": "Item added",
@@ -52,7 +75,8 @@
   },
   "WaybillsPage": {
     "waybill": "Waybill",
-    "waybills": "Waybills"
+    "waybills": "Waybills",
+    "waybill_items": "Waybill Items"
   },
   "CreateWaybillOffer": {
     "note_update_success": "Note updated",
@@ -64,12 +88,36 @@
     "note_placeholder": "Enter a note..",
     "save_note": "Save note"
   },
+  "OrderAndWaybillTable": {
+    "number": "№",
+    "address_code": "Address Code",
+    "photo": "Photo",
+    "system": "System",
+    "subsystem": "Subsystem",
+    "product_name": "Product Name",
+    "manufacturer": "Manufacturer",
+    "manufacturer_number": "Manufacturer Number",
+    "quantity": "Quantity",
+    "price": "Price",
+    "total": "Amount"
+  },
   "SelectOfferField": {
-    "search_tooltip": "Start a search, select an item, and click the Add button",
+    "search_tooltip": "Start a search, select an item, and click Add",
     "offer": "Offer",
     "select_offer": "Select an offer",
-    "search_placeholder": "Search by product, brand or part number...",
+    "search_placeholder": "Search by product, brand, or part number...",
     "search_not_found": "No results found",
     "search_results": "Results"
+  },
+  "TableDetailsDropdown": {
+    "accessibility": "Open menu",
+    "edit": "Edit"
+  },
+  "TableDetailsOrderDropdown": {
+    "accessibility": "Open menu",
+    "details": "Details",
+    "edit": "Edit",
+    "print": "Print",
+    "convert": "Convert"
   }
 }
