@@ -2,6 +2,17 @@
   "FaqPage": {
     "title": "Часто задаваемые вопросы"
   },
+  "PanelPage": {
+    "title": "Панель управления",
+    "offers_count": "Кол-во позиций",
+    "offers_active_count": "Кол-во активных позиций (>0)",
+    "offers_with_photo_count": "Кол-во позиций с фото",
+    "orders_count": "Кол-во заказов",
+    "waybills_count": "Кол-во накладных",
+    "users_count": "Кол-во клиентов",
+    "best_selling_products": "Самые продаваемые позиции",
+    "recent_orders": "Недавние заказы"
+  },
   "LocaleSwitcher": {
     "label": "Язык",
     "en": "Английский",
@@ -15,7 +26,9 @@
     "edit": "Редактировать",
     "delete": "Удалить",
     "view": "Просмотр",
-    "search": "Поиск.."
+    "search": "Поиск..",
+    "confirm": "Подтвердить",
+    "cancel": "Отменить"
   },
   "FileFormats": {
     "docx": "Word",
@@ -131,5 +144,36 @@
     "edit": "Редактировать",
     "print": "Печать",
     "convert": "Конвертировать"
+  },
+  "DeleteButton": {
+    "delete": "Удалить",
+    "deleted": "Удалено",
+    "one_way_action_alert": "Это действие является безвозвратным.",
+    "cancel": "Отмена",
+    "deleting": "Удаление..",
+    "delete_success": "успешно удален(а)."
+  },
+  "CommitWaybillButton": {
+    "waybill_success_title": "Накладная сохранена",
+    "waybill_success_description": "Изменения успешно зафиксированы",
+    "waybill_save": "Сохранить накладную",
+    "cancel": "Отмена",
+    "committing": "Сохраняем",
+    "confirm_title": "Вы уверены, что хотите провести накладную?",
+    "confirm_description": "Редактирование больше не будет возможно!"
+  },
+  "CartSheet": {
+    "item": "товар",
+    "items": "товаров",
+    "wipe_cart": "Очистить корзину"
+  },
+  "CartSummaryCard": {
+    "order_summary": "Сводка заказа",
+    "retail": "розница",
+    "Retail": "Розница",
+    "wholesale": "опт",
+    "Wholesale": "Опт",
+    "super_wholesale": "супер-опт",
+    "Super_wholesale": "Супер-опт"
   }
 }

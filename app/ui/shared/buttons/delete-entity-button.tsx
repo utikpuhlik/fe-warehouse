@@ -1,11 +1,12 @@
 "use client";
 
-import {useTransition} from "react";
-import {Button} from "@/components/ui/button";
+import * as React from "react";
+import {Trash2, Loader2} from "lucide-react";
 import {toast} from "@/hooks/use-toast";
-import {showToastError} from "@/app/lib/errors/toastError";
-import {TrashIcon} from "@heroicons/react/24/outline";
 import {isRedirectError} from "next/dist/client/components/redirect-error";
+import {showToastError} from "@/app/lib/errors/toastError";
+import {ConfirmButton} from "@/app/ui/shared/buttons/confirm-button";
+import {useTranslations} from "next-intl";
 
 type Props = {
     entityName: string;
@@ -25,37 +26,46 @@ export function DeleteEntityButton(
         className,
         disabled,
     }: Props) {
-    const [isPending, startTransition] = useTransition();
-
-    const handleDelete = () => {
-        const confirmed = confirm(`Вы уверены, что хотите удалить ${entityName}?\nЭто действие является безвозвратным!`);
-        if (!confirmed) return;
-
-        startTransition(async () => {
-            try {
-                await deleteAction(entityId);
-                toast({
-                    title: "Удалено",
-                    description: `${entityName[0].toUpperCase() + entityName.slice(1)} успешно удален(а).`,
-                });
-                onDeleted?.();
-            } catch (error) {
-                if (isRedirectError(error)) return;
-                showToastError(error);
-            }
-        });
+    const t = useTranslations("DeleteButton")
+    const onConfirm = async () => {
+        try {
+            await deleteAction(entityId);
+            toast({
+                title: t('deleted'),
+                description: `${entityName[0].toUpperCase() + entityName.slice(1)} ${t('delete_success')}`,
+            });
+            onDeleted?.();
+        } catch (error) {
+            if (isRedirectError(error)) return;
+            showToastError(error);
+        }
     };
 
     return (
-        <Button
-            type="button"
-            variant="destructive"
-            size="icon"
-            disabled={isPending || disabled}
-            onClick={handleDelete}
-            className={className}
-        >
-            <TrashIcon/>
-        </Button>
+        <ConfirmButton
+            title={`${t('delete')} ${entityName}?`}
+            description={t('one_way_action_alert')}
+            confirmText={t('delete')}
+            cancelText={t('cancel')}
+            onConfirm={onConfirm}
+            buttonProps={{
+                type: "button",
+                variant: "destructive",
+                size: "icon",
+                className,
+                disabled,
+            }}
+            // content trigger-button: spinner with pending
+            renderContent={(isPending) =>
+                isPending ? (
+                    <>
+                        <Loader2 className="size-4 animate-spin" aria-hidden="true"/>
+                        <span className="sr-only">{t('deleting')}</span>
+                    </>
+                ) : (
+                    <Trash2 className="size-4"/>
+                )
+            }
+        />
     );
 }

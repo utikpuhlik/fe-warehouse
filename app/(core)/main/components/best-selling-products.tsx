@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
+import {useTranslations} from "next-intl";
 
 export type Product = {
   id: number;
@@ -198,6 +199,7 @@ export const columns: ColumnDef<Product>[] = [
 ];
 
 export function EcommerceBestSellingProductsCard() {
+    const t = useTranslations("PanelPage");
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -230,7 +232,7 @@ export function EcommerceBestSellingProductsCard() {
   return (
     <Card className="lg:col-span-5">
       <CardHeader>
-        <CardTitle>Best Selling Products</CardTitle>
+        <CardTitle>{t('best_selling_products')}</CardTitle>
         {/*<CardAction className="relative">*/}
         {/*  <ExportButton className="absolute end-0 top-0" />*/}
         {/*</CardAction>*/}

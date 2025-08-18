@@ -2,6 +2,17 @@
   "FaqPage": {
     "title": "Sıkça Sorulan Sorular"
   },
+  "PanelPage": {
+    "title": "Kontrol Paneli",
+    "offers_count": "Toplam teklifler",
+    "offers_active_count": "Aktif teklifler (>0)",
+    "offers_with_photo_count": "Fotoğraflı teklifler",
+    "orders_count": "Toplam sipariş",
+    "waybills_count": "Toplam irsaliye",
+    "users_count": "Toplam müşteri",
+    "best_selling_products": "En Çok Satan Ürünler",
+    "recent_orders": "Son Siparişler"
+  },
   "LocaleSwitcher": {
     "label": "Dil",
     "en": "İngilizce",
@@ -15,7 +26,9 @@
     "edit": "Düzenle",
     "delete": "Sil",
     "view": "Görüntüle",
-    "search": "Ara.."
+    "search": "Ara..",
+    "confirm": "Onayla",
+    "cancel": "İptal"
   },
   "FileFormats": {
     "docx": "Word",
@@ -23,12 +36,12 @@
     "pdf": "PDF"
   },
   "SideNav": {
-    "panel": "Kontrol Paneli",
+    "panel": "Panel",
     "catalogue": "Katalog",
     "users": "Kullanıcılar",
     "orders": "Siparişler",
     "search": "Arama",
-    "waybills": "Sevkiyat Fişleri",
+    "waybills": "İrsaliyeler",
     "history": "Geçmiş",
     "help": "Yardım"
   },
@@ -42,7 +55,7 @@
     "delivery": "Teslimat",
     "type": "Tür",
     "note": "Not",
-    "mailing": "Posta"
+    "mailing": "Posta listesi"
   },
   "CataloguePage": {
     "catalogue": "Katalog"
@@ -53,8 +66,8 @@
   },
   "OrderDetailPage": {
     "order": "Sipariş",
-    "created_at": "Oluşturulma",
-    "updated_at": "Güncellenme",
+    "created_at": "Oluşturuldu",
+    "updated_at": "Güncellendi",
     "customer_info": "Müşteri Bilgileri",
     "payment_method": "Ödeme Yöntemi",
     "order_summary": "Sipariş Özeti",
@@ -62,23 +75,23 @@
     "quantity": "Miktar",
     "price": "Fiyat",
     "total": "Toplam",
-    "sub_total": "Ara Toplam"
+    "sub_total": "Ara toplam"
   },
   "ConvertOrderToWaybill": {
     "convert_success_title": "Başarılı",
-    "convert_success_desc": "Sipariş sevkiyat fişine dönüştürüldü",
+    "convert_success_desc": "Sipariş irsaliyeye dönüştürüldü",
     "convert_error_title": "Hata",
     "converting": "Dönüştürülüyor..",
     "convert": "Dönüştür",
-    "confirm_convert_title": "Siparişi sevkiyat fişine dönüştürmek istiyor musunuz?",
-    "confirm_convert_desc": "Bu işlem GİDEN sevkiyat fişi oluşturacak",
+    "confirm_convert_title": "Siparişi irsaliyeye dönüştürmek istiyor musunuz?",
+    "confirm_convert_desc": "Bu işlem bir Çıkış İrsaliyesi oluşturacaktır",
     "cancel": "İptal",
     "confirm": "Onayla"
   },
   "CreateOrderOffer": {
     "note_update_success": "Not güncellendi",
-    "offer_add_success": "Öğe eklendi",
-    "item": "Öğe",
+    "offer_add_success": "Ürün eklendi",
+    "item": "Ürün",
     "price": "Fiyat",
     "quantity": "Miktar",
     "note": "Not",
@@ -86,14 +99,14 @@
     "save_note": "Notu kaydet"
   },
   "WaybillsPage": {
-    "waybill": "Sevkiyat Fişi",
-    "waybills": "Sevkiyat Fişleri",
-    "waybill_items": "Sevkiyat Fişi Kalemleri"
+    "waybill": "İrsaliye",
+    "waybills": "İrsaliyeler",
+    "waybill_items": "İrsaliye Kalemleri"
   },
   "CreateWaybillOffer": {
     "note_update_success": "Not güncellendi",
-    "offer_add_success": "Öğe eklendi",
-    "item": "Öğe",
+    "offer_add_success": "Ürün eklendi",
+    "item": "Ürün",
     "price": "Fiyat",
     "quantity": "Miktar",
     "note": "Not",
@@ -114,10 +127,10 @@
     "total": "Tutar"
   },
   "SelectOfferField": {
-    "search_tooltip": "Aramaya başlayın, bir öğe seçin ve Ekle'ye tıklayın",
+    "search_tooltip": "Aramaya başlayın, bir ürün seçin ve Ekle'ye tıklayın",
     "offer": "Teklif",
     "select_offer": "Teklif seçin",
-    "search_placeholder": "Ürün, marka veya parça numarası ile arayın...",
+    "search_placeholder": "Ürün, marka veya parça numarasına göre ara...",
     "search_not_found": "Sonuç bulunamadı",
     "search_results": "Sonuçlar"
   },
@@ -131,5 +144,36 @@
     "edit": "Düzenle",
     "print": "Yazdır",
     "convert": "Dönüştür"
+  },
+  "DeleteButton": {
+    "delete": "Sil",
+    "deleted": "Silindi",
+    "one_way_action_alert": "Bu işlem geri alınamaz.",
+    "cancel": "İptal",
+    "deleting": "Siliniyor..",
+    "delete_success": "başarıyla silindi."
+  },
+  "CommitWaybillButton": {
+    "waybill_success_title": "İrsaliye kaydedildi",
+    "waybill_success_description": "Değişiklikler başarıyla kaydedildi",
+    "waybill_save": "İrsaliyeyi Kaydet",
+    "cancel": "İptal",
+    "committing": "Kaydediliyor",
+    "confirm_title": "İrsaliyeyi kaydetmek istediğinizden emin misiniz?",
+    "confirm_description": "Artık düzenleme yapılamaz!"
+  },
+  "CartSheet": {
+    "item": "ürün",
+    "items": "ürün",
+    "wipe_cart": "Sepeti temizle"
+  },
+  "CartSummaryCard": {
+    "order_summary": "Sipariş Özeti",
+    "retail": "perakende",
+    "Retail": "Perakende",
+    "wholesale": "toptan",
+    "Wholesale": "Toptan",
+    "super_wholesale": "süper-toptan",
+    "Super_wholesale": "Süper-toptan"
   }
 }

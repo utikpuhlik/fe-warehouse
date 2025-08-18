@@ -8,7 +8,7 @@ export async function fetchFilteredOffersTS(
     const url = `/api/offers/search?search_term=${encodeURIComponent(search_term)}&size=${size}&page=${page}`;
     const res = await fetch(url);
 
-    const text = await res.text().catch(() => "");
+    const text = await res.text();
     if (!res.ok) {
         throw new Error(`Failed to fetch offers: ${text}`);
     }

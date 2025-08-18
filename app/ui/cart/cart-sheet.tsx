@@ -17,8 +17,10 @@ import {CartItemCard} from "@/app/ui/cart/cart-item-card";
 import {OfferSchema} from "@/app/lib/schemas/offerSchema";
 import {CartSummaryCard} from "@/app/ui/cart/cart-summary-card";
 import {CreateOrderFromCartButton} from "./create-order-from-cart-button"
+import {useTranslations} from "next-intl";
 
 export function CartSheet() {
+    const t = useTranslations("CartSheet")
     const items = useCartStore((state) => state.items)
     const remove = useCartStore((state) => state.remove)
     const clear = useCartStore((state) => state.clear)
@@ -47,7 +49,7 @@ export function CartSheet() {
                 <SheetHeader>
                     <SheetTitle>Корзина</SheetTitle>
                     <SheetDescription>
-                        {items.length} {items.length === 1 ? "товар" : "товаров"} в корзине
+                        {items.length} {items.length === 1 ? t('item') : t('items')} в корзине
                     </SheetDescription>
                 </SheetHeader>
 
@@ -68,7 +70,6 @@ export function CartSheet() {
                     </div>
                 </ScrollArea>
                 <SheetFooter className="mt-4 mr-2 flex flex-col gap-4 sm:flex-col">
-                    {/* сумма */}
                     <CartSummaryCard
                         total_sum_retail={items.reduce(
                             (s, i) => s + i.price_rub * i.quantity,
@@ -90,7 +91,7 @@ export function CartSheet() {
                             disabled={items.length === 0}
                             className="w-full"
                         >
-                            Очистить
+                            {t('wipe_cart')}
                         </Button>
 
                         {isLoaded && isSignedIn && items.length > 0 && (

@@ -36,6 +36,7 @@ import { formatCurrency, generateAvatarFallback } from "@/app/lib/utils";
 import { getDictionary } from "@/app/lib/i18n";
 import { OrderBadge } from "@/app/ui/orders/order-badge";
 import { OrderStatusEnum } from "@/app/lib/schemas/commonSchema";
+import {useTranslations} from "next-intl";
 
 const currentLang = "ru";
 const dict = getDictionary(currentLang);
@@ -125,6 +126,8 @@ export function EcommerceRecentOrdersCard({
 }: {
   orders: OrderSchema[];
 }) {
+    const t = useTranslations("PanelPage");
+
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -171,7 +174,7 @@ export function EcommerceRecentOrdersCard({
   return (
     <Card className="lg:col-span-7">
       <CardHeader>
-        <CardTitle>Недавние заказы</CardTitle>
+        <CardTitle>{t('recent_orders')}</CardTitle>
         {/*<CardAction className="relative">*/}
         {/*  <ExportButton className="absolute end-0 top-0" />*/}
         {/*</CardAction>*/}

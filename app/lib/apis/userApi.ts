@@ -91,7 +91,7 @@ export async function patchUser(id: string, user: UserSchema): Promise<UserSchem
         body: JSON.stringify(user),
     });
 
-    const text = await res.text().catch(() => "");
+    const text = await res.text();
     if (!res.ok) {
         handleApiError(res, text, ENTITY);
     }

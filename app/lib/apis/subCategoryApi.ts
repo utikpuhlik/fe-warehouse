@@ -27,7 +27,7 @@ export async function postSubCategory(subCategory: FormData): Promise<SubCategor
         body: subCategory,
     });
 
-    const text = await res.text().catch(() => "");
+    const text = await res.text();
     if (!res.ok) {
         handleApiError(res, text, ENTITY);
     }
@@ -46,7 +46,7 @@ export async function patchSubCategory(id: string, subCategory: FormData): Promi
         body: subCategory,
     });
 
-    const text = await res.text().catch(() => "");
+    const text = await res.text();
     if (!res.ok) {
         handleApiError(res, text, ENTITY);
     }
@@ -63,7 +63,7 @@ export async function delSubCategory(id: string): Promise<number> {
         },
     });
 
-    const text = await res.text().catch(() => "");
+    const text = await res.text();
     if (!res.ok) {
         handleApiError(res, text, ENTITY);
     }

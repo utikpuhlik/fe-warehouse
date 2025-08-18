@@ -67,7 +67,9 @@ export function CreateWaybillFromCartDialog(
                 await createWaybillAction(values)
                 toast({
                     title: "Накладная создана",
-                    description: <Link href={`/waybills`}>${values.waybill_offers!.length} позиций</Link>,
+                    description: <Link href={`/waybills`}>
+                        {values.waybill_offers!.length} позиций - перейти к накладным
+                    </Link>,
                 })
                 clearCart()
                 setOpen(false)

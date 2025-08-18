@@ -12,17 +12,19 @@ import {
 } from "@/app/(core)/main/components";
 import {OrderPaginatedSchema, OrderSchema} from "@/app/lib/schemas/orderSchema";
 import {fetchOrders} from "@/app/lib/apis/orderApi";
+import {getTranslations} from "next-intl/server";
 
 export const metadata: Metadata = {
     title: "Панель | TCF",
 };
 
 export default async function Page() {
+    const t = await getTranslations("PanelPage");
     const data: OrderPaginatedSchema = await fetchOrders();
     const orders: OrderSchema[] = data.items;
     return (
         <main>
-            <h1 className="mb-4 text-xl md:text-2xl">Панель управления</h1>
+            <h1 className="mb-4 text-xl md:text-2xl">{t('title')}</h1>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
                 <Suspense fallback={<CardSkeleton/>}>
                     <OffersCard/>

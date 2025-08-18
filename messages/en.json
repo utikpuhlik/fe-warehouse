@@ -2,6 +2,17 @@
   "FaqPage": {
     "title": "Frequently Asked Questions"
   },
+  "PanelPage": {
+    "title": "Dashboard",
+    "offers_count": "Number of offers",
+    "offers_active_count": "Number of active offers (>0)",
+    "offers_with_photo_count": "Number of offers with photo",
+    "orders_count": "Number of orders",
+    "waybills_count": "Number of waybills",
+    "users_count": "Number of clients",
+    "best_selling_products": "Best Selling Products",
+    "recent_orders": "Recent Orders"
+  },
   "LocaleSwitcher": {
     "label": "Language",
     "en": "English",
@@ -15,7 +26,9 @@
     "edit": "Edit",
     "delete": "Delete",
     "view": "View",
-    "search": "Search.."
+    "search": "Search..",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
   },
   "FileFormats": {
     "docx": "Word",
@@ -70,8 +83,8 @@
     "convert_error_title": "Error",
     "converting": "Converting..",
     "convert": "Convert",
-    "confirm_convert_title": "Do you want convert Order to Waybill?",
-    "confirm_convert_desc": "This action will create the OUT Waybill",
+    "confirm_convert_title": "Do you want to convert the Order to a Waybill?",
+    "confirm_convert_desc": "This action will create an OUT Waybill",
     "cancel": "Cancel",
     "confirm": "Confirm"
   },
@@ -131,5 +144,36 @@
     "edit": "Edit",
     "print": "Print",
     "convert": "Convert"
+  },
+  "DeleteButton": {
+    "delete": "Delete",
+    "deleted": "Deleted",
+    "one_way_action_alert": "This action cannot be undone.",
+    "cancel": "Cancel",
+    "deleting": "Deleting..",
+    "delete_success": "successfully deleted."
+  },
+  "CommitWaybillButton": {
+    "waybill_success_title": "Waybill saved",
+    "waybill_success_description": "Changes successfully committed",
+    "waybill_save": "Save Waybill",
+    "cancel": "Cancel",
+    "committing": "Saving",
+    "confirm_title": "Are you sure you want to commit the Waybill?",
+    "confirm_description": "Editing will no longer be possible!"
+  },
+  "CartSheet": {
+    "item": "item",
+    "items": "items",
+    "wipe_cart": "Clear cart"
+  },
+  "CartSummaryCard": {
+    "order_summary": "Order Summary",
+    "retail": "retail",
+    "Retail": "Retail",
+    "wholesale": "wholesale",
+    "Wholesale": "Wholesale",
+    "super_wholesale": "super-wholesale",
+    "Super_wholesale": "Super-wholesale"
   }
 }
