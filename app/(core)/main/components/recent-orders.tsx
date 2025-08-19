@@ -33,13 +33,9 @@ import { Input } from "@/components/ui/input";
 import { TableDetailsOrderDropdown } from "@/app/ui/shared/table/table-details-dropdown";
 import { OrderSchema } from "@/app/lib/schemas/orderSchema";
 import { formatCurrency, generateAvatarFallback } from "@/app/lib/utils";
-import { getDictionary } from "@/app/lib/i18n";
 import { OrderBadge } from "@/app/ui/orders/order-badge";
 import { OrderStatusEnum } from "@/app/lib/schemas/commonSchema";
-import {useTranslations} from "next-intl";
-
-const currentLang = "ru";
-const dict = getDictionary(currentLang);
+import { useTranslations } from "next-intl";
 
 const columns: ColumnDef<OrderSchema>[] = [
   {
@@ -56,7 +52,7 @@ const columns: ColumnDef<OrderSchema>[] = [
   },
   {
     accessorKey: "customer",
-    header: dict.orderDataTable.customer,
+    header: "Customer",
     cell: ({ row }) => {
       const customer = row.original.user;
       const fullName = `${customer.first_name} ${customer.last_name}`;
@@ -91,7 +87,7 @@ const columns: ColumnDef<OrderSchema>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="p-0! hover:bg-transparent!"
         >
-          {dict.orderDataTable.totalSum}
+          "Сумма"
           <ArrowUpDown className="size-3" />
         </Button>
       );
@@ -106,7 +102,7 @@ const columns: ColumnDef<OrderSchema>[] = [
   },
   {
     accessorKey: "status",
-    header: dict.orderDataTable.status,
+    header: "Status",
     cell: ({ row }) => {
       const status: OrderStatusEnum = row.original.status;
       return <OrderBadge orderStatus={status} />;
@@ -126,7 +122,7 @@ export function EcommerceRecentOrdersCard({
 }: {
   orders: OrderSchema[];
 }) {
-    const t = useTranslations("PanelPage");
+  const t = useTranslations("PanelPage");
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -174,7 +170,7 @@ export function EcommerceRecentOrdersCard({
   return (
     <Card className="lg:col-span-7">
       <CardHeader>
-        <CardTitle>{t('recent_orders')}</CardTitle>
+        <CardTitle>{t("recent_orders")}</CardTitle>
         {/*<CardAction className="relative">*/}
         {/*  <ExportButton className="absolute end-0 top-0" />*/}
         {/*</CardAction>*/}

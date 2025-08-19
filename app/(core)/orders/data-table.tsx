@@ -38,11 +38,7 @@ import { formatCurrency, formatDateToLocal } from "@/app/lib/utils";
 import { TableDetailsOrderDropdown } from "@/app/ui/shared/table/table-details-dropdown";
 import { TablePopover } from "@/app/ui/shared/table/table-popover";
 import { ORDER_STATUS_LABELS } from "@/app/lib/schemas/commonSchema";
-import { getDictionary } from "@/app/lib/i18n";
 import { OrderStatusSelect } from "@/app/ui/orders/order-status-select";
-
-const currentLang = "ru";
-const dict = getDictionary(currentLang);
 
 export const columns: ColumnDef<OrderSchema>[] = [
   {
@@ -69,7 +65,7 @@ export const columns: ColumnDef<OrderSchema>[] = [
   },
   {
     accessorKey: "id",
-    header: dict.orderDataTable.number,
+    header: "№",
     cell: ({ row }) => (
       <Link
         href={`/orders/${row.getValue("id")}`}
@@ -88,7 +84,7 @@ export const columns: ColumnDef<OrderSchema>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          {dict.orderDataTable.createdAt}
+          Дата
           <ArrowUpDown className="size-3" />
         </Button>
       );
@@ -100,7 +96,7 @@ export const columns: ColumnDef<OrderSchema>[] = [
   },
   {
     accessorKey: "customer",
-    header: dict.orderDataTable.customer,
+    header: "Клиент",
     cell: ({ row }) => {
       const customer = row.original.user;
 
@@ -122,7 +118,7 @@ export const columns: ColumnDef<OrderSchema>[] = [
   },
   {
     accessorKey: "status",
-    header: dict.orderDataTable.status,
+    header: "Статус",
     cell: ({ row }) => {
       const order: OrderSchema = row.original;
       return <OrderStatusSelect order={order} />;
@@ -137,7 +133,7 @@ export const columns: ColumnDef<OrderSchema>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          {dict.orderDataTable.totalSum}
+          Сумма
           <ArrowUpDown className="size-3" />
         </Button>
       );
@@ -149,7 +145,7 @@ export const columns: ColumnDef<OrderSchema>[] = [
   },
   {
     accessorKey: "note",
-    header: dict.orderDataTable.note,
+    header: "Заметка",
     cell: ({ row }) => <div className="capitalize">{row.getValue("note")}</div>,
   },
   {

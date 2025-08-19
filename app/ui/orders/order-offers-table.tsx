@@ -17,12 +17,8 @@ import { OrderBadge } from "@/app/ui/orders/order-badge";
 import { CustomerBadge } from "@/app/ui/users/customer-badge";
 import { formatCurrency } from "@/app/lib/utils";
 import { OrderOfferQuantityEditor } from "@/app/ui/orders/quantity-editor";
-import { getDictionary } from "@/app/lib/i18n";
 import { zOrderStatusEnum } from "@/app/lib/schemas/commonSchema";
 import { getTranslations } from "next-intl/server";
-
-const currentLang = "ru";
-const dict = getDictionary(currentLang);
 
 type OrderOffersTableProps = {
   order: OrderSchema;
@@ -31,6 +27,7 @@ export default async function OrderOffersTable({
   order,
 }: OrderOffersTableProps) {
   const table = await getTranslations("OrderAndWaybillTable");
+  const t = await getTranslations("OrderDetailPage");
   const order_offers: OrderOfferSchema[] = order.order_offers;
 
   const totalSumRub = order_offers.reduce(
@@ -44,14 +41,14 @@ export default async function OrderOffersTable({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
-            {dict.orderDataTable.composition}
+            {t("order_items")}
             <div className="flex items-center space-x-2">
               <OrderBadge orderStatus={order.status} />
               <CustomerBadge customerType={order.user.customer_type} />
             </div>
           </CardTitle>
         </CardHeader>
-        <div className="p-4 text-muted-foreground">Позиции не добавлены</div>
+        <div className="p-4 text-muted-foreground">Empty</div>
       </Card>
     );
   }
@@ -60,7 +57,7 @@ export default async function OrderOffersTable({
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
-          {dict.orderDataTable.composition}
+          {t("order_items")}
           <div className="flex items-center space-x-2">
             <OrderBadge orderStatus={order.status} />
             <CustomerBadge customerType={order.user.customer_type} />

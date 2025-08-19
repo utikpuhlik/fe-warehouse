@@ -41,9 +41,6 @@ import Link from "next/link";
 import { TableDetailsDropdown } from "@/app/ui/shared/table/table-details-dropdown";
 import { TablePopover } from "@/app/ui/shared/table/table-popover";
 import { USER_TYPE_LABELS } from "@/app/lib/schemas/commonSchema";
-import { getDictionary } from "@/app/lib/i18n";
-const currentLang = "ru";
-const dict = getDictionary(currentLang);
 
 export const columns: ColumnDef<UserSchema>[] = [
   {
@@ -70,7 +67,7 @@ export const columns: ColumnDef<UserSchema>[] = [
   },
   {
     accessorKey: "customer",
-    header: dict.orderDataTable.customer,
+    header: "Клиент",
     cell: ({ row }) => {
       const customer = row.original;
       const fullName = `${customer.first_name} ${customer.last_name}`;
