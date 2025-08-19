@@ -87,7 +87,7 @@ const columns: ColumnDef<OrderSchema>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="p-0! hover:bg-transparent!"
         >
-          "Сумма"
+          Сумма
           <ArrowUpDown className="size-3" />
         </Button>
       );
