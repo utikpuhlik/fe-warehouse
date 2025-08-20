@@ -22,9 +22,11 @@ import { getTranslations } from "next-intl/server";
 
 type WaybillOffersTableProps = {
   waybill: WaybillSchema;
+  is_disabled: boolean;
 };
 export default async function WaybillOffersTable({
   waybill,
+  is_disabled,
 }: WaybillOffersTableProps) {
   const table = await getTranslations("OrderAndWaybillTable");
   const t = await getTranslations("WaybillsPage");
@@ -79,7 +81,7 @@ export default async function WaybillOffersTable({
             <TableHead>{table("quantity")}</TableHead>
             <TableHead>{table("price")}</TableHead>
             <TableHead>{table("total")}</TableHead>
-            {waybill.is_pending && <TableHead />}
+            {!is_disabled && <TableHead />}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -120,13 +122,16 @@ export default async function WaybillOffersTable({
               <TableCell>{wo.brand}</TableCell>
               <TableCell>{wo.manufacturer_number}</TableCell>
               <TableCell>
-                <WaybillOfferQuantityEditor waybillOffer={wo} />
+                <WaybillOfferQuantityEditor
+                  waybillOffer={wo}
+                  is_disabled={is_disabled}
+                />
               </TableCell>
               <TableCell>{formatCurrency(wo.price_rub)}</TableCell>
               <TableCell>
                 {formatCurrency(wo.price_rub * wo.quantity)}
               </TableCell>
-              {waybill.is_pending && (
+              {!is_disabled && (
                 <TableCell>
                   <DeleteWaybillOfferProxy {...wo} />
                 </TableCell>
@@ -139,7 +144,7 @@ export default async function WaybillOffersTable({
             <TableCell colSpan={9} />
             <TableCell className="text-right">Σ</TableCell>
             <TableCell>{formatCurrency(totalSumRub)}</TableCell>
-            {waybill.is_pending && <TableCell />}
+            {!is_disabled && <TableCell />}
           </TableRow>
         </TableFooter>
       </Table>

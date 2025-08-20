@@ -103,6 +103,33 @@
     "waybills": "Waybills",
     "waybill_items": "Waybill Items"
   },
+  "WaybillPage": {
+    "waybill": "Waybill",
+    "waybills": "Waybills",
+    "waybill_was_already_commited": "The waybill has already been committed",
+    "waybill_delete": "waybill"
+  },
+  "QuantityEditor": {
+    "updated_title": "Updated",
+    "quantity_updated_to_description": "Quantity updated to"
+  },
+  "CreateWaybillFromCartDialog": {
+    "waybill_created_title": "Waybill created",
+    "waybill_created_description": "items — go to waybills",
+    "create_waybill": "Create waybill",
+    "creation_of_waybill": "Waybill creation",
+    "choose_waybill_type": "Choose type"
+  },
+  "CreateOrderFromCartButton": {
+    "order_created_title": "Order created",
+    "order_created_description": "items — go to orders",
+    "create_order": "Create order"
+  },
+  "OfferCard" : {
+    "missing_description": "No description",
+    "in_stock": "In stock",
+    "out_of_stock": "Out of stock"
+  },
   "CreateWaybillOffer": {
     "note_update_success": "Note updated",
     "offer_add_success": "Item added",
