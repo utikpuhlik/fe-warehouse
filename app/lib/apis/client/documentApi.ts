@@ -1,9 +1,6 @@
 export async function printPriceList(
-  price_type: string,
-  ext: string,
 ): Promise<Response> {
-  const url = `/api/documents/pricing/?type=${price_type}&ext=${ext}`;
-  const res = await fetch(url);
+  const res = await fetch(`/api/print/prices`);
 
   if (!res.ok) {
     throw new Error("Ошибка при получении прайс-листа");

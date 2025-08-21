@@ -22,6 +22,9 @@ import { updateCategoryAction } from "@/app/lib/actions/categoryAction";
 import {SaveButton} from "@/app/ui/shared/buttons/save-button";
 import {EditButton} from "@/app/ui/shared/buttons/edit-button";
 
+// type EditCategoryModalProps = {
+//     category: Category
+// }
 
 export function EditCategoryModal(category: Category) {
     const [open, setOpen] = useState(false);

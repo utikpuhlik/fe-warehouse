@@ -22,6 +22,9 @@ import { DeleteEntityButton } from "@/app/ui/shared/buttons/delete-entity-button
 import {SaveButton} from "@/app/ui/shared/buttons/save-button";
 import {EditButton} from "@/app/ui/shared/buttons/edit-button";
 
+// type EditSubCategoryModalProps = {
+//     sub_category: SubCategory
+// }
 
 export function EditSubCategoryModal(sub_category: SubCategory) {
     const [open, setOpen] = useState(false);

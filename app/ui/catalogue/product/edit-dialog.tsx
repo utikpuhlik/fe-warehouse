@@ -21,6 +21,9 @@ import {deleteProductAction, updateProductAction} from "@/app/lib/actions/produc
 import {SaveButton} from "@/app/ui/shared/buttons/save-button";
 import {EditButton} from "@/app/ui/shared/buttons/edit-button";
 
+// type EditProductModalProps = {
+//     product: Product
+// }
 
 export function EditProductModal(product: Product) {
     const [open, setOpen] = useState(false);
