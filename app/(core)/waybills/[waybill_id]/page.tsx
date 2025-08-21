@@ -19,8 +19,10 @@ import { DownloadWaybill } from "@/app/ui/waybill/download-waybill";
 import {
   USER_TYPE_LABELS,
   WAYBILL_TYPE_LABELS,
+  zWaybillTypeEnum,
 } from "@/app/lib/schemas/commonSchema";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 type Props = {
   params: Promise<{ waybill_id: string }>;
@@ -41,11 +43,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function WaybillPage({ params }: Props) {
+  const t = await getTranslations("WaybillPage");
   const { waybill_id } = await params;
 
-  // TODO: обновить fetchJson для работы с null и 404
+  // TODO: reinvent fetchJson to handle 404 and nulls
   const waybill: WaybillSchema = await fetchWaybillById(waybill_id);
   if (!waybill) notFound();
+
+  const is_disabled: boolean =
+    waybill.is_pending ||
+    waybill.waybill_type === zWaybillTypeEnum.Enum.WAYBILL_OUT;
 
   const fullName = `${waybill.customer.first_name} ${waybill.customer.last_name}`;
   return (
@@ -83,27 +90,27 @@ export default async function WaybillPage({ params }: Props) {
               </TooltipTrigger>
               {!waybill.is_pending && (
                 <TooltipContent>
-                  <p>Накладная уже проведена</p>
+                  <p>{t("waybill_was_already_commited")}</p>
                 </TooltipContent>
               )}
             </Tooltip>
           </TooltipProvider>
           <DeleteEntityButton
-            entityName="накладную"
+            entityName={t("waybill_delete")}
             entityId={waybill_id}
             deleteAction={deleteWaybillAction}
             disabled={!waybill.is_pending}
           />
         </div>
       </div>
-      {waybill.is_pending && (
+      {!is_disabled && (
         <div className="mt-6 mb-4">
           <CreateWaybillOfferForm waybill={waybill} />
         </div>
       )}
 
       <Suspense fallback={<Skeleton className="h-32" />}>
-        <WaybillOffersTable waybill={waybill} />
+        <WaybillOffersTable waybill={waybill} is_disabled={is_disabled} />
       </Suspense>
     </main>
   );

@@ -103,6 +103,16 @@
     "waybills": "Накладные",
     "waybill_items": "Состав накладной"
   },
+  "WaybillPage": {
+    "waybill": "Накладная",
+    "waybills": "Накладные",
+    "waybill_was_already_commited": "Накладная уже проведена",
+    "waybill_delete": "накладную"
+  },
+  "QuantityEditor": {
+    "updated_title": "Обновлено",
+    "quantity_updated_to_description": "Количество обновлено до"
+  },
   "CreateWaybillOffer": {
     "note_update_success": "Заметка обновлена",
     "offer_add_success": "Позиция добавлена",
@@ -112,6 +122,23 @@
     "note": "Заметка",
     "note_placeholder": "Введите заметку..",
     "save_note": "Сохранить заметку"
+  },
+  "CreateWaybillFromCartDialog": {
+    "waybill_created_title": "Накладная создана",
+    "waybill_created_description": "позиций - перейти к накладным",
+    "create_waybill": "Создать накладную",
+    "creation_of_waybill": "Создание накладной",
+    "choose_waybill_type": "Выберите тип"
+  },
+  "CreateOrderFromCartButton" : {
+    "order_created_title": "Заказ создан",
+    "order_created_description": "позиций — перейти к заказам",
+    "create_order": "Создать заказ"
+  },
+  "OfferCard" : {
+    "missing_description": "Описание отсутствует",
+    "in_stock": "На складе",
+    "out_of_stock": "Нет на складе"
   },
   "OrderAndWaybillTable": {
     "number": "№",
