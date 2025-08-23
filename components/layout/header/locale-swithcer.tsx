@@ -17,10 +17,10 @@ export default function LocaleSwitcher() {
           value: "ru",
           label: t("ru"),
         },
-        {
-          value: "tr",
-          label: t("tr"),
-        },
+        // {
+        //   value: "tr",
+        //   label: t("tr"),
+        // },
       ]}
       label={t("label")}
     />

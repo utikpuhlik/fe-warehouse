@@ -22,11 +22,14 @@ import {
 } from "@/app/lib/schemas/offerSchema";
 import { createOfferAction } from "@/app/lib/actions/offerAction";
 import { CreateButton } from "@/app/ui/shared/buttons/create-entity-button";
+import { useTranslations } from "next-intl";
 
 export function CreateOfferModal(product: Product) {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
+  const t = useTranslations("OfferDialog");
+  const toastT = useTranslations("Toast");
 
   const form = useForm<OfferPostSchema>({
     resolver: zodResolver(zOfferPostSchema),
@@ -56,7 +59,7 @@ export function CreateOfferModal(product: Product) {
           product.id,
         );
         toast({
-          title: "Успешно",
+          title: toastT("success"),
           description: `Предложение "${data.brand}" для "${product.name}" добавлено.`,
         });
         resetForm();
@@ -73,16 +76,16 @@ export function CreateOfferModal(product: Product) {
 
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Новое предложение для {product.name}</DialogTitle>
+          <DialogTitle>{`${t("new")} ${product.name}`} </DialogTitle>
         </DialogHeader>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <Label htmlFor="address_id">Адресный номер</Label>
+            <Label htmlFor="address_id">{t("address_id")}</Label>
             <Input id="address_id" {...form.register("address_id")} />
           </div>
           <div>
-            <Label htmlFor="brand">Бренд</Label>
+            <Label htmlFor="brand">{t("manufacturer")}</Label>
             <Input id="brand" {...form.register("brand")} />
             {form.formState.errors.brand && (
               <p className="text-sm text-red-500">
@@ -91,21 +94,23 @@ export function CreateOfferModal(product: Product) {
             )}
           </div>
           <div>
-            <Label htmlFor="manufacturer_number">Номер производителя</Label>
+            <Label htmlFor="manufacturer_number">
+              {t("manufacturer_number")}
+            </Label>
             <Input
               id="manufacturer_number"
               {...form.register("manufacturer_number")}
             />
           </div>
           <div>
-            <Label htmlFor="internal_description">Описание</Label>
+            <Label htmlFor="internal_description">{t("description")}</Label>
             <Input
               id="internal_description"
               {...form.register("internal_description")}
             />
           </div>
           <div>
-            <Label htmlFor="price_rub">Цена розница</Label>
+            <Label htmlFor="price_rub">{t("price_retail")}</Label>
             <Input
               id="price_rub"
               type="number"
@@ -119,7 +124,9 @@ export function CreateOfferModal(product: Product) {
             )}
           </div>
           <div>
-            <Label htmlFor="super_wholesale_price_rub">Супер-опт</Label>
+            <Label htmlFor="super_wholesale_price_rub">
+              {t("price_super_wholesale")}
+            </Label>
             <Input
               id="super_wholesale_price_rub"
               type="number"

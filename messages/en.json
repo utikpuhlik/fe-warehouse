@@ -125,11 +125,6 @@
     "order_created_description": "items — go to orders",
     "create_order": "Create order"
   },
-  "OfferCard": {
-    "missing_description": "No description",
-    "in_stock": "In stock",
-    "out_of_stock": "Out of stock"
-  },
   "CreateWaybillOffer": {
     "note_update_success": "Note updated",
     "offer_add_success": "Item added",
@@ -211,7 +206,7 @@
     "orders": "Orders",
     "users": "Users | TCF",
     "waybills": "Waybills | TCF",
-    "login": "TCF | Login",
+    "login": "Login | TCF",
     "category_not_found": "Category Not Found | TCF",
     "subcategory_not_found": "Subcategory Not Found | TCF",
     "product_not_found": "Product Not Found | TCF",
@@ -224,7 +219,7 @@
     "category_not_found": "The requested category does not exist.",
     "subcategory_not_found": "The requested subcategory does not exist.",
     "product_not_found": "The requested product does not exist.",
-    "orders": "A list of orders generated using the Tanstack Table."
+    "orders": "A list of orders"
   },
   "OrderStatuses": {
     "new": "New",
@@ -241,23 +236,17 @@
   "Breadcrumbs": {
     "catalogue": "Catalog"
   },
-  "TableHeaders": {
-    "client": "Client",
-    "status": "Status",
-    "note": "Note"
-  },
-  "SearchPlaceholders": {
-    "search": "Search.."
-  },
   "Toast": {
     "added_to_cart": "Added to cart",
     "category_created": "Category created",
+    "sub_category_created": "Sub-Category updated",
     "success": "Success",
     "offer_created": "Offer added",
     "offer_updated": "Offer updated",
     "product_created": "Product added",
     "product_updated": "Product updated",
     "category_updated": "Category updated",
+    "sub_category_updated": "Sub-Category updated",
     "order_updated": "Order updated",
     "user_updated": "User updated",
     "order_status_update_error": "Failed to update order status",
@@ -294,5 +283,47 @@
   },
   "TablePage": {
     "offers_table": "Offers Table"
+  },
+  "CategoryDialog": {
+    "name": "Name",
+    "image": "Image",
+    "edit": "Edit category",
+    "new": "New category"
+  },
+  "SubCategoryDialog": {
+    "name": "Name",
+    "image": "Image",
+    "edit": "Edit subcategory",
+    "new": "New subcategory in"
+  },
+  "ProductDialog": {
+    "name": "Name",
+    "image": "Image",
+    "edit": "Edit product",
+    "cross_number": "Cross number",
+    "new": "New product in"
+  },
+  "OfferDialog": {
+    "name": "Name",
+    "image": "Image",
+    "edit": "Edit offer",
+    "new": "New offer for",
+    "cross_number": "Cross number",
+    "address_id": "Address code",
+    "manufacturer": "Manufacturer",
+    "manufacturer_number": "Manufacturer number",
+    "description": "Description",
+    "price_super_wholesale": "Super-wholesale price",
+    "price_retail": "Retail price"
+  },
+  "OfferCard": {
+    "missing_description": "No description available",
+    "in_stock": "In stock",
+    "out_of_stock": "Out of stock",
+    "retail": "Retail",
+    "wholesale": "Wholesale",
+    "super_wholesale": "Super-Wholesale",
+    "quantity": "Quantity",
+    "pcs": "pcs"
   }
 }

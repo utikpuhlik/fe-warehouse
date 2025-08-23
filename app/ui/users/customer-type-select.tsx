@@ -39,6 +39,7 @@ export function CustomerTypeSelect({ user }: CustomerTypeSelectProps) {
           description: `${t("user_updated")} ${user.email}`,
         });
       } catch (error) {
+        console.error(error);
         toast({
           title: t("error"),
           description: t("user_update_error"),

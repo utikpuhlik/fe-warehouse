@@ -25,7 +25,8 @@ export function EditCategoryModal(category: Category) {
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [isPending, startTransition] = useTransition();
-  const t = useTranslations("Toast");
+  const t = useTranslations("CategoryDialog");
+  const toastT = useTranslations("Toast");
 
   const form = useForm<Category>({
     resolver: zodResolver(zCategory),
@@ -43,8 +44,8 @@ export function EditCategoryModal(category: Category) {
       try {
         await updateCategoryAction(category.id, category, file ?? undefined);
         toast({
-          title: t("success"),
-          description: `${t("category_updated")} "${category.name}".`,
+          title: toastT("success"),
+          description: `${toastT("category_updated")} "${category.name}".`,
         });
         resetForm();
       } catch (error) {
@@ -65,17 +66,17 @@ export function EditCategoryModal(category: Category) {
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Редактировать категорию</DialogTitle>
+          <DialogTitle>{t("edit")}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <Label htmlFor="name">Название</Label>
+            <Label htmlFor="name">{t("name")}</Label>
             <Input id="name" {...form.register("name")} />
           </div>
 
           <div>
-            <Label htmlFor="picture">Картинка</Label>
+            <Label htmlFor="picture">{t("image")}</Label>
             <Input
               id="picture"
               type="file"

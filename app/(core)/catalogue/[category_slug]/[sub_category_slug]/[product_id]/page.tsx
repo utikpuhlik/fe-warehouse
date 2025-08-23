@@ -1,4 +1,4 @@
-import { OfferCard } from "@/app/ui/shared/cards/offer-card";
+import { OfferCard } from "@/app/ui/catalogue/cards/offer-card";
 import { fetchProductById } from "@/app/lib/apis/productApi";
 import { fetchOffersByProductId } from "@/app/lib/apis/offerApi";
 import Breadcrumbs from "@/app/ui/shared/breadcrumbs";

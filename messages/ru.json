@@ -135,11 +135,6 @@
     "order_created_description": "позиций — перейти к заказам",
     "create_order": "Создать заказ"
   },
-  "OfferCard": {
-    "missing_description": "Описание отсутствует",
-    "in_stock": "На складе",
-    "out_of_stock": "Нет на складе"
-  },
   "OrderAndWaybillTable": {
     "number": "№",
     "address_code": "Адресный код",
@@ -211,7 +206,7 @@
     "orders": "Заказы",
     "users": "Пользователи | TCF",
     "waybills": "Накладные | TCF",
-    "login": "TCF | Login",
+    "login": "Login | TCF",
     "category_not_found": "Категория не найдена | TCF",
     "subcategory_not_found": "Подкатегория не найдена | TCF",
     "product_not_found": "Товар не найден | TCF",
@@ -224,7 +219,7 @@
     "category_not_found": "Запрошенная категория не существует.",
     "subcategory_not_found": "Запрошенная подкатегория не существует.",
     "product_not_found": "Запрошенный товар не существует.",
-    "orders": "A list of orders generated using the Tanstack Table."
+    "orders": "Список заказов"
   },
   "OrderStatuses": {
     "new": "Новый",
@@ -241,23 +236,17 @@
   "Breadcrumbs": {
     "catalogue": "Каталог"
   },
-  "TableHeaders": {
-    "client": "Клиент",
-    "status": "Статус",
-    "note": "Заметка"
-  },
-  "SearchPlaceholders": {
-    "search": "Поиск.."
-  },
   "Toast": {
     "added_to_cart": "Добавлено в корзину",
     "category_created": "Категория создана",
+    "sub_category_created": "Подкатегория создана",
     "success": "Успешно",
     "offer_created": "Предложение добавлено",
     "offer_updated": "Предложение обновлено",
     "product_created": "Товар добавлен",
     "product_updated": "Товар обновлен",
     "category_updated": "Категория обновлена",
+    "sub_category_updated": "Категория обновлена",
     "order_updated": "Заказ обновлён",
     "user_updated": "Пользователь обновлён",
     "order_status_update_error": "Не удалось обновить статус заказа",
@@ -294,5 +283,47 @@
   },
   "TablePage": {
     "offers_table": "Таблица предложений"
+  },
+  "CategoryDialog" : {
+    "name": "Название",
+    "image": "Картинка",
+    "edit": "Редактировать категорию",
+    "new": "Новая категория"
+  },
+  "SubCategoryDialog" : {
+    "name": "Название",
+    "image": "Картинка",
+    "edit": "Редактировать подкатегорию",
+    "new": "Новая подкатегория в"
+  },
+  "ProductDialog" : {
+    "name": "Название",
+    "image": "Картинка",
+    "edit": "Редактировать товар",
+    "cross_number": "Кросс-номер",
+    "new": "Новый товар в"
+  },
+  "OfferDialog" : {
+    "name": "Название",
+    "image": "Картинка",
+    "new": "Новое предложение для",
+    "edit": "Редактировать предложение",
+    "cross_number": "Кросс-номер",
+    "address_id": "Адресный код",
+    "manufacturer": "Производитель",
+    "manufacturer_number": "Номер производителя",
+    "description": "Описание",
+    "price_super_wholesale": "Цена супер-опт",
+    "price_retail": "Цена розница"
+  },
+  "OfferCard": {
+    "missing_description": "Описание отсутствует",
+    "in_stock": "На складе",
+    "out_of_stock": "Нет на складе",
+    "retail": "Розница",
+    "wholesale": "Опт",
+    "super_wholesale": "Супер-опт",
+    "quantity": "Кол-во",
+    "pcs": "шт"
   }
 }

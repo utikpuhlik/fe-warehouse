@@ -35,6 +35,7 @@ function getFaqs(t: (key: string) => string) {
 
 export default function Page() {
   const t = useTranslations();
+  const title = useTranslations("PageTitles");
   const faqs = getFaqs(t);
   return (
     <>
@@ -42,7 +43,7 @@ export default function Page() {
         {/* <!-- Title --> */}
         <div className="max-w-2xl mx-auto mb-10 lg:mb-14">
           <h2 className="text-2xl font-bold md:text-4xl md:leading-tight">
-            {t("title")}
+            {title("help")}
           </h2>
         </div>
         {/* <!-- End Title --> */}

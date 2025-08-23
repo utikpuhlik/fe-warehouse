@@ -28,7 +28,8 @@ export function CreateCategoryModal() {
   const [file, setFile] = useState<File | null>(null);
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
-  const t = useTranslations("Toast");
+  const t = useTranslations("CategoryDialog");
+  const toastT = useTranslations("Toast");
 
   const form = useForm<CategoryPostSchema>({
     resolver: zodResolver(zCategoryPostSchema),
@@ -50,8 +51,8 @@ export function CreateCategoryModal() {
       try {
         await createCategoryAction(data, file);
         toast({
-          title: t("category_created"),
-          description: `${t("category_created")} "${data.name}".`,
+          title: toastT("category_created"),
+          description: `${toastT("category_created")} "${data.name}".`,
         });
         resetForm();
       } catch (error) {
@@ -68,12 +69,12 @@ export function CreateCategoryModal() {
 
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Новая категория</DialogTitle>
+          <DialogTitle>{t("new")}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <Label htmlFor="name">Название</Label>
+            <Label htmlFor="name">{t("name")}</Label>
             <Input id="name" {...form.register("name")} />
             {form.formState.errors.name && (
               <p className="text-sm text-red-500">
@@ -82,7 +83,7 @@ export function CreateCategoryModal() {
             )}
           </div>
           <div>
-            <Label htmlFor="picture">Картинка</Label>
+            <Label htmlFor="picture">{t("image")}</Label>
             <Input
               id="picture"
               type="file"

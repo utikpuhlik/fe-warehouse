@@ -6,7 +6,7 @@ import { CreateProductModal } from "@/app/ui/catalogue/product/create-dialog";
 import { notFound } from "next/navigation";
 import type { SubCategory } from "@/app/lib/schemas/subCategorySchema";
 import type { Metadata } from "next";
-import { CatalogueCard } from "@/app/ui/shared/cards/catalogue-card";
+import { CatalogueCard } from "@/app/ui/catalogue/cards/catalogue-card";
 import { getTranslations } from "next-intl/server";
 
 type Props = {

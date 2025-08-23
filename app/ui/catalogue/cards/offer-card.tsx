@@ -39,13 +39,15 @@ export function OfferCard({ offer }: { offer: OfferSchema }) {
         </div>
 
         <div className="flex items-center justify-between text-sm font-medium mt-3">
-          <div>Кол-во: {offer.quantity} шт</div>
-          <div>
-            Супер-опт: {formatCurrency(offer.super_wholesale_price_rub)}
-          </div>
-          <div>Опт: {formatCurrency(offer.wholesale_price_rub)}</div>
+          <div>{`${t("quantity")}: ${offer.quantity} ${t("pcs")}`}</div>
           <div className="text-right">
-            Розница: {formatCurrency(offer.price_rub)}
+            {`${t("retail")}: ${formatCurrency(offer.price_rub)}`}
+          </div>
+          <div>
+            {`${t("wholesale")}: ${formatCurrency(offer.wholesale_price_rub)}`}
+          </div>
+          <div>
+            {`${t("super_wholesale")}: ${formatCurrency(offer.super_wholesale_price_rub)}`}
           </div>
         </div>
 

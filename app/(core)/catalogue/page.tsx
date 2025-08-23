@@ -3,7 +3,7 @@ import { fetchCategories } from "@/app/lib/apis/categoryApi";
 import { CreateCategoryModal } from "@/app/ui/catalogue/category/create-dialog";
 import type { Metadata } from "next";
 import { SearchDropdown } from "@/app/modules/search-dropdown/search-dropdown";
-import { CatalogueCard } from "@/app/ui/shared/cards/catalogue-card";
+import { CatalogueCard } from "@/app/ui/catalogue/cards/catalogue-card";
 import { getTranslations } from "next-intl/server";
 
 export const dynamic = "force-dynamic";
