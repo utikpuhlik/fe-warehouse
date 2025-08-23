@@ -1,43 +1,41 @@
 import { Metadata } from "next";
 import { CircleHelp } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Помощь | TCF",
-  description: "Внутренняя документация бизнес-процессов TCF",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("PageTitles");
+  const tDesc = await getTranslations("PageDescriptions");
+  return {
+    title: t("help"),
+    description: tDesc("help"),
+  };
+}
 
-const faqs = [
-  {
-    question: "Процесс - Создание заказа",
-    answer:
-      "1. Корзина собрана - подтверждение\n" +
-      "2. Автоматически создается заказ со статусом `Новый`\n" +
-      "3. Печать - передача кладовщику `Сборка`\n" +
-      "4. Контакт клиента - финальное подтверждение\n" +
-      "5. Создание накладной из заказа для внесения изменений на склад\n" +
-      "6. Отправка и перевод в состояние `Выполнен`",
-  },
-  {
-    question: "Как создать ПРИХОДНУЮ/ВОЗВРАТНУЮ накладную?",
-    answer:
-      "Вы можете создать накладную из корзины, выбрав её тип и указав клиента, или же со страницы Накладные, нажав создать.",
-  },
-  {
-    question: "Как создать РАСХОДНУЮ накладную?",
-    answer:
-      "Для создания расходной накладной необходим заказ, который можно конвертировать в накладную. Как либо изменять расходную накладную нельзя, она должна всегда соответствовать заказу.",
-  },
-  {
-    question: "Как создать заказ?",
-    answer:
-      "Заказ создается автоматически при подтверждении в корзине.\n" +
-      "Любые изменения в заказе отобразятся у клиента в личном кабинете.",
-  },
-];
+function getFaqs(t: (key: string) => string) {
+  return [
+    {
+      question: t("FaqQuestions.order_creation_process"),
+      answer: t("FaqAnswers.order_creation_process"),
+    },
+    {
+      question: t("FaqQuestions.how_to_create_incoming_waybill"),
+      answer: t("FaqAnswers.how_to_create_incoming_waybill"),
+    },
+    {
+      question: t("FaqQuestions.how_to_create_outgoing_waybill"),
+      answer: t("FaqAnswers.how_to_create_outgoing_waybill"),
+    },
+    {
+      question: t("FaqQuestions.how_to_create_order"),
+      answer: t("FaqAnswers.how_to_create_order"),
+    },
+  ];
+}
 
 export default function Page() {
-  const t = useTranslations("FaqPage");
+  const t = useTranslations();
+  const faqs = getFaqs(t);
   return (
     <>
       <div className="max-w-[85rem] container mx-auto px-4 md:px-6 2xl:max-w-[1400px] py-24 lg:py-32">
@@ -58,12 +56,14 @@ export default function Page() {
                 <div className="grow">
                   <h3 className="md:text-lg font-semibold">{faq.question}</h3>
                   <p className="mt-1 text-muted-foreground">
-                    {faq.answer.split("\n").map((line, index) => (
-                      <span key={index}>
-                        {line}
-                        <br />
-                      </span>
-                    ))}
+                    {faq.answer
+                      .split("\n")
+                      .map((line: string, index: number) => (
+                        <span key={index}>
+                          {line}
+                          <br />
+                        </span>
+                      ))}
                   </p>
                 </div>
               </div>

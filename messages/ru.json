@@ -130,12 +130,12 @@
     "creation_of_waybill": "Создание накладной",
     "choose_waybill_type": "Выберите тип"
   },
-  "CreateOrderFromCartButton" : {
+  "CreateOrderFromCartButton": {
     "order_created_title": "Заказ создан",
     "order_created_description": "позиций — перейти к заказам",
     "create_order": "Создать заказ"
   },
-  "OfferCard" : {
+  "OfferCard": {
     "missing_description": "Описание отсутствует",
     "in_stock": "На складе",
     "out_of_stock": "Нет на складе"
@@ -202,5 +202,97 @@
     "Wholesale": "Опт",
     "super_wholesale": "супер-опт",
     "Super_wholesale": "Супер-опт"
+  },
+  "PageTitles": {
+    "catalogue": "Каталог | TCF",
+    "help": "Помощь | TCF",
+    "history": "История | TCF",
+    "panel": "Панель | TCF",
+    "orders": "Заказы",
+    "users": "Пользователи | TCF",
+    "waybills": "Накладные | TCF",
+    "login": "TCF | Login",
+    "category_not_found": "Категория не найдена | TCF",
+    "subcategory_not_found": "Подкатегория не найдена | TCF",
+    "product_not_found": "Товар не найден | TCF",
+    "order_not_found": "Заказ не найден | TCF",
+    "waybill_not_found": "Накладная не найдена | TCF"
+  },
+  "PageDescriptions": {
+    "catalogue": "Каталог автозапчастей Ford",
+    "help": "Внутренняя документация бизнес-процессов TCF",
+    "category_not_found": "Запрошенная категория не существует.",
+    "subcategory_not_found": "Запрошенная подкатегория не существует.",
+    "product_not_found": "Запрошенный товар не существует.",
+    "orders": "A list of orders generated using the Tanstack Table."
+  },
+  "OrderStatuses": {
+    "new": "Новый",
+    "in_progress": "Сборка",
+    "shipping": "Отправлен",
+    "completed": "Завершен",
+    "canceled": "Отменен",
+    "delivery_info": "Информация о доставке"
+  },
+  "WaybillStatuses": {
+    "draft": "Черновик",
+    "completed": "Завершено"
+  },
+  "Breadcrumbs": {
+    "catalogue": "Каталог"
+  },
+  "TableHeaders": {
+    "client": "Клиент",
+    "status": "Статус",
+    "note": "Заметка"
+  },
+  "SearchPlaceholders": {
+    "search": "Поиск.."
+  },
+  "Toast": {
+    "added_to_cart": "Добавлено в корзину",
+    "category_created": "Категория создана",
+    "success": "Успешно",
+    "offer_created": "Предложение добавлено",
+    "offer_updated": "Предложение обновлено",
+    "product_created": "Товар добавлен",
+    "product_updated": "Товар обновлен",
+    "category_updated": "Категория обновлена",
+    "order_updated": "Заказ обновлён",
+    "user_updated": "Пользователь обновлён",
+    "order_status_update_error": "Не удалось обновить статус заказа",
+    "user_update_error": "Не удалось обновить пользователя",
+    "mailing_updated": "Рассылка обновлена",
+    "subscribed": "подписан",
+    "unsubscribed": "отписан",
+    "error": "Ошибка"
+  },
+  "Cart": {
+    "add_to_cart": "Добавить в корзину"
+  },
+  "ErrorMessages": {
+    "something_went_wrong": "Что-то пошло не так!"
+  },
+  "ButtonLabels": {
+    "try_again": "Попробовать снова"
+  },
+  "HistoryPage": {
+    "warehouse_history": "Здесь будет история склада",
+    "generated_from_waybills": "Пока что она генерируется только с накладных"
+  },
+  "FaqQuestions": {
+    "order_creation_process": "Процесс - Создание заказа",
+    "how_to_create_incoming_waybill": "Как создать ПРИХОДНУЮ/ВОЗВРАТНУЮ накладную?",
+    "how_to_create_outgoing_waybill": "Как создать РАСХОДНУЮ накладную?",
+    "how_to_create_order": "Как создать заказ?"
+  },
+  "FaqAnswers": {
+    "order_creation_process": "1. Корзина собрана - подтверждение\n2. Автоматически создается заказ со статусом `Новый`\n3. Печать - передача кладовщику `Сборка`\n4. Контакт клиента - финальное подтверждение\n5. Создание накладной из заказа для внесения изменений на склад\n6. Отправка и перевод в состояние `Выполнен`",
+    "how_to_create_incoming_waybill": "Вы можете создать накладную из корзины, выбрав её тип и указав клиента, или же со страницы Накладные, нажав создать.",
+    "how_to_create_outgoing_waybill": "Для создания расходной накладной необходим заказ, который можно конвертировать в накладную. Как либо изменять расходную накладную нельзя, она должна всегда соответствовать заказу.",
+    "how_to_create_order": "Заказ создается автоматически при подтверждении в корзине.\nЛюбые изменения в заказе отобразятся у клиента в личном кабинете."
+  },
+  "TablePage": {
+    "offers_table": "Таблица предложений"
   }
 }

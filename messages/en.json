@@ -125,7 +125,7 @@
     "order_created_description": "items — go to orders",
     "create_order": "Create order"
   },
-  "OfferCard" : {
+  "OfferCard": {
     "missing_description": "No description",
     "in_stock": "In stock",
     "out_of_stock": "Out of stock"
@@ -202,5 +202,97 @@
     "Wholesale": "Wholesale",
     "super_wholesale": "super-wholesale",
     "Super_wholesale": "Super-wholesale"
+  },
+  "PageTitles": {
+    "catalogue": "Catalog | TCF",
+    "help": "Help | TCF",
+    "history": "History | TCF",
+    "panel": "Dashboard | TCF",
+    "orders": "Orders",
+    "users": "Users | TCF",
+    "waybills": "Waybills | TCF",
+    "login": "TCF | Login",
+    "category_not_found": "Category Not Found | TCF",
+    "subcategory_not_found": "Subcategory Not Found | TCF",
+    "product_not_found": "Product Not Found | TCF",
+    "order_not_found": "Order Not Found | TCF",
+    "waybill_not_found": "Waybill Not Found | TCF"
+  },
+  "PageDescriptions": {
+    "catalogue": "Ford auto parts catalog",
+    "help": "Internal documentation of TCF business processes",
+    "category_not_found": "The requested category does not exist.",
+    "subcategory_not_found": "The requested subcategory does not exist.",
+    "product_not_found": "The requested product does not exist.",
+    "orders": "A list of orders generated using the Tanstack Table."
+  },
+  "OrderStatuses": {
+    "new": "New",
+    "in_progress": "In Progress",
+    "shipping": "Shipped",
+    "completed": "Completed",
+    "canceled": "Canceled",
+    "delivery_info": "Delivery Information"
+  },
+  "WaybillStatuses": {
+    "draft": "Draft",
+    "completed": "Completed"
+  },
+  "Breadcrumbs": {
+    "catalogue": "Catalog"
+  },
+  "TableHeaders": {
+    "client": "Client",
+    "status": "Status",
+    "note": "Note"
+  },
+  "SearchPlaceholders": {
+    "search": "Search.."
+  },
+  "Toast": {
+    "added_to_cart": "Added to cart",
+    "category_created": "Category created",
+    "success": "Success",
+    "offer_created": "Offer added",
+    "offer_updated": "Offer updated",
+    "product_created": "Product added",
+    "product_updated": "Product updated",
+    "category_updated": "Category updated",
+    "order_updated": "Order updated",
+    "user_updated": "User updated",
+    "order_status_update_error": "Failed to update order status",
+    "user_update_error": "Failed to update user",
+    "mailing_updated": "Mailing updated",
+    "subscribed": "subscribed",
+    "unsubscribed": "unsubscribed",
+    "error": "Error"
+  },
+  "Cart": {
+    "add_to_cart": "Add to cart"
+  },
+  "ErrorMessages": {
+    "something_went_wrong": "Something went wrong!"
+  },
+  "ButtonLabels": {
+    "try_again": "Try again"
+  },
+  "HistoryPage": {
+    "warehouse_history": "Warehouse history will be here",
+    "generated_from_waybills": "For now it is generated only from waybills"
+  },
+  "FaqQuestions": {
+    "order_creation_process": "Process - Order Creation",
+    "how_to_create_incoming_waybill": "How to create an INCOMING/RETURN waybill?",
+    "how_to_create_outgoing_waybill": "How to create an OUTGOING waybill?",
+    "how_to_create_order": "How to create an order?"
+  },
+  "FaqAnswers": {
+    "order_creation_process": "1. Cart assembled - confirmation\n2. Order automatically created with `New` status\n3. Print - transfer to warehouse keeper `Assembly`\n4. Client contact - final confirmation\n5. Creating waybill from order to make changes to warehouse\n6. Shipping and transfer to `Completed` state",
+    "how_to_create_incoming_waybill": "You can create a waybill from the cart by selecting its type and specifying the client, or from the Waybills page by clicking create.",
+    "how_to_create_outgoing_waybill": "To create an outgoing waybill, you need an order that can be converted to a waybill. You cannot modify the outgoing waybill in any way, it must always correspond to the order.",
+    "how_to_create_order": "Order is created automatically when confirmed in the cart.\nAny changes in the order will be displayed to the client in their personal account."
+  },
+  "TablePage": {
+    "offers_table": "Offers Table"
   }
 }

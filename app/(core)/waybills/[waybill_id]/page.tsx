@@ -32,8 +32,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { waybill_id } = await params;
   const waybill: WaybillSchema = await fetchWaybillById(waybill_id);
   if (!waybill) {
+    const t = await getTranslations("PageTitles");
     return {
-      title: "Накладная не найдена | TCF",
+      title: t("waybill_not_found"),
       robots: { index: false, follow: false },
     };
   }

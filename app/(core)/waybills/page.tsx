@@ -7,9 +7,12 @@ import { Metadata } from "next";
 import WaybillDataTable from "@/app/(core)/waybills/data-table";
 import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Накладные | TCF",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("PageTitles");
+  return {
+    title: t("waybills"),
+  };
+}
 
 export default async function WaybillsPage() {
   const t = await getTranslations("WaybillsPage");

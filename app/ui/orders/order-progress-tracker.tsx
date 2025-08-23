@@ -12,6 +12,7 @@ import { formatDateToLocal } from "@/app/lib/utils";
 import { OrderBadge } from "@/app/ui/orders/order-badge";
 import { JSX } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useTranslations } from "next-intl";
 
 interface OrderProgressProps {
   status: OrderStatusEnum;
@@ -25,12 +26,16 @@ const progressStatuses: Exclude<OrderStatusEnum, "CANCELED">[] = [
   "COMPLETED",
 ];
 
-const statusLabels: Record<Exclude<OrderStatusEnum, "CANCELED">, string> = {
-  NEW: "Новый",
-  IN_PROGRESS: "Сборка",
-  SHIPPING: "Отправлен",
-  COMPLETED: "Завершен",
-};
+function getStatusLabels(
+  t: (key: string) => string,
+): Record<Exclude<OrderStatusEnum, "CANCELED">, string> {
+  return {
+    NEW: t("new"),
+    IN_PROGRESS: t("in_progress"),
+    SHIPPING: t("shipping"),
+    COMPLETED: t("completed"),
+  };
+}
 
 const statusIcons: Record<Exclude<OrderStatusEnum, "CANCELED">, JSX.Element> = {
   NEW: <BellPlus className="size-5" />,
@@ -43,6 +48,8 @@ export function OrderProgressTracker({
   status,
   updatedAt,
 }: OrderProgressProps) {
+  const t = useTranslations("OrderStatuses");
+  const statusLabels = getStatusLabels(t);
   if (status === "CANCELED") {
     return (
       <div className="flex items-center gap-2 text-destructive">
@@ -62,7 +69,7 @@ export function OrderProgressTracker({
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center">
-          Информация о доставке
+          {t("delivery_info")}
         </CardTitle>
       </CardHeader>
       <CardContent>

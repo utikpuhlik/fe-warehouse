@@ -7,12 +7,16 @@ import { UserSchema } from "@/app/lib/schemas/userSchema";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Пользователи | TCF",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("PageTitles");
+  return {
+    title: t("users"),
+  };
+}
 
 export default async function Page() {
   const t = await getTranslations("UsersPage");
+  const a = await getTranslations("Actions");
   const users: UserSchema[] = await fetchUsers();
 
   return (
@@ -21,7 +25,7 @@ export default async function Page() {
         <h1 className="text-2xl font-bold tracking-tight">{t("users")}</h1>
         <Button asChild>
           <Link href="#">
-            <CirclePlus /> Add New User
+            <CirclePlus /> {a("create")} {t("user")}
           </Link>
         </Button>
       </div>

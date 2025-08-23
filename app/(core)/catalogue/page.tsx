@@ -8,10 +8,14 @@ import { getTranslations } from "next-intl/server";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Каталог | TCF",
-  description: "Каталог автозапчастей Ford",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("PageTitles");
+  const tDesc = await getTranslations("PageDescriptions");
+  return {
+    title: t("catalogue"),
+    description: tDesc("catalogue"),
+  };
+}
 
 export default async function CategoriesPage() {
   const t = await getTranslations("CataloguePage");

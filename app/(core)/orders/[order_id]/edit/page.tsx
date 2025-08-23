@@ -11,6 +11,7 @@ import {
 import Breadcrumbs from "@/app/ui/shared/breadcrumbs";
 import { DownloadOrderWord } from "@/app/ui/orders/download-order-word";
 import { CreateOrderOfferForm } from "@/app/ui/orders/create-order-offer";
+import { getTranslations } from "next-intl/server";
 
 type Props = {
   params: Promise<{ order_id: string }>;
@@ -20,8 +21,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { order_id } = await params;
   const order: OrderSchema = await fetchOrderById(order_id);
   if (!order) {
+    const t = await getTranslations("PageTitles");
     return {
-      title: "Заказ не найден | TCF",
+      title: t("order_not_found"),
       robots: { index: false, follow: false },
     };
   }

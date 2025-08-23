@@ -1,5 +1,5 @@
 import { generateMeta } from "@/app/lib/utils";
-
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CirclePlus } from "lucide-react";
@@ -11,10 +11,12 @@ import {
 } from "@/app/lib/schemas/orderSchema";
 import { getTranslations } from "next-intl/server";
 
-export async function generateMetadata() {
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("PageTitles");
+  const tDesc = await getTranslations("PageDescriptions");
   return generateMeta({
-    title: "Заказы",
-    description: "A list of orders generated using the Tanstack Table.",
+    title: t("orders"),
+    description: tDesc("orders"),
     canonical: "/orders",
   });
 }

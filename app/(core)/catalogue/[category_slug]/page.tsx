@@ -17,9 +17,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { category_slug } = await params;
   const category: Category = await fetchCategoryBySlug(category_slug);
   if (!category) {
+    const t = await getTranslations("PageTitles");
+    const tDesc = await getTranslations("PageDescriptions");
     return {
-      title: "Категория не найдена | TCF",
-      description: "Запрошенная категория не существует.",
+      title: t("category_not_found"),
+      description: tDesc("category_not_found"),
       robots: { index: false, follow: false },
     };
   }
@@ -31,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function SubCategoriesPage({ params }: Props) {
-  const t = await getTranslations("CataloguePage");
+  const breadcrumbT = await getTranslations("Breadcrumbs");
   const { category_slug } = await params;
   const category: Category = await fetchCategoryBySlug(category_slug);
   if (!category) {
@@ -45,7 +47,7 @@ export default async function SubCategoriesPage({ params }: Props) {
       <div className="mb-4 flex items-center justify-between">
         <Breadcrumbs
           breadcrumbs={[
-            { label: t("catalogue"), href: "/catalogue" },
+            { label: breadcrumbT("catalogue"), href: "/catalogue" },
             {
               label: category.name,
               href: `/catalogue/${category_slug}`,

@@ -175,5 +175,97 @@
     "Wholesale": "Toptan",
     "super_wholesale": "süper-toptan",
     "Super_wholesale": "Süper-toptan"
+  },
+  "PageTitles": {
+    "catalogue": "Katalog | TCF",
+    "help": "Yardım | TCF",
+    "history": "Geçmiş | TCF",
+    "panel": "Panel | TCF",
+    "orders": "Siparişler",
+    "users": "Kullanıcılar | TCF",
+    "waybills": "İrsaliyeler | TCF",
+    "login": "TCF | Giriş",
+    "category_not_found": "Kategori Bulunamadı | TCF",
+    "subcategory_not_found": "Alt Kategori Bulunamadı | TCF",
+    "product_not_found": "Ürün Bulunamadı | TCF",
+    "order_not_found": "Sipariş Bulunamadı | TCF",
+    "waybill_not_found": "İrsaliye Bulunamadı | TCF"
+  },
+  "PageDescriptions": {
+    "catalogue": "Ford otomobil yedek parçaları kataloğu",
+    "help": "TCF iş süreçlerinin dahili dokümantasyonu",
+    "category_not_found": "İstenen kategori mevcut değil.",
+    "subcategory_not_found": "İstenen alt kategori mevcut değil.",
+    "product_not_found": "İstenen ürün mevcut değil.",
+    "orders": "Tanstack Table kullanılarak oluşturulmuş sipariş listesi."
+  },
+  "OrderStatuses": {
+    "new": "Yeni",
+    "in_progress": "İşlemde",
+    "shipping": "Gönderildi",
+    "completed": "Tamamlandı",
+    "canceled": "İptal edildi",
+    "delivery_info": "Teslimat Bilgileri"
+  },
+  "WaybillStatuses": {
+    "draft": "Taslak",
+    "completed": "Tamamlandı"
+  },
+  "Breadcrumbs": {
+    "catalogue": "Katalog"
+  },
+  "TableHeaders": {
+    "client": "Müşteri",
+    "status": "Durum",
+    "note": "Not"
+  },
+  "SearchPlaceholders": {
+    "search": "Ara.."
+  },
+  "Toast": {
+    "added_to_cart": "Sepete eklendi",
+    "category_created": "Kategori oluşturuldu",
+    "success": "Başarılı",
+    "offer_created": "Teklif eklendi",
+    "offer_updated": "Teklif güncellendi",
+    "product_created": "Ürün eklendi",
+    "product_updated": "Ürün güncellendi",
+    "category_updated": "Kategori güncellendi",
+    "order_updated": "Sipariş güncellendi",
+    "user_updated": "Kullanıcı güncellendi",
+    "order_status_update_error": "Sipariş durumu güncellenemedi",
+    "user_update_error": "Kullanıcı güncellenemedi",
+    "mailing_updated": "Posta listesi güncellendi",
+    "subscribed": "abone oldu",
+    "unsubscribed": "abonelikten çıktı",
+    "error": "Hata"
+  },
+  "Cart": {
+    "add_to_cart": "Sepete ekle"
+  },
+  "ErrorMessages": {
+    "something_went_wrong": "Bir şeyler ters gitti!"
+  },
+  "ButtonLabels": {
+    "try_again": "Tekrar dene"
+  },
+  "HistoryPage": {
+    "warehouse_history": "Burada depo geçmişi olacak",
+    "generated_from_waybills": "Şimdilik sadece irsaliyelerden oluşturuluyor"
+  },
+  "FaqQuestions": {
+    "order_creation_process": "Süreç - Sipariş Oluşturma",
+    "how_to_create_incoming_waybill": "GİRİŞ/İADE irsaliyesi nasıl oluşturulur?",
+    "how_to_create_outgoing_waybill": "ÇIKIŞ irsaliyesi nasıl oluşturulur?",
+    "how_to_create_order": "Sipariş nasıl oluşturulur?"
+  },
+  "FaqAnswers": {
+    "order_creation_process": "1. Sepet toplandı - onay\n2. Otomatik olarak `Yeni` durumunda sipariş oluşturulur\n3. Yazdır - depocuya `Toplama` teslimi\n4. Müşteri iletişimi - son onay\n5. Depoda değişiklik yapmak için siparişten irsaliye oluşturma\n6. Gönderim ve `Tamamlandı` durumuna geçiş",
+    "how_to_create_incoming_waybill": "Sepetten türünü seçip müşteriyi belirterek irsaliye oluşturabilir veya İrsaliyeler sayfasından oluştur'a tıklayabilirsiniz.",
+    "how_to_create_outgoing_waybill": "Çıkış irsaliyesi oluşturmak için irsaliyeye dönüştürülebilecek bir sipariş gerekir. Çıkış irsaliyesini hiçbir şekilde değiştiremezsiniz, her zaman siparişe uygun olmalıdır.",
+    "how_to_create_order": "Sipariş sepette onaylandığında otomatik olarak oluşturulur.\nSiparişte yapılan herhangi bir değişiklik müşterinin kişisel hesabında görüntülenecektir."
+  },
+  "TablePage": {
+    "offers_table": "Teklifler Tablosu"
   }
 }

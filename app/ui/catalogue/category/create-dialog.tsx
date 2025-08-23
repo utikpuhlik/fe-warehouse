@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createCategoryAction } from "@/app/lib/actions/categoryAction";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslations } from "next-intl";
 import { showToastError } from "@/app/lib/errors/toastError";
 import { useForm } from "react-hook-form";
 import {
@@ -27,6 +28,7 @@ export function CreateCategoryModal() {
   const [file, setFile] = useState<File | null>(null);
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
+  const t = useTranslations("Toast");
 
   const form = useForm<CategoryPostSchema>({
     resolver: zodResolver(zCategoryPostSchema),
@@ -48,8 +50,8 @@ export function CreateCategoryModal() {
       try {
         await createCategoryAction(data, file);
         toast({
-          title: "Категория создана",
-          description: `Категория "${data.name}" добавлена.`,
+          title: t("category_created"),
+          description: `${t("category_created")} "${data.name}".`,
         });
         resetForm();
       } catch (error) {
