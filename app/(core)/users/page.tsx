@@ -3,7 +3,7 @@ import { CirclePlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import UsersDataTable from "./data-table";
 import { fetchUsers } from "@/app/lib/apis/userApi";
-import { UserSchema } from "@/app/lib/schemas/userSchema";
+import { UserPaginatedSchema } from "@/app/lib/schemas/userSchema";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Page() {
   const t = await getTranslations("UsersPage");
   const a = await getTranslations("Actions");
-  const users: UserSchema[] = await fetchUsers();
+  const users: UserPaginatedSchema = await fetchUsers();
 
   return (
     <>
@@ -29,7 +29,7 @@ export default async function Page() {
           </Link>
         </Button>
       </div>
-      <UsersDataTable data={users} />
+      <UsersDataTable data={users.items} />
     </>
   );
 }

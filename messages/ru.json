@@ -325,5 +325,12 @@
     "super_wholesale": "Супер-опт",
     "quantity": "Кол-во",
     "pcs": "шт"
+  },
+  "SelectUserField": {
+    "tooltip": "Начните вводить имя, email или телефон для поиска клиента",
+    "select_user": "Выберите клиента",
+    "search_placeholder": "Поиск по имени, email или телефону..",
+    "search_not_found": "Ничего не найдено",
+    "search_results": "Результаты"
   }
 }

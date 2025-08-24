@@ -325,5 +325,12 @@
     "super_wholesale": "Super-Wholesale",
     "quantity": "Quantity",
     "pcs": "pcs"
+  },
+  "SelectUserField": {
+    "tooltip": "Start typing a name, email or phone number to search for a client",
+    "select_user": "Select a client",
+    "search_placeholder": "Search by name, email or phone..",
+    "search_not_found": "No results found",
+    "search_results": "Results"
   }
 }

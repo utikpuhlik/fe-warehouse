@@ -11,17 +11,11 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  useReactTable
+  useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -29,89 +23,15 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow
+  TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
-import {useTranslations} from "next-intl";
+import { useTranslations } from "next-intl";
+import { ProductAnalyticalSchema } from "@/app/lib/schemas/analyticalSchema";
+import { formatCurrency } from "@/app/lib/utils";
 
-export type Product = {
-  id: number;
-  image: string;
-  name: string;
-  price: number;
-  sold: number;
-  sales: number;
-};
-
-const data: Product[] = [
-  {
-    id: 1,
-    image: `https://bundui-images.netlify.app/products/01.jpeg`,
-    name: "Sports Shoes",
-    price: 316,
-    sold: 316,
-    sales: 10
-  },
-  {
-    id: 2,
-    image: `https://bundui-images.netlify.app/products/02.jpeg`,
-    name: "Black T-Shirt",
-    price: 274,
-    sold: 274,
-    sales: 20
-  },
-  {
-    id: 3,
-    image: `https://bundui-images.netlify.app/products/03.jpeg`,
-    name: "Jeans",
-    price: 195,
-    sold: 195,
-    sales: 15
-  },
-  {
-    id: 4,
-    image: `https://bundui-images.netlify.app/products/04.jpeg`,
-    name: "Red Sneakers",
-    price: 402,
-    sold: 402,
-    sales: 40
-  },
-  {
-    id: 5,
-    image: `https://bundui-images.netlify.app/products/05.jpeg`,
-    name: "Red Scarf",
-    price: 280,
-    sold: 280,
-    sales: 37
-  },
-  {
-    id: 6,
-    image: `https://bundui-images.netlify.app/products/06.jpeg`,
-    name: "Kitchen Accessory",
-    price: 150,
-    sold: 150,
-    sales: 18
-  },
-  {
-    id: 7,
-    image: `https://bundui-images.netlify.app/products/07.jpeg`,
-    name: "Bicycle",
-    price: 316,
-    sold: 316,
-    sales: 25
-  },
-  {
-    id: 8,
-    image: `https://bundui-images.netlify.app/products/01.jpeg`,
-    name: "Sports Shoes",
-    price: 290,
-    sold: 290,
-    sales: 12
-  }
-];
-
-export const columns: ColumnDef<Product>[] = [
+export const columns: ColumnDef<ProductAnalyticalSchema>[] = [
   {
     accessorKey: "name",
     header: "Product",
@@ -121,13 +41,13 @@ export const columns: ColumnDef<Product>[] = [
           width={30}
           height={30}
           className="size-8"
-          src={row.original.image}
-          alt="..."
+          src={row.original.image_url}
+          alt={row.original.name}
           unoptimized
         />
         <div className="capitalize">{row.getValue("name")}</div>
       </div>
-    )
+    ),
   },
   {
     accessorKey: "sold",
@@ -136,73 +56,52 @@ export const columns: ColumnDef<Product>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="p-0! hover:bg-transparent!">
+          className="p-0! hover:bg-transparent!"
+        >
           Sold
           <ArrowUpDown className="size-3" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("sold"));
+      const sold = parseFloat(row.getValue("sold"));
 
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD"
-      }).format(amount);
-
-      return <div className="font-medium">{formatted}</div>;
-    }
+      return <div className="font-medium">{sold}</div>;
+    },
   },
   {
-    accessorKey: "sales",
+    accessorKey: "revenue",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="p-0! hover:bg-transparent!">
-          Sales
+          className="p-0! hover:bg-transparent!"
+        >
+          Revenue
           <ArrowUpDown className="size-3" />
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("sales")}</div>
-  },
-  {
-    id: "actions",
-    enableHiding: false,
     cell: ({ row }) => {
-      const product = row.original;
-
-      return (
-        <div className="text-end">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => navigator.clipboard.writeText(String(product.id))}>
-                Copy product ID
-              </DropdownMenuItem>
-              <DropdownMenuItem>View customer</DropdownMenuItem>
-              <DropdownMenuItem>View payment details</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      );
-    }
-  }
+      const raw: number = row.getValue("revenue");
+      return formatCurrency(raw);
+    },
+  },
 ];
 
-export function EcommerceBestSellingProductsCard() {
-    const t = useTranslations("PanelPage");
+export function EcommerceBestSellingProductsCard({
+  data,
+}: {
+  data: ProductAnalyticalSchema[];
+}) {
+  const t = useTranslations("PanelPage");
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    [],
+  );
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
@@ -220,19 +119,19 @@ export function EcommerceBestSellingProductsCard() {
       sorting,
       columnFilters,
       columnVisibility,
-      rowSelection
+      rowSelection,
     },
     initialState: {
       pagination: {
-        pageSize: 8
-      }
-    }
+        pageSize: 8,
+      },
+    },
   });
 
   return (
     <Card className="lg:col-span-5">
       <CardHeader>
-        <CardTitle>{t('best_selling_products')}</CardTitle>
+        <CardTitle>{t("best_selling_products")}</CardTitle>
         {/*<CardAction className="relative">*/}
         {/*  <ExportButton className="absolute end-0 top-0" />*/}
         {/*</CardAction>*/}
@@ -241,7 +140,9 @@ export function EcommerceBestSellingProductsCard() {
         <Input
           placeholder="Filter products..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
+          onChange={(event) =>
+            table.getColumn("name")?.setFilterValue(event.target.value)
+          }
           className="max-w-xs"
         />
         <div className="rounded-md border">
@@ -254,7 +155,10 @@ export function EcommerceBestSellingProductsCard() {
                       <TableHead key={header.id}>
                         {header.isPlaceholder
                           ? null
-                          : flexRender(header.column.columnDef.header, header.getContext())}
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext(),
+                            )}
                       </TableHead>
                     );
                   })}
@@ -264,17 +168,26 @@ export function EcommerceBestSellingProductsCard() {
             <TableBody>
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
-                  <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
                       </TableCell>
                     ))}
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={columns.length} className="h-24 text-center">
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
                     No results.
                   </TableCell>
                 </TableRow>
@@ -292,14 +205,16 @@ export function EcommerceBestSellingProductsCard() {
               variant="outline"
               size="icon"
               onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}>
+              disabled={!table.getCanPreviousPage()}
+            >
               <ChevronLeft />
             </Button>
             <Button
               variant="outline"
               size="icon"
               onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}>
+              disabled={!table.getCanNextPage()}
+            >
               <ChevronRight />
             </Button>
           </div>

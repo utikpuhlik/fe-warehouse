@@ -12,8 +12,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { useTransition, useState } from "react";
 import {
-  zUserTypeEnum,
-  type UserTypeEnum,
+  zCustomerTypeEnum,
+  type CustomerTypeEnum,
 } from "@/app/lib/schemas/commonSchema";
 import { CustomerBadge } from "@/app/ui/users/customer-badge";
 import { useTranslations } from "next-intl";
@@ -23,12 +23,14 @@ interface CustomerTypeSelectProps {
 }
 
 export function CustomerTypeSelect({ user }: CustomerTypeSelectProps) {
-  const [selected, setSelected] = useState<UserTypeEnum>(user.customer_type);
+  const [selected, setSelected] = useState<CustomerTypeEnum>(
+    user.customer_type,
+  );
   const [isPending, startTransition] = useTransition();
   const t = useTranslations("Toast");
 
   const handleChange = (value: string) => {
-    const casted = value as UserTypeEnum;
+    const casted = value as CustomerTypeEnum;
     setSelected(casted);
 
     startTransition(async () => {
@@ -57,7 +59,7 @@ export function CustomerTypeSelect({ user }: CustomerTypeSelectProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {zUserTypeEnum.options.map((value: UserTypeEnum) => (
+        {zCustomerTypeEnum.options.map((value: CustomerTypeEnum) => (
           <DropdownMenuItem key={value} onSelect={() => handleChange(value)}>
             <CustomerBadge customerType={value} />
           </DropdownMenuItem>

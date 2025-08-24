@@ -14,12 +14,9 @@ import {
   OrdersCard,
   OffersWithImageCard,
 } from "@/app/(core)/main/components";
-import {
-  OrderPaginatedSchema,
-  OrderSchema,
-} from "@/app/lib/schemas/orderSchema";
 import { fetchOrders } from "@/app/lib/apis/orderApi";
 import { getTranslations } from "next-intl/server";
+import { fetchBestSellingProducts } from "@/app/lib/apis/analyticalApi";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("PageTitles");
@@ -30,8 +27,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Page() {
   const t = await getTranslations("PanelPage");
-  const data: OrderPaginatedSchema = await fetchOrders();
-  const orders: OrderSchema[] = data.items;
+  const [orders, best_selling_products] = await Promise.all([
+    fetchOrders(),
+    fetchBestSellingProducts(),
+  ]);
   return (
     <main>
       <h1 className="mb-4 text-xl md:text-2xl">{t("title")}</h1>
@@ -56,8 +55,8 @@ export default async function Page() {
         </Suspense>
       </div>
       <div className="space-y-4 xl:grid xl:grid-cols-12 xl:gap-4 xl:space-y-0 mt-4">
-        <EcommerceRecentOrdersCard orders={orders} />
-        <EcommerceBestSellingProductsCard />
+        <EcommerceRecentOrdersCard orders={orders.items} />
+        <EcommerceBestSellingProductsCard data={best_selling_products} />
       </div>
       <div className="mt-4">
         <DownloadPrice />

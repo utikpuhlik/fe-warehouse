@@ -2,7 +2,7 @@ import { z } from "zod";
 import {
   zRoleEnum,
   zShippingMethodEnum,
-  zUserTypeEnum,
+  zCustomerTypeEnum,
 } from "@/app/lib/schemas/commonSchema";
 
 /** Single user */
@@ -15,7 +15,7 @@ export const zUserSchema = z.object({
   is_active: z.boolean(),
   balance_rub: z.number(),
   role: zRoleEnum,
-  customer_type: zUserTypeEnum,
+  customer_type: zCustomerTypeEnum,
   mailing: z.boolean(),
   phone: z.string().nullable(),
   city: z.string().nullable(),
@@ -32,9 +32,6 @@ export const zUserPaginatedSchema = z.object({
   size: z.number().int().positive(),
   pages: z.number().int().nonnegative(),
 });
-
-/** Array wrapper for list endpoints */
-export const zUsers = z.array(zUserSchema);
 
 /** TypeScript helper */
 export type UserSchema = z.infer<typeof zUserSchema>;
