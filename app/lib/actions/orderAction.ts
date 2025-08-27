@@ -16,7 +16,6 @@ import {
 } from "@/app/lib/schemas/orderSchema";
 import { OrderOfferPostSchema } from "@/app/lib/schemas/orderOfferSchema";
 import { OrderOfferPutSchema } from "@/app/lib/schemas/orderOfferSchema";
-import { currentUser } from "@clerk/nextjs/server";
 
 export async function createOrderAction(
   order: OrderWithOffersPostSchema,
@@ -28,12 +27,7 @@ export async function createOrderAction(
 export async function convertOrderToWaybillAction(
   order_id: string,
 ): Promise<void> {
-  const user = await currentUser();
-  if (!user) {
-    throw new Error("Unauthorized");
-  }
-  const user_id: string = user.publicMetadata._id as string;
-  await convertOrder(order_id, user_id);
+  await convertOrder(order_id);
   revalidatePath("/waybills");
 }
 

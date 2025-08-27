@@ -76,7 +76,7 @@ export default async function Page({ params }: Props) {
               <div className="space-y-2">
                 <h3 className="font-semibold mb-1">{t("customer_info")}</h3>
                 <Link
-                  href={`/users/${order.user_id}`}
+                  href={`/users/${order.user.id}`}
                   className="hover:underline"
                 >
                   {order.user.first_name} {order.user.last_name}

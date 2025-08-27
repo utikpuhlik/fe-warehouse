@@ -7,7 +7,6 @@ import { zOrderOfferPostSchema } from "@/app/lib/schemas/orderOfferSchema";
 import { zWaybillSchema } from "@/app/lib/schemas/waybillSchema";
 
 const zOrderBaseSchema = z.object({
-  user_id: z.string().uuid(),
   address_id: z.string().uuid(),
   status: zOrderStatusEnum,
   note: z.string().nullable(),

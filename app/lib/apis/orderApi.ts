@@ -84,12 +84,9 @@ export async function postOrder(
   return zOrderSchema.parse(JSON.parse(text));
 }
 
-export async function convertOrder(
-  order_id: string,
-  author_id: string,
-): Promise<WaybillSchema> {
+export async function convertOrder(order_id: string): Promise<WaybillSchema> {
   const res = await fetch(
-    `${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${order_id}/convert?author_id=${author_id}`,
+    `${env.NEXT_PUBLIC_API_URL}/${ENTITY}/${order_id}/convert`,
     {
       method: "POST",
       headers: {

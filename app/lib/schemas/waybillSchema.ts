@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { zUserSchema } from "@/app/lib/schemas/userSchema";
 import { zWaybillOfferPostSchema } from "@/app/lib/schemas/waybillOfferSchema";
+import { zWaybillTypeEnum } from "@/app/lib/schemas/commonSchema";
 
 const zWaybillBaseSchema = z.object({
-  author_id: z.string().uuid(),
   customer_id: z.string().uuid().nullable(),
-  waybill_type: z.enum(["WAYBILL_IN", "WAYBILL_OUT", "WAYBILL_RETURN"]),
+  waybill_type: zWaybillTypeEnum,
   is_pending: z.boolean(),
   note: z.string().nullable(),
 });

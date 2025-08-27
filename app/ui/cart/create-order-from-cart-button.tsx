@@ -16,11 +16,9 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 export function CreateOrderFromCartButton({
-  user_id,
   address_id,
   items,
 }: {
-  user_id: string;
   address_id: string;
   items: OfferSchema[];
 }) {
@@ -39,7 +37,6 @@ export function CreateOrderFromCartButton({
 
   const handleCreate = () => {
     const payload: OrderWithOffersPostSchema = {
-      user_id,
       address_id,
       status: "NEW",
       note: null,

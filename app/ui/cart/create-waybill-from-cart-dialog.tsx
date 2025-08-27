@@ -37,10 +37,8 @@ import { CreateButton } from "@/app/ui/shared/buttons/create-entity-button";
 import { useTranslations } from "next-intl";
 
 export function CreateWaybillFromCartDialog({
-  author_id,
   items,
 }: {
-  author_id: string;
   items: OfferSchema[];
 }) {
   const t = useTranslations("CreateWaybillFromCartDialog");
@@ -62,7 +60,6 @@ export function CreateWaybillFromCartDialog({
   const form = useForm<WaybillWithOffersPostSchema>({
     resolver: zodResolver(zWaybillWithOffersPostSchema),
     defaultValues: {
-      author_id,
       customer_id: null,
       waybill_type: "WAYBILL_IN",
       is_pending: true,

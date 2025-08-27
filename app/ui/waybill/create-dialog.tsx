@@ -29,15 +29,14 @@ import { createWaybillAction } from "@/app/lib/actions/waybillAction";
 import { CreateButton } from "@/app/ui/shared/buttons/create-entity-button";
 import { SelectUserField } from "@/app/ui/users/select-user-field";
 
-export function CreateWaybillModal({ author_id }: { author_id: string }) {
+export function CreateWaybillModal() {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
   const form = useForm<WaybillWithOffersPostSchema>({
     resolver: zodResolver(zWaybillWithOffersPostSchema),
     defaultValues: {
-      author_id: author_id,
-      customer_id: author_id, // default customer is author
+      customer_id: null,
       is_pending: true,
       waybill_type: "WAYBILL_IN",
       note: null,
@@ -51,7 +50,7 @@ export function CreateWaybillModal({ author_id }: { author_id: string }) {
         await createWaybillAction(values);
         toast({
           title: "Накладная создана",
-          description: `Клиент: ${values.author_id}`,
+          // description: `Клиент: ${values.author_id}`,
         });
         setOpen(false);
         form.reset();

@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import { Trash2, ShoppingCart } from "lucide-react";
 import { useCartStore } from "@/app/shared/api/cartStoreProvider";
 import { CreateWaybillFromCartDialog } from "@/app/ui/cart/create-waybill-from-cart-dialog";
-import { useUser } from "@clerk/nextjs";
 import { CartItemCard } from "@/app/ui/cart/cart-item-card";
 import { OfferSchema } from "@/app/lib/schemas/offerSchema";
 import { CartSummaryCard } from "@/app/ui/cart/cart-summary-card";
@@ -27,7 +26,6 @@ export function CartSheet() {
   const clear = useCartStore((state) => state.clear);
   const increment = useCartStore((state) => state.increment);
   const decrement = useCartStore((state) => state.decrement);
-  const { isSignedIn, user, isLoaded } = useUser();
 
   // TODO(design): change to badge
   return (
@@ -94,20 +92,11 @@ export function CartSheet() {
             >
               <Trash2 className="h-4 w-4" />
             </Button>
-
-            {isLoaded && isSignedIn && items.length > 0 && (
-              <>
-                <CreateWaybillFromCartDialog
-                  author_id={user?.publicMetadata._id as string}
-                  items={items}
-                />
-                <CreateOrderFromCartButton
-                  user_id={user?.publicMetadata._id as string}
-                  address_id="356f1d6f-0514-4e40-aad5-d59b91674320"
-                  items={items}
-                />
-              </>
-            )}
+            <CreateWaybillFromCartDialog items={items} />
+            <CreateOrderFromCartButton
+              address_id="356f1d6f-0514-4e40-aad5-d59b91674320"
+              items={items}
+            />
           </div>
         </SheetFooter>
       </SheetContent>
