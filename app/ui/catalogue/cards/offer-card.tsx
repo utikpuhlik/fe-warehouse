@@ -6,7 +6,7 @@ import Image from "next/image";
 import { EditOfferModal } from "@/app/ui/catalogue/offer/edit-dialog";
 import { AddToCartButtonWithQuantity } from "@/app/ui/cart/cart-button";
 import { Badge } from "@/components/ui/badge";
-import { formatCurrency } from "@/app/lib/utils";
+import { formatCurrency } from "@/app/lib/utils/utils";
 import { useTranslations } from "next-intl";
 
 export function OfferCard({ offer }: { offer: OfferSchema }) {

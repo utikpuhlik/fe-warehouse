@@ -16,7 +16,7 @@ import { DeleteWaybillOfferProxy } from "@/app/ui/waybill/delete-waybill-offer";
 import Link from "next/link";
 import { WaybillBadge } from "@/app/ui/waybill/waybill-badge";
 import { CustomerBadge } from "@/app/ui/users/customer-badge";
-import { formatCurrency } from "@/app/lib/utils";
+import { formatCurrency } from "@/app/lib/utils/utils";
 import { WaybillOfferQuantityEditor } from "@/app/ui/waybill/quantity-editor";
 import { getTranslations } from "next-intl/server";
 

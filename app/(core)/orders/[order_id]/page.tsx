@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeft, CreditCard, EditIcon } from "lucide-react";
-import { formatCurrency, formatDateToLocal } from "@/app/lib/utils";
+import { formatCurrency, formatDateToLocal } from "@/app/lib/utils/utils";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

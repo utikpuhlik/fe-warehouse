@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { DownloadButton } from "@/app/ui/shared/buttons/download-button";
 import { showToastError } from "@/app/lib/errors/toastError";
-import { formatDatePriceList } from "@/app/lib/utils";
+import { formatDatePriceList } from "@/app/lib/utils/utils";
 
 const timestamp = new Date();
 const FILE_URL = `https://storage.yandexcloud.net/tcf-images/tmp/price_list_${formatDatePriceList(timestamp)}.xlsx`;

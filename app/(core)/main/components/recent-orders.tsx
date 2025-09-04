@@ -32,7 +32,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { TableDetailsOrderDropdown } from "@/app/ui/shared/table/table-details-dropdown";
 import { OrderSchema } from "@/app/lib/schemas/orderSchema";
-import { formatCurrency, generateAvatarFallback } from "@/app/lib/utils";
+import { formatCurrency, generateAvatarFallback } from "@/app/lib/utils/utils";
 import { OrderBadge } from "@/app/ui/orders/order-badge";
 import { OrderStatusEnum } from "@/app/lib/schemas/commonSchema";
 import { useTranslations } from "next-intl";

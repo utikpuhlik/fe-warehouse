@@ -1,4 +1,4 @@
-import { generateMeta } from "@/app/lib/utils";
+import { generateMeta } from "@/app/lib/utils/utils";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";

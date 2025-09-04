@@ -8,7 +8,7 @@ import {
   Truck,
   BanIcon,
 } from "lucide-react";
-import { formatDateToLocal } from "@/app/lib/utils";
+import { formatDateToLocal } from "@/app/lib/utils/utils";
 import { OrderBadge } from "@/app/ui/orders/order-badge";
 import { JSX } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

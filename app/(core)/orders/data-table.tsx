@@ -34,7 +34,7 @@ import {
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { OrderSchema } from "@/app/lib/schemas/orderSchema";
-import { formatCurrency, formatDateToLocal } from "@/app/lib/utils";
+import { formatCurrency, formatDateToLocal } from "@/app/lib/utils/utils";
 import { TableDetailsOrderDropdown } from "@/app/ui/shared/table/table-details-dropdown";
 import { TablePopover } from "@/app/ui/shared/table/table-popover";
 import { ORDER_STATUS_LABELS } from "@/app/lib/schemas/commonSchema";

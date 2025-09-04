@@ -40,7 +40,10 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-import { formatDateToLocal, generateAvatarFallback } from "@/app/lib/utils";
+import {
+  formatDateToLocal,
+  generateAvatarFallback,
+} from "@/app/lib/utils/utils";
 import { WaybillSchema } from "@/app/lib/schemas/waybillSchema";
 import { UserSchema } from "@/app/lib/schemas/userSchema";
 import { TableDetailsDropdown } from "@/app/ui/shared/table/table-details-dropdown";

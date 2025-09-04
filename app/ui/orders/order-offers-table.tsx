@@ -15,7 +15,7 @@ import { DeleteOrderOfferProxy } from "@/app/ui/orders/delete-order-offer";
 import Link from "next/link";
 import { OrderBadge } from "@/app/ui/orders/order-badge";
 import { CustomerBadge } from "@/app/ui/users/customer-badge";
-import { formatCurrency } from "@/app/lib/utils";
+import { formatCurrency } from "@/app/lib/utils/utils";
 import { OrderOfferQuantityEditor } from "@/app/ui/orders/quantity-editor";
 import { zOrderStatusEnum } from "@/app/lib/schemas/commonSchema";
 import { getTranslations } from "next-intl/server";

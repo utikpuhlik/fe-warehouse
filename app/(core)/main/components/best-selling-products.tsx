@@ -29,7 +29,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { ProductAnalyticalSchema } from "@/app/lib/schemas/analyticalSchema";
-import { formatCurrency } from "@/app/lib/utils";
+import { formatCurrency } from "@/app/lib/utils/utils";
 
 export const columns: ColumnDef<ProductAnalyticalSchema>[] = [
   {

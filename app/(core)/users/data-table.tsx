@@ -32,7 +32,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { generateAvatarFallback } from "@/app/lib/utils";
+import { generateAvatarFallback } from "@/app/lib/utils/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 import { UserSchema } from "@/app/lib/schemas/userSchema";
 import { MailingToggle } from "@/app/ui/users/mailing-toggle";
