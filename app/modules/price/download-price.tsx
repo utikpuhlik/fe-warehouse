@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { printPriceList } from "@/app/lib/apis/client/documentApi";
-import { showToastError } from "@/app/lib/errors/toastError";
 import { DownloadButton } from "@/app/ui/shared/buttons/download-button";
-import { downloadBlob } from "@/app/lib/utils/downloadBlob";
+import { showToastError } from "@/app/lib/errors/toastError";
+import { formatDatePriceList } from "@/app/lib/utils";
+
+const timestamp = new Date();
+const FILE_URL = `https://storage.yandexcloud.net/tcf-images/tmp/price_list_${formatDatePriceList(timestamp)}.xlsx`;
 
 export function DownloadPrice() {
   const [loading, setLoading] = useState(false);
@@ -12,10 +14,11 @@ export function DownloadPrice() {
   const handleDownload = async () => {
     try {
       setLoading(true);
-      const res = await printPriceList();
-      const blob = await res.blob();
-      const filename = `price.xlsx`;
-      downloadBlob(blob, filename);
+      const a = document.createElement("a");
+      a.href = FILE_URL;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
     } catch (err) {
       showToastError(err);
     } finally {
