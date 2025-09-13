@@ -1,5 +1,12 @@
 import { z } from "zod";
 
+export const zPaginatedSchema = z.object({
+  total: z.number().int().nonnegative(),
+  page: z.number().int().positive(),
+  size: z.number().int().positive(),
+  pages: z.number().int().nonnegative(),
+});
+
 export const zCountSchema = z.object({
   count: z.number().gte(0),
 });

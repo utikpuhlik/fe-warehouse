@@ -265,10 +265,6 @@
   "ButtonLabels": {
     "try_again": "Try again"
   },
-  "HistoryPage": {
-    "warehouse_history": "Warehouse history will be here",
-    "generated_from_waybills": "For now it is generated only from waybills"
-  },
   "FaqQuestions": {
     "order_creation_process": "Process - Order Creation",
     "how_to_create_incoming_waybill": "How to create an INCOMING/RETURN waybill?",

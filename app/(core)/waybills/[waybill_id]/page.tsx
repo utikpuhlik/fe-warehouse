@@ -52,7 +52,7 @@ export default async function WaybillPage({ params }: Props) {
   if (!waybill) notFound();
 
   const is_disabled: boolean =
-    waybill.is_pending ||
+    !waybill.is_pending ||
     waybill.waybill_type === zWaybillTypeEnum.Enum.WAYBILL_OUT;
 
   const fullName = `${waybill.customer.first_name} ${waybill.customer.last_name}`;
