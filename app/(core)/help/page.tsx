@@ -39,7 +39,7 @@ export default function Page() {
   const faqs = getFaqs(t);
   return (
     <>
-      <div className="max-w-[85rem] container mx-auto px-4 md:px-6 2xl:max-w-[1400px] py-24 lg:py-32">
+      <div className="max-w-[85rem] container mx-auto px-4 md:px-6 2xl:max-w-[1400px] py-12 lg:py-12">
         {/* <!-- Title --> */}
         <div className="max-w-2xl mx-auto mb-10 lg:mb-14">
           <h2 className="text-2xl font-bold md:text-4xl md:leading-tight">

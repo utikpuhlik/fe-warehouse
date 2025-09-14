@@ -18,7 +18,7 @@ import { AuditLogSchema } from "@/app/lib/schemas/auditLogSchema";
 export default async function BasicChangelog() {
   const data = await fetchAuditLog();
   const changes: AuditLogSchema[] = data.items;
-  // TODO: fix pulse + add pagination (maybe)
+
   return (
     <div className="container mx-auto max-w-3xl px-4 py-8">
       <Card>
@@ -26,8 +26,8 @@ export default async function BasicChangelog() {
           <CardTitle className="text-2xl font-bold flex items-center gap-2">
             Audit Log
             <span className="relative flex h-3 w-3">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-pulse"></span>
-              <span className="relative inline-flex h-3 w-3 rounded-full bg-green-500"></span>
+              <span className="bg-secondary-foreground/80 absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"></span>
+              <span className="bg-secondary-foreground relative inline-flex h-3 w-3 rounded-full"></span>
             </span>
           </CardTitle>
         </CardHeader>

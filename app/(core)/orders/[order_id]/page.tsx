@@ -20,8 +20,8 @@ import { fetchOrderById } from "@/app/lib/apis/orderApi";
 import { EditOrderButton } from "@/app/ui/orders/edit-order-button";
 import type { Metadata } from "next";
 import { OrderProgressTracker } from "@/app/ui/orders/order-progress-tracker";
-import { PrintButton } from "@/app/ui/shared/buttons/print-button";
 import { getTranslations } from "next-intl/server";
+import { DownloadOrderWord } from "@/app/ui/orders/download-order-word";
 
 type Props = {
   params: Promise<{ order_id: string }>;
@@ -54,7 +54,7 @@ export default async function Page({ params }: Props) {
           </Link>
         </Button>
         <div className="flex gap-2">
-          <PrintButton orderId={order_id} />
+          <DownloadOrderWord orderId={order_id} />
           <EditOrderButton orderId={order_id} />
         </div>
       </div>

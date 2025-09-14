@@ -57,9 +57,9 @@ export function TableDetailsOrderDropdown({
         <DropdownMenuItem>
           <Link href={`/orders/${order_id}/edit`}>{t("edit")}</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Link href={`/orders/${order_id}/print`}>{t("print")}</Link>
-        </DropdownMenuItem>
+        {/*<DropdownMenuItem>*/}
+        {/*  <DownloadOrderWord orderId={order_id} />*/}
+        {/*</DropdownMenuItem>*/}
         <ConvertOrderToWaybill orderId={order_id} />
       </DropdownMenuContent>
     </DropdownMenu>
