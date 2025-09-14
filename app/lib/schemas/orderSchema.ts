@@ -2,7 +2,10 @@ import { z } from "zod";
 import { zUserSchema } from "@/app/lib/schemas/userSchema";
 import { zAddressSchema } from "@/app/lib/schemas/addressSchema";
 import { zOrderOfferSchema } from "@/app/lib/schemas/orderOfferSchema";
-import { zOrderStatusEnum } from "@/app/lib/schemas/commonSchema";
+import {
+  zOrderStatusEnum,
+  zPaginatedSchema,
+} from "@/app/lib/schemas/commonSchema";
 import { zOrderOfferPostSchema } from "@/app/lib/schemas/orderOfferSchema";
 import { zWaybillSchema } from "@/app/lib/schemas/waybillSchema";
 
@@ -23,12 +26,8 @@ export const zOrderSchema = zOrderBaseSchema.extend({
   total_sum: z.number().int().nonnegative(),
 });
 
-export const zOrderPaginatedSchema = z.object({
+export const zOrderPaginatedSchema = zPaginatedSchema.extend({
   items: z.array(zOrderSchema),
-  total: z.number().int().nonnegative(),
-  page: z.number().int().positive(),
-  size: z.number().int().positive(),
-  pages: z.number().int().nonnegative(),
 });
 
 export const zOrderPostSchema = zOrderBaseSchema.extend({});

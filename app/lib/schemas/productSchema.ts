@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { zSubCategorySchema } from "@/app/lib/schemas/subCategorySchema";
+import { zPaginatedSchema } from "@/app/lib/schemas/commonSchema";
 
 const zProductBaseSchema = z.object({
   name: z.string().min(1, "Название не может быть пустым"),
@@ -23,12 +24,8 @@ export const zProduct = zProductBaseSchema.extend({
   sub_category: zSubCategorySchema,
 });
 
-export const zProducts = z.object({
+export const zProducts = zPaginatedSchema.extend({
   items: z.array(zProduct),
-  total: z.number().int().nonnegative(),
-  page: z.number().int().positive(),
-  size: z.number().int().positive(),
-  pages: z.number().int().nonnegative(),
 });
 
 /** TypeScript helper */

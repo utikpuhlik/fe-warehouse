@@ -3,6 +3,7 @@ import {
   zRoleEnum,
   zShippingMethodEnum,
   zCustomerTypeEnum,
+  zPaginatedSchema,
 } from "@/app/lib/schemas/commonSchema";
 
 /** Single user */
@@ -25,12 +26,8 @@ export const zUserSchema = z.object({
   // addresses: z.array(zAddressSchema),
 });
 
-export const zUserPaginatedSchema = z.object({
+export const zUserPaginatedSchema = zPaginatedSchema.extend({
   items: z.array(zUserSchema),
-  total: z.number().int().nonnegative(),
-  page: z.number().int().positive(),
-  size: z.number().int().positive(),
-  pages: z.number().int().nonnegative(),
 });
 
 /** TypeScript helper */

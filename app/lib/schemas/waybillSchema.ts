@@ -1,7 +1,10 @@
 import { z } from "zod";
 import { zUserSchema } from "@/app/lib/schemas/userSchema";
 import { zWaybillOfferPostSchema } from "@/app/lib/schemas/waybillOfferSchema";
-import { zWaybillTypeEnum } from "@/app/lib/schemas/commonSchema";
+import {
+  zPaginatedSchema,
+  zWaybillTypeEnum,
+} from "@/app/lib/schemas/commonSchema";
 
 const zWaybillBaseSchema = z.object({
   customer_id: z.string().uuid().nullable(),
@@ -19,12 +22,8 @@ export const zWaybillSchema = zWaybillBaseSchema.extend({
   updated_at: z.string().datetime(),
 });
 
-export const zWaybillPaginatedSchema = z.object({
+export const zWaybillPaginatedSchema = zPaginatedSchema.extend({
   items: z.array(zWaybillSchema),
-  total: z.number().int().nonnegative(),
-  page: z.number().int().positive(),
-  size: z.number().int().positive(),
-  pages: z.number().int().nonnegative(),
 });
 
 export const zWaybillPostSchema = zWaybillBaseSchema.extend({});
