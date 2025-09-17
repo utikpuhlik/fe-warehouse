@@ -1,22 +1,21 @@
 import type { Metadata } from "next";
-
-import { DownloadPrice } from "@/app/modules/price/download-price";
+import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
-import { CardSkeleton } from "@/app/ui/dashboard/card-skeleton";
 
 import {
   ActiveOffersCard,
   EcommerceBestSellingProductsCard,
   EcommerceRecentOrdersCard,
   OffersCard,
+  OffersWithImageCard,
+  OrdersCard,
   UsersCard,
   WaybillsCard,
-  OrdersCard,
-  OffersWithImageCard,
 } from "@/app/(core)/main/components";
-import { fetchOrders } from "@/app/lib/apis/orderApi";
-import { getTranslations } from "next-intl/server";
 import { fetchBestSellingProducts } from "@/app/lib/apis/analyticalApi";
+import { fetchOrders } from "@/app/lib/apis/orderApi";
+import { DownloadPrice } from "@/app/modules/price/download-price";
+import { CardSkeleton } from "@/app/ui/dashboard/card-skeleton";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("PageTitles");
@@ -27,10 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Page() {
   const t = await getTranslations("PanelPage");
-  const [orders, best_selling_products] = await Promise.all([
-    fetchOrders(),
-    fetchBestSellingProducts(),
-  ]);
+  const [orders, best_selling_products] = await Promise.all([fetchOrders(), fetchBestSellingProducts()]);
   return (
     <main>
       <h1 className="mb-4 text-xl md:text-2xl">{t("title")}</h1>
@@ -54,7 +50,7 @@ export default async function Page() {
           <UsersCard />
         </Suspense>
       </div>
-      <div className="space-y-4 xl:grid xl:grid-cols-12 xl:gap-4 xl:space-y-0 mt-4">
+      <div className="mt-4 space-y-4 xl:grid xl:grid-cols-12 xl:gap-4 xl:space-y-0">
         <EcommerceRecentOrdersCard orders={orders.items} />
         <EcommerceBestSellingProductsCard data={best_selling_products} />
       </div>

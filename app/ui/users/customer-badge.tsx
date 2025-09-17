@@ -1,18 +1,12 @@
+import { CustomerTypeEnum, USER_TYPE_LABELS } from "@/app/lib/schemas/commonSchema";
 import { Badge } from "@/components/ui/badge";
-import {
-  CustomerTypeEnum,
-  USER_TYPE_LABELS,
-} from "@/app/lib/schemas/commonSchema";
 
 interface CustomerBadgeProps {
   customerType: CustomerTypeEnum;
 }
 
 export function CustomerBadge({ customerType }: CustomerBadgeProps) {
-  const customerMap: Record<
-    CustomerTypeEnum,
-    "warning" | "info" | "success" | "outline"
-  > = {
+  const customerMap: Record<CustomerTypeEnum, "warning" | "info" | "success" | "outline"> = {
     USER_RETAIL: "warning",
     USER_WHOLESALE: "info",
     USER_SUPER_WHOLESALE: "success",

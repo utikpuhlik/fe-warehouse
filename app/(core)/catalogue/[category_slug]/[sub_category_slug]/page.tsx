@@ -1,13 +1,14 @@
-import Breadcrumbs from "@/app/ui/shared/breadcrumbs";
-import { fetchSubCategoryBySlug } from "@/app/lib/apis/subCategoryApi";
-import { fetchProducts } from "@/app/lib/apis/productApi";
-import type { Product, Products } from "@/app/lib/schemas/productSchema";
-import { CreateProductModal } from "@/app/ui/catalogue/product/create-dialog";
-import { notFound } from "next/navigation";
-import type { SubCategory } from "@/app/lib/schemas/subCategorySchema";
 import type { Metadata } from "next";
-import { CatalogueCard } from "@/app/ui/catalogue/cards/catalogue-card";
 import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
+
+import { fetchProducts } from "@/app/lib/apis/productApi";
+import { fetchSubCategoryBySlug } from "@/app/lib/apis/subCategoryApi";
+import type { Product, Products } from "@/app/lib/schemas/productSchema";
+import type { SubCategory } from "@/app/lib/schemas/subCategorySchema";
+import { CatalogueCard } from "@/app/ui/catalogue/cards/catalogue-card";
+import { CreateProductModal } from "@/app/ui/catalogue/product/create-dialog";
+import Breadcrumbs from "@/app/ui/shared/breadcrumbs";
 
 type Props = {
   params: Promise<{ sub_category_slug: string }>;
@@ -35,8 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProductsPage({ params }: Props) {
   const breadcrumbT = await getTranslations("Breadcrumbs");
   const { sub_category_slug } = await params;
-  const sub_category: SubCategory =
-    await fetchSubCategoryBySlug(sub_category_slug);
+  const sub_category: SubCategory = await fetchSubCategoryBySlug(sub_category_slug);
   if (!sub_category) {
     notFound();
   }
@@ -67,7 +67,7 @@ export default async function ProductsPage({ params }: Props) {
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
-        {products.map((product) => (
+        {products.map(product => (
           <CatalogueCard key={product.id} type="product" entity={product} />
         ))}
       </div>

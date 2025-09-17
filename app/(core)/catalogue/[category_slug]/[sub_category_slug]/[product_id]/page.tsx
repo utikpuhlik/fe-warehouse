@@ -1,16 +1,14 @@
-import { OfferCard } from "@/app/ui/catalogue/cards/offer-card";
-import { fetchProductById } from "@/app/lib/apis/productApi";
-import { fetchOffersByProductId } from "@/app/lib/apis/offerApi";
-import Breadcrumbs from "@/app/ui/shared/breadcrumbs";
-import type {
-  OfferSchema,
-  OfferPaginatedSchema,
-} from "@/app/lib/schemas/offerSchema";
-import { notFound } from "next/navigation";
-import { CreateOfferModal } from "@/app/ui/catalogue/offer/create-dialog";
-import type { Product } from "@/app/lib/schemas/productSchema";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
+
+import { fetchOffersByProductId } from "@/app/lib/apis/offerApi";
+import { fetchProductById } from "@/app/lib/apis/productApi";
+import type { OfferPaginatedSchema, OfferSchema } from "@/app/lib/schemas/offerSchema";
+import type { Product } from "@/app/lib/schemas/productSchema";
+import { OfferCard } from "@/app/ui/catalogue/cards/offer-card";
+import { CreateOfferModal } from "@/app/ui/catalogue/offer/create-dialog";
+import Breadcrumbs from "@/app/ui/shared/breadcrumbs";
 
 // https://stackoverflow.com/questions/79113322/nextjs-react-type-does-not-satisfy-constraint
 type Props = {
@@ -48,8 +46,7 @@ export default async function OffersPage({ params }: Props) {
   const category_slug = product.sub_category.category.slug;
   const sub_category_slug = product.sub_category.slug;
 
-  const offersData: OfferPaginatedSchema =
-    await fetchOffersByProductId(product_id);
+  const offersData: OfferPaginatedSchema = await fetchOffersByProductId(product_id);
   const offers: OfferSchema[] = offersData.items ?? [];
 
   return (
@@ -78,7 +75,7 @@ export default async function OffersPage({ params }: Props) {
         <CreateOfferModal {...product} />
       </div>
       <div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-1">
-        {offers.map((offer) => (
+        {offers.map(offer => (
           <OfferCard key={offer.id} offer={offer} />
         ))}
       </div>

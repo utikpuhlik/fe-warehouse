@@ -1,15 +1,16 @@
+import { MoreHorizontal } from "lucide-react";
+import { useTranslations } from "next-intl";
+import Link from "next/link";
+import * as React from "react";
+
+import { ConvertOrderToWaybill } from "@/app/ui/orders/convert-order-to-waybill";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { MoreHorizontal } from "lucide-react";
-import Link from "next/link";
-import * as React from "react";
-import { useTranslations } from "next-intl";
-import { ConvertOrderToWaybill } from "@/app/ui/orders/convert-order-to-waybill";
 
 type TableDetailsDropdownProps = {
   href_edit: string;
@@ -38,9 +39,7 @@ export function TableDetailsDropdown({ href_edit }: TableDetailsDropdownProps) {
   );
 }
 
-export function TableDetailsOrderDropdown({
-  order_id,
-}: TableDetailsOrderDropdownProps) {
+export function TableDetailsOrderDropdown({ order_id }: TableDetailsOrderDropdownProps) {
   const t = useTranslations("TableDetailsOrderDropdown");
   return (
     <DropdownMenu>

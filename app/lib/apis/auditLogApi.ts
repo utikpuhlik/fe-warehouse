@@ -1,9 +1,6 @@
-import { env } from "@/env";
 import { fetchWithAuthAndParse } from "@/app/lib/apis/utils/fetchJson";
-import {
-  AuditLogPaginatedSchema,
-  zAuditLogPaginatedSchema,
-} from "@/app/lib/schemas/auditLogSchema";
+import { AuditLogPaginatedSchema, zAuditLogPaginatedSchema } from "@/app/lib/schemas/auditLogSchema";
+import { env } from "@/env";
 
 const ENTITY = "audit-log";
 

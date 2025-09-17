@@ -1,10 +1,11 @@
-import type { OfferSchema } from "@/app/lib/schemas/offerSchema";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
-import { formatCurrency } from "@/app/lib/utils/utils";
 import Link from "next/link";
+
+import type { OfferSchema } from "@/app/lib/schemas/offerSchema";
+import { formatCurrency } from "@/app/lib/utils/utils";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 type CartItemCardProps = {
   offer: OfferSchema;
@@ -13,25 +14,14 @@ type CartItemCardProps = {
   onRemove: (id: string) => void;
 };
 
-export function CartItemCard({
-  offer,
-  onIncrement,
-  onDecrement,
-  onRemove,
-}: CartItemCardProps) {
+export function CartItemCard({ offer, onIncrement, onDecrement, onRemove }: CartItemCardProps) {
   return (
     <Card key={offer.id} className="overflow-hidden p-0">
       <CardContent className="p-0">
         <div className="flex">
           {/* Product Image */}
           <div className="relative h-auto w-28 flex-shrink-0">
-            <Image
-              src={offer.product.image_url}
-              alt={offer.product.name}
-              fill
-              className="object-cover"
-              sizes="96px"
-            />
+            <Image src={offer.product.image_url} alt={offer.product.name} fill className="object-cover" sizes="96px" />
           </div>
 
           {/* Product Details */}
@@ -45,54 +35,35 @@ export function CartItemCard({
                     {offer.product.name}
                   </Link>
                 </h3>
-                <p className="text-muted-foreground text-xs">
+                <p className="text-xs text-muted-foreground">
                   <Link
                     href={`/catalogue/${offer.product.sub_category.category.slug}/${offer.product.sub_category.slug}`}
                   >
                     {offer.product.sub_category.name}
                   </Link>
                 </p>
-                <p className="text-muted-foreground text-xs">
+                <p className="text-xs text-muted-foreground">
                   {offer.brand} • {offer.manufacturer_number}
                 </p>
               </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-8 w-8"
-                onClick={() => onRemove(offer.id)}
-              >
+              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => onRemove(offer.id)}>
                 <Trash2 className="h-4 w-4" />
               </Button>
             </div>
 
             <div className="mt-2 flex items-center justify-between">
               <div className="flex items-center gap-1">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="h-7 w-7"
-                  onClick={() => onDecrement(offer.id)}
-                >
+                <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => onDecrement(offer.id)}>
                   <Minus className="h-3 w-3" />
                 </Button>
-                <span className="w-6 text-center text-sm">
-                  {offer.quantity}
-                </span>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="h-7 w-7"
-                  onClick={() => onIncrement(offer.id)}
-                >
+                <span className="w-6 text-center text-sm">{offer.quantity}</span>
+                <Button variant="outline" size="icon" className="h-7 w-7" onClick={() => onIncrement(offer.id)}>
                   <Plus className="h-3 w-3" />
                 </Button>
               </div>
 
               <div className="text-right">
-                <div className="text-sm font-medium">
-                  {formatCurrency(offer.price_rub * offer.quantity)}
-                </div>
+                <div className="text-sm font-medium">{formatCurrency(offer.price_rub * offer.quantity)}</div>
                 {/*{offer.price_rub && (*/}
                 {/*    <div className="text-muted-foreground text-xs line-through">*/}
                 {/*        $*/}

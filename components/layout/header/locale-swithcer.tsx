@@ -1,4 +1,5 @@
 import { useLocale, useTranslations } from "next-intl";
+
 import LocaleSwitcherSelect from "@/components/layout/locale-switcher-select";
 
 export default function LocaleSwitcher() {

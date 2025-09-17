@@ -1,27 +1,20 @@
-import Link from "next/link";
-import Image from "next/image";
 import { ChevronLeft, CreditCard, EditIcon } from "lucide-react";
-import { formatCurrency, formatDateToLocal } from "@/app/lib/utils/utils";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 
+import { fetchOrderById } from "@/app/lib/apis/orderApi";
+import { OrderSchema } from "@/app/lib/schemas/orderSchema";
+import { formatCurrency, formatDateToLocal } from "@/app/lib/utils/utils";
+import { DownloadOrderWord } from "@/app/ui/orders/download-order-word";
+import { EditOrderButton } from "@/app/ui/orders/edit-order-button";
+import { OrderProgressTracker } from "@/app/ui/orders/order-progress-tracker";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Separator } from "@/components/ui/separator";
-import { notFound } from "next/navigation";
-import { OrderSchema } from "@/app/lib/schemas/orderSchema";
-import { fetchOrderById } from "@/app/lib/apis/orderApi";
-import { EditOrderButton } from "@/app/ui/orders/edit-order-button";
-import type { Metadata } from "next";
-import { OrderProgressTracker } from "@/app/ui/orders/order-progress-tracker";
-import { getTranslations } from "next-intl/server";
-import { DownloadOrderWord } from "@/app/ui/orders/download-order-word";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 type Props = {
   params: Promise<{ order_id: string }>;
@@ -65,31 +58,27 @@ export default async function Page({ params }: Props) {
             <CardTitle className="font-display text-2xl">
               {t("order")} {order.id}
             </CardTitle>
-            <p className="text-muted-foreground text-sm">
-              {t("created_at")}{" "}
-              {formatDateToLocal(order.created_at, "ru-RU", true)}
+            <p className="text-sm text-muted-foreground">
+              {t("created_at")} {formatDateToLocal(order.created_at, "ru-RU", true)}
             </p>
           </CardHeader>
           <CardContent>
             <Separator className="mb-4" />
             <div className="space-y-4">
               <div className="space-y-2">
-                <h3 className="font-semibold mb-1">{t("customer_info")}</h3>
-                <Link
-                  href={`/users/${order.user.id}`}
-                  className="hover:underline"
-                >
+                <h3 className="mb-1 font-semibold">{t("customer_info")}</h3>
+                <Link href={`/users/${order.user.id}`} className="hover:underline">
                   {order.user.first_name} {order.user.last_name}
                 </Link>
                 <p>{order.user.email}</p>
-                <p className="text-muted-foreground text-sm">
+                <p className="text-sm text-muted-foreground">
                   {order.address.city}, {order.address.street}
                 </p>
               </div>
-              <div className="bg-muted flex items-center justify-between space-y-2 rounded-md border p-4">
+              <div className="flex items-center justify-between space-y-2 rounded-md border bg-muted p-4">
                 <div className="space-y-1">
                   <h3 className="font-semibold">{t("payment_method")}</h3>
-                  <div className="text-muted-foreground flex items-center gap-2 text-sm">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <CreditCard className="size-4" /> Visa ending in **** 1234
                   </div>
                 </div>
@@ -124,10 +113,7 @@ export default async function Page({ params }: Props) {
         </Card>
       </div>
 
-      <OrderProgressTracker
-        status={order.status}
-        updatedAt={order.updated_at}
-      />
+      <OrderProgressTracker status={order.status} updatedAt={order.updated_at} />
 
       <Card>
         <CardHeader>
@@ -157,19 +143,11 @@ export default async function Page({ params }: Props) {
                   <TableCell>{order_offer.offer.address_id}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-4">
-                      <Image
-                        src={order_offer.offer.product.image_url}
-                        width={60}
-                        height={60}
-                        alt=""
-                        unoptimized
-                      />
+                      <Image src={order_offer.offer.product.image_url} width={60} height={60} alt="" unoptimized />
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Link
-                      href={`/catalogue/${order_offer.offer.product.sub_category.category.slug}`}
-                    >
+                    <Link href={`/catalogue/${order_offer.offer.product.sub_category.category.slug}`}>
                       {order_offer.offer.product.sub_category.category.name}
                     </Link>
                   </TableCell>
@@ -191,11 +169,7 @@ export default async function Page({ params }: Props) {
                   <TableCell>{order_offer.manufacturer_number}</TableCell>
                   <TableCell>{order_offer.quantity}</TableCell>
                   <TableCell>{formatCurrency(order_offer.price_rub)}</TableCell>
-                  <TableCell>
-                    {formatCurrency(
-                      order_offer.price_rub * order_offer.quantity,
-                    )}
-                  </TableCell>
+                  <TableCell>{formatCurrency(order_offer.price_rub * order_offer.quantity)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

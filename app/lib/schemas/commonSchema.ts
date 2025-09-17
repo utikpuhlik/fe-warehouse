@@ -12,31 +12,14 @@ export const zCountSchema = z.object({
 });
 
 export const zQuantityFormSchema = z.object({
-  quantity: z
-    .number({ invalid_type_error: "Введите число" })
-    .int("Только целые числа")
-    .min(1, "Минимум 1 шт."),
+  quantity: z.number({ invalid_type_error: "Введите число" }).int("Только целые числа").min(1, "Минимум 1 шт."),
 });
 
 // ENUMs
 export const zRoleEnum = z.enum(["ADMIN", "EMPLOYEE", "USER"]);
-export const zWaybillTypeEnum = z.enum([
-  "WAYBILL_IN",
-  "WAYBILL_OUT",
-  "WAYBILL_RETURN",
-]);
-export const zOrderStatusEnum = z.enum([
-  "NEW",
-  "IN_PROGRESS",
-  "SHIPPING",
-  "COMPLETED",
-  "CANCELED",
-]);
-export const zCustomerTypeEnum = z.enum([
-  "USER_RETAIL",
-  "USER_WHOLESALE",
-  "USER_SUPER_WHOLESALE",
-]);
+export const zWaybillTypeEnum = z.enum(["WAYBILL_IN", "WAYBILL_OUT", "WAYBILL_RETURN"]);
+export const zOrderStatusEnum = z.enum(["NEW", "IN_PROGRESS", "SHIPPING", "COMPLETED", "CANCELED"]);
+export const zCustomerTypeEnum = z.enum(["USER_RETAIL", "USER_WHOLESALE", "USER_SUPER_WHOLESALE"]);
 export const zShippingMethodEnum = z.enum(["SELF_PICKUP", "CARGO", "OTHER"]);
 
 export type QuantityFormSchema = z.infer<typeof zQuantityFormSchema>;

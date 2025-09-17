@@ -1,21 +1,19 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ShoppingCart } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
+
+import { QuantityFormSchema, zQuantityFormSchema } from "@/app/lib/schemas/commonSchema";
+import type { OfferSchema } from "@/app/lib/schemas/offerSchema";
+import { useCartStore } from "@/app/shared/api/cartStoreProvider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { useCartStore } from "@/app/shared/api/cartStoreProvider";
-import type { OfferSchema } from "@/app/lib/schemas/offerSchema";
-import { ShoppingCart } from "lucide-react";
-import { useForm } from "react-hook-form";
-import {
-  QuantityFormSchema,
-  zQuantityFormSchema,
-} from "@/app/lib/schemas/commonSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useTranslations } from "next-intl";
 
 export function AddToCartButtonWithQuantity({ offer }: { offer: OfferSchema }) {
-  const add = useCartStore((state) => state.add);
+  const add = useCartStore(state => state.add);
   const { toast } = useToast();
   const t = useTranslations("Cart");
   const toastT = useTranslations("Toast");
@@ -50,11 +48,9 @@ export function AddToCartButtonWithQuantity({ offer }: { offer: OfferSchema }) {
         {...register("quantity", { valueAsNumber: true })}
         className="h-9 w-12 text-sm"
       />
-      {errors.quantity && (
-        <p className="text-xs text-red-500">{errors.quantity.message}</p>
-      )}
+      {errors.quantity && <p className="text-xs text-red-500">{errors.quantity.message}</p>}
       <Button type="submit" size="default" variant="outline">
-        <ShoppingCart className="w-3 h-3" /> {t("add_to_cart")}
+        <ShoppingCart className="h-3 w-3" /> {t("add_to_cart")}
       </Button>
     </form>
   );

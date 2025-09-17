@@ -1,5 +1,4 @@
-export async function printPriceList(
-): Promise<Response> {
+export async function printPriceList(): Promise<Response> {
   const res = await fetch(`/api/print/prices`);
 
   if (!res.ok) {
@@ -8,10 +7,7 @@ export async function printPriceList(
   return res;
 }
 
-export async function printWaybill(
-  waybill_id: string,
-  format: "docx" | "xlsx",
-): Promise<Response> {
+export async function printWaybill(waybill_id: string, format: "docx" | "xlsx"): Promise<Response> {
   const url = `/api/print/waybills/${waybill_id}?format=${format}`;
   const res = await fetch(url);
 

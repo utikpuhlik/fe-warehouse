@@ -1,32 +1,20 @@
 "use client";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  type SubCategory,
-  zSubCategorySchema,
-} from "@/app/lib/schemas/subCategorySchema";
-import { useState, useTransition } from "react";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { toast } from "@/hooks/use-toast";
-import { showToastError } from "@/app/lib/errors/toastError";
-import {
-  deleteSubCategoryAction,
-  updateSubCategoryAction,
-} from "@/app/lib/actions/subCategoryAction";
-import { DeleteEntityButton } from "@/app/ui/shared/buttons/delete-entity-button";
-import { SaveButton } from "@/app/ui/shared/buttons/save-button";
-import { EditButton } from "@/app/ui/shared/buttons/edit-button";
 import { useTranslations } from "next-intl";
+import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+
+import { deleteSubCategoryAction, updateSubCategoryAction } from "@/app/lib/actions/subCategoryAction";
+import { showToastError } from "@/app/lib/errors/toastError";
+import { zSubCategorySchema, type SubCategory } from "@/app/lib/schemas/subCategorySchema";
+import { DeleteEntityButton } from "@/app/ui/shared/buttons/delete-entity-button";
+import { EditButton } from "@/app/ui/shared/buttons/edit-button";
+import { SaveButton } from "@/app/ui/shared/buttons/save-button";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "@/hooks/use-toast";
 
 export function EditSubCategoryModal(sub_category: SubCategory) {
   const [open, setOpen] = useState(false);
@@ -49,12 +37,7 @@ export function EditSubCategoryModal(sub_category: SubCategory) {
   const onSubmit = (sub_category: SubCategory) => {
     startTransition(async () => {
       try {
-        await updateSubCategoryAction(
-          sub_category.id,
-          sub_category,
-          sub_category.category.slug,
-          file ?? undefined,
-        );
+        await updateSubCategoryAction(sub_category.id, sub_category, sub_category.category.slug, file ?? undefined);
         toast({
           title: toastT("success"),
           description: `${toastT("sub_category_updated")} "${sub_category.name}".`,
@@ -72,7 +55,7 @@ export function EditSubCategoryModal(sub_category: SubCategory) {
         <EditButton
           variant="ghost"
           size="icon"
-          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute right-2 top-2 opacity-0 transition-opacity group-hover:opacity-100"
         />
       </DialogTrigger>
 
@@ -93,7 +76,7 @@ export function EditSubCategoryModal(sub_category: SubCategory) {
               id="picture"
               type="file"
               accept="image/*"
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              onChange={e => setFile(e.target.files?.[0] || null)}
               required={false}
             />
           </div>
@@ -101,17 +84,10 @@ export function EditSubCategoryModal(sub_category: SubCategory) {
             <DeleteEntityButton
               entityName={sub_category.name}
               entityId={sub_category.id}
-              deleteAction={(id) =>
-                deleteSubCategoryAction(id, sub_category.category.slug)
-              }
+              deleteAction={id => deleteSubCategoryAction(id, sub_category.category.slug)}
               onDeleted={resetForm}
             />
-            <SaveButton
-              variant="default"
-              type="submit"
-              disabled={isPending}
-              loading={isPending}
-            />
+            <SaveButton variant="default" type="submit" disabled={isPending} loading={isPending} />
           </DialogFooter>
         </form>
       </DialogContent>

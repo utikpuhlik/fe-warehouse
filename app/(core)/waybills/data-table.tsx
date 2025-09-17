@@ -1,27 +1,33 @@
 "use client";
 
-import * as React from "react";
-import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   ColumnDef,
   ColumnFiltersState,
-  PaginationState,
-  SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getSortedRowModel,
+  PaginationState,
+  SortingState,
   useReactTable,
+  VisibilityState,
 } from "@tanstack/react-table";
 import { ArrowUpDown, ChevronLeft, ChevronRight, Columns } from "lucide-react";
+import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import * as React from "react";
 import { useDebouncedCallback } from "use-debounce";
 
-// Custom hook for fetching data
-import { useWaybills } from "@/hooks/useTableNavigation";
-
+import { UserSchema } from "@/app/lib/schemas/userSchema";
+import { WaybillSchema } from "@/app/lib/schemas/waybillSchema";
+import { formatDateToLocal, generateAvatarFallback } from "@/app/lib/utils/utils";
+import { TableDetailsDropdown } from "@/app/ui/shared/table/table-details-dropdown";
+import { TablePopover } from "@/app/ui/shared/table/table-popover";
+import { WaybillBadge } from "@/app/ui/waybill/waybill-badge";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -29,44 +35,24 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  formatDateToLocal,
-  generateAvatarFallback,
-} from "@/app/lib/utils/utils";
-import { WaybillSchema } from "@/app/lib/schemas/waybillSchema";
-import { UserSchema } from "@/app/lib/schemas/userSchema";
-import { TableDetailsDropdown } from "@/app/ui/shared/table/table-details-dropdown";
-import { TablePopover } from "@/app/ui/shared/table/table-popover";
-import { WaybillBadge } from "@/app/ui/waybill/waybill-badge";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+// Custom hook for fetching data
+import { useWaybills } from "@/hooks/useTableNavigation";
 
 export const columns: ColumnDef<WaybillSchema>[] = [
   {
     id: "select",
     header: ({ table }) => (
       <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
+        onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        onCheckedChange={value => row.toggleSelected(!!value)}
         aria-label="Select row"
       />
     ),
@@ -103,11 +89,7 @@ export const columns: ColumnDef<WaybillSchema>[] = [
   {
     accessorKey: "waybill_type",
     header: ({ column }) => (
-      <Button
-        className="-ml-3"
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
+      <Button className="-ml-3" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
         Тип
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
@@ -120,11 +102,7 @@ export const columns: ColumnDef<WaybillSchema>[] = [
   {
     accessorKey: "is_pending",
     header: ({ column }) => (
-      <Button
-        className="-ml-3"
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
+      <Button className="-ml-3" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
         Статус
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
@@ -132,10 +110,9 @@ export const columns: ColumnDef<WaybillSchema>[] = [
     cell: ({ row }) => {
       const isPending: boolean = row.original.is_pending;
 
-      const { variant, label }: { variant: "info" | "success"; label: string } =
-        isPending
-          ? { variant: "info", label: "Черновик" }
-          : { variant: "success", label: "Завершено" };
+      const { variant, label }: { variant: "info" | "success"; label: string } = isPending
+        ? { variant: "info", label: "Черновик" }
+        : { variant: "success", label: "Завершено" };
 
       return (
         <Badge variant={variant} className="capitalize">
@@ -167,27 +144,17 @@ export const columns: ColumnDef<WaybillSchema>[] = [
   {
     accessorKey: "note",
     header: ({ column }) => (
-      <Button
-        className="-ml-3"
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
+      <Button className="-ml-3" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
         Примечание
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => (
-      <div className="max-w-[200px] truncate">{row.getValue("note")}</div>
-    ),
+    cell: ({ row }) => <div className="max-w-[200px] truncate">{row.getValue("note")}</div>,
   },
   {
     accessorKey: "created_at",
     header: ({ column }) => (
-      <Button
-        className="-ml-3"
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
+      <Button className="-ml-3" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
         Дата
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
@@ -200,9 +167,7 @@ export const columns: ColumnDef<WaybillSchema>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => (
-      <TableDetailsDropdown href_edit={`/waybills/${row.original.id}`} />
-    ),
+    cell: ({ row }) => <TableDetailsDropdown href_edit={`/waybills/${row.original.id}`} />,
   },
 ];
 
@@ -222,11 +187,8 @@ export default function WaybillDataTable() {
   // --- Local Component State ---
   const [inputValue, setInputValue] = React.useState(query);
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
   // Memoize pagination state to avoid re-renders
@@ -239,12 +201,7 @@ export default function WaybillDataTable() {
   );
 
   // --- Data Fetching via Custom Hook ---
-  const { data, isLoading, isError } = useWaybills(
-    query,
-    pagination,
-    waybillTypeParam,
-    isPendingParam,
-  );
+  const { data, isLoading, isError } = useWaybills(query, pagination, waybillTypeParam, isPendingParam);
 
   // --- Handlers to update URL ---
   const updateURLParams = (newParams: Record<string, string | null>) => {
@@ -305,7 +262,7 @@ export default function WaybillDataTable() {
     manualPagination: true,
     manualSorting: true,
     manualFiltering: true,
-    onPaginationChange: (updater) => {
+    onPaginationChange: updater => {
       if (typeof updater !== "function") return;
       const newPagination = updater(pagination);
       const params = new URLSearchParams(searchParams.toString());
@@ -335,13 +292,13 @@ export default function WaybillDataTable() {
         <TablePopover
           options={waybill_types}
           selected={waybillTypeParam}
-          onSelect={(val) => updateFilter("waybill_type", val)}
+          onSelect={val => updateFilter("waybill_type", val)}
           label="Тип"
         />
         <TablePopover
           options={waybill_statuses}
           selected={isPendingParam}
-          onSelect={(val) => updateFilter("is_pending", val)}
+          onSelect={val => updateFilter("is_pending", val)}
           label="Статус"
         />
         <div className="ml-auto">
@@ -354,15 +311,13 @@ export default function WaybillDataTable() {
             <DropdownMenuContent align="end">
               {table
                 .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => (
+                .filter(column => column.getCanHide())
+                .map(column => (
                   <DropdownMenuCheckboxItem
                     key={column.id}
                     className="capitalize"
                     checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
+                    onCheckedChange={value => column.toggleVisibility(!!value)}
                   >
                     {column.id}
                   </DropdownMenuCheckboxItem>
@@ -375,16 +330,11 @@ export default function WaybillDataTable() {
       <div className="rounded-md border">
         <Table>
           <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
+            {table.getHeaderGroups().map(headerGroup => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
+                {headerGroup.headers.map(header => (
                   <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
+                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                   </TableHead>
                 ))}
               </TableRow>
@@ -393,44 +343,27 @@ export default function WaybillDataTable() {
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
+                <TableCell colSpan={columns.length} className="h-24 text-center">
                   Загрузка...
                 </TableCell>
               </TableRow>
             ) : isError ? (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center text-red-500"
-                >
+                <TableCell colSpan={columns.length} className="h-24 text-center text-red-500">
                   Ошибка при загрузке данных.
                 </TableCell>
               </TableRow>
             ) : table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
+              table.getRowModel().rows.map(row => (
+                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                  {row.getVisibleCells().map(cell => (
+                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
+                <TableCell colSpan={columns.length} className="h-24 text-center">
                   Ничего не найдено.
                 </TableCell>
               </TableRow>
@@ -440,9 +373,9 @@ export default function WaybillDataTable() {
       </div>
 
       <div className="flex items-center justify-between space-x-2 pt-4">
-        <div className="text-muted-foreground flex-1 text-sm">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+        <div className="flex-1 text-sm text-muted-foreground">
+          {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s)
+          selected.
         </div>
         <div className="flex items-center space-x-2">
           <Button
@@ -456,12 +389,7 @@ export default function WaybillDataTable() {
           <span className="text-sm">
             {table.getState().pagination.pageIndex + 1}/{table.getPageCount()}
           </span>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
+          <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>

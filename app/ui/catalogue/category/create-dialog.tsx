@@ -1,27 +1,18 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
+import { useForm } from "react-hook-form";
+
+import { createCategoryAction } from "@/app/lib/actions/categoryAction";
+import { showToastError } from "@/app/lib/errors/toastError";
+import { zCategoryPostSchema, type CategoryPostSchema } from "@/app/lib/schemas/categorySchema";
+import { CreateButton } from "@/app/ui/shared/buttons/create-entity-button";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createCategoryAction } from "@/app/lib/actions/categoryAction";
 import { useToast } from "@/hooks/use-toast";
-import { useTranslations } from "next-intl";
-import { showToastError } from "@/app/lib/errors/toastError";
-import { useForm } from "react-hook-form";
-import {
-  type CategoryPostSchema,
-  zCategoryPostSchema,
-} from "@/app/lib/schemas/categorySchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { CreateButton } from "@/app/ui/shared/buttons/create-entity-button";
 
 export function CreateCategoryModal() {
   const [open, setOpen] = useState(false);
@@ -76,11 +67,7 @@ export function CreateCategoryModal() {
           <div>
             <Label htmlFor="name">{t("name")}</Label>
             <Input id="name" {...form.register("name")} />
-            {form.formState.errors.name && (
-              <p className="text-sm text-red-500">
-                {form.formState.errors.name.message}
-              </p>
-            )}
+            {form.formState.errors.name && <p className="text-sm text-red-500">{form.formState.errors.name.message}</p>}
           </div>
           <div>
             <Label htmlFor="picture">{t("image")}</Label>
@@ -88,16 +75,12 @@ export function CreateCategoryModal() {
               id="picture"
               type="file"
               accept="image/*"
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              onChange={e => setFile(e.target.files?.[0] || null)}
               required
             />
           </div>
           <DialogFooter>
-            <CreateButton
-              type="submit"
-              disabled={isPending}
-              loading={isPending}
-            />
+            <CreateButton type="submit" disabled={isPending} loading={isPending} />
           </DialogFooter>
         </form>
       </DialogContent>

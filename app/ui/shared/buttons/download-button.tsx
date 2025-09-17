@@ -1,13 +1,12 @@
-import { Button } from "@/components/ui/button";
-import { Loader } from "lucide-react";
-import { FileText, FileSpreadsheet, Download } from "lucide-react";
+import { Download, FileSpreadsheet, FileText, Loader } from "lucide-react";
 import type { ComponentType } from "react";
 
+import { Button } from "@/components/ui/button";
 
 type DownloadButtonProps = {
   onClick?: () => void;
   variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
-  format: "default" |"docx" | "xlsx";
+  format: "default" | "docx" | "xlsx";
   full?: boolean;
   disabled?: boolean;
   loading?: boolean;
@@ -39,11 +38,7 @@ export function DownloadButton({
       disabled={disabled}
       aria-label={full ? undefined : label}
     >
-      {loading ? (
-        <Loader className="h-5 w-5 animate-spin" />
-      ) : (
-        <Icon className="h-5 w-5" />
-      )}
+      {loading ? <Loader className="h-5 w-5 animate-spin" /> : <Icon className="h-5 w-5" />}
       {full && <span>{label}</span>}
     </Button>
   );

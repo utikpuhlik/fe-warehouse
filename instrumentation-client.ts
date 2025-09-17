@@ -8,9 +8,7 @@ Sentry.init({
   dsn: "https://0e010143996e96a57833c0a9b6df6830@o4506192017424384.ingest.us.sentry.io/4509329210015744",
 
   // Add optional integrations for additional features
-  integrations: [
-    Sentry.replayIntegration(),
-  ],
+  integrations: [Sentry.replayIntegration()],
 
   // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
   tracesSampleRate: 1,

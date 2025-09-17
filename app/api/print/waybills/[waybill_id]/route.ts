@@ -1,17 +1,13 @@
-import { env } from "@/env";
 import { NextRequest } from "next/server";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ waybill_id: string }> },
-) {
+import { env } from "@/env";
+
+export async function GET(request: NextRequest, { params }: { params: Promise<{ waybill_id: string }> }) {
   const { waybill_id } = await params;
   const searchParams = request.nextUrl.searchParams;
   const format = searchParams.get("format") || "docx";
 
-  const res = await fetch(
-    `${env.NEXT_PUBLIC_API_DOCX3R}/print/waybills/${waybill_id}?format=${format}`,
-  );
+  const res = await fetch(`${env.NEXT_PUBLIC_API_DOCX3R}/print/waybills/${waybill_id}?format=${format}`);
 
   if (!res.ok) {
     return new Response("Error while getting a waybill", { status: 500 });

@@ -1,6 +1,7 @@
-import { CardHeader, Card, CardContent, CardTitle } from "@/components/ui/card";
-import { formatCurrency } from "@/app/lib/utils/utils";
 import { useTranslations } from "next-intl";
+
+import { formatCurrency } from "@/app/lib/utils/utils";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function CartSummaryCard({
   total_sum_retail = 0,

@@ -1,11 +1,12 @@
 "use client";
 
-import type { UserSchema } from "@/app/lib/schemas/userSchema";
-import { updateUserAction } from "@/app/lib/actions/userAction";
-import { toast } from "@/hooks/use-toast";
-import { Switch } from "@/components/ui/switch";
-import { useTransition, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useState, useTransition } from "react";
+
+import { updateUserAction } from "@/app/lib/actions/userAction";
+import type { UserSchema } from "@/app/lib/schemas/userSchema";
+import { Switch } from "@/components/ui/switch";
+import { toast } from "@/hooks/use-toast";
 
 interface MailingToggleProps {
   user: UserSchema;
@@ -38,11 +39,7 @@ export function MailingToggle({ user }: MailingToggleProps) {
 
   return (
     <div className="flex items-center gap-2">
-      <Switch
-        checked={value}
-        onCheckedChange={handleChange}
-        disabled={isPending}
-      />
+      <Switch checked={value} onCheckedChange={handleChange} disabled={isPending} />
     </div>
   );
 }

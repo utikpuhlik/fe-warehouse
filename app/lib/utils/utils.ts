@@ -2,9 +2,7 @@ import { Metadata } from "next";
 
 export function generateAvatarFallback(string: string) {
   const names = string.split(" ").filter((first_name: string) => first_name);
-  const mapped = names.map((first_name: string) =>
-    first_name.charAt(0).toUpperCase(),
-  );
+  const mapped = names.map((first_name: string) => first_name.charAt(0).toUpperCase());
 
   return mapped.join("");
 }
@@ -40,11 +38,7 @@ export function formatCurrency(value: number): string {
   }).format(value);
 }
 
-export const formatDateToLocal = (
-  dateStr: string,
-  locale = "ru-RU",
-  numeric = false,
-) => {
+export const formatDateToLocal = (dateStr: string, locale = "ru-RU", numeric = false) => {
   const date = new Date(dateStr);
   const options: Intl.DateTimeFormatOptions = {
     minute: "2-digit",
@@ -86,13 +80,5 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
   // If the current page is somewhere in the middle,
   // show the first page, an ellipsis, the current page and its neighbors,
   // another ellipsis, and the last page.
-  return [
-    1,
-    "...",
-    currentPage - 1,
-    currentPage,
-    currentPage + 1,
-    "...",
-    totalPages,
-  ];
+  return [1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages];
 };

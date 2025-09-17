@@ -1,17 +1,18 @@
 "use client";
 
-import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { OfferSchema, OfferPaginatedSchema } from "@/app/lib/schemas/offerSchema";
-import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
-import { Input } from "@/components/ui/input";
-import { useDebounce } from "use-debounce";
 import Link from "next/link";
-import { fetchFilteredOffersTS } from "@/app/modules/search-dropdown/api";
-import { useClickOutside } from "@/hooks/useClickOutside";
-import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
+import { useDebounce } from "use-debounce";
+
+import { OfferPaginatedSchema, OfferSchema } from "@/app/lib/schemas/offerSchema";
+import { fetchFilteredOffersTS } from "@/app/modules/search-dropdown/api";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { useClickOutside } from "@/hooks/useClickOutside";
 
 export function SearchDropdown() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -31,8 +32,7 @@ export function SearchDropdown() {
 
   const { data, isLoading } = useQuery({
     queryKey: ["offers", debouncedSearchTerm],
-    queryFn: (): Promise<OfferPaginatedSchema> =>
-      fetchFilteredOffersTS(debouncedSearchTerm, 5, 1),
+    queryFn: (): Promise<OfferPaginatedSchema> => fetchFilteredOffersTS(debouncedSearchTerm, 5, 1),
     enabled: debouncedSearchTerm.length >= 2,
   });
 
@@ -43,12 +43,12 @@ export function SearchDropdown() {
       <Input
         placeholder="Поиск..."
         value={searchTerm}
-        onChange={(e) => {
+        onChange={e => {
           const value = e.target.value;
           setSearchTerm(value);
           setOpen(value.length >= 2);
         }}
-        onKeyDown={(e) => {
+        onKeyDown={e => {
           if (e.key === "Enter") {
             handleSearchSubmit();
           }
@@ -58,13 +58,13 @@ export function SearchDropdown() {
       {open && offers.length > 0 && (
         <div className="absolute left-0 top-full z-50 mt-1 w-full">
           {offers.map((offer: OfferSchema) => (
-            <Card key={offer.id} className="hover:bg-gray-50 cursor-pointer">
+            <Card key={offer.id} className="cursor-pointer hover:bg-gray-50">
               <Link
                 href={`/catalogue/${offer.product.sub_category.category.slug}/${offer.product.sub_category.slug}/${offer.product_id}`}
-                className="px-3 py-2 flex items-center gap-3 w-full hover:bg-muted"
+                className="flex w-full items-center gap-3 px-3 py-2 hover:bg-muted"
               >
                 <CardContent className="flex items-center gap-3 p-2">
-                  <div className="relative w-12 h-12 rounded overflow-hidden">
+                  <div className="relative h-12 w-12 overflow-hidden rounded">
                     <Image
                       src={offer.product.image_url || "/placeholder.jpg"}
                       alt={offer.product.name}
@@ -74,17 +74,15 @@ export function SearchDropdown() {
                   </div>
                   <div className="text-sm">
                     <div className="font-medium">{offer.product.name}</div>
-                    <div className="text-muted-foreground">{offer.brand} | {offer.manufacturer_number} | {offer.product.sub_category.name}</div>
+                    <div className="text-muted-foreground">
+                      {offer.brand} | {offer.manufacturer_number} | {offer.product.sub_category.name}
+                    </div>
                   </div>
                 </CardContent>
               </Link>
             </Card>
           ))}
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={handleSearchSubmit}
-          >
+          <Button variant="outline" className="w-full" onClick={handleSearchSubmit}>
             Все результаты
           </Button>
         </div>

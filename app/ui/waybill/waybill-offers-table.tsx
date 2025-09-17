@@ -1,38 +1,26 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
+import Link from "next/link";
+
 import { fetchWaybillOffers } from "@/app/lib/apis/waybillApi";
 import type { WaybillOfferSchema } from "@/app/lib/schemas/waybillOfferSchema";
 import type { WaybillSchema } from "@/app/lib/schemas/waybillSchema";
-import { DeleteWaybillOfferProxy } from "@/app/ui/waybill/delete-waybill-offer";
-import Link from "next/link";
-import { WaybillBadge } from "@/app/ui/waybill/waybill-badge";
-import { CustomerBadge } from "@/app/ui/users/customer-badge";
 import { formatCurrency } from "@/app/lib/utils/utils";
+import { CustomerBadge } from "@/app/ui/users/customer-badge";
+import { DeleteWaybillOfferProxy } from "@/app/ui/waybill/delete-waybill-offer";
 import { WaybillOfferQuantityEditor } from "@/app/ui/waybill/quantity-editor";
-import { getTranslations } from "next-intl/server";
+import { WaybillBadge } from "@/app/ui/waybill/waybill-badge";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 type WaybillOffersTableProps = {
   waybill: WaybillSchema;
   is_disabled: boolean;
 };
-export default async function WaybillOffersTable({
-  waybill,
-  is_disabled,
-}: WaybillOffersTableProps) {
+export default async function WaybillOffersTable({ waybill, is_disabled }: WaybillOffersTableProps) {
   const table = await getTranslations("OrderAndWaybillTable");
   const t = await getTranslations("WaybillsPage");
-  const waybill_offers: WaybillOfferSchema[] = await fetchWaybillOffers(
-    waybill.id,
-  );
+  const waybill_offers: WaybillOfferSchema[] = await fetchWaybillOffers(waybill.id);
 
   const totalSumRub = waybill_offers.reduce(
     (acc: number, wo: WaybillOfferSchema) => acc + wo.price_rub * wo.quantity,
@@ -99,9 +87,7 @@ export default async function WaybillOffersTable({
                 />
               </TableCell>
               <TableCell>
-                <Link
-                  href={`/catalogue/${wo.offer.product.sub_category.category.slug}`}
-                >
+                <Link href={`/catalogue/${wo.offer.product.sub_category.category.slug}`}>
                   {wo.offer.product.sub_category.category.name}
                 </Link>
               </TableCell>
@@ -122,15 +108,10 @@ export default async function WaybillOffersTable({
               <TableCell>{wo.brand}</TableCell>
               <TableCell>{wo.manufacturer_number}</TableCell>
               <TableCell>
-                <WaybillOfferQuantityEditor
-                  waybillOffer={wo}
-                  is_disabled={is_disabled}
-                />
+                <WaybillOfferQuantityEditor waybillOffer={wo} is_disabled={is_disabled} />
               </TableCell>
               <TableCell>{formatCurrency(wo.price_rub)}</TableCell>
-              <TableCell>
-                {formatCurrency(wo.price_rub * wo.quantity)}
-              </TableCell>
+              <TableCell>{formatCurrency(wo.price_rub * wo.quantity)}</TableCell>
               {!is_disabled && (
                 <TableCell>
                   <DeleteWaybillOfferProxy {...wo} />
@@ -140,7 +121,7 @@ export default async function WaybillOffersTable({
           ))}
         </TableBody>
         <TableFooter>
-          <TableRow className="font-semibold bg-muted/40">
+          <TableRow className="bg-muted/40 font-semibold">
             <TableCell colSpan={9} />
             <TableCell className="text-right">Σ</TableCell>
             <TableCell>{formatCurrency(totalSumRub)}</TableCell>

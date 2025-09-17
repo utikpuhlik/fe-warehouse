@@ -1,51 +1,40 @@
 "use client";
 
-import * as React from "react";
 import {
-  type ColumnDef,
-  type ColumnFiltersState,
-  type PaginationState,
-  type SortingState,
-  type VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
+  type ColumnDef,
+  type ColumnFiltersState,
+  type PaginationState,
+  type SortingState,
+  type VisibilityState,
 } from "@tanstack/react-table";
 import { ArrowUpDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
+import * as React from "react";
 
-import { Button } from "@/components/ui/button";
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
-import { TableDetailsOrderDropdown } from "@/app/ui/shared/table/table-details-dropdown";
+import { OrderStatusEnum } from "@/app/lib/schemas/commonSchema";
 import { OrderSchema } from "@/app/lib/schemas/orderSchema";
 import { formatCurrency, generateAvatarFallback } from "@/app/lib/utils/utils";
 import { OrderBadge } from "@/app/ui/orders/order-badge";
-import { OrderStatusEnum } from "@/app/lib/schemas/commonSchema";
-import { useTranslations } from "next-intl";
+import { TableDetailsOrderDropdown } from "@/app/ui/shared/table/table-details-dropdown";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 const columns: ColumnDef<OrderSchema>[] = [
   {
     accessorKey: "id",
     header: "ID",
     cell: ({ row }) => (
-      <Button
-        variant="link"
-        className="text-muted-foreground hover:text-primary h-auto p-0"
-      >
+      <Button variant="link" className="h-auto p-0 text-muted-foreground hover:text-primary">
         <Link href={`/orders/${row.original.id}`}>#{row.getValue("id")}</Link>
       </Button>
     ),
@@ -64,7 +53,7 @@ const columns: ColumnDef<OrderSchema>[] = [
           <div className="capitalize">
             <Link
               href={`/users/${row.original.user.id ?? "#"}`}
-              className="text-muted-foreground hover:text-primary h-auto p-0"
+              className="h-auto p-0 text-muted-foreground hover:text-primary"
             >
               {fullName}
             </Link>
@@ -73,9 +62,7 @@ const columns: ColumnDef<OrderSchema>[] = [
       );
     },
     filterFn: (row, columnId, filterValue) => {
-      return row.original.user.first_name
-        .toLowerCase()
-        .includes(filterValue.toLowerCase());
+      return row.original.user.first_name.toLowerCase().includes(filterValue.toLowerCase());
     },
   },
   {
@@ -93,11 +80,7 @@ const columns: ColumnDef<OrderSchema>[] = [
       );
     },
     cell: ({ row }) => {
-      return (
-        <div className="font-medium">
-          {formatCurrency(row.getValue("total_sum"))}
-        </div>
-      );
+      return <div className="font-medium">{formatCurrency(row.getValue("total_sum"))}</div>;
     },
   },
   {
@@ -117,25 +100,17 @@ const columns: ColumnDef<OrderSchema>[] = [
   },
 ];
 
-export function EcommerceRecentOrdersCard({
-  orders,
-}: {
-  orders: OrderSchema[];
-}) {
+export function EcommerceRecentOrdersCard({ orders }: { orders: OrderSchema[] }) {
   const t = useTranslations("PanelPage");
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  const [{ pageIndex, pageSize }, setPagination] =
-    React.useState<PaginationState>({
-      pageIndex: 0,
-      pageSize: 8,
-    });
+  const [{ pageIndex, pageSize }, setPagination] = React.useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 8,
+  });
 
   const pagination = React.useMemo(
     () => ({
@@ -178,28 +153,19 @@ export function EcommerceRecentOrdersCard({
       <CardContent className="space-y-4">
         <Input
           placeholder="Filter orders..."
-          value={
-            (table.getColumn("customer")?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn("customer")?.setFilterValue(event.target.value)
-          }
+          value={(table.getColumn("customer")?.getFilterValue() as string) ?? ""}
+          onChange={event => table.getColumn("customer")?.setFilterValue(event.target.value)}
           className="max-w-xs"
         />
         <div className="rounded-md border">
           <Table>
             <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
+              {table.getHeaderGroups().map(headerGroup => (
                 <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
+                  {headerGroup.headers.map(header => {
                     return (
                       <TableHead key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext(),
-                            )}
+                        {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                       </TableHead>
                     );
                   })}
@@ -208,27 +174,16 @@ export function EcommerceRecentOrdersCard({
             </TableHeader>
             <TableBody>
               {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </TableCell>
+                table.getRowModel().rows.map(row => (
+                  <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                    {row.getVisibleCells().map(cell => (
+                      <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                     ))}
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
+                  <TableCell colSpan={columns.length} className="h-24 text-center">
                     No results.
                   </TableCell>
                 </TableRow>
@@ -237,9 +192,8 @@ export function EcommerceRecentOrdersCard({
           </Table>
         </div>
         <div className="flex items-center justify-between">
-          <p className="text-muted-foreground text-sm">
-            Showing {pageIndex * pageSize + 1} to{" "}
-            {Math.min((pageIndex + 1) * pageSize, orders.length)} of{" "}
+          <p className="text-sm text-muted-foreground">
+            Showing {pageIndex * pageSize + 1} to {Math.min((pageIndex + 1) * pageSize, orders.length)} of{" "}
             {orders.length} entries
           </p>
           <div className="space-x-2">
@@ -251,12 +205,7 @@ export function EcommerceRecentOrdersCard({
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
+            <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
               <ChevronRight className="h-4 w-4" />
             </Button>
           </div>

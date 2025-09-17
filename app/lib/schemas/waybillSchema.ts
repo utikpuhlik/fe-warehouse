@@ -1,10 +1,8 @@
 import { z } from "zod";
+
+import { zPaginatedSchema, zWaybillTypeEnum } from "@/app/lib/schemas/commonSchema";
 import { zUserSchema } from "@/app/lib/schemas/userSchema";
 import { zWaybillOfferPostSchema } from "@/app/lib/schemas/waybillOfferSchema";
-import {
-  zPaginatedSchema,
-  zWaybillTypeEnum,
-} from "@/app/lib/schemas/commonSchema";
 
 const zWaybillBaseSchema = z.object({
   customer_id: z.string().uuid().nullable(),
@@ -38,8 +36,6 @@ export const zWaybillPutSchema = zWaybillBaseSchema.extend({});
 /** TypeScript helper */
 export type WaybillSchema = z.infer<typeof zWaybillSchema>;
 export type WaybillPostSchema = z.infer<typeof zWaybillPostSchema>;
-export type WaybillWithOffersPostSchema = z.infer<
-  typeof zWaybillWithOffersPostSchema
->;
+export type WaybillWithOffersPostSchema = z.infer<typeof zWaybillWithOffersPostSchema>;
 export type WaybillPutSchema = z.infer<typeof zWaybillPutSchema>;
 export type WaybillPaginatedSchema = z.infer<typeof zWaybillPaginatedSchema>;

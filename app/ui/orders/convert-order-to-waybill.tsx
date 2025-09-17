@@ -1,8 +1,11 @@
 "use client";
 
+import { FileDiff, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useTransition } from "react";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+
+import { convertOrderToWaybillAction } from "@/app/lib/actions/orderAction";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,10 +17,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Loader2, FileDiff } from "lucide-react";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
-import { convertOrderToWaybillAction } from "@/app/lib/actions/orderAction";
-import { useTranslations } from "next-intl";
 
 type ConvertOrderItemProps = {
   orderId: string;
@@ -52,7 +53,7 @@ export function ConvertOrderToWaybill({ orderId }: ConvertOrderItemProps) {
       <AlertDialogTrigger asChild>
         <DropdownMenuItem
           disabled={isPending}
-          onSelect={(e) => e.preventDefault()} // prevent Menu from closing early on Enter
+          onSelect={e => e.preventDefault()} // prevent Menu from closing early on Enter
         >
           {isPending ? (
             <span className="inline-flex items-center gap-2">
@@ -70,14 +71,10 @@ export function ConvertOrderToWaybill({ orderId }: ConvertOrderItemProps) {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{t("confirm_convert_title")}</AlertDialogTitle>
-          <AlertDialogDescription>
-            {t("confirm_convert_desc")}
-          </AlertDialogDescription>
+          <AlertDialogDescription>{t("confirm_convert_desc")}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isPending}>
-            {t("cancel")}
-          </AlertDialogCancel>
+          <AlertDialogCancel disabled={isPending}>{t("cancel")}</AlertDialogCancel>
           <AlertDialogAction onClick={handleConvert} disabled={isPending}>
             {isPending ? (
               <span className="inline-flex items-center gap-2">

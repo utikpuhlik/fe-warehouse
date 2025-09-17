@@ -284,26 +284,26 @@
   "TablePage": {
     "offers_table": "Таблица предложений"
   },
-  "CategoryDialog" : {
+  "CategoryDialog": {
     "name": "Название",
     "image": "Картинка",
     "edit": "Редактировать категорию",
     "new": "Новая категория"
   },
-  "SubCategoryDialog" : {
+  "SubCategoryDialog": {
     "name": "Название",
     "image": "Картинка",
     "edit": "Редактировать подкатегорию",
     "new": "Новая подкатегория в"
   },
-  "ProductDialog" : {
+  "ProductDialog": {
     "name": "Название",
     "image": "Картинка",
     "edit": "Редактировать товар",
     "cross_number": "Кросс-номер",
     "new": "Новый товар в"
   },
-  "OfferDialog" : {
+  "OfferDialog": {
     "name": "Название",
     "image": "Картинка",
     "new": "Новое предложение для",

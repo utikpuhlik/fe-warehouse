@@ -1,12 +1,9 @@
 import { z } from "zod";
-import { zUserSchema } from "@/app/lib/schemas/userSchema";
+
 import { zAddressSchema } from "@/app/lib/schemas/addressSchema";
-import { zOrderOfferSchema } from "@/app/lib/schemas/orderOfferSchema";
-import {
-  zOrderStatusEnum,
-  zPaginatedSchema,
-} from "@/app/lib/schemas/commonSchema";
-import { zOrderOfferPostSchema } from "@/app/lib/schemas/orderOfferSchema";
+import { zOrderStatusEnum, zPaginatedSchema } from "@/app/lib/schemas/commonSchema";
+import { zOrderOfferPostSchema, zOrderOfferSchema } from "@/app/lib/schemas/orderOfferSchema";
+import { zUserSchema } from "@/app/lib/schemas/userSchema";
 import { zWaybillSchema } from "@/app/lib/schemas/waybillSchema";
 
 const zOrderBaseSchema = z.object({
@@ -42,7 +39,5 @@ export const zOrderPutSchema = zOrderBaseSchema.extend({});
 export type OrderSchema = z.infer<typeof zOrderSchema>;
 export type OrderPaginatedSchema = z.infer<typeof zOrderPaginatedSchema>;
 export type OrderPostSchema = z.infer<typeof zOrderPostSchema>;
-export type OrderWithOffersPostSchema = z.infer<
-  typeof zOrderWithOffersPostSchema
->;
+export type OrderWithOffersPostSchema = z.infer<typeof zOrderWithOffersPostSchema>;
 export type OrderPutSchema = z.infer<typeof zOrderPutSchema>;

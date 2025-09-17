@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import type { UserPaginatedSchema } from "@/app/lib/schemas/userSchema";
+
 import { fetchUsers } from "@/app/lib/apis/userApi";
+import type { UserPaginatedSchema } from "@/app/lib/schemas/userSchema";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);

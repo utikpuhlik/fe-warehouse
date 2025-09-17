@@ -1,5 +1,5 @@
-import { Metadata } from "next";
 import { CircleHelp } from "lucide-react";
+import { Metadata } from "next";
 import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 
@@ -39,32 +39,28 @@ export default function Page() {
   const faqs = getFaqs(t);
   return (
     <>
-      <div className="max-w-[85rem] container mx-auto px-4 md:px-6 2xl:max-w-[1400px] py-12 lg:py-12">
+      <div className="container mx-auto max-w-[85rem] px-4 py-12 md:px-6 lg:py-12 2xl:max-w-[1400px]">
         {/* <!-- Title --> */}
-        <div className="max-w-2xl mx-auto mb-10 lg:mb-14">
-          <h2 className="text-2xl font-bold md:text-4xl md:leading-tight">
-            {title("help")}
-          </h2>
+        <div className="mx-auto mb-10 max-w-2xl lg:mb-14">
+          <h2 className="text-2xl font-bold md:text-4xl md:leading-tight">{title("help")}</h2>
         </div>
         {/* <!-- End Title --> */}
 
         {/* <!-- FAQs --> */}
-        <div className="max-w-2xl mx-auto divide-y divide-border">
-          {faqs.map((faq) => (
+        <div className="mx-auto max-w-2xl divide-y divide-border">
+          {faqs.map(faq => (
             <div key={faq.question} className="py-8 first:pt-0 last:pb-0">
               <div className="flex gap-x-5">
-                <CircleHelp className="shrink-0 mt-1 size-6 text-muted-foreground" />
+                <CircleHelp className="mt-1 size-6 shrink-0 text-muted-foreground" />
                 <div className="grow">
-                  <h3 className="md:text-lg font-semibold">{faq.question}</h3>
+                  <h3 className="font-semibold md:text-lg">{faq.question}</h3>
                   <p className="mt-1 text-muted-foreground">
-                    {faq.answer
-                      .split("\n")
-                      .map((line: string, index: number) => (
-                        <span key={index}>
-                          {line}
-                          <br />
-                        </span>
-                      ))}
+                    {faq.answer.split("\n").map((line: string, index: number) => (
+                      <span key={index}>
+                        {line}
+                        <br />
+                      </span>
+                    ))}
                   </p>
                 </div>
               </div>

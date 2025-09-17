@@ -1,33 +1,18 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import {
-  Select,
-  SelectTrigger,
-  SelectContent,
-  SelectItem,
-  SelectValue,
-} from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useToast } from "@/hooks/use-toast";
-import { showToastError } from "@/app/lib/errors/toastError";
-import {
-  WaybillWithOffersPostSchema,
-  zWaybillWithOffersPostSchema,
-} from "@/app/lib/schemas/waybillSchema";
+import { useState, useTransition } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+
 import { createWaybillAction } from "@/app/lib/actions/waybillAction";
+import { showToastError } from "@/app/lib/errors/toastError";
+import { WaybillWithOffersPostSchema, zWaybillWithOffersPostSchema } from "@/app/lib/schemas/waybillSchema";
 import { CreateButton } from "@/app/ui/shared/buttons/create-entity-button";
 import { SelectUserField } from "@/app/ui/users/select-user-field";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 
 export function CreateWaybillModal() {
   const [open, setOpen] = useState(false);
@@ -76,9 +61,7 @@ export function CreateWaybillModal() {
             <div>
               <Label>Тип</Label>
               <Select
-                onValueChange={(value: "WAYBILL_IN" | "WAYBILL_RETURN") =>
-                  form.setValue("waybill_type", value)
-                }
+                onValueChange={(value: "WAYBILL_IN" | "WAYBILL_RETURN") => form.setValue("waybill_type", value)}
                 defaultValue={form.getValues("waybill_type")}
               >
                 <SelectTrigger>
@@ -94,11 +77,7 @@ export function CreateWaybillModal() {
             <SelectUserField />
 
             <DialogFooter>
-              <CreateButton
-                type="submit"
-                disabled={isPending}
-                loading={isPending}
-              />
+              <CreateButton type="submit" disabled={isPending} loading={isPending} />
             </DialogFooter>
           </form>
         </FormProvider>

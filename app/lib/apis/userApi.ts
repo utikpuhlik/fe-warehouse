@@ -1,19 +1,9 @@
-import {
-  type UserSchema,
-  zUserSchema,
-  UserPaginatedSchema,
-  zUserPaginatedSchema,
-} from "@/app/lib/schemas/userSchema";
-import { env } from "@/env";
+import { fetchWithAuthAndParse } from "@/app/lib/apis/utils/fetchJson";
 import { getAuthHeader } from "@/app/lib/apis/utils/getAuthHeader";
 import { handleApiError } from "@/app/lib/errors/handleApiError";
-import {
-  CountSchema,
-  CustomerTypeEnum,
-  RoleEnum,
-  zCountSchema,
-} from "@/app/lib/schemas/commonSchema";
-import { fetchWithAuthAndParse } from "@/app/lib/apis/utils/fetchJson";
+import { CountSchema, CustomerTypeEnum, RoleEnum, zCountSchema } from "@/app/lib/schemas/commonSchema";
+import { UserPaginatedSchema, zUserPaginatedSchema, zUserSchema, type UserSchema } from "@/app/lib/schemas/userSchema";
+import { env } from "@/env";
 
 const ENTITY = "users";
 
@@ -46,9 +36,7 @@ export async function fetchUserById(user_id: string): Promise<UserSchema> {
   return fetchWithAuthAndParse(url, zUserSchema, false, ENTITY);
 }
 
-export async function fetchUserByClerkId(
-  clerk_id: string,
-): Promise<UserSchema> {
+export async function fetchUserByClerkId(clerk_id: string): Promise<UserSchema> {
   const url = `${env.NEXT_PUBLIC_API_URL}/${ENTITY}/clerk/${clerk_id}`;
   return fetchWithAuthAndParse(url, zUserSchema, false, ENTITY);
 }
@@ -58,14 +46,11 @@ export async function fetchUsersCount(): Promise<CountSchema> {
   return fetchWithAuthAndParse(url, zCountSchema, false, ENTITY);
 }
 
-export async function patchUser(
-  id: string,
-  user: UserSchema,
-): Promise<UserSchema> {
+export async function patchUser(id: string, user: UserSchema): Promise<UserSchema> {
   const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/users/${id}`, {
     method: "PATCH",
     headers: {
-      Accept: "application/json",
+      "Accept": "application/json",
       "Content-Type": "application/json",
       ...(await getAuthHeader()),
     },

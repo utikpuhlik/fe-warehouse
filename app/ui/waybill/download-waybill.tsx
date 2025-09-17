@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+
 import { printWaybill } from "@/app/lib/apis/client/documentApi";
 import { showToastError } from "@/app/lib/errors/toastError";
-import { DownloadButton } from "@/app/ui/shared/buttons/download-button";
 import { downloadBlob } from "@/app/lib/utils/downloadBlob";
+import { DownloadButton } from "@/app/ui/shared/buttons/download-button";
 
 type Props = {
   waybillId: string;
@@ -29,13 +30,5 @@ export function DownloadWaybill({ waybillId, format, full = true }: Props) {
     }
   };
 
-  return (
-    <DownloadButton
-      onClick={handleDownload}
-      format={format}
-      full={full}
-      loading={loading}
-      disabled={loading}
-    />
-  );
+  return <DownloadButton onClick={handleDownload} format={format} full={full} loading={loading} disabled={loading} />;
 }

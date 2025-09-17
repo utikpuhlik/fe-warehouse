@@ -1,10 +1,6 @@
 import { z } from "zod";
-import {
-  zRoleEnum,
-  zShippingMethodEnum,
-  zCustomerTypeEnum,
-  zPaginatedSchema,
-} from "@/app/lib/schemas/commonSchema";
+
+import { zCustomerTypeEnum, zPaginatedSchema, zRoleEnum, zShippingMethodEnum } from "@/app/lib/schemas/commonSchema";
 
 /** Single user */
 export const zUserSchema = z.object({

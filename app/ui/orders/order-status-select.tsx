@@ -1,25 +1,21 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
-import { toast } from "@/hooks/use-toast";
+
+import { updateOrderAction } from "@/app/lib/actions/orderAction";
+import { zOrderStatusEnum, type OrderStatusEnum } from "@/app/lib/schemas/commonSchema";
+import type { OrderSchema } from "@/app/lib/schemas/orderSchema";
+import { OrderBadge } from "@/app/ui/orders/order-badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import {
-  zOrderStatusEnum,
-  type OrderStatusEnum,
-} from "@/app/lib/schemas/commonSchema";
-
-import type { OrderSchema } from "@/app/lib/schemas/orderSchema";
-import { updateOrderAction } from "@/app/lib/actions/orderAction";
-import { OrderBadge } from "@/app/ui/orders/order-badge";
-import { useTranslations } from "next-intl";
+import { toast } from "@/hooks/use-toast";
 
 interface OrderStatusSelectProps {
   order: OrderSchema;
@@ -62,11 +58,7 @@ export function OrderStatusSelect({ order }: OrderStatusSelectProps) {
       <DropdownMenuContent>
         <DropdownMenuGroup>
           {zOrderStatusEnum.options.map((status: OrderStatusEnum) => (
-            <DropdownMenuItem
-              key={status}
-              onSelect={() => handleChange(status)}
-              className="flex items-center gap-2"
-            >
+            <DropdownMenuItem key={status} onSelect={() => handleChange(status)} className="flex items-center gap-2">
               <OrderBadge orderStatus={status} />
             </DropdownMenuItem>
           ))}

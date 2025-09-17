@@ -8,11 +8,7 @@ interface Breadcrumb {
   active?: boolean;
 }
 
-export default function Breadcrumbs({
-  breadcrumbs,
-}: {
-  breadcrumbs: Breadcrumb[];
-}) {
+export default function Breadcrumbs({ breadcrumbs }: { breadcrumbs: Breadcrumb[] }) {
   return (
     <nav aria-label="Breadcrumb" className="mb-4 block">
       <ol className="flex items-center text-base text-muted-foreground">
@@ -23,16 +19,12 @@ export default function Breadcrumbs({
               aria-current={breadcrumb.active ? "page" : undefined}
               className={clsx(
                 "transition-colors",
-                breadcrumb.active
-                  ? "font-medium text-foreground"
-                  : "text-muted-foreground hover:text-primary",
+                breadcrumb.active ? "font-medium text-foreground" : "text-muted-foreground hover:text-primary",
               )}
             >
               {breadcrumb.label}
             </Link>
-            {index < breadcrumbs.length - 1 && (
-              <ChevronRight className="mx-1 h-5 w-5 text-muted-foreground" />
-            )}
+            {index < breadcrumbs.length - 1 && <ChevronRight className="mx-1 h-5 w-5 text-muted-foreground" />}
           </li>
         ))}
       </ol>

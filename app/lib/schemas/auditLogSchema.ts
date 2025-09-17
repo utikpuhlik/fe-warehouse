@@ -1,6 +1,7 @@
 import { z } from "zod";
-import { zUserSchema } from "@/app/lib/schemas/userSchema";
+
 import { zPaginatedSchema } from "@/app/lib/schemas/commonSchema";
+import { zUserSchema } from "@/app/lib/schemas/userSchema";
 
 const zAuditLogSchema = z.object({
   id: z.string().uuid(),

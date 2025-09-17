@@ -1,6 +1,7 @@
 import { z } from "zod";
-import { zProduct } from "@/app/lib/schemas/productSchema";
+
 import { zPaginatedSchema } from "@/app/lib/schemas/commonSchema";
+import { zProduct } from "@/app/lib/schemas/productSchema";
 
 export const zOfferBaseSchema = z.object({
   address_id: z.string().nullable(),
@@ -9,25 +10,19 @@ export const zOfferBaseSchema = z.object({
   manufacturer_number: z.string({
     invalid_type_error: "Номер производителя не может быть пустым",
   }),
-  price_rub: z
-    .number({ invalid_type_error: "Поле должно быть числом" })
-    .nonnegative({
-      message: "Цена не может быть меньше нуля",
-    }),
-  super_wholesale_price_rub: z
-    .number({ invalid_type_error: "Поле должно быть числом" })
-    .nonnegative({
-      message: "Цена не может быть меньше нуля",
-    }),
+  price_rub: z.number({ invalid_type_error: "Поле должно быть числом" }).nonnegative({
+    message: "Цена не может быть меньше нуля",
+  }),
+  super_wholesale_price_rub: z.number({ invalid_type_error: "Поле должно быть числом" }).nonnegative({
+    message: "Цена не может быть меньше нуля",
+  }),
   product_id: z.string().uuid(),
 });
 
 export const zOfferSchema = zOfferBaseSchema.extend({
   id: z.string().uuid(),
   offer_bitrix_id: z.string().nullable().optional(),
-  quantity: z
-    .number({ invalid_type_error: "Поле должно быть целым числом" })
-    .int(),
+  quantity: z.number({ invalid_type_error: "Поле должно быть целым числом" }).int(),
   product: zProduct,
   wholesale_price_rub: z.number().nonnegative(),
 });

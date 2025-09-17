@@ -1,28 +1,20 @@
-import type { WaybillSchema } from "@/app/lib/schemas/waybillSchema";
-import { fetchWaybillById } from "@/app/lib/apis/waybillApi";
-import WaybillOffersTable from "@/app/ui/waybill/waybill-offers-table";
-import { Suspense } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
-import Breadcrumbs from "@/app/ui/shared/breadcrumbs";
-import { CreateWaybillOfferForm } from "@/app/ui/waybill/create-waybill-offer";
-import { CommitWaybillButton } from "@/app/ui/waybill/commit-waybill-button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { DeleteEntityButton } from "@/app/ui/shared/buttons/delete-entity-button";
-import { deleteWaybillAction } from "@/app/lib/actions/waybillAction";
-import { notFound } from "next/navigation";
-import { DownloadWaybill } from "@/app/ui/waybill/download-waybill";
-import {
-  USER_TYPE_LABELS,
-  WAYBILL_TYPE_LABELS,
-  zWaybillTypeEnum,
-} from "@/app/lib/schemas/commonSchema";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
+import { Suspense } from "react";
+
+import { deleteWaybillAction } from "@/app/lib/actions/waybillAction";
+import { fetchWaybillById } from "@/app/lib/apis/waybillApi";
+import { USER_TYPE_LABELS, WAYBILL_TYPE_LABELS, zWaybillTypeEnum } from "@/app/lib/schemas/commonSchema";
+import type { WaybillSchema } from "@/app/lib/schemas/waybillSchema";
+import Breadcrumbs from "@/app/ui/shared/breadcrumbs";
+import { DeleteEntityButton } from "@/app/ui/shared/buttons/delete-entity-button";
+import { CommitWaybillButton } from "@/app/ui/waybill/commit-waybill-button";
+import { CreateWaybillOfferForm } from "@/app/ui/waybill/create-waybill-offer";
+import { DownloadWaybill } from "@/app/ui/waybill/download-waybill";
+import WaybillOffersTable from "@/app/ui/waybill/waybill-offers-table";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 type Props = {
   params: Promise<{ waybill_id: string }>;
@@ -51,9 +43,7 @@ export default async function WaybillPage({ params }: Props) {
   const waybill: WaybillSchema = await fetchWaybillById(waybill_id);
   if (!waybill) notFound();
 
-  const is_disabled: boolean =
-    !waybill.is_pending ||
-    waybill.waybill_type === zWaybillTypeEnum.Enum.WAYBILL_OUT;
+  const is_disabled: boolean = !waybill.is_pending || waybill.waybill_type === zWaybillTypeEnum.Enum.WAYBILL_OUT;
 
   const fullName = `${waybill.customer.first_name} ${waybill.customer.last_name}`;
   return (
@@ -83,10 +73,7 @@ export default async function WaybillPage({ params }: Props) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="inline-block">
-                  <CommitWaybillButton
-                    waybill_id={waybill_id}
-                    disabled={!waybill.is_pending}
-                  />
+                  <CommitWaybillButton waybill_id={waybill_id} disabled={!waybill.is_pending} />
                 </div>
               </TooltipTrigger>
               {!waybill.is_pending && (
@@ -105,7 +92,7 @@ export default async function WaybillPage({ params }: Props) {
         </div>
       </div>
       {!is_disabled && (
-        <div className="mt-6 mb-4">
+        <div className="mb-4 mt-6">
           <CreateWaybillOfferForm waybill={waybill} />
         </div>
       )}

@@ -1,14 +1,15 @@
-import {Button} from "@/components/ui/button";
+import { Printer } from "lucide-react";
 import Link from "next/link";
-import {Printer} from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 
 export function PrintButton({ orderId }: { orderId: string }) {
-    return (
-        <Button asChild variant="outline">
-            <Link href={`/orders/${orderId}/print`}>
-                <Printer/>
-                Print
-            </Link>
-        </Button>
-    );
+  return (
+    <Button asChild variant="outline">
+      <Link href={`/orders/${orderId}/print`}>
+        <Printer />
+        Print
+      </Link>
+    </Button>
+  );
 }

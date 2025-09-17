@@ -1,17 +1,15 @@
-import { Skeleton } from "@/components/ui/skeleton";
-import { Suspense } from "react";
-import OrderOffersTable from "@/app/ui/orders/order-offers-table";
 import type { Metadata } from "next";
-import type { OrderSchema } from "@/app/lib/schemas/orderSchema";
-import { fetchOrderById } from "@/app/lib/apis/orderApi";
-import {
-  ORDER_STATUS_LABELS,
-  USER_TYPE_LABELS,
-} from "@/app/lib/schemas/commonSchema";
-import Breadcrumbs from "@/app/ui/shared/breadcrumbs";
-import { DownloadOrderWord } from "@/app/ui/orders/download-order-word";
-import { CreateOrderOfferForm } from "@/app/ui/orders/create-order-offer";
 import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
+
+import { fetchOrderById } from "@/app/lib/apis/orderApi";
+import { ORDER_STATUS_LABELS, USER_TYPE_LABELS } from "@/app/lib/schemas/commonSchema";
+import type { OrderSchema } from "@/app/lib/schemas/orderSchema";
+import { CreateOrderOfferForm } from "@/app/ui/orders/create-order-offer";
+import { DownloadOrderWord } from "@/app/ui/orders/download-order-word";
+import OrderOffersTable from "@/app/ui/orders/order-offers-table";
+import Breadcrumbs from "@/app/ui/shared/breadcrumbs";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Props = {
   params: Promise<{ order_id: string }>;
@@ -61,7 +59,7 @@ export default async function Page({ params }: Props) {
           <DownloadOrderWord orderId={order_id} />
         </div>
       </div>
-      <div className="mt-6 mb-4">
+      <div className="mb-4 mt-6">
         <CreateOrderOfferForm order={order} />
       </div>
       <Suspense fallback={<Skeleton className="h-32" />}>

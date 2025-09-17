@@ -1,25 +1,23 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
-import { Input } from "@/components/ui/input";
-import { OrderOfferSchema } from "@/app/lib/schemas/orderOfferSchema";
+
 import { updateOrderOfferAction } from "@/app/lib/actions/orderAction";
 import { showToastError } from "@/app/lib/errors/toastError";
-import { useToast } from "@/hooks/use-toast";
-import { CheckButton } from "@/app/ui/shared/buttons/check-button";
+import { OrderOfferSchema } from "@/app/lib/schemas/orderOfferSchema";
 import { CancelButton } from "@/app/ui/shared/buttons/cancel-button";
+import { CheckButton } from "@/app/ui/shared/buttons/check-button";
 import { EditButton } from "@/app/ui/shared/buttons/edit-button";
-import { useTranslations } from "next-intl";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 
 type Props = {
   orderOffer: OrderOfferSchema;
   is_disabled?: boolean;
 };
 
-export function OrderOfferQuantityEditor({
-  orderOffer,
-  is_disabled = false,
-}: Props) {
+export function OrderOfferQuantityEditor({ orderOffer, is_disabled = false }: Props) {
   const t = useTranslations("QuantityEditor");
   const [editing, setEditing] = useState(false);
   const [quantity, setQuantity] = useState(orderOffer.quantity);
@@ -53,32 +51,16 @@ export function OrderOfferQuantityEditor({
         type="number"
         min={1}
         value={quantity}
-        onChange={(e) => setQuantity(Number(e.target.value))}
-        className="w-12 h-9"
+        onChange={e => setQuantity(Number(e.target.value))}
+        className="h-9 w-12"
       />
-      <CheckButton
-        variant="ghost"
-        onClick={handleSave}
-        disabled={isPending}
-        loading={isPending}
-        full={false}
-      />
-      <CancelButton
-        variant="ghost"
-        size="icon"
-        onClick={() => setEditing(false)}
-        disabled={isPending}
-        full={false}
-      />
+      <CheckButton variant="ghost" onClick={handleSave} disabled={isPending} loading={isPending} full={false} />
+      <CancelButton variant="ghost" size="icon" onClick={() => setEditing(false)} disabled={isPending} full={false} />
     </div>
   ) : (
     <div className="flex items-center gap-2">
       {orderOffer.quantity}
-      <EditButton
-        onClick={() => setEditing(true)}
-        variant="ghost"
-        size="icon"
-      />
+      <EditButton onClick={() => setEditing(true)} variant="ghost" size="icon" />
     </div>
   );
 }

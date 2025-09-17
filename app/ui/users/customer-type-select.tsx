@@ -1,31 +1,27 @@
 "use client";
 
-import type { UserSchema } from "@/app/lib/schemas/userSchema";
+import { useTranslations } from "next-intl";
+import { useState, useTransition } from "react";
+
 import { updateUserAction } from "@/app/lib/actions/userAction";
-import { toast } from "@/hooks/use-toast";
+import { zCustomerTypeEnum, type CustomerTypeEnum } from "@/app/lib/schemas/commonSchema";
+import type { UserSchema } from "@/app/lib/schemas/userSchema";
+import { CustomerBadge } from "@/app/ui/users/customer-badge";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { useTransition, useState } from "react";
-import {
-  zCustomerTypeEnum,
-  type CustomerTypeEnum,
-} from "@/app/lib/schemas/commonSchema";
-import { CustomerBadge } from "@/app/ui/users/customer-badge";
-import { useTranslations } from "next-intl";
+import { toast } from "@/hooks/use-toast";
 
 interface CustomerTypeSelectProps {
   user: UserSchema;
 }
 
 export function CustomerTypeSelect({ user }: CustomerTypeSelectProps) {
-  const [selected, setSelected] = useState<CustomerTypeEnum>(
-    user.customer_type,
-  );
+  const [selected, setSelected] = useState<CustomerTypeEnum>(user.customer_type);
   const [isPending, startTransition] = useTransition();
   const t = useTranslations("Toast");
 

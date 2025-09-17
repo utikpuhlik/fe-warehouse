@@ -1,28 +1,22 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Package } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useState, useTransition } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 
+import { createOrderOfferAction, updateOrderAction } from "@/app/lib/actions/orderAction";
+import { showToastError } from "@/app/lib/errors/toastError";
+import { zOrderOfferPostSchema, type OrderOfferPostSchema } from "@/app/lib/schemas/orderOfferSchema";
+import { OrderSchema } from "@/app/lib/schemas/orderSchema";
+import { AddButton } from "@/app/ui/shared/buttons/add-button";
+import { SaveButton } from "@/app/ui/shared/buttons/save-button";
+import { SelectOfferField } from "@/app/ui/shared/select-offer-field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { showToastError } from "@/app/lib/errors/toastError";
-import {
-  createOrderOfferAction,
-  updateOrderAction,
-} from "@/app/lib/actions/orderAction";
-import {
-  type OrderOfferPostSchema,
-  zOrderOfferPostSchema,
-} from "@/app/lib/schemas/orderOfferSchema";
-import { SelectOfferField } from "@/app/ui/shared/select-offer-field";
-import { Package } from "lucide-react";
-import { OrderSchema } from "@/app/lib/schemas/orderSchema";
-import { SaveButton } from "@/app/ui/shared/buttons/save-button";
-import { AddButton } from "@/app/ui/shared/buttons/add-button";
-import { useTranslations } from "next-intl";
 
 export function CreateOrderOfferForm({ order }: { order: OrderSchema }) {
   const t = useTranslations("CreateOrderOffer");
@@ -73,10 +67,7 @@ export function CreateOrderOfferForm({ order }: { order: OrderSchema }) {
 
   return (
     <FormProvider {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-4 rounded-md border p-4"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 rounded-md border p-4">
         <div className="flex justify-between">
           <div>
             <SelectOfferField />
@@ -84,7 +75,7 @@ export function CreateOrderOfferForm({ order }: { order: OrderSchema }) {
             <input type="hidden" {...form.register("brand")} />
             <input type="hidden" {...form.register("manufacturer_number")} />
 
-            <div className="flex items-end gap-4 mt-2">
+            <div className="mt-2 flex items-end gap-4">
               <div className="w-full max-w-[150px]">
                 <Label htmlFor="price_rub">{t("price")}</Label>
                 <Input
@@ -94,35 +85,22 @@ export function CreateOrderOfferForm({ order }: { order: OrderSchema }) {
                   disabled={true}
                 />
                 {form.formState.errors.price_rub && (
-                  <p className="text-sm text-red-500">
-                    {form.formState.errors.price_rub.message}
-                  </p>
+                  <p className="text-sm text-red-500">{form.formState.errors.price_rub.message}</p>
                 )}
               </div>
 
               <div className="w-full max-w-[150px]">
-                <div className="flex items-center gap-1 mb-1">
+                <div className="mb-1 flex items-center gap-1">
                   <Label htmlFor="quantity">{t("quantity")}</Label>
                   <Package size={15} />
                 </div>
 
-                <Input
-                  id="quantity"
-                  type="number"
-                  step="1"
-                  {...form.register("quantity", { valueAsNumber: true })}
-                />
+                <Input id="quantity" type="number" step="1" {...form.register("quantity", { valueAsNumber: true })} />
                 {form.formState.errors.quantity && (
-                  <p className="text-sm text-red-500">
-                    {form.formState.errors.quantity.message}
-                  </p>
+                  <p className="text-sm text-red-500">{form.formState.errors.quantity.message}</p>
                 )}
               </div>
-              <AddButton
-                type="submit"
-                disabled={isSubmittingOffer}
-                loading={isSubmittingOffer}
-              />
+              <AddButton type="submit" disabled={isSubmittingOffer} loading={isSubmittingOffer} />
             </div>
           </div>
           <div className="w-[300px] space-y-2">
@@ -130,7 +108,7 @@ export function CreateOrderOfferForm({ order }: { order: OrderSchema }) {
             <Textarea
               id="note"
               value={note}
-              onChange={(e) => setNote(e.target.value)}
+              onChange={e => setNote(e.target.value)}
               placeholder={t("note_placeholder")}
               className="max-h-[100px]"
             />

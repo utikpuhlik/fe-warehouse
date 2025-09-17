@@ -1,28 +1,19 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
+import { useForm } from "react-hook-form";
+
 import { createSubCategoryAction } from "@/app/lib/actions/subCategoryAction";
 import { showToastError } from "@/app/lib/errors/toastError";
 import type { Category } from "@/app/lib/schemas/categorySchema";
-import {
-  type SubCategoryPostSchema,
-  zSubCategoryPostSchema,
-} from "@/app/lib/schemas/subCategorySchema";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { zSubCategoryPostSchema, type SubCategoryPostSchema } from "@/app/lib/schemas/subCategorySchema";
 import { CreateButton } from "@/app/ui/shared/buttons/create-entity-button";
-import { useTranslations } from "next-intl";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
 
 export function CreateSubCategoryModal(category: Category) {
   const [open, setOpen] = useState(false);
@@ -79,11 +70,7 @@ export function CreateSubCategoryModal(category: Category) {
           <div>
             <Label htmlFor="name">{t("name")}</Label>
             <Input id="name" {...form.register("name")} />
-            {form.formState.errors.name && (
-              <p className="text-sm text-red-500">
-                {form.formState.errors.name.message}
-              </p>
-            )}
+            {form.formState.errors.name && <p className="text-sm text-red-500">{form.formState.errors.name.message}</p>}
           </div>
 
           <div>
@@ -93,18 +80,14 @@ export function CreateSubCategoryModal(category: Category) {
               type="file"
               accept="image/*"
               required
-              onChange={(e) => {
+              onChange={e => {
                 setFile(e.target.files?.[0] || null);
               }}
             />
           </div>
 
           <DialogFooter>
-            <CreateButton
-              type="submit"
-              disabled={isPending}
-              loading={isPending}
-            />
+            <CreateButton type="submit" disabled={isPending} loading={isPending} />
           </DialogFooter>
         </form>
       </DialogContent>

@@ -1,16 +1,11 @@
-import { Button } from "@/components/ui/button";
 import { Loader, Save } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import { Button } from "@/components/ui/button";
+
 type SaveButtonProps = {
   onClick?: () => void;
-  variant?:
-    | "default"
-    | "destructive"
-    | "outline"
-    | "secondary"
-    | "ghost"
-    | "link";
+  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
   type?: "button" | "submit" | "reset";
   full?: boolean;
   disabled?: boolean;
@@ -31,13 +26,7 @@ export function SaveButton({
 }: SaveButtonProps) {
   const t = useTranslations("Actions");
   return (
-    <Button
-      variant={variant}
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-      className={className}
-    >
+    <Button variant={variant} type={type} onClick={onClick} disabled={disabled} className={className}>
       {loading ? (
         <Loader className="h-5 w-5 animate-spin" />
       ) : (

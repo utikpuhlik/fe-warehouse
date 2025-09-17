@@ -1,17 +1,20 @@
 import "@/app/ui/global.css";
+
+import { ruRU } from "@clerk/localizations";
+import { ClerkProvider, SignedOut } from "@clerk/nextjs";
+import { experimental__simple } from "@clerk/themes";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { QueryProvider } from "@/app/shared/api/queryProvider";
-import { ClerkProvider, SignedOut } from "@clerk/nextjs";
-import { Metadata } from "next";
-import { ruRU } from "@clerk/localizations";
-import { experimental__simple } from "@clerk/themes";
-import { ThemeProvider } from "next-themes";
 import { GeistSans } from "geist/font/sans";
-import { ThemedTopLoader } from "@/components/layout/top-loader";
-import { CartStoreProvider } from "@/app/shared/api/cartStoreProvider";
+import { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
+import { ThemeProvider } from "next-themes";
+
+import { CartStoreProvider } from "@/app/shared/api/cartStoreProvider";
+import { QueryProvider } from "@/app/shared/api/queryProvider";
+import { ThemedTopLoader } from "@/components/layout/top-loader";
+
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("PageTitles");
   return {
@@ -38,12 +41,7 @@ export default async function RootLayout({
       <html lang={locale} suppressHydrationWarning>
         <body className={`${GeistSans.className} antialiased`}>
           <SignedOut></SignedOut>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="light"
-            enableSystem
-            disableTransitionOnChange
-          >
+          <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
             <ThemedTopLoader />
             <QueryProvider>
               <CartStoreProvider>

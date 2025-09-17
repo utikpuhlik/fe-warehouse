@@ -1,11 +1,12 @@
+import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
+
+import { fetchFilteredOffersTS } from "@/app/lib/apis/offerApi";
+import type { OfferPaginatedSchema } from "@/app/lib/schemas/offerSchema";
 import Pagination from "@/app/ui/catalogue/pagination";
 import Search from "@/app/ui/catalogue/search";
 import Table from "@/app/ui/catalogue/table";
 import { ProductsTableSkeleton } from "@/app/ui/skeletons/skeletons";
-import { Suspense } from "react";
-import type { OfferPaginatedSchema } from "@/app/lib/schemas/offerSchema";
-import { fetchFilteredOffersTS } from "@/app/lib/apis/offerApi";
-import { getTranslations } from "next-intl/server";
 
 export default async function Page(props: {
   searchParams?: Promise<{
@@ -19,11 +20,7 @@ export default async function Page(props: {
   const query = searchParams?.query || "6000180";
   const currentPage = Number(searchParams?.page) || 1;
 
-  const data: OfferPaginatedSchema = await fetchFilteredOffersTS(
-    query,
-    10,
-    currentPage,
-  );
+  const data: OfferPaginatedSchema = await fetchFilteredOffersTS(query, 10, currentPage);
 
   const { pages: totalPages, items } = data;
   return (

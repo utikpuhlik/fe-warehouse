@@ -1,5 +1,5 @@
-import type { NextConfig } from "next";
 import { withSentryConfig } from "@sentry/nextjs";
+import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const baseConfig: NextConfig = {
@@ -34,7 +34,6 @@ const sentryOptions = {
   automaticVercelMonitors: true,
 };
 
-const withPlugins = (config: NextConfig): NextConfig =>
-  withSentryConfig(withNextIntl(config), sentryOptions);
+const withPlugins = (config: NextConfig): NextConfig => withSentryConfig(withNextIntl(config), sentryOptions);
 
 export default withPlugins(baseConfig);

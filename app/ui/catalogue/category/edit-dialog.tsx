@@ -1,25 +1,19 @@
 "use client";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type Category, zCategory } from "@/app/lib/schemas/categorySchema";
-import { useState, useTransition } from "react";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { toast } from "@/hooks/use-toast";
-import { showToastError } from "@/app/lib/errors/toastError";
-import { updateCategoryAction } from "@/app/lib/actions/categoryAction";
-import { SaveButton } from "@/app/ui/shared/buttons/save-button";
-import { EditButton } from "@/app/ui/shared/buttons/edit-button";
 import { useTranslations } from "next-intl";
+import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+
+import { updateCategoryAction } from "@/app/lib/actions/categoryAction";
+import { showToastError } from "@/app/lib/errors/toastError";
+import { zCategory, type Category } from "@/app/lib/schemas/categorySchema";
+import { EditButton } from "@/app/ui/shared/buttons/edit-button";
+import { SaveButton } from "@/app/ui/shared/buttons/save-button";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "@/hooks/use-toast";
 
 export function EditCategoryModal(category: Category) {
   const [open, setOpen] = useState(false);
@@ -60,7 +54,7 @@ export function EditCategoryModal(category: Category) {
         <EditButton
           variant="ghost"
           size="icon"
-          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute right-2 top-2 opacity-0 transition-opacity group-hover:opacity-100"
         />
       </DialogTrigger>
 
@@ -81,17 +75,12 @@ export function EditCategoryModal(category: Category) {
               id="picture"
               type="file"
               accept="image/*"
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              onChange={e => setFile(e.target.files?.[0] || null)}
               required={false}
             />
           </div>
           <DialogFooter className="flex items-center justify-between">
-            <SaveButton
-              variant="default"
-              type="submit"
-              disabled={isPending}
-              loading={isPending}
-            />
+            <SaveButton variant="default" type="submit" disabled={isPending} loading={isPending} />
           </DialogFooter>
         </form>
       </DialogContent>

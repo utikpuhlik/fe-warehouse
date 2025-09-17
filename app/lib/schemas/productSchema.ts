@@ -1,6 +1,7 @@
 import { z } from "zod";
-import { zSubCategorySchema } from "@/app/lib/schemas/subCategorySchema";
+
 import { zPaginatedSchema } from "@/app/lib/schemas/commonSchema";
+import { zSubCategorySchema } from "@/app/lib/schemas/subCategorySchema";
 
 const zProductBaseSchema = z.object({
   name: z.string().min(1, "Название не может быть пустым"),

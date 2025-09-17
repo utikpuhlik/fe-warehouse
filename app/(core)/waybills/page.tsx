@@ -1,9 +1,10 @@
-import { CreateWaybillModal } from "@/app/ui/waybill/create-dialog";
-import { notFound } from "next/navigation";
 import { currentUser } from "@clerk/nextjs/server";
 import { Metadata } from "next";
-import WaybillDataTable from "@/app/(core)/waybills/data-table";
 import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
+
+import WaybillDataTable from "@/app/(core)/waybills/data-table";
+import { CreateWaybillModal } from "@/app/ui/waybill/create-dialog";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("PageTitles");

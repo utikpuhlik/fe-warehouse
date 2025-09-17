@@ -1,35 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import { useDebouncedCallback } from "use-debounce";
-import { useFormContext } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronDown, Loader } from "lucide-react";
-
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from "@/components/ui/popover";
-import {
-  Command,
-  CommandInput,
-  CommandList,
-  CommandItem,
-  CommandEmpty,
-  CommandGroup,
-} from "@/components/ui/command";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { TooltipInfo } from "@/app/ui/shared/tooltip-info";
-
-import type {
-  UserSchema,
-  UserPaginatedSchema,
-} from "@/app/lib/schemas/userSchema";
-import { USER_TYPE_LABELS } from "@/app/lib/schemas/commonSchema";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { useFormContext } from "react-hook-form";
+import { useDebouncedCallback } from "use-debounce";
+
+import { USER_TYPE_LABELS } from "@/app/lib/schemas/commonSchema";
+import type { UserPaginatedSchema, UserSchema } from "@/app/lib/schemas/userSchema";
+import { TooltipInfo } from "@/app/ui/shared/tooltip-info";
+import { Button } from "@/components/ui/button";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Label } from "@/components/ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export function SelectUserField() {
   const t = useTranslations("SelectUserField");
@@ -74,25 +59,18 @@ export function SelectUserField() {
 
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            role="combobox"
-            aria-expanded={open}
-            className="w-full justify-between"
-          >
-            {input || (
-              <span className="text-muted-foreground">{t("select_user")}</span>
-            )}
+          <Button variant="outline" role="combobox" aria-expanded={open} className="w-full justify-between">
+            {input || <span className="text-muted-foreground">{t("select_user")}</span>}
             <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
 
-        <PopoverContent className="w-[--radix-popover-trigger-width] p-0 rounded-xl shadow-xl">
+        <PopoverContent className="w-[--radix-popover-trigger-width] rounded-xl p-0 shadow-xl">
           <Command shouldFilter={false}>
             <CommandInput
               id="user-search"
               value={input}
-              onValueChange={(val) => {
+              onValueChange={val => {
                 setInput(val);
                 debouncedSearch(val.trim());
               }}
@@ -109,20 +87,19 @@ export function SelectUserField() {
                   <CommandEmpty>{t("search_not_found")}</CommandEmpty>
                 ) : (
                   <CommandGroup heading={t("results")}>
-                    {data.items.map((user) => (
+                    {data.items.map(user => (
                       <CommandItem
                         key={user.id}
                         value={user.id}
                         onSelect={() => handleSelect(user)}
-                        className="px-3 py-2 cursor-pointer hover:bg-muted"
+                        className="cursor-pointer px-3 py-2 hover:bg-muted"
                       >
                         <div className="flex flex-col text-sm">
                           <span className="font-medium">
                             {user.first_name} {user.last_name}
                           </span>
                           <span className="text-xs text-muted-foreground">
-                            {user.email} —{" "}
-                            {USER_TYPE_LABELS[user.customer_type]}
+                            {user.email} — {USER_TYPE_LABELS[user.customer_type]}
                           </span>
                         </div>
                       </CommandItem>

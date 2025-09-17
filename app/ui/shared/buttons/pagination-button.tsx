@@ -1,8 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import clsx from "clsx";
+import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 
 type Direction = "next" | "prev";
 
@@ -26,12 +27,7 @@ export function PaginationButton({
   const isNext = direction === "next";
 
   return (
-    <Button
-      variant="outline"
-      onClick={onClick}
-      disabled={disabled || loading}
-      className={clsx("gap-2", className)}
-    >
+    <Button variant="outline" onClick={onClick} disabled={disabled || loading} className={clsx("gap-2", className)}>
       {loading ? (
         <Loader className="h-5 w-5 animate-spin" />
       ) : (

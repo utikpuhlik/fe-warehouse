@@ -1,8 +1,8 @@
 "use client";
 
 import clsx from "clsx";
-import { useTransition } from "react";
 import { Check, Languages } from "lucide-react";
+import { useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +11,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
 import { Locale } from "@/i18n/config";
 import { setUserLocale } from "@/services/locale";
 
@@ -23,11 +22,7 @@ type Props = {
   label: string;
 };
 
-export default function LocaleSwitcherButton({
-  defaultValue,
-  items,
-  label,
-}: Props) {
+export default function LocaleSwitcherButton({ defaultValue, items, label }: Props) {
   const [isPending, startTransition] = useTransition();
 
   const handleSelect = (value: Locale) => {
@@ -49,7 +44,7 @@ export default function LocaleSwitcherButton({
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-36">
-        {items.map((item) => (
+        {items.map(item => (
           <DropdownMenuItem
             key={item.value}
             onSelect={() => handleSelect(item.value)}
@@ -57,9 +52,7 @@ export default function LocaleSwitcherButton({
             className="flex items-center gap-2"
           >
             <span className="inline-flex h-4 w-4 items-center justify-center">
-              {item.value === defaultValue ? (
-                <Check className="h-4 w-4" />
-              ) : null}
+              {item.value === defaultValue ? <Check className="h-4 w-4" /> : null}
             </span>
             <span>{item.label}</span>
           </DropdownMenuItem>

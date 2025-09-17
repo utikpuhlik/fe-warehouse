@@ -1,4 +1,15 @@
 "use client";
+
+import { ShoppingCart, Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
+
+import { OfferSchema } from "@/app/lib/schemas/offerSchema";
+import { useCartStore } from "@/app/shared/api/cartStoreProvider";
+import { CartItemCard } from "@/app/ui/cart/cart-item-card";
+import { CartSummaryCard } from "@/app/ui/cart/cart-summary-card";
+import { CreateWaybillFromCartDialog } from "@/app/ui/cart/create-waybill-from-cart-dialog";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Sheet,
   SheetContent,
@@ -8,24 +19,16 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
-import { Trash2, ShoppingCart } from "lucide-react";
-import { useCartStore } from "@/app/shared/api/cartStoreProvider";
-import { CreateWaybillFromCartDialog } from "@/app/ui/cart/create-waybill-from-cart-dialog";
-import { CartItemCard } from "@/app/ui/cart/cart-item-card";
-import { OfferSchema } from "@/app/lib/schemas/offerSchema";
-import { CartSummaryCard } from "@/app/ui/cart/cart-summary-card";
+
 import { CreateOrderFromCartButton } from "./create-order-from-cart-button";
-import { useTranslations } from "next-intl";
 
 export function CartSheet() {
   const t = useTranslations("CartSheet");
-  const items = useCartStore((state) => state.items);
-  const remove = useCartStore((state) => state.remove);
-  const clear = useCartStore((state) => state.clear);
-  const increment = useCartStore((state) => state.increment);
-  const decrement = useCartStore((state) => state.decrement);
+  const items = useCartStore(state => state.items);
+  const remove = useCartStore(state => state.remove);
+  const clear = useCartStore(state => state.clear);
+  const increment = useCartStore(state => state.increment);
+  const decrement = useCartStore(state => state.decrement);
 
   // TODO(design): change to badge
   return (
@@ -34,7 +37,7 @@ export function CartSheet() {
         <Button variant="outline" size="icon" className="relative">
           <ShoppingCart className="h-5 w-5" />
           {items.length > 0 && (
-            <span className="bg-primary text-primary-foreground absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
+            <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
               {items.length}
             </span>
           )}
@@ -43,12 +46,11 @@ export function CartSheet() {
 
       {/*<SheetContent*/}
       {/*    className="w-[500px] sm:w-[540px] flex flex-col justify-between max-h-screen overflow-y-scroll">*/}
-      <SheetContent className="w-full px-4 sm:max-w-lg md:px-6 flex flex-col">
+      <SheetContent className="flex w-full flex-col px-4 sm:max-w-lg md:px-6">
         <SheetHeader>
           <SheetTitle>Корзина</SheetTitle>
           <SheetDescription>
-            {items.length} {items.length === 1 ? t("item") : t("items")} в
-            корзине
+            {items.length} {items.length === 1 ? t("item") : t("items")} в корзине
           </SheetDescription>
         </SheetHeader>
 
@@ -68,35 +70,18 @@ export function CartSheet() {
             </div>
           </div>
         </ScrollArea>
-        <SheetFooter className="mt-4 mr-2 flex flex-col gap-4 sm:flex-col">
+        <SheetFooter className="mr-2 mt-4 flex flex-col gap-4 sm:flex-col">
           <CartSummaryCard
-            total_sum_retail={items.reduce(
-              (s, i) => s + i.price_rub * i.quantity,
-              0,
-            )}
-            total_sum_wholesale={items.reduce(
-              (s, i) => s + i.wholesale_price_rub * i.quantity,
-              0,
-            )}
-            total_sum_super_wholesale={items.reduce(
-              (s, i) => s + i.super_wholesale_price_rub * i.quantity,
-              0,
-            )}
+            total_sum_retail={items.reduce((s, i) => s + i.price_rub * i.quantity, 0)}
+            total_sum_wholesale={items.reduce((s, i) => s + i.wholesale_price_rub * i.quantity, 0)}
+            total_sum_super_wholesale={items.reduce((s, i) => s + i.super_wholesale_price_rub * i.quantity, 0)}
           />
           <div className="flex flex-row gap-4">
-            <Button
-              variant="secondary"
-              onClick={clear}
-              disabled={items.length === 0}
-              className="w-icon"
-            >
+            <Button variant="secondary" onClick={clear} disabled={items.length === 0} className="w-icon">
               <Trash2 className="h-4 w-4" />
             </Button>
             <CreateWaybillFromCartDialog items={items} />
-            <CreateOrderFromCartButton
-              address_id="356f1d6f-0514-4e40-aad5-d59b91674320"
-              items={items}
-            />
+            <CreateOrderFromCartButton address_id="356f1d6f-0514-4e40-aad5-d59b91674320" items={items} />
           </div>
         </SheetFooter>
       </SheetContent>

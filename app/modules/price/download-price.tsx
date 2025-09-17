@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { DownloadButton } from "@/app/ui/shared/buttons/download-button";
+
 import { showToastError } from "@/app/lib/errors/toastError";
 import { formatDatePriceList } from "@/app/lib/utils/utils";
+import { DownloadButton } from "@/app/ui/shared/buttons/download-button";
 
 const timestamp = new Date();
 const FILE_URL = `https://storage.yandexcloud.net/tcf-images/tmp/price_list_${formatDatePriceList(timestamp)}.xlsx`;
@@ -28,13 +29,7 @@ export function DownloadPrice() {
 
   return (
     <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
-      <DownloadButton
-        onClick={handleDownload}
-        format="xlsx"
-        full={true}
-        loading={loading}
-        disabled={loading}
-      />
+      <DownloadButton onClick={handleDownload} format="xlsx" full={true} loading={loading} disabled={loading} />
     </div>
   );
 }

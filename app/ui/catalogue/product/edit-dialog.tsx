@@ -1,29 +1,20 @@
 "use client";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useTransition } from "react";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { toast } from "@/hooks/use-toast";
-import { showToastError } from "@/app/lib/errors/toastError";
-import { DeleteEntityButton } from "@/app/ui/shared/buttons/delete-entity-button";
-import { type Product, zProduct } from "@/app/lib/schemas/productSchema";
-import {
-  deleteProductAction,
-  updateProductAction,
-} from "@/app/lib/actions/productAction";
-import { SaveButton } from "@/app/ui/shared/buttons/save-button";
-import { EditButton } from "@/app/ui/shared/buttons/edit-button";
 import { useTranslations } from "next-intl";
+import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+
+import { deleteProductAction, updateProductAction } from "@/app/lib/actions/productAction";
+import { showToastError } from "@/app/lib/errors/toastError";
+import { zProduct, type Product } from "@/app/lib/schemas/productSchema";
+import { DeleteEntityButton } from "@/app/ui/shared/buttons/delete-entity-button";
+import { EditButton } from "@/app/ui/shared/buttons/edit-button";
+import { SaveButton } from "@/app/ui/shared/buttons/save-button";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "@/hooks/use-toast";
 
 export function EditProductModal(product: Product) {
   const [open, setOpen] = useState(false);
@@ -70,7 +61,7 @@ export function EditProductModal(product: Product) {
         <EditButton
           variant="ghost"
           size="icon"
-          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute right-2 top-2 opacity-0 transition-opacity group-hover:opacity-100"
         />
       </DialogTrigger>
 
@@ -94,7 +85,7 @@ export function EditProductModal(product: Product) {
               id="picture"
               type="file"
               accept="image/*"
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              onChange={e => setFile(e.target.files?.[0] || null)}
               required={false}
             />
           </div>
@@ -102,21 +93,12 @@ export function EditProductModal(product: Product) {
             <DeleteEntityButton
               entityName={product.name}
               entityId={product.id}
-              deleteAction={(id) =>
-                deleteProductAction(
-                  id,
-                  product.sub_category.category.slug,
-                  product.sub_category.slug,
-                )
+              deleteAction={id =>
+                deleteProductAction(id, product.sub_category.category.slug, product.sub_category.slug)
               }
               onDeleted={resetForm}
             />
-            <SaveButton
-              variant="default"
-              type="submit"
-              disabled={isPending}
-              loading={isPending}
-            />
+            <SaveButton variant="default" type="submit" disabled={isPending} loading={isPending} />
           </DialogFooter>
         </form>
       </DialogContent>

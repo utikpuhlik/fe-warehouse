@@ -1,38 +1,28 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
+import Link from "next/link";
+
+import { zOrderStatusEnum } from "@/app/lib/schemas/commonSchema";
 import type { OrderOfferSchema } from "@/app/lib/schemas/orderOfferSchema";
 import type { OrderSchema } from "@/app/lib/schemas/orderSchema";
-import { DeleteOrderOfferProxy } from "@/app/ui/orders/delete-order-offer";
-import Link from "next/link";
-import { OrderBadge } from "@/app/ui/orders/order-badge";
-import { CustomerBadge } from "@/app/ui/users/customer-badge";
 import { formatCurrency } from "@/app/lib/utils/utils";
+import { DeleteOrderOfferProxy } from "@/app/ui/orders/delete-order-offer";
+import { OrderBadge } from "@/app/ui/orders/order-badge";
 import { OrderOfferQuantityEditor } from "@/app/ui/orders/quantity-editor";
-import { zOrderStatusEnum } from "@/app/lib/schemas/commonSchema";
-import { getTranslations } from "next-intl/server";
+import { CustomerBadge } from "@/app/ui/users/customer-badge";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 type OrderOffersTableProps = {
   order: OrderSchema;
 };
-export default async function OrderOffersTable({
-  order,
-}: OrderOffersTableProps) {
+export default async function OrderOffersTable({ order }: OrderOffersTableProps) {
   const table = await getTranslations("OrderAndWaybillTable");
   const t = await getTranslations("OrderDetailPage");
   const order_offers: OrderOfferSchema[] = order.order_offers;
 
   const totalSumRub = order_offers.reduce(
-    (acc: number, order_offer: OrderOfferSchema) =>
-      acc + order_offer.price_rub * order_offer.quantity,
+    (acc: number, order_offer: OrderOfferSchema) => acc + order_offer.price_rub * order_offer.quantity,
     0,
   );
 
@@ -96,9 +86,7 @@ export default async function OrderOffersTable({
                 />
               </TableCell>
               <TableCell>
-                <Link
-                  href={`/catalogue/${order_offer.offer.product.sub_category.category.slug}`}
-                >
+                <Link href={`/catalogue/${order_offer.offer.product.sub_category.category.slug}`}>
                   {order_offer.offer.product.sub_category.category.name}
                 </Link>
               </TableCell>
@@ -122,9 +110,7 @@ export default async function OrderOffersTable({
                 <OrderOfferQuantityEditor orderOffer={order_offer} />
               </TableCell>
               <TableCell>{formatCurrency(order_offer.price_rub)}</TableCell>
-              <TableCell>
-                {formatCurrency(order_offer.price_rub * order_offer.quantity)}
-              </TableCell>
+              <TableCell>{formatCurrency(order_offer.price_rub * order_offer.quantity)}</TableCell>
               {order.status != zOrderStatusEnum.Enum.COMPLETED && (
                 <TableCell>
                   <DeleteOrderOfferProxy {...order_offer} />
@@ -134,7 +120,7 @@ export default async function OrderOffersTable({
           ))}
         </TableBody>
         <TableFooter>
-          <TableRow className="font-semibold bg-muted/40">
+          <TableRow className="bg-muted/40 font-semibold">
             <TableCell colSpan={9} />
             <TableCell className="text-right">Σ</TableCell>
             <TableCell>{formatCurrency(totalSumRub)}</TableCell>

@@ -1,28 +1,19 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
+import { useForm } from "react-hook-form";
+
+import { createOfferAction } from "@/app/lib/actions/offerAction";
+import { showToastError } from "@/app/lib/errors/toastError";
+import { zOfferPostSchema, type OfferPostSchema } from "@/app/lib/schemas/offerSchema";
+import type { Product } from "@/app/lib/schemas/productSchema";
+import { CreateButton } from "@/app/ui/shared/buttons/create-entity-button";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { showToastError } from "@/app/lib/errors/toastError";
-import type { Product } from "@/app/lib/schemas/productSchema";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  type OfferPostSchema,
-  zOfferPostSchema,
-} from "@/app/lib/schemas/offerSchema";
-import { createOfferAction } from "@/app/lib/actions/offerAction";
-import { CreateButton } from "@/app/ui/shared/buttons/create-entity-button";
-import { useTranslations } from "next-intl";
 
 export function CreateOfferModal(product: Product) {
   const [open, setOpen] = useState(false);
@@ -52,12 +43,7 @@ export function CreateOfferModal(product: Product) {
   const onSubmit = (data: OfferPostSchema) => {
     startTransition(async () => {
       try {
-        await createOfferAction(
-          data,
-          product.sub_category.category.slug,
-          product.sub_category.slug,
-          product.id,
-        );
+        await createOfferAction(data, product.sub_category.category.slug, product.sub_category.slug, product.id);
         toast({
           title: toastT("success"),
           description: `Предложение "${data.brand}" для "${product.name}" добавлено.`,
@@ -88,45 +74,26 @@ export function CreateOfferModal(product: Product) {
             <Label htmlFor="brand">{t("manufacturer")}</Label>
             <Input id="brand" {...form.register("brand")} />
             {form.formState.errors.brand && (
-              <p className="text-sm text-red-500">
-                {form.formState.errors.brand.message}
-              </p>
+              <p className="text-sm text-red-500">{form.formState.errors.brand.message}</p>
             )}
           </div>
           <div>
-            <Label htmlFor="manufacturer_number">
-              {t("manufacturer_number")}
-            </Label>
-            <Input
-              id="manufacturer_number"
-              {...form.register("manufacturer_number")}
-            />
+            <Label htmlFor="manufacturer_number">{t("manufacturer_number")}</Label>
+            <Input id="manufacturer_number" {...form.register("manufacturer_number")} />
           </div>
           <div>
             <Label htmlFor="internal_description">{t("description")}</Label>
-            <Input
-              id="internal_description"
-              {...form.register("internal_description")}
-            />
+            <Input id="internal_description" {...form.register("internal_description")} />
           </div>
           <div>
             <Label htmlFor="price_rub">{t("price_retail")}</Label>
-            <Input
-              id="price_rub"
-              type="number"
-              step="1"
-              {...form.register("price_rub", { valueAsNumber: true })}
-            />
+            <Input id="price_rub" type="number" step="1" {...form.register("price_rub", { valueAsNumber: true })} />
             {form.formState.errors.price_rub && (
-              <p className="text-sm text-red-500">
-                {form.formState.errors.price_rub.message}
-              </p>
+              <p className="text-sm text-red-500">{form.formState.errors.price_rub.message}</p>
             )}
           </div>
           <div>
-            <Label htmlFor="super_wholesale_price_rub">
-              {t("price_super_wholesale")}
-            </Label>
+            <Label htmlFor="super_wholesale_price_rub">{t("price_super_wholesale")}</Label>
             <Input
               id="super_wholesale_price_rub"
               type="number"
@@ -136,17 +103,11 @@ export function CreateOfferModal(product: Product) {
               })}
             />
             {form.formState.errors.super_wholesale_price_rub && (
-              <p className="text-sm text-red-500">
-                {form.formState.errors.super_wholesale_price_rub.message}
-              </p>
+              <p className="text-sm text-red-500">{form.formState.errors.super_wholesale_price_rub.message}</p>
             )}
           </div>
           <DialogFooter>
-            <CreateButton
-              type="submit"
-              disabled={isPending}
-              loading={isPending}
-            />
+            <CreateButton type="submit" disabled={isPending} loading={isPending} />
           </DialogFooter>
         </form>
       </DialogContent>

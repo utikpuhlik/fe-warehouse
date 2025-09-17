@@ -1,10 +1,11 @@
-import type { Category } from "@/app/lib/schemas/categorySchema";
-import { fetchCategories } from "@/app/lib/apis/categoryApi";
-import { CreateCategoryModal } from "@/app/ui/catalogue/category/create-dialog";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+
+import { fetchCategories } from "@/app/lib/apis/categoryApi";
+import type { Category } from "@/app/lib/schemas/categorySchema";
 import { SearchDropdown } from "@/app/modules/search-dropdown/search-dropdown";
 import { CatalogueCard } from "@/app/ui/catalogue/cards/catalogue-card";
-import { getTranslations } from "next-intl/server";
+import { CreateCategoryModal } from "@/app/ui/catalogue/category/create-dialog";
 
 export const dynamic = "force-dynamic";
 
@@ -23,9 +24,7 @@ export default async function CategoriesPage() {
   return (
     <main>
       <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-xl font-bold tracking-tight lg:text-2xl">
-          {t("catalogue")}
-        </h1>
+        <h1 className="text-xl font-bold tracking-tight lg:text-2xl">{t("catalogue")}</h1>
         <SearchDropdown />
         <CreateCategoryModal />
       </div>

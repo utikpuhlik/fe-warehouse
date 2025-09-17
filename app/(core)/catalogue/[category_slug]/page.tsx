@@ -1,13 +1,14 @@
-import Breadcrumbs from "@/app/ui/shared/breadcrumbs";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
+
 import { fetchCategoryBySlug } from "@/app/lib/apis/categoryApi";
 import { fetchSubCategories } from "@/app/lib/apis/subCategoryApi";
-import { CreateSubCategoryModal } from "@/app/ui/catalogue/sub-category/create-dialog";
-import type { SubCategory } from "@/app/lib/schemas/subCategorySchema";
 import type { Category } from "@/app/lib/schemas/categorySchema";
-import { notFound } from "next/navigation";
-import type { Metadata } from "next";
+import type { SubCategory } from "@/app/lib/schemas/subCategorySchema";
 import { CatalogueCard } from "@/app/ui/catalogue/cards/catalogue-card";
-import { getTranslations } from "next-intl/server";
+import { CreateSubCategoryModal } from "@/app/ui/catalogue/sub-category/create-dialog";
+import Breadcrumbs from "@/app/ui/shared/breadcrumbs";
 
 type Props = {
   params: Promise<{ category_slug: string }>;

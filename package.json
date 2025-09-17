@@ -4,7 +4,9 @@
     "build": "next build",
     "dev": "next dev --turbopack",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write ."
   },
   "dependencies": {
     "@clerk/localizations": "^3.21.3",
@@ -67,6 +69,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
     "@types/bcrypt": "^5.0.2",
     "@types/node": "22.10.7",
     "@types/react": "19.0.7",
@@ -74,6 +77,7 @@
     "eslint": "^9.33.0",
     "eslint-config-next": "15.3.1",
     "husky": "^9.1.7",
-    "prettier": "3.6.2"
+    "prettier": "3.6.2",
+    "prettier-plugin-tailwindcss": "^0.6.14"
   }
 }

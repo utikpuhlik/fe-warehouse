@@ -1,11 +1,13 @@
-import Link from "next/link";
 import { CirclePlus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import UsersDataTable from "./data-table";
-import { fetchUsers } from "@/app/lib/apis/userApi";
-import { UserPaginatedSchema } from "@/app/lib/schemas/userSchema";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import Link from "next/link";
+
+import { fetchUsers } from "@/app/lib/apis/userApi";
+import { UserPaginatedSchema } from "@/app/lib/schemas/userSchema";
+import { Button } from "@/components/ui/button";
+
+import UsersDataTable from "./data-table";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("PageTitles");

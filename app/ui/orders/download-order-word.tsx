@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+
 import { printOrder } from "@/app/lib/apis/client/documentApi";
 import { showToastError } from "@/app/lib/errors/toastError";
-import { DownloadButton } from "@/app/ui/shared/buttons/download-button";
 import { downloadBlob } from "@/app/lib/utils/downloadBlob";
+import { DownloadButton } from "@/app/ui/shared/buttons/download-button";
 
 type Props = {
   orderId: string;
@@ -28,13 +29,5 @@ export function DownloadOrderWord({ orderId, full = true }: Props) {
     }
   };
 
-  return (
-    <DownloadButton
-      onClick={handleDownload}
-      format="docx"
-      full={full}
-      loading={loading}
-      disabled={loading}
-    />
-  );
+  return <DownloadButton onClick={handleDownload} format="docx" full={full} loading={loading} disabled={loading} />;
 }
